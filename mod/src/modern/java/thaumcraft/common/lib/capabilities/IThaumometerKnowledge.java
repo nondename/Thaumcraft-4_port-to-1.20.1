@@ -5,7 +5,9 @@ import net.minecraft.resources.ResourceLocation;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 
-/** Persistent player discoveries used by thaumometer scans. */
+import java.util.Set;
+
+/** Persistent player discoveries used by thaumometer scans and research progression. */
 public interface IThaumometerKnowledge {
     boolean hasScannedItem(ResourceLocation itemId);
 
@@ -28,6 +30,16 @@ public interface IThaumometerKnowledge {
     Aspect combine(Aspect first, Aspect second);
 
     AspectList getDiscoveredAspects();
+
+    boolean hasResearch(String key);
+
+    boolean grantResearch(String key);
+
+    boolean revokeResearch(String key);
+
+    void clearResearch();
+
+    Set<String> getResearchKeys();
 
     CompoundTag serializeNBT();
 

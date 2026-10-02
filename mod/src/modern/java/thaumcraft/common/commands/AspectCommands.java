@@ -19,6 +19,9 @@ import net.minecraftforge.event.RegisterCommandsEvent;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
+import thaumcraft.common.lib.capabilities.IThaumometerKnowledge;
+import thaumcraft.common.lib.capabilities.ThaumometerKnowledgeProvider;
+import thaumcraft.common.lib.network.ModNetwork;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -48,7 +51,27 @@ public final class AspectCommands {
                 .then(Commands.literal("heldaspects")
                         .executes(context -> showHeldAspects(context.getSource())))
                 .then(Commands.literal("lookaspects")
-                        .executes(context -> showLookedAtBlockAspects(context.getSource()))));
+                        .executes(context -> showLookedAtBlockAspects(context.getSource())))
+                .then(Commands.literal("research")
+                        .then(Commands.literal("list")
+                                .executes(context -> listResearch(context.getSource())))
+                        .then(Commands.literal("grant")
+                                .requires(source -> source.hasPermission(2))
+                                .then(Commands.argument("key", StringArgumentType.word())
+                                        .executes(context -> grantResearch(
+                                                context.getSource(),
+                                                StringArgumentType.getString(context, "key")
+                                        ))))
+                        .then(Commands.literal("revoke")
+                                .requires(source -> source.hasPermission(2))
+                                .then(Commands.argument("key", StringArgumentType.word())
+                                        .executes(context -> revokeResearch(
+                                                context.getSource(),
+                                                StringArgumentType.getString(context, "key")
+                                        ))))
+                        .then(Commands.literal("reset")
+                                .requires(source -> source.hasPermission(2))
+                                .executes(context -> resetResearch(context.getSource())))));
     }
 
     private static int showSummary(CommandSourceStack source) {
@@ -195,6 +218,72 @@ public final class AspectCommands {
         return sendAspects(source, blockId, ThaumcraftApi.getBlockAspects(block));
     }
 
+    private static int listResearch(CommandSourceStack source) {
+        ResearchAccess access = researchAccess(source);
+        if (access == null) {
+            return 0;
+        }
+        String keys = access.knowledge().getResearchKeys().stream().sorted().collect(Collectors.joining(", "));
+        source.sendSuccess(
+                () -> Component.literal(keys.isEmpty() ? "Thaumcraft research: none" : "Thaumcraft research: " + keys),
+                false
+        );
+        return access.knowledge().getResearchKeys().size();
+    }
+
+    private static int grantResearch(CommandSourceStack source, String key) {
+        ResearchAccess access = researchAccess(source);
+        if (access == null) {
+            return 0;
+        }
+        boolean changed = access.knowledge().grantResearch(key);
+        ModNetwork.syncThaumometerKnowledge(access.player());
+        source.sendSuccess(
+                () -> Component.literal((changed ? "Granted research " : "Research already granted: ") + key.toUpperCase()),
+                false
+        );
+        return changed ? 1 : 0;
+    }
+
+    private static int revokeResearch(CommandSourceStack source, String key) {
+        ResearchAccess access = researchAccess(source);
+        if (access == null) {
+            return 0;
+        }
+        boolean changed = access.knowledge().revokeResearch(key);
+        ModNetwork.syncThaumometerKnowledge(access.player());
+        source.sendSuccess(
+                () -> Component.literal((changed ? "Revoked research " : "Research was not granted: ") + key.toUpperCase()),
+                false
+        );
+        return changed ? 1 : 0;
+    }
+
+    private static int resetResearch(CommandSourceStack source) {
+        ResearchAccess access = researchAccess(source);
+        if (access == null) {
+            return 0;
+        }
+        int count = access.knowledge().getResearchKeys().size();
+        access.knowledge().clearResearch();
+        ModNetwork.syncThaumometerKnowledge(access.player());
+        source.sendSuccess(() -> Component.literal("Cleared " + count + " Thaumcraft research keys"), false);
+        return Math.max(1, count);
+    }
+
+    private static ResearchAccess researchAccess(CommandSourceStack source) {
+        if (!(source.getEntity() instanceof ServerPlayer player)) {
+            source.sendFailure(Component.literal("This command must be run by a player"));
+            return null;
+        }
+        IThaumometerKnowledge knowledge = player.getCapability(ThaumometerKnowledgeProvider.CAPABILITY).orElse(null);
+        if (knowledge == null) {
+            source.sendFailure(Component.literal("Thaumcraft player knowledge is unavailable"));
+            return null;
+        }
+        return new ResearchAccess(player, knowledge);
+    }
+
     private static int sendAspects(CommandSourceStack source, String objectId, AspectList aspects) {
         if (aspects == null || aspects.size() == 0) {
             source.sendFailure(Component.literal("No Thaumcraft aspects registered for " + objectId));
@@ -211,5 +300,8 @@ public final class AspectCommands {
                 false
         );
         return aspects.visSize();
+    }
+
+    private record ResearchAccess(ServerPlayer player, IThaumometerKnowledge knowledge) {
     }
 }

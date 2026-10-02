@@ -8,17 +8,20 @@ import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
-/** Default TC4-style persistent aspect and scan knowledge for one player. */
+/** Default TC4-style persistent aspect, scan and research knowledge for one player. */
 public final class ThaumometerKnowledge implements IThaumometerKnowledge {
     private static final String TAG_SCANNED_ITEMS = "scannedItems";
     private static final String TAG_LEGACY_SCANNED_BLOCKS = "scannedBlocks";
     private static final String TAG_DISCOVERED_ASPECTS = "discoveredAspects";
+    private static final String TAG_RESEARCH = "research";
     private static final int ASPECT_POOL_CAP = 100;
 
     private final Set<String> scannedEntities = new HashSet<>();
     private final Set<String> scannedItems = new HashSet<>();
+    private final Set<String> researchKeys = new HashSet<>();
     private final AspectList discoveredAspects = new AspectList();
 
     public ThaumometerKnowledge() {
@@ -40,10 +43,16 @@ public final class ThaumometerKnowledge implements IThaumometerKnowledge {
     }
 
     @Override
-    public boolean hasScannedEntity(ResourceLocation id) { return id != null && scannedEntities.contains(id.toString()); }
+    public boolean hasScannedEntity(ResourceLocation id) {
+        return id != null && scannedEntities.contains(id.toString());
+    }
 
     @Override
-    public void scanEntity(ResourceLocation id) { if (id != null) scannedEntities.add(id.toString()); }
+    public void scanEntity(ResourceLocation id) {
+        if (id != null) {
+            scannedEntities.add(id.toString());
+        }
+    }
 
     @Override
     public boolean hasDiscoveredAspect(Aspect aspect) {
@@ -113,8 +122,12 @@ public final class ThaumometerKnowledge implements IThaumometerKnowledge {
     /** Same pool costs and discovery bonus as PacketAspectCombinationToServer in the reference. */
     @Override
     public Aspect combine(Aspect first, Aspect second) {
-        if (first == null || second == null || !hasDiscoveredAspect(first) || !hasDiscoveredAspect(second)) return null;
-        if (getAspectPool(first) < (first == second ? 2 : 1) || getAspectPool(second) < 1) return null;
+        if (first == null || second == null || !hasDiscoveredAspect(first) || !hasDiscoveredAspect(second)) {
+            return null;
+        }
+        if (getAspectPool(first) < (first == second ? 2 : 1) || getAspectPool(second) < 1) {
+            return null;
+        }
         for (Aspect result : Aspect.getCompoundAspects()) {
             Aspect[] parents = result.getComponents();
             if ((parents[0] == first && parents[1] == second) || (parents[1] == first && parents[0] == second)) {
@@ -128,17 +141,51 @@ public final class ThaumometerKnowledge implements IThaumometerKnowledge {
     }
 
     @Override
+    public boolean hasResearch(String key) {
+        String normalized = normalizeResearchKey(key);
+        return normalized != null && researchKeys.contains(normalized);
+    }
+
+    @Override
+    public boolean grantResearch(String key) {
+        String normalized = normalizeResearchKey(key);
+        return normalized != null && researchKeys.add(normalized);
+    }
+
+    @Override
+    public boolean revokeResearch(String key) {
+        String normalized = normalizeResearchKey(key);
+        return normalized != null && researchKeys.remove(normalized);
+    }
+
+    @Override
+    public void clearResearch() {
+        researchKeys.clear();
+    }
+
+    @Override
+    public Set<String> getResearchKeys() {
+        return Set.copyOf(researchKeys);
+    }
+
+    @Override
     public CompoundTag serializeNBT() {
         CompoundTag tag = new CompoundTag();
         discoveredAspects.writeToNBT(tag, TAG_DISCOVERED_ASPECTS);
+
         ListTag items = new ListTag();
         for (String itemId : scannedItems) {
             items.add(net.minecraft.nbt.StringTag.valueOf(itemId));
         }
         tag.put(TAG_SCANNED_ITEMS, items);
+
         ListTag entities = new ListTag();
         scannedEntities.forEach(id -> entities.add(net.minecraft.nbt.StringTag.valueOf(id)));
         tag.put("scannedEntities", entities);
+
+        ListTag research = new ListTag();
+        researchKeys.stream().sorted().forEach(key -> research.add(net.minecraft.nbt.StringTag.valueOf(key)));
+        tag.put(TAG_RESEARCH, research);
         return tag;
     }
 
@@ -146,18 +193,32 @@ public final class ThaumometerKnowledge implements IThaumometerKnowledge {
     public void deserializeNBT(CompoundTag tag) {
         scannedItems.clear();
         scannedEntities.clear();
-        var entities = tag.getList("scannedEntities", Tag.TAG_STRING);
+        researchKeys.clear();
+
+        ListTag entities = tag.getList("scannedEntities", Tag.TAG_STRING);
         for (int i = 0; i < entities.size(); i++) {
-            if (ResourceLocation.tryParse(entities.getString(i)) != null) scannedEntities.add(entities.getString(i));
+            if (ResourceLocation.tryParse(entities.getString(i)) != null) {
+                scannedEntities.add(entities.getString(i));
+            }
         }
+
         discoveredAspects.aspects.clear();
         discoveredAspects.readFromNBT(tag, TAG_DISCOVERED_ASPECTS);
         for (Aspect aspect : Aspect.getPrimalAspects()) {
             discoveredAspects.aspects.putIfAbsent(aspect, 0);
         }
+
         readScannedItems(tag.getList(TAG_SCANNED_ITEMS, Tag.TAG_STRING));
         // Keep discoveries written by the earlier block-ID based prototype.
         readScannedItems(tag.getList(TAG_LEGACY_SCANNED_BLOCKS, Tag.TAG_STRING));
+
+        ListTag research = tag.getList(TAG_RESEARCH, Tag.TAG_STRING);
+        for (int i = 0; i < research.size(); i++) {
+            String normalized = normalizeResearchKey(research.getString(i));
+            if (normalized != null) {
+                researchKeys.add(normalized);
+            }
+        }
     }
 
     private void readScannedItems(ListTag items) {
@@ -167,5 +228,16 @@ public final class ThaumometerKnowledge implements IThaumometerKnowledge {
                 scannedItems.add(value);
             }
         }
+    }
+
+    private static String normalizeResearchKey(String key) {
+        if (key == null) {
+            return null;
+        }
+        String normalized = key.trim();
+        if (normalized.isEmpty()) {
+            return null;
+        }
+        return normalized.toUpperCase(Locale.ROOT);
     }
 }
