@@ -26,5 +26,19 @@
   "tc.research.combine": "Combine",
   "tc.research.clear": "Clear",
   "tc.research.choose": "Select two known aspects",
-  "tc.research.failed": "No combination or not enough points"
+  "tc.research.failed": "No combination or not enough points",
+  "tc.book.chapter.0": "First steps",
+  "tc.book.chapter.1": "Studying the world",
+  "tc.book.chapter.2": "Research table",
+  "tc.book.aspects": "Discovered aspects",
+  "tc.book.primal": "Primal aspect",
+  "item.thaumcraft.wand": "Iron Capped Wooden Wand",
+  "item.thaumcraft.iron_wand_cap": "Iron Wand Cap",
+  "item.thaumcraft.thaumonomicon": "Thaumonomicon",
+  "tc.book.body.0": "Craft two iron caps and attach them to a stick.\n\nUse the wand on a bookshelf. The shelf becomes a Thaumonomicon. Pick up the book and right-click to read it.",
+  "tc.book.recipe.0": "Cap: five iron nuggets.\nWand: two caps and a stick, arranged diagonally.",
+  "tc.book.body.1": "Mine infused stone with an iron pickaxe for shards.\n\nHold use while aiming at a block, dropped item or creature. Keep the same target until the scan completes.",
+  "tc.book.recipe.1": "Thaumometer: glass, two iron ingots and any two shards.\n\nDiscover both components before studying a compound aspect. Repeated scans give no points.",
+  "tc.book.body.2": "Place two tables next to each other and use scribing tools.\n\nTools: phial, feather, black dye.\n\nEight phials: clay above, glass to the left, right and below.",
+  "tc.book.recipe.2": "Each combination spends one point of each component.\n\nTerra + Aqua = Victus\nVictus + Terra = Herba\nAer + Herba = Arbor"
 }

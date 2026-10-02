@@ -46,6 +46,9 @@ public final class ModOres {
                 .title(Component.translatable("itemGroup.thaumcraft"))
                 .icon(() -> new ItemStack(ModItems.THAUMOMETER.get()))
                 .displayItems((parameters, output) -> {
+                    output.accept(ModItems.WAND.get());
+                    output.accept(ModItems.THAUMONOMICON.get());
+                    output.accept(ModItems.IRON_WAND_CAP.get());
                     output.accept(ModItems.THAUMOMETER.get());
                     output.accept(thaumcraft.common.research.ModResearch.TABLE_ITEM.get());
                     output.accept(thaumcraft.common.research.ModResearch.SCRIBING_TOOLS.get());
@@ -61,6 +64,9 @@ public final class ModOres {
     }
 
     public static void registerAspects() {
+        ThaumcraftApi.registerObjectTag(ModItems.IRON_WAND_CAP.get(), new AspectList().add(Aspect.METAL, 3));
+        ThaumcraftApi.registerObjectTag(ModItems.WAND.get(), new AspectList().add(Aspect.METAL, 4));
+        ThaumcraftApi.registerObjectTag(ModItems.THAUMONOMICON.get(), new AspectList().add(Aspect.TREE, 2).add(Aspect.MIND, 4).add(Aspect.MAGIC, 2));
         for (int i = 0; i < NAMES.length; i++) {
             ThaumcraftApi.registerObjectTag(SHARDS.get(NAMES[i]).get(), new AspectList()
                     .add(Aspect.MAGIC, 1).add(ASPECTS[i], 2).add(Aspect.CRYSTAL, 1));

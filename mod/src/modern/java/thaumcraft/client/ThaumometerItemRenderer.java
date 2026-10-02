@@ -91,14 +91,14 @@ public final class ThaumometerItemRenderer extends BlockEntityWithoutLevelRender
         IThaumometerKnowledge knowledge = minecraft.player
                 .getCapability(ThaumometerKnowledgeProvider.CAPABILITY)
                 .orElse(null);
-        AspectList aspects = knowledge != null && knowledge.hasScannedItem(itemId)
-                ? ThaumcraftApi.getObjectAspects(target)
+        AspectList aspects = knowledge != null && scan.scanned(knowledge)
+                ? scan.aspects(minecraft.level)
                 : null;
 
         poseStack.pushPose();
         poseStack.translate(0.0D, 0.12D, 0.0D);
         poseStack.mulPose(Axis.XP.rotationDegrees(90.0F));
-        poseStack.mulPose(Axis.ZP.rotationDegrees(180.0F));
+        // The item transform already turns X by 90 degrees; text Y must point down.
         renderAspectIcons(minecraft, poseStack, bufferSource, aspects);
         renderTargetName(minecraft.font, poseStack, bufferSource, scan.name().getString());
         poseStack.popPose();
@@ -120,9 +120,9 @@ public final class ThaumometerItemRenderer extends BlockEntityWithoutLevelRender
             Aspect aspect = sorted[index];
             if (aspect != null) {
                 poseStack.pushPose();
-                poseStack.scale(0.0075F, 0.0075F, 0.0075F);
+                poseStack.scale(0.023F, 0.023F, 0.023F);
                 drawTexture(bufferSource, poseStack, aspect.getImage(),
-                        -baseX + posX * 16, -8 + posY * 16, 16, 16, LightTexture.FULL_BRIGHT);
+                        -baseX + posX * 16, -8 + posY * 16, 16, 16, LightTexture.FULL_BRIGHT, aspect.getColor());
                 String amount = Integer.toString(aspects.getAmount(aspect));
                 drawText(minecraft.font, poseStack, bufferSource, amount,
                         -baseX + posX * 16 + 9, -8 + posY * 16 + 9, 0xFFFFFFFF, 0.55F);
@@ -143,8 +143,8 @@ public final class ThaumometerItemRenderer extends BlockEntityWithoutLevelRender
             return;
         }
         poseStack.pushPose();
-        poseStack.translate(0.0D, -0.25D, 0.0D);
-        float scale = 0.005F;
+        poseStack.translate(0.0D, -0.5D, 0.0D);
+        float scale = Math.min(0.020F, 1.9F / Math.max(1, font.width(name)));
         int width = font.width(name);
         if (width > 90) {
             scale -= 0.000025F * (width - 90);
@@ -165,19 +165,24 @@ public final class ThaumometerItemRenderer extends BlockEntityWithoutLevelRender
     }
 
     private static void drawTexture(MultiBufferSource bufferSource, PoseStack poseStack,
-                                    ResourceLocation texture, float x, float y, float width, float height, int light) {
+                                    ResourceLocation texture, float x, float y, float width, float height, int light, int color) {
         VertexConsumer vertices = bufferSource.getBuffer(RenderType.entityCutoutNoCull(texture));
         PoseStack.Pose pose = poseStack.last();
-        putVertex(vertices, pose, x, y + height, 0.0F, 0.0F, 1.0F, light);
-        putVertex(vertices, pose, x + width, y + height, 0.0F, 1.0F, 1.0F, light);
-        putVertex(vertices, pose, x + width, y, 0.0F, 1.0F, 0.0F, light);
-        putVertex(vertices, pose, x, y, 0.0F, 0.0F, 0.0F, light);
+        putVertex(vertices, pose, x, y + height, 0.0F, 0.0F, 1.0F, light, color);
+        putVertex(vertices, pose, x + width, y + height, 0.0F, 1.0F, 1.0F, light, color);
+        putVertex(vertices, pose, x + width, y, 0.0F, 1.0F, 0.0F, light, color);
+        putVertex(vertices, pose, x, y, 0.0F, 0.0F, 0.0F, light, color);
     }
 
     private static void putVertex(VertexConsumer vertices, PoseStack.Pose pose,
                                   float x, float y, float z, float u, float v, int packedLight) {
+        putVertex(vertices, pose, x, y, z, u, v, packedLight, 0xFFFFFF);
+    }
+
+    private static void putVertex(VertexConsumer vertices, PoseStack.Pose pose,
+                                  float x, float y, float z, float u, float v, int packedLight, int color) {
         vertices.vertex(pose.pose(), x, y, z)
-                .color(255, 255, 255, 255)
+                .color((color >> 16) & 255, (color >> 8) & 255, color & 255, 255)
                 .uv(u, v)
                 .overlayCoords(OverlayTexture.NO_OVERLAY)
                 .uv2(packedLight)

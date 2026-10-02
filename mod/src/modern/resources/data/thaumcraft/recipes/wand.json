@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  I",
+    " S ",
+    "I  "
+  ],
+  "key": {
+    "I": {
+      "item": "thaumcraft:iron_wand_cap"
+    },
+    "S": {
+      "tag": "forge:rods/wooden"
+    }
+  },
+  "result": {
+    "item": "thaumcraft:wand"
+  }
+}

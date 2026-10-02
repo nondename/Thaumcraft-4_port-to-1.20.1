@@ -66,7 +66,7 @@ public class ItemThaumometer extends Item {
 
         var knowledge = player.getCapability(ThaumometerKnowledgeProvider.CAPABILITY).orElse(null);
         if (knowledge == null) return InteractionResultHolder.fail(stack);
-        Component error = rejection(scan, knowledge);
+        Component error = rejection(scan, knowledge, level);
         if (error != null) {
             if (!level.isClientSide) player.displayClientMessage(error, true);
             return InteractionResultHolder.fail(stack);
@@ -126,11 +126,11 @@ public class ItemThaumometer extends Item {
         }
     }
 
-    private static Component rejection(ThaumometerTargets.Target target, IThaumometerKnowledge knowledge) {
-        if (knowledge.hasScannedItem(BuiltInRegistries.ITEM.getKey(target.stack().getItem()))) {
+    private static Component rejection(ThaumometerTargets.Target target, IThaumometerKnowledge knowledge, Level level) {
+        if (target.scanned(knowledge)) {
             return Component.translatable("tc.scan.already_scanned", target.name());
         }
-        var aspects = ThaumcraftApi.getObjectAspects(target.stack());
+        var aspects = target.aspects(level);
         if (aspects == null || aspects.size() == 0) return Component.translatable("tc.scan.no_aspects", target.name());
         for (Aspect aspect : aspects.getAspects()) {
             if (aspect == null || aspect.isPrimal()) continue;
@@ -145,9 +145,9 @@ public class ItemThaumometer extends Item {
 
     private static void finishScan(Level level, Player player, ThaumometerTargets.Target target) {
         var knowledge = player.getCapability(ThaumometerKnowledgeProvider.CAPABILITY).orElse(null);
-        if (target == null || knowledge == null || rejection(target, knowledge) != null) return;
-        var aspects = ThaumcraftApi.getObjectAspects(target.stack());
-        knowledge.scanItem(BuiltInRegistries.ITEM.getKey(target.stack().getItem()));
+        if (target == null || knowledge == null || rejection(target, knowledge, level) != null) return;
+        var aspects = target.aspects(level);
+        target.markScanned(knowledge);
         for (Aspect aspect : aspects.getAspectsSorted()) {
             if (aspect != null) knowledge.awardAspect(aspect, aspects.getAmount(aspect));
         }

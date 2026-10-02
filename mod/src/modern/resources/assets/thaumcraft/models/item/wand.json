@@ -1,0 +1,262 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "rod": "thaumcraft:item/wand_rod_wood",
+    "cap": "thaumcraft:item/wand_cap_iron",
+    "particle": "thaumcraft:item/wand_rod_wood"
+  },
+  "elements": [
+    {
+      "from": [
+        7,
+        -3,
+        7
+      ],
+      "to": [
+        9,
+        -1,
+        9
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            1.0,
+            0.0,
+            2.0,
+            1.0
+          ],
+          "texture": "#cap"
+        },
+        "up": {
+          "uv": [
+            2.0,
+            0.0,
+            3.0,
+            1.0
+          ],
+          "texture": "#cap"
+        },
+        "west": {
+          "uv": [
+            0.0,
+            1.0,
+            1.0,
+            2.0
+          ],
+          "texture": "#cap"
+        },
+        "north": {
+          "uv": [
+            1.0,
+            1.0,
+            2.0,
+            2.0
+          ],
+          "texture": "#cap"
+        },
+        "east": {
+          "uv": [
+            2.0,
+            1.0,
+            3.0,
+            2.0
+          ],
+          "texture": "#cap"
+        },
+        "south": {
+          "uv": [
+            3.0,
+            1.0,
+            4.0,
+            2.0
+          ],
+          "texture": "#cap"
+        }
+      }
+    },
+    {
+      "from": [
+        7,
+        -1,
+        7
+      ],
+      "to": [
+        9,
+        17,
+        9
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            1.0,
+            4.0,
+            2.0,
+            5.0
+          ],
+          "texture": "#rod"
+        },
+        "up": {
+          "uv": [
+            2.0,
+            4.0,
+            3.0,
+            5.0
+          ],
+          "texture": "#rod"
+        },
+        "west": {
+          "uv": [
+            0.0,
+            5.0,
+            1.0,
+            14.0
+          ],
+          "texture": "#rod"
+        },
+        "north": {
+          "uv": [
+            1.0,
+            5.0,
+            2.0,
+            14.0
+          ],
+          "texture": "#rod"
+        },
+        "east": {
+          "uv": [
+            2.0,
+            5.0,
+            3.0,
+            14.0
+          ],
+          "texture": "#rod"
+        },
+        "south": {
+          "uv": [
+            3.0,
+            5.0,
+            4.0,
+            14.0
+          ],
+          "texture": "#rod"
+        }
+      }
+    },
+    {
+      "from": [
+        7,
+        17,
+        7
+      ],
+      "to": [
+        9,
+        19,
+        9
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            1.0,
+            0.0,
+            2.0,
+            1.0
+          ],
+          "texture": "#cap"
+        },
+        "up": {
+          "uv": [
+            2.0,
+            0.0,
+            3.0,
+            1.0
+          ],
+          "texture": "#cap"
+        },
+        "west": {
+          "uv": [
+            0.0,
+            1.0,
+            1.0,
+            2.0
+          ],
+          "texture": "#cap"
+        },
+        "north": {
+          "uv": [
+            1.0,
+            1.0,
+            2.0,
+            2.0
+          ],
+          "texture": "#cap"
+        },
+        "east": {
+          "uv": [
+            2.0,
+            1.0,
+            3.0,
+            2.0
+          ],
+          "texture": "#cap"
+        },
+        "south": {
+          "uv": [
+            3.0,
+            1.0,
+            4.0,
+            2.0
+          ],
+          "texture": "#cap"
+        }
+      }
+    }
+  ],
+  "display": {
+    "gui": {
+      "rotation": [
+        0,
+        0,
+        -45
+      ],
+      "scale": [
+        0.7,
+        0.7,
+        0.7
+      ]
+    },
+    "firstperson_righthand": {
+      "rotation": [
+        0,
+        -90,
+        25
+      ],
+      "translation": [
+        1,
+        2,
+        1
+      ],
+      "scale": [
+        0.7,
+        0.7,
+        0.7
+      ]
+    },
+    "firstperson_lefthand": {
+      "rotation": [
+        0,
+        90,
+        -25
+      ],
+      "translation": [
+        1,
+        2,
+        1
+      ],
+      "scale": [
+        0.7,
+        0.7,
+        0.7
+      ]
+    }
+  }
+}

@@ -13,7 +13,25 @@ import net.minecraft.world.phys.Vec3;
 
 /** One target resolver shared by the server scan and the lens readout. */
 public final class ThaumometerTargets {
-    public record Target(ItemStack stack, Component name, String identity) {}
+    public record Target(ItemStack stack, Component name, String identity, net.minecraft.world.entity.Entity entity) {
+        public Target(ItemStack stack, Component name, String identity) { this(stack, name, identity, null); }
+        public thaumcraft.api.aspects.AspectList aspects(net.minecraft.world.level.Level level) {
+            return entity == null ? thaumcraft.common.config.RecipeAspects.get(stack, level)
+                    : thaumcraft.common.config.EntityAspects.get(entity);
+        }
+        private net.minecraft.resources.ResourceLocation discoveryId() {
+            if (entity == null) return BuiltInRegistries.ITEM.getKey(stack.getItem());
+            var id = BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType());
+            return net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(id.getNamespace(),
+                    id.getPath() + thaumcraft.common.config.EntityAspects.variant(entity));
+        }
+        public boolean scanned(thaumcraft.common.lib.capabilities.IThaumometerKnowledge knowledge) {
+            return entity == null ? knowledge.hasScannedItem(discoveryId()) : knowledge.hasScannedEntity(discoveryId());
+        }
+        public void markScanned(thaumcraft.common.lib.capabilities.IThaumometerKnowledge knowledge) {
+            if (entity == null) knowledge.scanItem(discoveryId()); else knowledge.scanEntity(discoveryId());
+        }
+    }
 
     public static Target find(Player player) {
         var level = player.level();
@@ -22,18 +40,22 @@ public final class ThaumometerTargets {
         var hit = level.clip(new ClipContext(start, end, ClipContext.Block.OUTLINE,
                 ClipContext.Fluid.SOURCE_ONLY, player));
         double nearest = start.distanceToSqr(hit.getLocation());
-        ItemEntity selected = null;
+        net.minecraft.world.entity.Entity selected = null;
         for (var entity : level.getEntities(player, player.getBoundingBox()
-                .expandTowards(end.subtract(start)).inflate(1), e -> e instanceof ItemEntity && e.isAlive())) {
+                .expandTowards(end.subtract(start)).inflate(1), e -> e.isAlive() && !e.isSpectator() && (e instanceof ItemEntity || e instanceof net.minecraft.world.entity.ExperienceOrb || e.isPickable()))) {
             var box = entity.getBoundingBox().inflate(0.25);
             var intersection = box.contains(start) ? java.util.Optional.of(start) : box.clip(start, end);
             if (intersection.isPresent() && start.distanceToSqr(intersection.get()) < nearest) {
                 nearest = start.distanceToSqr(intersection.get());
-                selected = (ItemEntity) entity;
+                selected = entity;
             }
         }
-        if (selected != null) {
-            ItemStack stack = selected.getItem().copy();
+        if (selected != null && !(selected instanceof ItemEntity)) {
+            return new Target(ItemStack.EMPTY, selected.getDisplayName(), "entity:" + selected.getUUID()
+                    + thaumcraft.common.config.EntityAspects.variant(selected), selected);
+        }
+        if (selected instanceof ItemEntity dropped) {
+            ItemStack stack = dropped.getItem().copy();
             stack.setCount(1);
             return new Target(stack, stack.getHoverName(), "entity:" + selected.getUUID() + ":" + itemKey(stack));
         }

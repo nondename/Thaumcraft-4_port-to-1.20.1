@@ -15,5 +15,12 @@
       "thaumcraft:cameraclack2",
       "thaumcraft:cameraclack3"
     ]
+  },
+  "wand": {
+    "sounds": [
+      "thaumcraft:wand1",
+      "thaumcraft:wand2",
+      "thaumcraft:wand3"
+    ]
   }
 }

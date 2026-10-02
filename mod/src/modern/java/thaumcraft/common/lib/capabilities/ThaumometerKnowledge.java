@@ -17,6 +17,7 @@ public final class ThaumometerKnowledge implements IThaumometerKnowledge {
     private static final String TAG_DISCOVERED_ASPECTS = "discoveredAspects";
     private static final int ASPECT_POOL_CAP = 100;
 
+    private final Set<String> scannedEntities = new HashSet<>();
     private final Set<String> scannedItems = new HashSet<>();
     private final AspectList discoveredAspects = new AspectList();
 
@@ -37,6 +38,12 @@ public final class ThaumometerKnowledge implements IThaumometerKnowledge {
             scannedItems.add(itemId.toString());
         }
     }
+
+    @Override
+    public boolean hasScannedEntity(ResourceLocation id) { return id != null && scannedEntities.contains(id.toString()); }
+
+    @Override
+    public void scanEntity(ResourceLocation id) { if (id != null) scannedEntities.add(id.toString()); }
 
     @Override
     public boolean hasDiscoveredAspect(Aspect aspect) {
@@ -129,12 +136,20 @@ public final class ThaumometerKnowledge implements IThaumometerKnowledge {
             items.add(net.minecraft.nbt.StringTag.valueOf(itemId));
         }
         tag.put(TAG_SCANNED_ITEMS, items);
+        ListTag entities = new ListTag();
+        scannedEntities.forEach(id -> entities.add(net.minecraft.nbt.StringTag.valueOf(id)));
+        tag.put("scannedEntities", entities);
         return tag;
     }
 
     @Override
     public void deserializeNBT(CompoundTag tag) {
         scannedItems.clear();
+        scannedEntities.clear();
+        var entities = tag.getList("scannedEntities", Tag.TAG_STRING);
+        for (int i = 0; i < entities.size(); i++) {
+            if (ResourceLocation.tryParse(entities.getString(i)) != null) scannedEntities.add(entities.getString(i));
+        }
         discoveredAspects.aspects.clear();
         discoveredAspects.readFromNBT(tag, TAG_DISCOVERED_ASPECTS);
         for (Aspect aspect : Aspect.getPrimalAspects()) {

@@ -11,6 +11,10 @@ public interface IThaumometerKnowledge {
 
     void scanItem(ResourceLocation itemId);
 
+    boolean hasScannedEntity(ResourceLocation entityId);
+
+    void scanEntity(ResourceLocation entityId);
+
     boolean hasDiscoveredAspect(Aspect aspect);
 
     boolean hasDiscoveredParents(Aspect aspect);

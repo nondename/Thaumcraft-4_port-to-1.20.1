@@ -13,6 +13,7 @@ public final class ModSounds {
     private static final DeferredRegister<SoundEvent> SOUNDS =
             DeferredRegister.create(Registries.SOUND_EVENT, Thaumcraft.MODID);
 
+    public static final RegistryObject<SoundEvent> WAND = register("wand");
     public static final RegistryObject<SoundEvent> CAMERA_TICKS = register("cameraticks");
     public static final RegistryObject<SoundEvent> CAMERA_CLACK = register("cameraclack");
 

@@ -20,6 +20,10 @@ public final class ModItems {
             () -> new ItemThaumometer(new Item.Properties().stacksTo(1))
     );
 
+    public static final RegistryObject<Item> IRON_WAND_CAP = ITEMS.register("iron_wand_cap", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> WAND = ITEMS.register("wand", () -> new thaumcraft.common.items.tools.ItemWand(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> THAUMONOMICON = ITEMS.register("thaumonomicon", () -> new thaumcraft.common.items.tools.ItemThaumonomicon(new Item.Properties().stacksTo(1)));
+
     private ModItems() {
     }
 

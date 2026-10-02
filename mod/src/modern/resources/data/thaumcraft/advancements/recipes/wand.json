@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "material": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "thaumcraft:iron_wand_cap"
+            ]
+          }
+        ]
+      }
+    },
+    "has_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "thaumcraft:wand"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "material",
+      "has_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "thaumcraft:wand"
+    ]
+  }
+}

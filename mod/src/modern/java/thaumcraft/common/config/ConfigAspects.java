@@ -39,6 +39,7 @@ public final class ConfigAspects {
         registerPlants();
         registerWool();
         registerUtilityBlocks();
+        registerAdditionalObjects();
     }
 
     private static void registerMaterials() {
@@ -249,6 +250,27 @@ public final class ConfigAspects {
         AspectList torch = new AspectList().add(Aspect.LIGHT, 1);
         register(Blocks.TORCH, torch);
         registerBlockOnly(Blocks.WALL_TORCH, torch);
+    }
+
+    private static void registerAdditionalObjects() {
+        register(Items.PAPER, new AspectList().add(Aspect.MIND, 1));
+        register(Items.BOOK, new AspectList().add(Aspect.MIND, 3));
+        register(Items.SHIELD, new AspectList().add(Aspect.ARMOR, 2).add(Aspect.TREE, 3).add(Aspect.METAL, 1));
+        register(Items.ELYTRA, new AspectList().add(Aspect.FLIGHT, 5).add(Aspect.ELDRITCH, 3).add(Aspect.CLOTH, 2));
+        register(Items.TOTEM_OF_UNDYING, new AspectList().add(Aspect.LIFE, 5).add(Aspect.MAGIC, 4).add(Aspect.HEAL, 4).add(Aspect.ELDRITCH, 3));
+        register(Items.SHULKER_SHELL, new AspectList().add(Aspect.VOID, 3).add(Aspect.ELDRITCH, 3).add(Aspect.ARMOR, 2));
+        register(Items.SPECTRAL_ARROW, new AspectList().add(Aspect.WEAPON, 1).add(Aspect.LIGHT, 2));
+        register(Items.DRAGON_BREATH, new AspectList().add(Aspect.ELDRITCH, 4).add(Aspect.MAGIC, 3).add(Aspect.AIR, 2));
+        register(Items.END_CRYSTAL, new AspectList().add(Aspect.ELDRITCH, 3).add(Aspect.MAGIC, 3).add(Aspect.CRYSTAL, 3));
+        register(Blocks.CRAFTING_TABLE, new AspectList().add(Aspect.CRAFT, 4));
+        register(Blocks.OBSERVER, new AspectList().add(Aspect.MECHANISM, 3).add(Aspect.SENSES, 2));
+        register(Blocks.END_STONE_BRICKS, new AspectList().add(Aspect.EARTH, 2).add(Aspect.ELDRITCH, 2));
+        register(Blocks.END_ROD, new AspectList().add(Aspect.LIGHT, 2).add(Aspect.ELDRITCH, 2).add(Aspect.AIR, 1));
+        register(Blocks.MAGMA_BLOCK, new AspectList().add(Aspect.FIRE, 4).add(Aspect.EARTH, 1).add(Aspect.SLIME, 1));
+        register(Blocks.BONE_BLOCK, new AspectList().add(Aspect.DEATH, 2).add(Aspect.EARTH, 1));
+        register(Blocks.NETHER_WART_BLOCK, new AspectList().add(Aspect.PLANT, 2).add(Aspect.FIRE, 2).add(Aspect.TRAP, 2));
+        register(Blocks.RED_NETHER_BRICKS, new AspectList().add(Aspect.EARTH, 2).add(Aspect.FIRE, 2));
+        register(Blocks.DIRT_PATH, new AspectList().add(Aspect.EARTH, 1).add(Aspect.PLANT, 1));
     }
 
     private static void register(Item item, AspectList aspects) {
