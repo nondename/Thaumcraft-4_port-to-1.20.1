@@ -29,6 +29,10 @@ public final class Thaumcraft {
     public Thaumcraft() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         ModItems.register(modEventBus);
+        thaumcraft.common.blocks.ModOres.register(modEventBus);
+        thaumcraft.common.research.ModResearch.register(modEventBus);
+        thaumcraft.common.world.InfusedOreFeature.register(modEventBus);
+        modEventBus.addListener(this::commonSetup);
         ModSounds.register(modEventBus);
         modEventBus.addListener(ThaumometerKnowledgeEvents::registerCapabilities);
         ModNetwork.register();
@@ -38,6 +42,10 @@ public final class Thaumcraft {
         MinecraftForge.EVENT_BUS.addListener(AspectCommands::onRegisterCommands);
         LOGGER.info("Thaumcraft 4 port loaded on Minecraft 1.20.1 with {} object aspect tags",
                 ThaumcraftApi.getRegisteredObjectTagCount());
+    }
+
+    private void commonSetup(net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent event) {
+        event.enqueueWork(thaumcraft.common.blocks.ModOres::registerAspects);
     }
 
     private static void validateAspectRegistry() {

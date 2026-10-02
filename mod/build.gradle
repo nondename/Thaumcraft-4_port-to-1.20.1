@@ -54,7 +54,9 @@ minecraft {
         }
 
         gameTestServer {
+            workingDirectory project.file('build/gametest')
             property 'forge.enabledGameTestNamespaces', mod_id
+            mods { thaumcraft { source sourceSets.test } }
         }
 
         data {

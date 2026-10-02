@@ -21,6 +21,8 @@ public interface IThaumometerKnowledge {
 
     int awardAspect(Aspect aspect, int amount);
 
+    Aspect combine(Aspect first, Aspect second);
+
     AspectList getDiscoveredAspects();
 
     CompoundTag serializeNBT();

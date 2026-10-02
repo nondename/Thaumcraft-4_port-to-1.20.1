@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "ingredients": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "minecraft:planks"
+          }
+        ]
+      }
+    },
+    "recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "thaumcraft:table"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "ingredients",
+      "recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "thaumcraft:table"
+    ]
+  }
+}

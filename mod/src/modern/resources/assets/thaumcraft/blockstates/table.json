@@ -1,0 +1,17 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "thaumcraft:block/table"
+      }
+    },
+    {
+      "when": {
+        "part": "1"
+      },
+      "apply": {
+        "model": "thaumcraft:block/table_quill"
+      }
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "loader": "forge:obj",
+  "model": "thaumcraft:models/scanner.obj",
+  "flip_v": true,
+  "textures": {
+    "scanner": "thaumcraft:models/scanner",
+    "particle": "thaumcraft:models/scanner"
+  }
+}

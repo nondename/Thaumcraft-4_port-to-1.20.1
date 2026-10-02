@@ -1,9 +1,7 @@
 package thaumcraft.common.items.tools;
 
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -11,16 +9,12 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.HitResult;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
-import thaumcraft.api.aspects.AspectList;
 import thaumcraft.common.lib.capabilities.IThaumometerKnowledge;
 import thaumcraft.common.lib.capabilities.ThaumometerKnowledgeProvider;
 import thaumcraft.common.lib.network.ModNetwork;
@@ -29,7 +23,7 @@ import thaumcraft.common.sounds.ModSounds;
 import java.util.function.Consumer;
 
 /**
- * Hold to scan a block, matching TC4's sustained scanning action. The scan
+ * Hold to scan blocks and dropped items, matching TC4's sustained scanning action. The scan
  * target must remain under the player's crosshair until the thaumometer finishes.
  */
 public class ItemThaumometer extends Item {
@@ -64,11 +58,19 @@ public class ItemThaumometer extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
-        String target = getTargetKey(level, player);
+        var scan = ThaumometerTargets.find(player);
+        String target = scan == null ? null : scan.identity();
         if (target == null) {
             return InteractionResultHolder.pass(stack);
         }
 
+        var knowledge = player.getCapability(ThaumometerKnowledgeProvider.CAPABILITY).orElse(null);
+        if (knowledge == null) return InteractionResultHolder.fail(stack);
+        Component error = rejection(scan, knowledge);
+        if (error != null) {
+            if (!level.isClientSide) player.displayClientMessage(error, true);
+            return InteractionResultHolder.fail(stack);
+        }
         stack.getOrCreateTag().putString(SCAN_TARGET_TAG, target);
         player.startUsingItem(hand);
         return InteractionResultHolder.sidedSuccess(stack, level.isClientSide);
@@ -81,8 +83,10 @@ public class ItemThaumometer extends Item {
         }
 
         String startedTarget = stack.hasTag() ? stack.getTag().getString(SCAN_TARGET_TAG) : "";
-        String currentTarget = getTargetKey(level, player);
+        var scan = ThaumometerTargets.find(player);
+        String currentTarget = scan == null ? null : scan.identity();
         if (startedTarget.isEmpty() || !startedTarget.equals(currentTarget)) {
+            releaseUsing(stack, level, player, remainingUseDuration);
             player.stopUsingItem();
             return;
         }
@@ -100,8 +104,9 @@ public class ItemThaumometer extends Item {
 
         if (remainingUseDuration <= 5) {
             if (!level.isClientSide) {
-                finishBlockScan(level, player);
+                finishScan(level, player, scan);
             }
+            releaseUsing(stack, level, player, remainingUseDuration);
             player.stopUsingItem();
         }
     }
@@ -121,90 +126,33 @@ public class ItemThaumometer extends Item {
         }
     }
 
-    private static void finishBlockScan(Level level, Player player) {
-        HitResult hit = player.pick(SCAN_RANGE, 1.0F, false);
-        if (!(hit instanceof BlockHitResult blockHit) || hit.getType() != HitResult.Type.BLOCK) {
-            return;
+    private static Component rejection(ThaumometerTargets.Target target, IThaumometerKnowledge knowledge) {
+        if (knowledge.hasScannedItem(BuiltInRegistries.ITEM.getKey(target.stack().getItem()))) {
+            return Component.translatable("tc.scan.already_scanned", target.name());
         }
-
-        BlockPos pos = blockHit.getBlockPos();
-        ItemStack target = getBlockScanStack(level, player, blockHit);
-        if (target.isEmpty()) {
-            return;
-        }
-        ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(target.getItem());
-        AspectList aspects = ThaumcraftApi.getObjectAspects(target);
-        IThaumometerKnowledge knowledge = player.getCapability(ThaumometerKnowledgeProvider.CAPABILITY).orElse(null);
-        if (knowledge == null) {
-            return;
-        }
-        if (knowledge.hasScannedItem(itemId)) {
-            player.displayClientMessage(Component.translatable("tc.scan.already_scanned", target.getHoverName()), false);
-            return;
-        }
-        if (aspects == null || aspects.size() == 0) {
-            player.displayClientMessage(
-                    Component.translatable("tc.scan.no_aspects", level.getBlockState(pos).getBlock().getName()),
-                    false
-            );
-            return;
-        }
-
+        var aspects = ThaumcraftApi.getObjectAspects(target.stack());
+        if (aspects == null || aspects.size() == 0) return Component.translatable("tc.scan.no_aspects", target.name());
         for (Aspect aspect : aspects.getAspects()) {
-            if (aspect != null && !aspect.isPrimal() && !knowledge.hasDiscoveredParents(aspect)) {
-                player.displayClientMessage(
-                        Component.translatable("tc.scan.missing_parent", aspect.getTag()),
-                        false
-                );
-                return;
+            if (aspect == null || aspect.isPrimal()) continue;
+            for (Aspect parent : aspect.getComponents()) {
+                if (!knowledge.hasDiscoveredAspect(parent)) {
+                    return Component.translatable("tc.scan.missing_parent", parent.getName());
+                }
             }
         }
+        return null;
+    }
 
-        knowledge.scanItem(itemId);
-
+    private static void finishScan(Level level, Player player, ThaumometerTargets.Target target) {
+        var knowledge = player.getCapability(ThaumometerKnowledgeProvider.CAPABILITY).orElse(null);
+        if (target == null || knowledge == null || rejection(target, knowledge) != null) return;
+        var aspects = ThaumcraftApi.getObjectAspects(target.stack());
+        knowledge.scanItem(BuiltInRegistries.ITEM.getKey(target.stack().getItem()));
         for (Aspect aspect : aspects.getAspectsSorted()) {
-            if (aspect == null || !knowledge.hasDiscoveredParents(aspect)) {
-                continue;
-            }
-            knowledge.awardAspect(aspect, aspects.getAmount(aspect));
+            if (aspect != null) knowledge.awardAspect(aspect, aspects.getAmount(aspect));
         }
         ModNetwork.syncThaumometerKnowledge(player);
-    }
-
-    private static String getTargetKey(Level level, Player player) {
-        HitResult hit = player.pick(SCAN_RANGE, 1.0F, false);
-        if (!(hit instanceof BlockHitResult blockHit) || hit.getType() != HitResult.Type.BLOCK) {
-            return null;
-        }
-
-        BlockPos pos = blockHit.getBlockPos();
-        ItemStack target = getBlockScanStack(level, player, blockHit);
-        if (target.isEmpty()) {
-            return null;
-        }
-        ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(target.getItem());
-        return itemId + ":" + (target.hasTag() ? target.getTag().toString() : "");
-    }
-
-    public static ItemStack getBlockScanStack(Level level, Player player, BlockHitResult hit) {
-        if (level == null || player == null || hit == null) {
-            return ItemStack.EMPTY;
-        }
-        BlockPos pos = hit.getBlockPos();
-        var state = level.getBlockState(pos);
-        ItemStack picked = state.getBlock().getCloneItemStack(state, hit, level, pos, player);
-        if (picked != null && !picked.isEmpty() && ThaumcraftApi.getObjectAspects(picked) != null) {
-            return picked;
-        }
-
-        if (state.is(net.minecraft.world.level.block.Blocks.WATER)) {
-            ItemStack water = new ItemStack(Items.WATER_BUCKET);
-            return ThaumcraftApi.getObjectAspects(water) == null ? ItemStack.EMPTY : water;
-        }
-        if (state.is(net.minecraft.world.level.block.Blocks.LAVA)) {
-            ItemStack lava = new ItemStack(Items.LAVA_BUCKET);
-            return ThaumcraftApi.getObjectAspects(lava) == null ? ItemStack.EMPTY : lava;
-        }
-        return ItemStack.EMPTY;
+        level.playSound(null, player.blockPosition(), ModSounds.CAMERA_CLACK.get(), SoundSource.PLAYERS, 0.5F, 1.0F);
+        player.displayClientMessage(Component.translatable("tc.scan.success", target.name()), true);
     }
 }

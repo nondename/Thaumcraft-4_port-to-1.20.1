@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_shard": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "thaumcraft:shards"
+          }
+        ]
+      }
+    },
+    "has_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "thaumcraft:thaumometer"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_shard",
+      "has_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "thaumcraft:thaumometer"
+    ]
+  }
+}

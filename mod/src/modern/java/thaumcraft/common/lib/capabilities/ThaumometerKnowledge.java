@@ -103,6 +103,23 @@ public final class ThaumometerKnowledge implements IThaumometerKnowledge {
         return discoveredAspects.copy();
     }
 
+    /** Same pool costs and discovery bonus as PacketAspectCombinationToServer in the reference. */
+    @Override
+    public Aspect combine(Aspect first, Aspect second) {
+        if (first == null || second == null || !hasDiscoveredAspect(first) || !hasDiscoveredAspect(second)) return null;
+        if (getAspectPool(first) < (first == second ? 2 : 1) || getAspectPool(second) < 1) return null;
+        for (Aspect result : Aspect.getCompoundAspects()) {
+            Aspect[] parents = result.getComponents();
+            if ((parents[0] == first && parents[1] == second) || (parents[1] == first && parents[0] == second)) {
+                discoveredAspects.aspects.put(first, getAspectPool(first) - 1);
+                discoveredAspects.aspects.put(second, getAspectPool(second) - 1);
+                awardAspect(result, 1);
+                return result;
+            }
+        }
+        return null;
+    }
+
     @Override
     public CompoundTag serializeNBT() {
         CompoundTag tag = new CompoundTag();

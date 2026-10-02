@@ -1,0 +1,12 @@
+{
+  "sources": [
+    {
+      "type": "minecraft:single",
+      "resource": "thaumcraft:models/scanner"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "thaumcraft:items/gogglesrevealing"
+    }
+  ]
+}

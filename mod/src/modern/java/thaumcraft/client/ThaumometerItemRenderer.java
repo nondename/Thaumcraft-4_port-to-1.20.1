@@ -32,8 +32,7 @@ import thaumcraft.common.lib.capabilities.ThaumometerKnowledgeProvider;
 /** Renders the original scanner mesh and its live readout on the lens. */
 @OnlyIn(Dist.CLIENT)
 public final class ThaumometerItemRenderer extends BlockEntityWithoutLevelRenderer {
-    private static final ModelResourceLocation MODEL = new ModelResourceLocation(
-            ResourceLocation.fromNamespaceAndPath(Thaumcraft.MODID, "thaumometer"), "inventory");
+    public static final ResourceLocation MODEL = ResourceLocation.fromNamespaceAndPath(Thaumcraft.MODID, "item/thaumometer_mesh");
     private static final ResourceLocation SCREEN_TEXTURE =
             ResourceLocation.fromNamespaceAndPath(Thaumcraft.MODID, "textures/models/scanscreen.png");
     private static final int MAX_READOUT_ASPECTS = 15;
@@ -45,6 +44,8 @@ public final class ThaumometerItemRenderer extends BlockEntityWithoutLevelRender
     @Override
     public void renderByItem(ItemStack stack, ItemDisplayContext context, PoseStack poseStack,
                              MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
+        poseStack.pushPose();
+        poseStack.translate(0.5D, 0.5D, 0.5D);
         Minecraft minecraft = Minecraft.getInstance();
         BakedModel model = minecraft.getModelManager().getModel(MODEL);
         for (BakedModel pass : model.getRenderPasses(stack, false)) {
@@ -60,6 +61,7 @@ public final class ThaumometerItemRenderer extends BlockEntityWithoutLevelRender
                 || context == ItemDisplayContext.FIRST_PERSON_RIGHT_HAND) {
             renderReadout(minecraft, poseStack, bufferSource);
         }
+        poseStack.popPose();
     }
 
     private static void renderScannerLens(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
@@ -82,18 +84,9 @@ public final class ThaumometerItemRenderer extends BlockEntityWithoutLevelRender
         if (minecraft.player == null || minecraft.level == null) {
             return;
         }
-        HitResult hit = minecraft.player.pick(10.0D, 1.0F, false);
-        if (!(hit instanceof BlockHitResult blockHit) || hit.getType() != HitResult.Type.BLOCK) {
-            return;
-        }
-
-        BlockPos pos = blockHit.getBlockPos();
-        BlockState state = minecraft.level.getBlockState(pos);
-        ItemStack target = thaumcraft.common.items.tools.ItemThaumometer.getBlockScanStack(
-                minecraft.level, minecraft.player, blockHit);
-        if (target.isEmpty()) {
-            return;
-        }
+        var scan = thaumcraft.common.items.tools.ThaumometerTargets.find(minecraft.player);
+        if (scan == null) return;
+        ItemStack target = scan.stack();
         ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(target.getItem());
         IThaumometerKnowledge knowledge = minecraft.player
                 .getCapability(ThaumometerKnowledgeProvider.CAPABILITY)
@@ -103,10 +96,11 @@ public final class ThaumometerItemRenderer extends BlockEntityWithoutLevelRender
                 : null;
 
         poseStack.pushPose();
+        poseStack.translate(0.0D, 0.12D, 0.0D);
+        poseStack.mulPose(Axis.XP.rotationDegrees(90.0F));
         poseStack.mulPose(Axis.ZP.rotationDegrees(180.0F));
-        poseStack.translate(0.0D, 0.0D, -0.01D);
         renderAspectIcons(minecraft, poseStack, bufferSource, aspects);
-        renderTargetName(minecraft.font, poseStack, bufferSource, state.getBlock().getName().getString());
+        renderTargetName(minecraft.font, poseStack, bufferSource, scan.name().getString());
         poseStack.popPose();
     }
 
@@ -155,6 +149,7 @@ public final class ThaumometerItemRenderer extends BlockEntityWithoutLevelRender
         if (width > 90) {
             scale -= 0.000025F * (width - 90);
         }
+        scale = Math.max(0.0015F, scale);
         poseStack.scale(scale, scale, scale);
         drawText(font, poseStack, bufferSource, name, -width / 2.0F, 0.0F, 0xFFFFFFFF, 1.0F);
         poseStack.popPose();

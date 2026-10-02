@@ -56,8 +56,7 @@ public final class ThaumcraftApi {
         if (stack == null || stack.isEmpty()) {
             return false;
         }
-        ItemStackKey key = stackKey(stack);
-        return (key != null && itemStackTags.containsKey(key)) || objectTags.containsKey(stack.getItem());
+        return getObjectAspects(stack) != null;
     }
 
     public static boolean exists(Block block) {
@@ -73,7 +72,7 @@ public final class ThaumcraftApi {
         if (aspects == null) {
             aspects = objectTags.get(stack.getItem());
         }
-        return aspects == null ? null : aspects.copy();
+        return aspects == null ? getTaggedAspects(stack.getItem()) : aspects.copy();
     }
 
     public static AspectList getBlockAspects(Block block) {
@@ -86,7 +85,10 @@ public final class ThaumcraftApi {
             return direct.copy();
         }
 
-        Item item = block.asItem();
+        return getObjectAspects(new ItemStack(block.asItem()));
+    }
+
+    private static AspectList getTaggedAspects(Item item) {
         if (item != net.minecraft.world.item.Items.AIR) {
             var holder = item.builtInRegistryHolder();
             if (holder.is(ItemTags.LOGS)) {
@@ -104,8 +106,7 @@ public final class ThaumcraftApi {
                         .add(thaumcraft.api.aspects.Aspect.TREE, 1);
             }
         }
-        AspectList fallback = objectTags.get(item);
-        return fallback == null ? null : fallback.copy();
+        return null;
     }
 
     public static int getRegisteredObjectTagCount() {

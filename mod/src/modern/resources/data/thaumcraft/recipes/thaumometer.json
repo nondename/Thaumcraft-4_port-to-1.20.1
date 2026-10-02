@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    " S ",
+    "IGI",
+    " S "
+  ],
+  "key": {
+    "S": {
+      "tag": "thaumcraft:shards"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "G": {
+      "item": "minecraft:glass"
+    }
+  },
+  "result": {
+    "item": "thaumcraft:thaumometer"
+  }
+}

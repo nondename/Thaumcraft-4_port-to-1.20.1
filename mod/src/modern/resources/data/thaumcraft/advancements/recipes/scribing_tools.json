@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "ingredients": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:feathers"
+          }
+        ]
+      }
+    },
+    "recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "thaumcraft:scribing_tools"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "ingredients",
+      "recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "thaumcraft:scribing_tools"
+    ]
+  }
+}

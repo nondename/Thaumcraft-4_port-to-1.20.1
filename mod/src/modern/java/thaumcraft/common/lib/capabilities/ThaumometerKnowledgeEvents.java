@@ -44,4 +44,14 @@ public final class ThaumometerKnowledgeEvents {
     public static void playerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
         ModNetwork.syncThaumometerKnowledge(event.getEntity());
     }
+
+    @SubscribeEvent
+    public static void playerRespawned(PlayerEvent.PlayerRespawnEvent event) {
+        ModNetwork.syncThaumometerKnowledge(event.getEntity());
+    }
+
+    @SubscribeEvent
+    public static void playerChangedDimension(PlayerEvent.PlayerChangedDimensionEvent event) {
+        ModNetwork.syncThaumometerKnowledge(event.getEntity());
+    }
 }

@@ -1,47 +1,128 @@
 {
   "parent": "builtin/entity",
-  "loader": "forge:obj",
-  "model": "thaumcraft:models/scanner.obj",
-  "flip_v": true,
   "textures": {
     "scanner": "thaumcraft:models/scanner",
     "particle": "thaumcraft:items/gogglesrevealing"
   },
   "display": {
     "thirdperson_righthand": {
-      "rotation": [90, 90, 0],
-      "translation": [0.0, 0.0, 0.0],
-      "scale": [0.2, 0.2, 0.2]
+      "rotation": [
+        90,
+        90,
+        0
+      ],
+      "translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        0.2,
+        0.2,
+        0.2
+      ]
     },
     "thirdperson_lefthand": {
-      "rotation": [90, 90, 0],
-      "translation": [0.0, 0.0, 0.0],
-      "scale": [0.2, 0.2, 0.2]
+      "rotation": [
+        90,
+        90,
+        0
+      ],
+      "translation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        0.2,
+        0.2,
+        0.2
+      ]
     },
     "firstperson_righthand": {
-      "rotation": [90, 0, 0],
-      "translation": [0.0, 3.0, 0.0],
-      "scale": [0.2, 0.2, 0.2]
+      "rotation": [
+        90,
+        0,
+        0
+      ],
+      "translation": [
+        0.0,
+        3.0,
+        0.0
+      ],
+      "scale": [
+        0.2,
+        0.2,
+        0.2
+      ]
     },
     "firstperson_lefthand": {
-      "rotation": [90, 0, 0],
-      "translation": [0.0, 3.0, 0.0],
-      "scale": [0.2, 0.2, 0.2]
+      "rotation": [
+        90,
+        0,
+        0
+      ],
+      "translation": [
+        0.0,
+        3.0,
+        0.0
+      ],
+      "scale": [
+        0.2,
+        0.2,
+        0.2
+      ]
     },
     "gui": {
-      "rotation": [90, 0, 0],
-      "translation": [2.8, -2.8, 0.0],
-      "scale": [0.15, 0.15, 0.15]
+      "rotation": [
+        90,
+        0,
+        0
+      ],
+      "translation": [
+        2.8,
+        -2.8,
+        0.0
+      ],
+      "scale": [
+        0.15,
+        0.15,
+        0.15
+      ]
     },
     "ground": {
-      "rotation": [90, 0, 0],
-      "translation": [1.6, 1.6, 1.6],
-      "scale": [0.12, 0.12, 0.12]
+      "rotation": [
+        90,
+        0,
+        0
+      ],
+      "translation": [
+        1.6,
+        1.6,
+        1.6
+      ],
+      "scale": [
+        0.12,
+        0.12,
+        0.12
+      ]
     },
     "fixed": {
-      "rotation": [-90, 0, 0],
-      "translation": [3.2, 3.2, -2.72],
-      "scale": [0.2, 0.2, 0.2]
+      "rotation": [
+        -90,
+        0,
+        0
+      ],
+      "translation": [
+        3.2,
+        3.2,
+        -2.72
+      ],
+      "scale": [
+        0.2,
+        0.2,
+        0.2
+      ]
     }
   }
 }

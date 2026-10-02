@@ -1,0 +1,8 @@
+{
+  "feature": "thaumcraft:infused_ores",
+  "placement": [
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}
