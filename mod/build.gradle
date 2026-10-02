@@ -14,12 +14,16 @@ base {
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
-// Keep the complete 1.12.2 source tree in src/main as a reference during the port.
-// Only src/modern is compiled for Minecraft 1.20.1.
+// Keep the complete 1.12.2 source and test trees in place as porting references.
+// Only the modern source sets are compiled for Minecraft 1.20.1.
 sourceSets {
     main {
         java.srcDirs = ['src/modern/java']
         resources.srcDirs = ['src/modern/resources', 'src/generated/resources']
+    }
+    test {
+        java.srcDirs = ['src/modernTest/java']
+        resources.srcDirs = ['src/modernTest/resources']
     }
 }
 
