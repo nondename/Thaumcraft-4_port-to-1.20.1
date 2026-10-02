@@ -13,6 +13,7 @@ import thaumcraft.common.config.ConfigAspects;
 import thaumcraft.common.items.ModItems;
 import thaumcraft.common.lib.capabilities.ThaumometerKnowledgeEvents;
 import thaumcraft.common.lib.network.ModNetwork;
+import thaumcraft.common.nodes.ModNodes;
 import thaumcraft.common.sounds.ModSounds;
 
 /**
@@ -29,9 +30,12 @@ public final class Thaumcraft {
     public Thaumcraft() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         ModItems.register(modEventBus);
+        // Load node block entries before the shared block DeferredRegister is attached to the bus.
+        ModNodes.register(modEventBus);
         thaumcraft.common.blocks.ModOres.register(modEventBus);
         thaumcraft.common.research.ModResearch.register(modEventBus);
         thaumcraft.common.world.InfusedOreFeature.register(modEventBus);
+        thaumcraft.common.world.AuraNodeFeature.register(modEventBus);
         modEventBus.addListener(this::commonSetup);
         ModSounds.register(modEventBus);
         modEventBus.addListener(ThaumometerKnowledgeEvents::registerCapabilities);
