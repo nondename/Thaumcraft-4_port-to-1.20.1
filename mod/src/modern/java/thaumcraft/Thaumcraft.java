@@ -4,8 +4,10 @@ import com.mojang.logging.LogUtils;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import org.slf4j.Logger;
+import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.common.commands.AspectCommands;
+import thaumcraft.common.config.ConfigAspects;
 
 /**
  * Forge 1.20.1 entry point for the Thaumcraft 4 port.
@@ -20,8 +22,10 @@ public final class Thaumcraft {
 
     public Thaumcraft() {
         validateAspectRegistry();
+        ConfigAspects.init();
         MinecraftForge.EVENT_BUS.addListener(AspectCommands::onRegisterCommands);
-        LOGGER.info("Thaumcraft 4 port loaded on Minecraft 1.20.1");
+        LOGGER.info("Thaumcraft 4 port loaded on Minecraft 1.20.1 with {} object aspect tags",
+                ThaumcraftApi.getRegisteredObjectTagCount());
     }
 
     private static void validateAspectRegistry() {
