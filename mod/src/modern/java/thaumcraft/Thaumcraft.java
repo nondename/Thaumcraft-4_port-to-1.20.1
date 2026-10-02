@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.common.commands.AspectCommands;
+import thaumcraft.common.commands.NodeCommands;
 import thaumcraft.common.config.ConfigAspects;
 import thaumcraft.common.items.ModItems;
 import thaumcraft.common.lib.capabilities.ThaumometerKnowledgeEvents;
@@ -44,6 +45,7 @@ public final class Thaumcraft {
         validateAspectRegistry();
         ConfigAspects.init();
         MinecraftForge.EVENT_BUS.addListener(AspectCommands::onRegisterCommands);
+        MinecraftForge.EVENT_BUS.addListener(NodeCommands::onRegisterCommands);
         LOGGER.info("Thaumcraft 4 port loaded on Minecraft 1.20.1 with {} object aspect tags",
                 ThaumcraftApi.getRegisteredObjectTagCount());
     }
