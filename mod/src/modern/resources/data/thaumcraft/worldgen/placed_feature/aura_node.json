@@ -1,0 +1,12 @@
+{
+  "feature": "thaumcraft:aura_node",
+  "placement": [
+    {
+      "type": "minecraft:rarity_filter",
+      "chance": 36
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}
