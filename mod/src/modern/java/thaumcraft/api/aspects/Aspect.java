@@ -101,7 +101,7 @@ public class Aspect {
     }
 
     public Aspect(String tag, int color, String chatcolor, int blend) {
-        this(tag, color, null, blend);
+        this(tag, color, (Aspect[]) null, blend);
         this.chatcolor = chatcolor;
     }
 
