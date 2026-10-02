@@ -25,7 +25,7 @@ public final class AuraNodeRenderer implements BlockEntityRenderer<AuraNodeBlock
     private static final ResourceLocation NODE_TEXTURE =
             ResourceLocation.fromNamespaceAndPath(Thaumcraft.MODID, "textures/misc/nodes.png");
     private static final int FRAMES = 32;
-    private static final int STRIPS = 8;
+    private static final int ATLAS_ROWS = 32;
     private static final double THAUMOMETER_VIEW_DISTANCE = 48.0D;
     private static final double FAINT_VIEW_DISTANCE = 64.0D;
 
@@ -53,7 +53,6 @@ public final class AuraNodeRenderer implements BlockEntityRenderer<AuraNodeBlock
 
         int frame = (int) ((System.nanoTime() / 40_000_000L + node.getBlockPos().getX()) % FRAMES);
         if (!revealed) {
-            // TC4 still leaves a nearly imperceptible generic aura when no revealer is active.
             drawLayer(poseStack, bufferSource, minecraft, 0.50F, 0.0F, 0.10F,
                     1, frame, 0xFFFFFF);
             return;
@@ -112,10 +111,11 @@ public final class AuraNodeRenderer implements BlockEntityRenderer<AuraNodeBlock
         poseStack.mulPose(Axis.ZP.rotation(angle));
         poseStack.scale(scale, scale, scale);
 
+        // UtilsFX.renderFacingStrip in TC4 uses the same 32 divisor on both atlas axes.
         float u0 = (float) frame / (float) FRAMES;
         float u1 = (float) (frame + 1) / (float) FRAMES;
-        float v0 = (float) strip / (float) STRIPS;
-        float v1 = (float) (strip + 1) / (float) STRIPS;
+        float v0 = (float) strip / (float) ATLAS_ROWS;
+        float v1 = (float) (strip + 1) / (float) ATLAS_ROWS;
         int red = (color >> 16) & 255;
         int green = (color >> 8) & 255;
         int blue = color & 255;
