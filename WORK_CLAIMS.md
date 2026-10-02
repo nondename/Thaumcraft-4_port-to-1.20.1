@@ -17,11 +17,19 @@
 
 ## Активные заявки
 
-- **`mod/src/modern/**`, `mod/gradle.properties`, `docs/PLAYABLE_SCAN_SLICE.md`, `scripts/export_modern_research.py` — Codex (2026-10-02).** Модель палочки, HUD vis и оригинальная навигация исследований.
+- **`mod/src/modern/java/thaumcraft/common/lib/capabilities/IThaumometerKnowledge.java`, `mod/src/modern/java/thaumcraft/common/lib/capabilities/ThaumometerKnowledge.java`, `mod/src/modern/java/thaumcraft/common/commands/AspectCommands.java`, `mod/src/modern/java/thaumcraft/client/ResearchTreeScreen.java` — ChatGPT (2026-10-02).** Первый persistent/synced research-state: ключи исследований, тестовая выдача и блокировка дерева по прогрессу.
 
 ---
 
 ## Снятые заявки
+
+### ~~Research flow, wand HUD и legacy assets — Codex (2026-10-02)~~
+
+`mod/src/modern/**`, `mod/gradle.properties`, `docs/PLAYABLE_SCAN_SLICE.md`,
+`scripts/export_modern_research.py`: модель палочки, HUD vis, оригинальная
+навигация исследований, research browser и пакет legacy-ассетов. Зафиксировано
+коммитом `d400596d`; локальный `gradlew build` после исправления импорта `Level`
+прошёл успешно.
 
 ### ~~Первые шаги 0.3.0 — Codex (2026-10-02)~~
 
