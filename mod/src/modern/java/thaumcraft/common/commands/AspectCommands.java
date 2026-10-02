@@ -4,13 +4,20 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.RegisterCommandsEvent;
+import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
+
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public final class AspectCommands {
     private AspectCommands() {
@@ -31,7 +38,11 @@ public final class AspectCommands {
                                         StringArgumentType.getString(context, "tag")
                                 ))))
                 .then(Commands.literal("aspectlist")
-                        .executes(context -> testAspectList(context.getSource()))));
+                        .executes(context -> testAspectList(context.getSource())))
+                .then(Commands.literal("objecttags")
+                        .executes(context -> showObjectTagSummary(context.getSource())))
+                .then(Commands.literal("heldaspects")
+                        .executes(context -> showHeldAspects(context.getSource()))));
     }
 
     private static int showSummary(CommandSourceStack source) {
@@ -131,5 +142,45 @@ public final class AspectCommands {
                         + ", total=" + restored.visSize()
         ));
         return 0;
+    }
+
+    private static int showObjectTagSummary(CommandSourceStack source) {
+        int count = ThaumcraftApi.getRegisteredObjectTagCount();
+        source.sendSuccess(
+                () -> Component.literal("Thaumcraft object aspect tags: " + count + " registered"),
+                false
+        );
+        return count;
+    }
+
+    private static int showHeldAspects(CommandSourceStack source) {
+        if (!(source.getEntity() instanceof ServerPlayer player)) {
+            source.sendFailure(Component.literal("This command must be run by a player"));
+            return 0;
+        }
+
+        ItemStack stack = player.getMainHandItem();
+        if (stack.isEmpty()) {
+            source.sendFailure(Component.literal("Hold an item in your main hand"));
+            return 0;
+        }
+
+        String itemId = BuiltInRegistries.ITEM.getKey(stack.getItem()).toString();
+        AspectList aspects = ThaumcraftApi.getObjectAspects(stack);
+        if (aspects == null || aspects.size() == 0) {
+            source.sendFailure(Component.literal("No Thaumcraft aspects registered for " + itemId));
+            return 0;
+        }
+
+        String values = Arrays.stream(aspects.getAspectsSorted())
+                .filter(aspect -> aspect != null)
+                .map(aspect -> aspect.getTag() + "=" + aspects.getAmount(aspect))
+                .collect(Collectors.joining(", "));
+
+        source.sendSuccess(
+                () -> Component.literal(itemId + " -> " + values + " (total=" + aspects.visSize() + ")"),
+                false
+        );
+        return aspects.visSize();
     }
 }
