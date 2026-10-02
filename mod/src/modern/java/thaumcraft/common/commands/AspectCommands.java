@@ -11,7 +11,7 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -151,12 +151,14 @@ public final class AspectCommands {
     }
 
     private static int showObjectTagSummary(CommandSourceStack source) {
-        int count = ThaumcraftApi.getRegisteredObjectTagCount();
+        int items = ThaumcraftApi.getRegisteredObjectTagCount();
+        int blocks = ThaumcraftApi.getRegisteredBlockTagCount();
         source.sendSuccess(
-                () -> Component.literal("Thaumcraft object aspect tags: " + count + " registered"),
+                () -> Component.literal("Thaumcraft aspect tags: " + items
+                        + " item tags, " + blocks + " block tags"),
                 false
         );
-        return count;
+        return items + blocks;
     }
 
     private static int showHeldAspects(CommandSourceStack source) {
@@ -172,7 +174,7 @@ public final class AspectCommands {
         }
 
         String itemId = BuiltInRegistries.ITEM.getKey(stack.getItem()).toString();
-        return sendObjectAspects(source, itemId, stack);
+        return sendAspects(source, itemId, ThaumcraftApi.getObjectAspects(stack));
     }
 
     private static int showLookedAtBlockAspects(CommandSourceStack source) {
@@ -188,17 +190,12 @@ public final class AspectCommands {
         }
 
         BlockState state = player.level().getBlockState(blockHit.getBlockPos());
-        String blockId = BuiltInRegistries.BLOCK.getKey(state.getBlock()).toString();
-        if (state.getBlock().asItem() == Items.AIR) {
-            source.sendFailure(Component.literal("Block has no item form for aspect lookup: " + blockId));
-            return 0;
-        }
-
-        return sendObjectAspects(source, blockId, new ItemStack(state.getBlock().asItem()));
+        Block block = state.getBlock();
+        String blockId = BuiltInRegistries.BLOCK.getKey(block).toString();
+        return sendAspects(source, blockId, ThaumcraftApi.getBlockAspects(block));
     }
 
-    private static int sendObjectAspects(CommandSourceStack source, String objectId, ItemStack stack) {
-        AspectList aspects = ThaumcraftApi.getObjectAspects(stack);
+    private static int sendAspects(CommandSourceStack source, String objectId, AspectList aspects) {
         if (aspects == null || aspects.size() == 0) {
             source.sendFailure(Component.literal("No Thaumcraft aspects registered for " + objectId));
             return 0;
