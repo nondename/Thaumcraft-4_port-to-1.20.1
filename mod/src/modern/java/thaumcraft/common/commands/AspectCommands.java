@@ -11,6 +11,10 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
@@ -42,7 +46,9 @@ public final class AspectCommands {
                 .then(Commands.literal("objecttags")
                         .executes(context -> showObjectTagSummary(context.getSource())))
                 .then(Commands.literal("heldaspects")
-                        .executes(context -> showHeldAspects(context.getSource()))));
+                        .executes(context -> showHeldAspects(context.getSource())))
+                .then(Commands.literal("lookaspects")
+                        .executes(context -> showLookedAtBlockAspects(context.getSource()))));
     }
 
     private static int showSummary(CommandSourceStack source) {
@@ -166,9 +172,35 @@ public final class AspectCommands {
         }
 
         String itemId = BuiltInRegistries.ITEM.getKey(stack.getItem()).toString();
+        return sendObjectAspects(source, itemId, stack);
+    }
+
+    private static int showLookedAtBlockAspects(CommandSourceStack source) {
+        if (!(source.getEntity() instanceof ServerPlayer player)) {
+            source.sendFailure(Component.literal("This command must be run by a player"));
+            return 0;
+        }
+
+        HitResult hit = player.pick(5.0D, 0.0F, false);
+        if (!(hit instanceof BlockHitResult blockHit) || hit.getType() != HitResult.Type.BLOCK) {
+            source.sendFailure(Component.literal("Look at a block within 5 blocks"));
+            return 0;
+        }
+
+        BlockState state = player.level().getBlockState(blockHit.getBlockPos());
+        String blockId = BuiltInRegistries.BLOCK.getKey(state.getBlock()).toString();
+        if (state.getBlock().asItem() == Items.AIR) {
+            source.sendFailure(Component.literal("Block has no item form for aspect lookup: " + blockId));
+            return 0;
+        }
+
+        return sendObjectAspects(source, blockId, new ItemStack(state.getBlock().asItem()));
+    }
+
+    private static int sendObjectAspects(CommandSourceStack source, String objectId, ItemStack stack) {
         AspectList aspects = ThaumcraftApi.getObjectAspects(stack);
         if (aspects == null || aspects.size() == 0) {
-            source.sendFailure(Component.literal("No Thaumcraft aspects registered for " + itemId));
+            source.sendFailure(Component.literal("No Thaumcraft aspects registered for " + objectId));
             return 0;
         }
 
@@ -178,7 +210,7 @@ public final class AspectCommands {
                 .collect(Collectors.joining(", "));
 
         source.sendSuccess(
-                () -> Component.literal(itemId + " -> " + values + " (total=" + aspects.visSize() + ")"),
+                () -> Component.literal(objectId + " -> " + values + " (total=" + aspects.visSize() + ")"),
                 false
         );
         return aspects.visSize();
