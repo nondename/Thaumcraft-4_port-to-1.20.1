@@ -6,24 +6,17 @@ import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.client.resources.model.ModelResourceLocation;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import thaumcraft.Thaumcraft;
-import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.common.lib.capabilities.IThaumometerKnowledge;
@@ -86,8 +79,6 @@ public final class ThaumometerItemRenderer extends BlockEntityWithoutLevelRender
         }
         var scan = thaumcraft.common.items.tools.ThaumometerTargets.find(minecraft.player);
         if (scan == null) return;
-        ItemStack target = scan.stack();
-        ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(target.getItem());
         IThaumometerKnowledge knowledge = minecraft.player
                 .getCapability(ThaumometerKnowledgeProvider.CAPABILITY)
                 .orElse(null);
@@ -98,9 +89,8 @@ public final class ThaumometerItemRenderer extends BlockEntityWithoutLevelRender
         poseStack.pushPose();
         poseStack.translate(0.0D, 0.12D, 0.0D);
         poseStack.mulPose(Axis.XP.rotationDegrees(90.0F));
-        // The item transform already turns X by 90 degrees; text Y must point down.
         renderAspectIcons(minecraft, poseStack, bufferSource, aspects);
-        renderTargetName(minecraft.font, poseStack, bufferSource, scan.name().getString());
+        renderTargetName(minecraft.font, poseStack, bufferSource, scan.readoutName(knowledge).getString());
         poseStack.popPose();
     }
 
