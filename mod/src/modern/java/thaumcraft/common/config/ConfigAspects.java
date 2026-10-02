@@ -34,6 +34,7 @@ public final class ConfigAspects {
         registerTerrain();
         registerPlants();
         registerWool();
+        registerUtilityBlocks();
     }
 
     private static void registerMaterials() {
@@ -147,14 +148,25 @@ public final class ConfigAspects {
         register(Blocks.BLACK_WOOL, wool);
     }
 
+    private static void registerUtilityBlocks() {
+        AspectList torch = new AspectList().add(Aspect.LIGHT, 1);
+        register(Blocks.TORCH, torch);
+        registerBlockOnly(Blocks.WALL_TORCH, torch);
+    }
+
     private static void register(Item item, AspectList aspects) {
         ThaumcraftApi.registerObjectTag(new ItemStack(item), aspects);
     }
 
     private static void register(Block block, AspectList aspects) {
+        ThaumcraftApi.registerBlockTag(block, aspects);
         Item item = block.asItem();
         if (item != Items.AIR) {
             register(item, aspects);
         }
+    }
+
+    private static void registerBlockOnly(Block block, AspectList aspects) {
+        ThaumcraftApi.registerBlockTag(block, aspects);
     }
 }
