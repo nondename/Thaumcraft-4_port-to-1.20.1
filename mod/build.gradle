@@ -1,128 +1,113 @@
-buildscript {
-    repositories {
-        mavenCentral()
-        maven {
-            name = "forge"
-            url = "https://maven.minecraftforge.net/"
-        }
-        maven {
-            name = "sonatype"
-            url = "https://oss.sonatype.org/content/repositories/snapshots/"
-        }
-    }
-    dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
-    }
+plugins {
+    id 'eclipse'
+    id 'idea'
+    id 'maven-publish'
+    id 'net.minecraftforge.gradle' version '6.0.54'
 }
 
-apply plugin: 'net.minecraftforge.gradle.forge'
+group = mod_group_id
+version = mod_version
 
-version = "1.2.8.3"
-ext.advertisedModVersion = "6.1.BETA26"
-group = "thaumcraft"
-archivesBaseName = "Thaumcraft"
+base {
+    archivesName = mod_id
+}
 
-sourceCompatibility = targetCompatibility = '1.8'
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
-// Sources are UTF-8 (lang refs, § literals in static-guard tests). Without this,
-// javac falls back to the platform codepage on Windows and garbles the literals.
-tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8'
+// Keep the complete 1.12.2 source tree in src/main as a reference during the port.
+// Only src/modern is compiled for Minecraft 1.20.1.
+sourceSets {
+    main {
+        java.srcDirs = ['src/modern/java']
+        resources.srcDirs = ['src/modern/resources', 'src/generated/resources']
+    }
 }
 
 minecraft {
-    version = "1.12.2-14.23.5.2847"
-    runDir = "run"
-    mappings = "stable_39"
+    mappings channel: mapping_channel, version: mapping_version
+    copyIdeResources = true
 
-    replace '@VERSION@', project.ext.advertisedModVersion
-    replaceIn 'Thaumcraft.java'
+    runs {
+        configureEach {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+
+            mods {
+                thaumcraft {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        client {
+            property 'forge.enabledGameTestNamespaces', mod_id
+        }
+
+        server {
+            property 'forge.enabledGameTestNamespaces', mod_id
+            args '--nogui'
+        }
+
+        gameTestServer {
+            property 'forge.enabledGameTestNamespaces', mod_id
+        }
+
+        data {
+            workingDirectory project.file('run-data')
+            args '--mod', mod_id,
+                    '--all',
+                    '--output', file('src/generated/resources/'),
+                    '--existing', file('src/modern/resources/')
+        }
+    }
 }
 
 repositories {
-    maven {
-        name = "curse"
-        url = "https://www.cursemaven.com"
-    }
+    // Add mod integration repositories here as systems are migrated.
 }
 
 dependencies {
-    compile 'curse.maven:baubles-227083:2518667'
-
-    // IC2 Experimental — ТОЛЬКО для компиляции (@Optional-интеграция:
-    // TileNitor implements IHeatSource). В jar не попадает, в рантайме
-    // интерфейс снимается Forge-ом, если IC2 не загружен. Тот же пин
-    // файла, что у сабмода Unbound Technology (3838713 = 2.8.222-ex112).
-    deobfProvided 'curse.maven:industrial-craft-242638:3838713'
-
-    testCompile 'junit:junit:4.12'
-    // Тестам IC2 нужен на classpath: JUnit-классло́адеру @Optional не помогает,
-    // а TileNitor (→ ConfigBlocks → половина runtime-тестов) без интерфейса
-    // IHeatSource не загружается. В universal-jar по-прежнему не попадает.
-    testCompile 'curse.maven:industrial-craft-242638:3838713'
+    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 }
 
-processResources {
-    inputs.property 'advertisedModVersion', project.ext.advertisedModVersion
+tasks.named('processResources', ProcessResources).configure {
+    def replaceProperties = [
+            minecraft_version      : minecraft_version,
+            minecraft_version_range: minecraft_version_range,
+            forge_version          : forge_version,
+            forge_version_range    : forge_version_range,
+            loader_version_range   : loader_version_range,
+            mod_id                 : mod_id,
+            mod_name               : mod_name,
+            mod_license            : mod_license,
+            mod_version            : mod_version,
+            mod_authors            : mod_authors,
+            mod_description        : mod_description
+    ]
 
-    from(sourceSets.main.resources.srcDirs) {
-        include 'mcmod.info'
-        expand version: project.ext.advertisedModVersion
-    }
+    inputs.properties replaceProperties
 
-    from(sourceSets.main.resources.srcDirs) {
-        exclude 'mcmod.info'
+    filesMatching(['META-INF/mods.toml']) {
+        expand replaceProperties
     }
 }
 
-jar {
-    classifier = 'universal'
-    from sourceSets.main.output
-}
-
-// API jar: packages thaumcraft.api.* for addon mods (see API.md)
-task apiJar(type: Jar) {
-    classifier = 'api'
-    from(sourceSets.main.output) {
-        include 'thaumcraft/api/**'
-    }
-    from(sourceSets.main.allJava) {
-        include 'thaumcraft/api/**'   // ship sources too so addon IDEs get javadoc/signatures
-    }
+tasks.named('jar', Jar).configure {
     manifest {
-        attributes(
-            'Specification-Title'  : 'Thaumcraft|API',
-            'Specification-Vendor' : 'Thaumcraft',
-            'Specification-Version': '4.2.2.0',
-            'Implementation-Title' : 'Thaumcraft',
-            'Implementation-Version': project.version
-        )
+        attributes([
+                'Specification-Title'     : mod_id,
+                'Specification-Vendor'    : mod_authors,
+                'Specification-Version'   : '1',
+                'Implementation-Title'    : project.name,
+                'Implementation-Version'  : project.jar.archiveVersion,
+                'Implementation-Vendor'   : mod_authors,
+                'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ])
     }
+    finalizedBy 'reobfJar'
 }
 
-// Dev jar: all classes + sources for IDE debugging
-task devJar(type: Jar) {
-    classifier = 'dev'
-    from sourceSets.main.output
-    from sourceSets.main.allJava
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
 }
-
-artifacts {
-    archives apiJar
-    archives devJar
-}
-
-// Re-obfuscation: production main jar only. Keep API/dev jars readable.
-reobf {
-    jar { }
-}
-
-// CI test configuration: exclude client-only tests when running in CI
-// (client tests require display/GL context unavailable in headless CI)
-test {
-    if (System.getenv('CI') == 'true' || project.hasProperty('ci')) {
-        exclude 'thaumcraft/client/**'
-    }
-}
-
-idea { module { inheritOutputDirs = true } }
