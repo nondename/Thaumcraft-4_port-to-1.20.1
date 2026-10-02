@@ -70,7 +70,6 @@ public final class AuraNodeGenerator {
 
         List<Aspect> primals = Aspect.getPrimalAspects();
         List<Aspect> compounds = Aspect.getCompoundAspects();
-        // TC4 makes up to three extra rolls, favouring primal aspects heavily.
         for (int i = 0; i < 3; i++) {
             if (!random.nextBoolean()) continue;
             Aspect picked;
@@ -102,8 +101,6 @@ public final class AuraNodeGenerator {
         addEnvironmentAspects(level, pos, weights);
         if (weights.isEmpty()) addWeight(weights, Aspect.AIR, 1);
 
-        // The legacy generator turns the semantic 1/2 weights into a noisy distribution and
-        // then divides the biome's total aura among all selected aspects.
         List<Map.Entry<Aspect, Integer>> entries = new ArrayList<>(weights.entrySet());
         int[] spread = new int[entries.size()];
         int spreadTotal = 0;
@@ -123,11 +120,8 @@ public final class AuraNodeGenerator {
     }
 
     private static int estimateBiomeAura(Biome biome) {
-        // BiomeHandler itself has not been ported yet. Keep TC4-like variation instead of making
-        // every biome produce identical nodes, while leaving this method as the one replacement
-        // point when the original biome-aura table arrives.
         int aura = 60;
-        float rain = biome.getDownfall();
+        float rain = biome.getModifiedClimateSettings().downfall();
         float temperature = biome.getBaseTemperature();
         if (rain > 0.75F) aura += 10;
         if (temperature < 0.2F) aura += 5;
@@ -136,7 +130,7 @@ public final class AuraNodeGenerator {
     }
 
     private static Aspect pickBiomeAspect(Biome biome, BlockPos pos, RandomSource random) {
-        float rain = biome.getDownfall();
+        float rain = biome.getModifiedClimateSettings().downfall();
         float temperature = biome.getBaseTemperature();
         if (temperature > 1.2F) return Aspect.FIRE;
         if (temperature < 0.2F) return random.nextBoolean() ? Aspect.COLD : Aspect.ORDER;
