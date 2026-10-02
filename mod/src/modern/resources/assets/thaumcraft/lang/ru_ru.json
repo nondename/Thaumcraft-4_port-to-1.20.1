@@ -1,3 +1,8 @@
 {
-  "item.thaumcraft.thaumometer": "Таумометр"
+  "item.thaumcraft.thaumometer": "Таумометр",
+  "tc.scan.no_aspects": "В блоке %s аспекты не найдены",
+  "tc.scan.unknown_target": "Для этого блока ещё не зарегистрированы аспекты",
+  "tc.scan.already_scanned": "Вы уже изучили %s",
+  "tc.scan.missing_parent": "Сначала откройте родительские аспекты аспекта %s",
+  "tc.scan.hold_to_scan": "Удерживайте кнопку использования, чтобы изучить блок"
 }

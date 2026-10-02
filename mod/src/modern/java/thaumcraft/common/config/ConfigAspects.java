@@ -31,6 +31,10 @@ public final class ConfigAspects {
 
         registerMaterials();
         registerTools();
+        registerFood();
+        registerMobDrops();
+        registerAlchemyMaterials();
+        registerMiscellaneousItems();
         registerTerrain();
         registerPlants();
         registerWool();
@@ -44,7 +48,19 @@ public final class ConfigAspects {
         register(Items.EMERALD, new AspectList().add(Aspect.CRYSTAL, 4).add(Aspect.GREED, 5));
         register(Items.REDSTONE, new AspectList().add(Aspect.ENERGY, 2).add(Aspect.MECHANISM, 1));
         register(Items.COAL, new AspectList().add(Aspect.ENERGY, 2).add(Aspect.FIRE, 2));
+        register(Items.STICK, new AspectList().add(Aspect.TREE, 1));
+        register(Items.STRING, new AspectList().add(Aspect.BEAST, 1).add(Aspect.CLOTH, 1));
+        register(Items.FEATHER, new AspectList().add(Aspect.FLIGHT, 2).add(Aspect.AIR, 1));
+        register(Items.LEATHER, new AspectList().add(Aspect.CLOTH, 2).add(Aspect.BEAST, 1).add(Aspect.ARMOR, 1));
+        register(Items.BONE, new AspectList().add(Aspect.DEATH, 2).add(Aspect.FLESH, 1));
+        register(Items.GUNPOWDER, new AspectList().add(Aspect.FIRE, 4).add(Aspect.ENTROPY, 4));
+        register(Items.ENDER_PEARL,
+                new AspectList().add(Aspect.ELDRITCH, 4).add(Aspect.MAGIC, 2).add(Aspect.TRAVEL, 4));
         register(Items.IRON_NUGGET, new AspectList().add(Aspect.METAL, 1));
+        register(Items.GOLD_NUGGET, new AspectList().add(Aspect.METAL, 1));
+        register(Items.QUARTZ, new AspectList().add(Aspect.CRYSTAL, 1).add(Aspect.ENERGY, 1));
+        register(Items.BRICK, new AspectList().add(Aspect.EARTH, 1).add(Aspect.FIRE, 1));
+        register(Items.NETHER_BRICK, new AspectList().add(Aspect.FIRE, 1));
     }
 
     private static void registerTools() {
@@ -57,6 +73,68 @@ public final class ConfigAspects {
         register(Items.DIAMOND_PICKAXE, new AspectList().add(Aspect.TOOL, 4).add(Aspect.CRYSTAL, 5));
         register(Items.DIAMOND_SWORD, new AspectList().add(Aspect.TOOL, 4).add(Aspect.WEAPON, 4).add(Aspect.CRYSTAL, 4));
         register(Items.DIAMOND_AXE, new AspectList().add(Aspect.TOOL, 4).add(Aspect.CRYSTAL, 4));
+        register(Items.DIAMOND_SHOVEL, new AspectList().add(Aspect.TOOL, 3).add(Aspect.CRYSTAL, 3));
+        register(Items.DIAMOND_HOE, new AspectList().add(Aspect.TOOL, 3).add(Aspect.CRYSTAL, 3).add(Aspect.HARVEST, 2));
+
+        register(Items.GOLDEN_PICKAXE, new AspectList().add(Aspect.TOOL, 2).add(Aspect.METAL, 4));
+        register(Items.GOLDEN_SWORD, new AspectList().add(Aspect.TOOL, 2).add(Aspect.WEAPON, 2).add(Aspect.METAL, 4));
+        register(Items.GOLDEN_AXE, new AspectList().add(Aspect.TOOL, 2).add(Aspect.METAL, 4));
+        register(Items.GOLDEN_SHOVEL, new AspectList().add(Aspect.TOOL, 1).add(Aspect.METAL, 4));
+        register(Items.GOLDEN_HOE, new AspectList().add(Aspect.TOOL, 1).add(Aspect.METAL, 4).add(Aspect.HARVEST, 1));
+
+        register(Items.STONE_PICKAXE, new AspectList().add(Aspect.TOOL, 2).add(Aspect.EARTH, 3));
+        register(Items.STONE_SWORD, new AspectList().add(Aspect.TOOL, 2).add(Aspect.WEAPON, 2).add(Aspect.EARTH, 3));
+        register(Items.STONE_AXE, new AspectList().add(Aspect.TOOL, 2).add(Aspect.EARTH, 3));
+        register(Items.STONE_SHOVEL, new AspectList().add(Aspect.TOOL, 1).add(Aspect.EARTH, 2));
+        register(Items.STONE_HOE, new AspectList().add(Aspect.TOOL, 1).add(Aspect.EARTH, 2).add(Aspect.HARVEST, 1));
+
+        register(Items.WOODEN_PICKAXE, new AspectList().add(Aspect.TOOL, 1).add(Aspect.TREE, 3));
+        register(Items.WOODEN_SWORD, new AspectList().add(Aspect.TOOL, 1).add(Aspect.WEAPON, 1).add(Aspect.TREE, 3));
+        register(Items.WOODEN_AXE, new AspectList().add(Aspect.TOOL, 1).add(Aspect.TREE, 3));
+        register(Items.WOODEN_SHOVEL, new AspectList().add(Aspect.TOOL, 1).add(Aspect.TREE, 2));
+        register(Items.WOODEN_HOE, new AspectList().add(Aspect.TOOL, 1).add(Aspect.TREE, 2).add(Aspect.HARVEST, 1));
+    }
+
+    private static void registerFood() {
+        register(Items.APPLE, new AspectList().add(Aspect.CROP, 2).add(Aspect.HUNGER, 1));
+        register(Items.BREAD, new AspectList().add(Aspect.PLANT, 2).add(Aspect.LIFE, 2));
+        register(Items.COOKED_BEEF, new AspectList().add(Aspect.CRAFT, 1).add(Aspect.FLESH, 4).add(Aspect.HUNGER, 4));
+        register(Items.COOKED_PORKCHOP,
+                new AspectList().add(Aspect.CRAFT, 1).add(Aspect.FLESH, 3).add(Aspect.HUNGER, 3));
+        register(Items.COOKED_CHICKEN, new AspectList().add(Aspect.CRAFT, 1).add(Aspect.FLESH, 4).add(Aspect.HUNGER, 3));
+        register(Items.COOKED_COD, new AspectList().add(Aspect.CRAFT, 1).add(Aspect.FLESH, 4).add(Aspect.HUNGER, 3));
+        register(Items.COOKED_SALMON, new AspectList().add(Aspect.CRAFT, 1).add(Aspect.FLESH, 4).add(Aspect.HUNGER, 3));
+        register(Items.GOLDEN_CARROT, new AspectList().add(Aspect.PLANT, 2).add(Aspect.METAL, 4).add(Aspect.SENSES, 2));
+        register(Items.GLISTERING_MELON_SLICE,
+                new AspectList().add(Aspect.PLANT, 2).add(Aspect.METAL, 4).add(Aspect.HEAL, 2));
+        register(Items.WHEAT, new AspectList().add(Aspect.CROP, 2).add(Aspect.HUNGER, 1));
+        register(Items.MELON_SLICE, new AspectList().add(Aspect.HUNGER, 1));
+    }
+
+    private static void registerMobDrops() {
+        register(Items.ROTTEN_FLESH, new AspectList().add(Aspect.MAN, 1).add(Aspect.FLESH, 2));
+        register(Items.SPIDER_EYE, new AspectList().add(Aspect.SENSES, 2).add(Aspect.BEAST, 2).add(Aspect.POISON, 2));
+        register(Items.BLAZE_ROD, new AspectList().add(Aspect.FIRE, 4).add(Aspect.MAGIC, 2));
+        register(Items.GHAST_TEAR, new AspectList().add(Aspect.WATER, 1).add(Aspect.UNDEAD, 4).add(Aspect.SOUL, 4));
+        register(Items.MAGMA_CREAM, new AspectList().add(Aspect.FIRE, 3).add(Aspect.SLIME, 2));
+        register(Items.SLIME_BALL, new AspectList().add(Aspect.SLIME, 2));
+    }
+
+    private static void registerAlchemyMaterials() {
+        register(Items.NETHER_WART, new AspectList().add(Aspect.PLANT, 1).add(Aspect.MAGIC, 1));
+        register(Items.WHEAT_SEEDS, new AspectList().add(Aspect.PLANT, 1));
+        register(Items.MELON_SEEDS, new AspectList().add(Aspect.PLANT, 1));
+        register(Items.PUMPKIN_SEEDS, new AspectList().add(Aspect.PLANT, 1));
+        register(Items.WATER_BUCKET, new AspectList().add(Aspect.WATER, 3));
+        register(Items.LAVA_BUCKET, new AspectList().add(Aspect.FIRE, 3).add(Aspect.EARTH, 1));
+    }
+
+    private static void registerMiscellaneousItems() {
+        register(Items.FLINT, new AspectList().add(Aspect.EARTH, 1).add(Aspect.TOOL, 1));
+        register(Items.BUCKET, new AspectList().add(Aspect.METAL, 8).add(Aspect.VOID, 1));
+        // In the 1.12 reference these are complex tags: the values above their
+        // base aspect depend on recipe-derived aspects, which this stage has
+        // not ported yet.
     }
 
     private static void registerTerrain() {
@@ -94,6 +172,25 @@ public final class ConfigAspects {
         register(Blocks.ICE, new AspectList().add(Aspect.COLD, 4));
         register(Blocks.PACKED_ICE, new AspectList().add(Aspect.COLD, 3).add(Aspect.EARTH, 1));
         register(Blocks.CLAY, new AspectList().add(Aspect.EARTH, 3).add(Aspect.WATER, 3));
+        register(Blocks.TERRACOTTA, new AspectList().add(Aspect.EARTH, 4).add(Aspect.FIRE, 1));
+        AspectList coloredTerracotta = new AspectList()
+                .add(Aspect.EARTH, 3).add(Aspect.FIRE, 1).add(Aspect.SENSES, 1);
+        register(Blocks.WHITE_TERRACOTTA, coloredTerracotta);
+        register(Blocks.ORANGE_TERRACOTTA, coloredTerracotta);
+        register(Blocks.MAGENTA_TERRACOTTA, coloredTerracotta);
+        register(Blocks.LIGHT_BLUE_TERRACOTTA, coloredTerracotta);
+        register(Blocks.YELLOW_TERRACOTTA, coloredTerracotta);
+        register(Blocks.LIME_TERRACOTTA, coloredTerracotta);
+        register(Blocks.PINK_TERRACOTTA, coloredTerracotta);
+        register(Blocks.GRAY_TERRACOTTA, coloredTerracotta);
+        register(Blocks.LIGHT_GRAY_TERRACOTTA, coloredTerracotta);
+        register(Blocks.CYAN_TERRACOTTA, coloredTerracotta);
+        register(Blocks.PURPLE_TERRACOTTA, coloredTerracotta);
+        register(Blocks.BLUE_TERRACOTTA, coloredTerracotta);
+        register(Blocks.BROWN_TERRACOTTA, coloredTerracotta);
+        register(Blocks.GREEN_TERRACOTTA, coloredTerracotta);
+        register(Blocks.RED_TERRACOTTA, coloredTerracotta);
+        register(Blocks.BLACK_TERRACOTTA, coloredTerracotta);
         register(Blocks.GLASS, new AspectList().add(Aspect.CRYSTAL, 1));
 
         register(Blocks.NETHERRACK, new AspectList().add(Aspect.EARTH, 2).add(Aspect.FIRE, 1));

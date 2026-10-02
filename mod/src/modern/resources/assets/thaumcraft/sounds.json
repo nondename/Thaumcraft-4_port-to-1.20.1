@@ -1,0 +1,19 @@
+{
+  "cameraticks": {
+    "category": "master",
+    "sounds": [
+      {
+        "name": "thaumcraft:cameraticks",
+        "stream": false
+      }
+    ]
+  },
+  "cameraclack": {
+    "category": "master",
+    "sounds": [
+      "thaumcraft:cameraclack1",
+      "thaumcraft:cameraclack2",
+      "thaumcraft:cameraclack3"
+    ]
+  }
+}

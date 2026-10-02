@@ -11,6 +11,9 @@ import thaumcraft.api.aspects.Aspect;
 import thaumcraft.common.commands.AspectCommands;
 import thaumcraft.common.config.ConfigAspects;
 import thaumcraft.common.items.ModItems;
+import thaumcraft.common.lib.capabilities.ThaumometerKnowledgeEvents;
+import thaumcraft.common.lib.network.ModNetwork;
+import thaumcraft.common.sounds.ModSounds;
 
 /**
  * Forge 1.20.1 entry point for the Thaumcraft 4 port.
@@ -26,6 +29,9 @@ public final class Thaumcraft {
     public Thaumcraft() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         ModItems.register(modEventBus);
+        ModSounds.register(modEventBus);
+        modEventBus.addListener(ThaumometerKnowledgeEvents::registerCapabilities);
+        ModNetwork.register();
 
         validateAspectRegistry();
         ConfigAspects.init();

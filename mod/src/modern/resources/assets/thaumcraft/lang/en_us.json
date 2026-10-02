@@ -1,3 +1,8 @@
 {
-  "item.thaumcraft.thaumometer": "Thaumometer"
+  "item.thaumcraft.thaumometer": "Thaumometer",
+  "tc.scan.no_aspects": "No aspects found in %s",
+  "tc.scan.unknown_target": "No aspect data is registered for this block",
+  "tc.scan.already_scanned": "You have already scanned %s",
+  "tc.scan.missing_parent": "Discover the parent aspects of %s before scanning this block",
+  "tc.scan.hold_to_scan": "Hold use to analyze this block"
 }
