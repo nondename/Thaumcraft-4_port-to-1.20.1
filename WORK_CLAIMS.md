@@ -17,7 +17,7 @@
 
 ## Активные заявки
 
-Нет активных заявок Codex.
+- **`mod/src/modern/**`, `mod/gradle.properties`, `docs/PLAYABLE_SCAN_SLICE.md`, `scripts/export_modern_research.py` — Codex (2026-10-02).** Модель палочки, HUD vis и оригинальная навигация исследований.
 
 ---
 

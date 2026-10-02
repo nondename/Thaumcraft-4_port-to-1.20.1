@@ -18,11 +18,14 @@ import java.util.List;
 public final class ThaumonomiconScreen extends Screen {
     private static final ResourceLocation BOOK = ResourceLocation.fromNamespaceAndPath("thaumcraft", "textures/gui/gui_researchbook.png");
     private int page;
+    private Screen parent;
     private int left, top;
     private float uiScale = 1;
     private Button previous, next;
     public ThaumonomiconScreen() { super(Component.translatable("item.thaumcraft.thaumonomicon")); }
-    public static void open() { Minecraft.getInstance().setScreen(new ThaumonomiconScreen()); }
+    public ThaumonomiconScreen(Screen parent, int page) { this(); this.parent = parent; this.page = page; }
+    @Override public void onClose() { minecraft.setScreen(parent); }
+    public static void open() { Minecraft.getInstance().setScreen(new ResearchTreeScreen()); }
     private List<Aspect> known() {
         var knowledge = minecraft.player.getCapability(ThaumometerKnowledgeProvider.CAPABILITY).orElse(null);
         return Aspect.aspects.values().stream().filter(a -> knowledge != null && knowledge.hasDiscoveredAspect(a)).toList();

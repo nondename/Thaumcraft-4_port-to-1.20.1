@@ -1,0 +1,3662 @@
+[
+  {
+    "key": "ASPECTS",
+    "category": "BASICS",
+    "x": 0,
+    "y": 0,
+    "parents": [],
+    "pages": [
+      "tc.research_page.ASPECTS.1",
+      "tc.research_page.ASPECTS.2",
+      "tc.research_page.ASPECTS.3"
+    ],
+    "auto": true,
+    "round": true,
+    "concealed": false,
+    "icon": "thaumcraft:textures/misc/r_aspects.png",
+    "iconWidth": 32,
+    "iconHeight": 32
+  },
+  {
+    "key": "PECH",
+    "category": "BASICS",
+    "x": -4,
+    "y": -4,
+    "parents": [],
+    "pages": [
+      "tc.research_page.PECH.1",
+      "tc.research_page.PECH.2"
+    ],
+    "auto": true,
+    "round": true,
+    "concealed": false,
+    "icon": "thaumcraft:textures/misc/r_pech.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "NODES",
+    "category": "BASICS",
+    "x": -2,
+    "y": 0,
+    "parents": [],
+    "pages": [
+      "tc.research_page.NODES.1",
+      "tc.research_page.NODES.2",
+      "tc.research_page.NODES.3"
+    ],
+    "auto": true,
+    "round": true,
+    "concealed": false,
+    "icon": "thaumcraft:textures/misc/r_nodes.png",
+    "iconWidth": 32,
+    "iconHeight": 32
+  },
+  {
+    "key": "WARP",
+    "category": "BASICS",
+    "x": 0,
+    "y": 2,
+    "parents": [],
+    "pages": [
+      "tc.research_page.WARP.1",
+      "tc.research_page.WARP.2",
+      "tc.research_page.WARP.3"
+    ],
+    "auto": true,
+    "round": true,
+    "concealed": false,
+    "icon": "thaumcraft:textures/misc/r_warp.png",
+    "iconWidth": 32,
+    "iconHeight": 32
+  },
+  {
+    "key": "RESEARCH",
+    "category": "BASICS",
+    "x": 2,
+    "y": 0,
+    "parents": [],
+    "pages": [
+      "tc.research_page.RESEARCH.1",
+      "tc.research_page.RESEARCH.2",
+      "tc.research_page.RESEARCH.3",
+      "tc.research_page.RESEARCH.4",
+      "tc.research_page.RESEARCH.5",
+      "tc.research_page.RESEARCH.6",
+      "tc.research_page.RESEARCH.7",
+      "tc.research_page.RESEARCH.8",
+      "tc.research_page.RESEARCH.9",
+      "tc.research_page.RESEARCH.10",
+      "tc.research_page.RESEARCH.11",
+      "tc.research_page.RESEARCH.12"
+    ],
+    "auto": true,
+    "round": true,
+    "concealed": false,
+    "icon": "thaumcraft:textures/items/inkwell.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "KNOWFRAG",
+    "category": "BASICS",
+    "x": 3,
+    "y": -2,
+    "parents": [
+      "RESEARCH"
+    ],
+    "pages": [
+      "tc.research_page.KNOWFRAG.1"
+    ],
+    "auto": true,
+    "round": true,
+    "concealed": false,
+    "icon": "thaumcraft:textures/items/knowledgefragment.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "THAUMONOMICON",
+    "category": "BASICS",
+    "x": 1,
+    "y": -2,
+    "parents": [
+      "RESEARCH"
+    ],
+    "pages": [
+      "tc.research_page.THAUMONOMICON.1"
+    ],
+    "auto": true,
+    "round": true,
+    "concealed": false,
+    "icon": "thaumcraft:textures/items/thaumonomicon.png",
+    "iconWidth": 32,
+    "iconHeight": 32
+  },
+  {
+    "key": "ORE",
+    "category": "BASICS",
+    "x": -2,
+    "y": -2,
+    "parents": [],
+    "pages": [
+      "tc.research_page.ORE.1",
+      "tc.research_page.ORE.2",
+      "tc.research_page.ORE.3",
+      "tc.research_page.ORE.4"
+    ],
+    "auto": true,
+    "round": true,
+    "concealed": false,
+    "icon": "thaumcraft:textures/blocks/cinnibar.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "PLANTS",
+    "category": "BASICS",
+    "x": -2,
+    "y": -4,
+    "parents": [],
+    "pages": [
+      "tc.research_page.PLANTS.1",
+      "tc.research_page.PLANTS.2",
+      "tc.research_page.PLANTS.3",
+      "tc.research_page.PLANTS.4",
+      "tc.research_page.PLANTS.5",
+      "tc.research_page.PLANTS.6"
+    ],
+    "auto": true,
+    "round": true,
+    "concealed": false,
+    "icon": "thaumcraft:textures/blocks/shimmerleaf.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "RESEARCHER1",
+    "category": "BASICS",
+    "x": 4,
+    "y": 1,
+    "parents": [
+      "RESEARCH"
+    ],
+    "pages": [
+      "tc.research_page.RESEARCHER1.1"
+    ],
+    "auto": false,
+    "round": true,
+    "concealed": false,
+    "icon": "thaumcraft:textures/misc/r_researcher1.png",
+    "iconWidth": 32,
+    "iconHeight": 32
+  },
+  {
+    "key": "DECONSTRUCTOR",
+    "category": "BASICS",
+    "x": 6,
+    "y": 2,
+    "parents": [
+      "RESEARCHER1"
+    ],
+    "pages": [
+      "tc.research_page.DECONSTRUCTOR.1",
+      "tc.research_page.DECONSTRUCTOR.2"
+    ],
+    "auto": false,
+    "round": true,
+    "concealed": false,
+    "icon": "thaumcraft:textures/blocks/woodplain.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "RESEARCHER2",
+    "category": "BASICS",
+    "x": 3,
+    "y": 3,
+    "parents": [
+      "RESEARCHER1"
+    ],
+    "pages": [
+      "tc.research_page.RESEARCHER2.1"
+    ],
+    "auto": false,
+    "round": true,
+    "concealed": false,
+    "icon": "thaumcraft:textures/misc/r_researcher2.png",
+    "iconWidth": 32,
+    "iconHeight": 32
+  },
+  {
+    "key": "RESEARCHDUPE",
+    "category": "BASICS",
+    "x": 4,
+    "y": 5,
+    "parents": [
+      "RESEARCHER2"
+    ],
+    "pages": [
+      "tc.research_page.RESEARCHDUPE.1"
+    ],
+    "auto": false,
+    "round": true,
+    "concealed": false,
+    "icon": "thaumcraft:textures/misc/r_resdupe.png",
+    "iconWidth": 32,
+    "iconHeight": 32
+  },
+  {
+    "key": "ENCHANT",
+    "category": "BASICS",
+    "x": -4,
+    "y": -2,
+    "parents": [],
+    "pages": [
+      "tc.research_page.ENCHANT.1",
+      "tc.research_page.ENCHANT.2"
+    ],
+    "auto": true,
+    "round": true,
+    "concealed": false,
+    "icon": "thaumcraft:textures/misc/r_enchant.png",
+    "iconWidth": 32,
+    "iconHeight": 32
+  },
+  {
+    "key": "NODETAPPER1",
+    "category": "BASICS",
+    "x": -4,
+    "y": 1,
+    "parents": [
+      "NODES"
+    ],
+    "pages": [
+      "tc.research_page.NODETAPPER1.1"
+    ],
+    "auto": false,
+    "round": true,
+    "concealed": false,
+    "icon": "thaumcraft:textures/misc/r_nodetap1.png",
+    "iconWidth": 32,
+    "iconHeight": 32
+  },
+  {
+    "key": "NODEPRESERVE",
+    "category": "BASICS",
+    "x": -6,
+    "y": 2,
+    "parents": [
+      "NODETAPPER1"
+    ],
+    "pages": [
+      "tc.research_page.NODEPRESERVE"
+    ],
+    "auto": false,
+    "round": true,
+    "concealed": false,
+    "icon": "thaumcraft:textures/misc/r_nodepreserve.png",
+    "iconWidth": 32,
+    "iconHeight": 32
+  },
+  {
+    "key": "NODETAPPER2",
+    "category": "BASICS",
+    "x": -3,
+    "y": 3,
+    "parents": [
+      "NODETAPPER1"
+    ],
+    "pages": [
+      "tc.research_page.NODETAPPER2.1"
+    ],
+    "auto": false,
+    "round": true,
+    "concealed": false,
+    "icon": "thaumcraft:textures/misc/r_nodetap2.png",
+    "iconWidth": 32,
+    "iconHeight": 32
+  },
+  {
+    "key": "NODEJAR",
+    "category": "BASICS",
+    "x": -7,
+    "y": 4,
+    "parents": [
+      "NODEPRESERVE"
+    ],
+    "pages": [
+      "tc.research_page.NODEJAR.1",
+      "tc.research_page.NODEJAR.2"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/blocks/jar_side.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "CRIMSON",
+    "category": "BASICS",
+    "x": 0,
+    "y": 4,
+    "parents": [],
+    "pages": [
+      "tc.research_page.CRIMSON.1"
+    ],
+    "auto": false,
+    "round": true,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/eldritch_object.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "BASICTHAUMATURGY",
+    "category": "THAUMATURGY",
+    "x": 0,
+    "y": 0,
+    "parents": [],
+    "pages": [
+      "tc.research_page.BASICTHAUMATURGY.1",
+      "tc.research_page.BASICTHAUMATURGY.2"
+    ],
+    "auto": true,
+    "round": true,
+    "concealed": false,
+    "item": "thaumcraft:wand"
+  },
+  {
+    "key": "FOCUSFIRE",
+    "category": "THAUMATURGY",
+    "x": 2,
+    "y": -2,
+    "parents": [
+      "BASICTHAUMATURGY"
+    ],
+    "pages": [
+      "tc.research_page.FOCUSFIRE.1",
+      "tc.research_page.FOCUSFIRE.2"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": false,
+    "icon": "thaumcraft:textures/items/focus_fire.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "FOCUSFROST",
+    "category": "THAUMATURGY",
+    "x": 1,
+    "y": -5,
+    "parents": [
+      "FOCUSFIRE"
+    ],
+    "pages": [
+      "tc.research_page.FOCUSFROST.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/focus_frost.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "FOCUSHELLBAT",
+    "category": "THAUMATURGY",
+    "x": 3,
+    "y": -7,
+    "parents": [],
+    "pages": [
+      "tc.research_page.FOCUSHELLBAT.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/focus_hellbat_orn.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "FOCUSEXCAVATION",
+    "category": "THAUMATURGY",
+    "x": 0,
+    "y": -3,
+    "parents": [
+      "FOCUSFIRE"
+    ],
+    "pages": [
+      "tc.research_page.FOCUSEXCAVATION.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/focus_excavation.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "FOCUSWARDING",
+    "category": "THAUMATURGY",
+    "x": -2,
+    "y": -4,
+    "parents": [
+      "FOCUSEXCAVATION",
+      "INFUSION"
+    ],
+    "pages": [
+      "tc.research_page.FOCUSWARDING.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/focus_warding.png",
+    "iconWidth": 16,
+    "iconHeight": 128
+  },
+  {
+    "key": "FOCUSSHOCK",
+    "category": "THAUMATURGY",
+    "x": 3,
+    "y": -5,
+    "parents": [
+      "FOCUSFIRE"
+    ],
+    "pages": [
+      "tc.research_page.FOCUSSHOCK.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/focus_shock.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "FOCUSTRADE",
+    "category": "THAUMATURGY",
+    "x": 4,
+    "y": -3,
+    "parents": [
+      "FOCUSFIRE"
+    ],
+    "pages": [
+      "tc.research_page.FOCUSTRADE.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/focus_trade.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "FOCUSPORTABLEHOLE",
+    "category": "THAUMATURGY",
+    "x": 7,
+    "y": -2,
+    "parents": [
+      "FOCUSTRADE",
+      "INFUSION"
+    ],
+    "pages": [
+      "tc.research_page.FOCUSPORTABLEHOLE.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/focus_portablehole.png",
+    "iconWidth": 16,
+    "iconHeight": 256
+  },
+  {
+    "key": "FOCUSPOUCH",
+    "category": "THAUMATURGY",
+    "x": 4,
+    "y": -1,
+    "parents": [
+      "FOCUSFIRE"
+    ],
+    "pages": [
+      "tc.research_page.FOCUSPOUCH.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": false,
+    "icon": "thaumcraft:textures/items/focuspouch.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "CAP_gold",
+    "category": "THAUMATURGY",
+    "x": 3,
+    "y": 2,
+    "parents": [
+      "BASICTHAUMATURGY"
+    ],
+    "pages": [
+      "tc.research_page.CAP_gold.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": false,
+    "icon": "thaumcraft:textures/items/wand_cap_gold.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "CAP_copper",
+    "category": "THAUMATURGY",
+    "x": 2,
+    "y": 0,
+    "parents": [
+      "BASICTHAUMATURGY"
+    ],
+    "pages": [
+      "tc.research_page.CAP_copper.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": false,
+    "icon": "thaumcraft:textures/items/wand_cap_copper.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "CAP_thaumium",
+    "category": "THAUMATURGY",
+    "x": 5,
+    "y": 4,
+    "parents": [
+      "CAP_gold",
+      "THAUMIUM",
+      "INFUSION"
+    ],
+    "pages": [
+      "tc.research_page.CAP_thaumium.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": false,
+    "icon": "thaumcraft:textures/items/wand_cap_thaumium.png",
+    "iconWidth": 16,
+    "iconHeight": 48
+  },
+  {
+    "key": "CAP_silver",
+    "category": "THAUMATURGY",
+    "x": 5,
+    "y": 1,
+    "parents": [
+      "CAP_gold",
+      "INFUSION"
+    ],
+    "pages": [
+      "tc.research_page.CAP_silver.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/wand_cap_silver.png",
+    "iconWidth": 16,
+    "iconHeight": 48
+  },
+  {
+    "key": "ROD_greatwood",
+    "category": "THAUMATURGY",
+    "x": -5,
+    "y": 2,
+    "parents": [
+      "BASICTHAUMATURGY"
+    ],
+    "pages": [
+      "tc.research_page.ROD_greatwood.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": false,
+    "icon": "thaumcraft:textures/items/wand_rod_greatwood.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "ROD_reed",
+    "category": "THAUMATURGY",
+    "x": -5,
+    "y": -1,
+    "parents": [
+      "ROD_greatwood",
+      "INFUSION"
+    ],
+    "pages": [
+      "tc.research_page.ROD_reed.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/wand_rod_reed.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "ROD_blaze",
+    "category": "THAUMATURGY",
+    "x": -7,
+    "y": 0,
+    "parents": [
+      "ROD_greatwood",
+      "INFUSION"
+    ],
+    "pages": [
+      "tc.research_page.ROD_blaze.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/wand_rod_blaze.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "ROD_obsidian",
+    "category": "THAUMATURGY",
+    "x": -8,
+    "y": 2,
+    "parents": [
+      "ROD_greatwood",
+      "INFUSION"
+    ],
+    "pages": [
+      "tc.research_page.ROD_obsidian.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/wand_rod_obsidian.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "ROD_ice",
+    "category": "THAUMATURGY",
+    "x": -7,
+    "y": 4,
+    "parents": [
+      "ROD_greatwood",
+      "INFUSION"
+    ],
+    "pages": [
+      "tc.research_page.ROD_ice.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/wand_rod_ice.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "ROD_quartz",
+    "category": "THAUMATURGY",
+    "x": -5,
+    "y": 5,
+    "parents": [
+      "ROD_greatwood",
+      "INFUSION"
+    ],
+    "pages": [
+      "tc.research_page.ROD_quartz.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/wand_rod_quartz.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "ROD_bone",
+    "category": "THAUMATURGY",
+    "x": -3,
+    "y": 0,
+    "parents": [
+      "ROD_greatwood",
+      "INFUSION"
+    ],
+    "pages": [
+      "tc.research_page.ROD_bone.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/wand_rod_bone.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "ROD_silverwood",
+    "category": "THAUMATURGY",
+    "x": -2,
+    "y": 5,
+    "parents": [
+      "ROD_greatwood",
+      "INFUSION"
+    ],
+    "pages": [
+      "tc.research_page.ROD_silverwood.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": false,
+    "icon": "thaumcraft:textures/items/wand_rod_silverwood.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "SCEPTRE",
+    "category": "THAUMATURGY",
+    "x": 0,
+    "y": 4,
+    "parents": [
+      "ROD_silverwood"
+    ],
+    "pages": [
+      "tc.research_page.SCEPTRE.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "item": "thaumcraft:wand"
+  },
+  {
+    "key": "ROD_greatwood_staff",
+    "category": "THAUMATURGY",
+    "x": -1,
+    "y": 7,
+    "parents": [
+      "ROD_silverwood"
+    ],
+    "pages": [
+      "tc.research_page.ROD_greatwood_staff.1",
+      "tc.research_page.ROD_greatwood_staff.2"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": false,
+    "icon": "thaumcraft:textures/items/staff_rod_greatwood.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "ROD_reed_staff",
+    "category": "THAUMATURGY",
+    "x": -5,
+    "y": -2,
+    "parents": [
+      "ROD_reed"
+    ],
+    "pages": [
+      "tc.research_page.ROD_reed_staff.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/staff_rod_reed.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "ROD_blaze_staff",
+    "category": "THAUMATURGY",
+    "x": -8,
+    "y": -1,
+    "parents": [
+      "ROD_blaze"
+    ],
+    "pages": [
+      "tc.research_page.ROD_blaze_staff.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/staff_rod_blaze.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "ROD_obsidian_staff",
+    "category": "THAUMATURGY",
+    "x": -9,
+    "y": 2,
+    "parents": [
+      "ROD_obsidian"
+    ],
+    "pages": [
+      "tc.research_page.ROD_obsidian_staff.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/staff_rod_obsidian.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "ROD_ice_staff",
+    "category": "THAUMATURGY",
+    "x": -8,
+    "y": 5,
+    "parents": [
+      "ROD_ice"
+    ],
+    "pages": [
+      "tc.research_page.ROD_ice_staff.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/staff_rod_ice.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "ROD_quartz_staff",
+    "category": "THAUMATURGY",
+    "x": -4,
+    "y": 6,
+    "parents": [
+      "ROD_quartz"
+    ],
+    "pages": [
+      "tc.research_page.ROD_quartz_staff.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/staff_rod_quartz.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "ROD_bone_staff",
+    "category": "THAUMATURGY",
+    "x": -2,
+    "y": -1,
+    "parents": [
+      "ROD_bone"
+    ],
+    "pages": [
+      "tc.research_page.ROD_bone_staff.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/staff_rod_bone.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "ROD_silverwood_staff",
+    "category": "THAUMATURGY",
+    "x": -1,
+    "y": 5,
+    "parents": [
+      "ROD_silverwood"
+    ],
+    "pages": [
+      "tc.research_page.ROD_silverwood_staff.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/staff_rod_silverwood.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "NODESTABILIZER",
+    "category": "THAUMATURGY",
+    "x": -7,
+    "y": -4,
+    "parents": [
+      "NODEPRESERVE"
+    ],
+    "pages": [
+      "tc.research_page.NODESTABILIZER.1",
+      "tc.research_page.NODESTABILIZER.2"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": false,
+    "icon": "thaumcraft:textures/blocks/al_furnace_side.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "NODESTABILIZERADV",
+    "category": "THAUMATURGY",
+    "x": -8,
+    "y": -3,
+    "parents": [
+      "NODESTABILIZER"
+    ],
+    "pages": [
+      "tc.research_page.NODESTABILIZERADV.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/blocks/al_furnace_side.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "VISPOWER",
+    "category": "THAUMATURGY",
+    "x": -5,
+    "y": -6,
+    "parents": [
+      "NODESTABILIZER"
+    ],
+    "pages": [
+      "tc.research_page.VISPOWER.1",
+      "tc.research_page.VISPOWER.2",
+      "tc.research_page.VISPOWER.3",
+      "tc.research_page.VISPOWER.4",
+      "tc.research_page.VISPOWER.5"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": false,
+    "icon": "thaumcraft:textures/blocks/al_furnace_side.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "FOCALMANIPULATION",
+    "category": "THAUMATURGY",
+    "x": -3,
+    "y": -8,
+    "parents": [
+      "VISPOWER"
+    ],
+    "pages": [
+      "tc.research_page.FOCALMANIPULATION.1",
+      "tc.research_page.FOCALMANIPULATION.2"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": false,
+    "icon": "thaumcraft:textures/blocks/al_furnace_side.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "VAMPBAT",
+    "category": "THAUMATURGY",
+    "x": 4,
+    "y": -8,
+    "parents": [
+      "FOCUSHELLBAT"
+    ],
+    "pages": [
+      "focus.upgrade.vampirebats.text"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": false,
+    "icon": "thaumcraft:textures/foci/vampirebats.png",
+    "iconWidth": 32,
+    "iconHeight": 32
+  },
+  {
+    "key": "WANDPED",
+    "category": "THAUMATURGY",
+    "x": -9,
+    "y": -6,
+    "parents": [
+      "INFUSION",
+      "NODEPRESERVE",
+      "NODESTABILIZER"
+    ],
+    "pages": [
+      "tc.research_page.WANDPED.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/blocks/al_furnace_side.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "VISAMULET",
+    "category": "THAUMATURGY",
+    "x": -9,
+    "y": -8,
+    "parents": [
+      "WANDPED"
+    ],
+    "pages": [
+      "tc.research_page.VISAMULET.1",
+      "tc.research_page.VISAMULET.2"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/vis_amulet.png",
+    "iconWidth": 16,
+    "iconHeight": 128
+  },
+  {
+    "key": "WANDPEDFOC",
+    "category": "THAUMATURGY",
+    "x": -10,
+    "y": -7,
+    "parents": [
+      "WANDPED"
+    ],
+    "pages": [
+      "tc.research_page.WANDPEDFOC.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/blocks/al_furnace_side.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "VISCHARGERELAY",
+    "category": "THAUMATURGY",
+    "x": -7,
+    "y": -6,
+    "parents": [
+      "VISPOWER",
+      "WANDPED"
+    ],
+    "pages": [
+      "tc.research_page.VISCHARGERELAY.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/blocks/crucible1.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "PHIAL",
+    "category": "ALCHEMY",
+    "x": 0,
+    "y": -2,
+    "parents": [],
+    "pages": [
+      "tc.research_page.PHIAL.1"
+    ],
+    "auto": true,
+    "round": true,
+    "concealed": false,
+    "icon": "thaumcraft:textures/items/phial.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "CRUCIBLE",
+    "category": "ALCHEMY",
+    "x": 0,
+    "y": 0,
+    "parents": [],
+    "pages": [
+      "tc.research_page.CRUCIBLE.1",
+      "tc.research_page.CRUCIBLE.2",
+      "tc.research_page.CRUCIBLE.3",
+      "tc.research_page.CRUCIBLE.4",
+      "tc.research_page.CRUCIBLE.5"
+    ],
+    "auto": true,
+    "round": false,
+    "concealed": false,
+    "icon": "thaumcraft:textures/blocks/crucible1.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "NITOR",
+    "category": "ALCHEMY",
+    "x": 2,
+    "y": -1,
+    "parents": [
+      "CRUCIBLE"
+    ],
+    "pages": [
+      "tc.research_page.NITOR.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": false,
+    "icon": "thaumcraft:textures/items/nitor.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "ALUMENTUM",
+    "category": "ALCHEMY",
+    "x": 2,
+    "y": 1,
+    "parents": [
+      "CRUCIBLE"
+    ],
+    "pages": [
+      "tc.research_page.ALUMENTUM.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": false,
+    "icon": "thaumcraft:textures/items/alumentum.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "DISTILESSENTIA",
+    "category": "ALCHEMY",
+    "x": 5,
+    "y": -1,
+    "parents": [
+      "NITOR",
+      "ALUMENTUM"
+    ],
+    "pages": [
+      "tc.research_page.DISTILESSENTIA.1",
+      "tc.research_page.DISTILESSENTIA.2"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": false,
+    "icon": "thaumcraft:textures/blocks/crucible1.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "THAUMIUM",
+    "category": "ALCHEMY",
+    "x": -1,
+    "y": 3,
+    "parents": [
+      "CRUCIBLE"
+    ],
+    "pages": [
+      "tc.research_page.THAUMIUM.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/thaumiumingot.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "TUBES",
+    "category": "ALCHEMY",
+    "x": 7,
+    "y": 0,
+    "parents": [
+      "DISTILESSENTIA"
+    ],
+    "pages": [
+      "tc.research_page.TUBES.1",
+      "tc.research_page.TUBES.2",
+      "tc.research_page.TUBES.3",
+      "tc.research_page.TUBES.4"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/blocks/pipe_1.png",
+    "iconWidth": 32,
+    "iconHeight": 32
+  },
+  {
+    "key": "TUBEFILTER",
+    "category": "ALCHEMY",
+    "x": 9,
+    "y": 1,
+    "parents": [
+      "TUBES"
+    ],
+    "pages": [
+      "tc.research_page.TUBEFILTER.1",
+      "tc.research_page.TUBEFILTER.2"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/blocks/pipe_1.png",
+    "iconWidth": 32,
+    "iconHeight": 32
+  },
+  {
+    "key": "ESSENTIACRYSTAL",
+    "category": "ALCHEMY",
+    "x": 8,
+    "y": -2,
+    "parents": [
+      "TUBES"
+    ],
+    "pages": [
+      "tc.research_page.ESSENTIACRYSTAL.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/blocks/pipe_1.png",
+    "iconWidth": 32,
+    "iconHeight": 32
+  },
+  {
+    "key": "CENTRIFUGE",
+    "category": "ALCHEMY",
+    "x": 10,
+    "y": 0,
+    "parents": [
+      "TUBEFILTER"
+    ],
+    "pages": [
+      "tc.research_page.CENTRIFUGE.1",
+      "tc.research_page.CENTRIFUGE.2",
+      "tc.research_page.CENTRIFUGE.3"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/blocks/pipe_1.png",
+    "iconWidth": 32,
+    "iconHeight": 32
+  },
+  {
+    "key": "THAUMATORIUM",
+    "category": "ALCHEMY",
+    "x": 10,
+    "y": -2,
+    "parents": [
+      "CENTRIFUGE"
+    ],
+    "pages": [
+      "tc.research_page.THAUMATORIUM.1",
+      "tc.research_page.THAUMATORIUM.2",
+      "tc.research_page.THAUMATORIUM.3"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/blocks/alchemyblock.png",
+    "iconWidth": 32,
+    "iconHeight": 32
+  },
+  {
+    "key": "TALLOW",
+    "category": "ALCHEMY",
+    "x": -2,
+    "y": 0,
+    "parents": [
+      "CRUCIBLE"
+    ],
+    "pages": [
+      "tc.research_page.TALLOW.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": false,
+    "icon": "thaumcraft:textures/items/tallow.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "ALCHEMICALDUPLICATION",
+    "category": "ALCHEMY",
+    "x": -4,
+    "y": 0,
+    "parents": [
+      "TALLOW"
+    ],
+    "pages": [
+      "tc.research_page.ALCHEMICALDUPLICATION.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/misc/r_alchmult.png",
+    "iconWidth": 32,
+    "iconHeight": 32
+  },
+  {
+    "key": "ALCHEMICALMANUFACTURE",
+    "category": "ALCHEMY",
+    "x": -5,
+    "y": -2,
+    "parents": [
+      "ALCHEMICALDUPLICATION"
+    ],
+    "pages": [
+      "tc.research_page.ALCHEMICALMANUFACTURE.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/misc/r_alchman.png",
+    "iconWidth": 32,
+    "iconHeight": 32
+  },
+  {
+    "key": "ENTROPICPROCESSING",
+    "category": "ALCHEMY",
+    "x": -6,
+    "y": 1,
+    "parents": [
+      "ALCHEMICALDUPLICATION"
+    ],
+    "pages": [
+      "tc.research_page.ENTROPICPROCESSING.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/misc/r_alchent.png",
+    "iconWidth": 32,
+    "iconHeight": 32
+  },
+  {
+    "key": "LIQUIDDEATH",
+    "category": "ALCHEMY",
+    "x": -7,
+    "y": 3,
+    "parents": [
+      "ENTROPICPROCESSING"
+    ],
+    "pages": [
+      "tc.research_page.LIQUIDDEATH.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/bucket_death.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "BOTTLETAINT",
+    "category": "ALCHEMY",
+    "x": -8,
+    "y": 1,
+    "parents": [
+      "ENTROPICPROCESSING"
+    ],
+    "pages": [
+      "tc.research_page.BOTTLETAINT.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/bottle_taint.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "PUREIRON",
+    "category": "ALCHEMY",
+    "x": -2,
+    "y": 5,
+    "parents": [
+      "THAUMIUM"
+    ],
+    "pages": [
+      "tc.research_page.PUREIRON.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/nuggetthaumium.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "PUREGOLD",
+    "category": "ALCHEMY",
+    "x": -4,
+    "y": 3,
+    "parents": [
+      "PUREIRON"
+    ],
+    "pages": [
+      "tc.research_page.PUREGOLD.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/nuggetthaumium.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "PURECOPPER",
+    "category": "ALCHEMY",
+    "x": -4,
+    "y": 5,
+    "parents": [
+      "PUREIRON"
+    ],
+    "pages": [
+      "tc.research_page.PURECOPPER.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/nuggetthaumium.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "PURETIN",
+    "category": "ALCHEMY",
+    "x": -4,
+    "y": 7,
+    "parents": [
+      "PUREIRON"
+    ],
+    "pages": [
+      "tc.research_page.PURETIN.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/nuggetthaumium.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "PURESILVER",
+    "category": "ALCHEMY",
+    "x": -3,
+    "y": 8,
+    "parents": [
+      "PUREIRON"
+    ],
+    "pages": [
+      "tc.research_page.PURESILVER.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/nuggetthaumium.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "PURELEAD",
+    "category": "ALCHEMY",
+    "x": -2,
+    "y": 9,
+    "parents": [
+      "PUREIRON"
+    ],
+    "pages": [
+      "tc.research_page.PURELEAD.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/nuggetthaumium.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "TRANSIRON",
+    "category": "ALCHEMY",
+    "x": 0,
+    "y": 5,
+    "parents": [
+      "THAUMIUM"
+    ],
+    "pages": [
+      "tc.research_page.TRANSIRON.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/nuggetthaumium.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "TRANSGOLD",
+    "category": "ALCHEMY",
+    "x": 2,
+    "y": 3,
+    "parents": [
+      "TRANSIRON"
+    ],
+    "pages": [
+      "tc.research_page.TRANSGOLD.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "item": "minecraft:gold_nugget"
+  },
+  {
+    "key": "TRANSCOPPER",
+    "category": "ALCHEMY",
+    "x": 2,
+    "y": 5,
+    "parents": [
+      "TRANSIRON"
+    ],
+    "pages": [
+      "tc.research_page.TRANSCOPPER.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/nuggetthaumium.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "TRANSTIN",
+    "category": "ALCHEMY",
+    "x": 2,
+    "y": 7,
+    "parents": [
+      "TRANSIRON"
+    ],
+    "pages": [
+      "tc.research_page.TRANSTIN.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/nuggetthaumium.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "TRANSSILVER",
+    "category": "ALCHEMY",
+    "x": 1,
+    "y": 8,
+    "parents": [
+      "TRANSIRON"
+    ],
+    "pages": [
+      "tc.research_page.TRANSSILVER.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/nuggetthaumium.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "TRANSLEAD",
+    "category": "ALCHEMY",
+    "x": 0,
+    "y": 9,
+    "parents": [
+      "TRANSIRON"
+    ],
+    "pages": [
+      "tc.research_page.TRANSLEAD.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/nuggetthaumium.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "ETHEREALBLOOM",
+    "category": "ALCHEMY",
+    "x": -2,
+    "y": -3,
+    "parents": [
+      "CRUCIBLE"
+    ],
+    "pages": [
+      "tc.research_page.ETHEREALBLOOM.1",
+      "tc.research_page.ETHEREALBLOOM.2"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/blocks/purifier_seed.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "BATHSALTS",
+    "category": "ALCHEMY",
+    "x": -4,
+    "y": -4,
+    "parents": [],
+    "pages": [
+      "tc.research_page.BATHSALTS.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/bath_salts.png",
+    "iconWidth": 16,
+    "iconHeight": 64
+  },
+  {
+    "key": "SANESOAP",
+    "category": "ALCHEMY",
+    "x": -3,
+    "y": -6,
+    "parents": [
+      "BATHSALTS"
+    ],
+    "pages": [
+      "tc.research_page.SANESOAP.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": false,
+    "icon": "thaumcraft:textures/items/soap.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "ARCANESPA",
+    "category": "ALCHEMY",
+    "x": -6,
+    "y": -5,
+    "parents": [
+      "BATHSALTS"
+    ],
+    "pages": [
+      "tc.research_page.ARCANESPA.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": false,
+    "icon": "thaumcraft:textures/blocks/al_furnace_side.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "JARLABEL",
+    "category": "ALCHEMY",
+    "x": 4,
+    "y": -3,
+    "parents": [
+      "DISTILESSENTIA"
+    ],
+    "pages": [
+      "tc.research_page.JARLABEL.1",
+      "tc.research_page.JARLABEL.2",
+      "tc.research_page.JARLABEL.3"
+    ],
+    "auto": false,
+    "round": true,
+    "concealed": false,
+    "icon": "thaumcraft:textures/blocks/jar_side.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "JARVOID",
+    "category": "ALCHEMY",
+    "x": 5,
+    "y": -5,
+    "parents": [
+      "JARLABEL"
+    ],
+    "pages": [
+      "tc.research_page.JARVOID.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/blocks/jar_side_void.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "ARCANESTONE",
+    "category": "ARTIFICE",
+    "x": 5,
+    "y": -2,
+    "parents": [],
+    "pages": [
+      "tc.research_page.ARCANESTONE.1"
+    ],
+    "auto": true,
+    "round": true,
+    "concealed": false,
+    "icon": "thaumcraft:textures/blocks/arcane_stone.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "GRATE",
+    "category": "ARTIFICE",
+    "x": 2,
+    "y": -1,
+    "parents": [],
+    "pages": [
+      "tc.research_page.GRATE.1"
+    ],
+    "auto": true,
+    "round": true,
+    "concealed": false,
+    "icon": "thaumcraft:textures/blocks/crucible1.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "TABLE",
+    "category": "ARTIFICE",
+    "x": 0,
+    "y": -1,
+    "parents": [],
+    "pages": [
+      "tc.research_page.TABLE.1"
+    ],
+    "auto": true,
+    "round": true,
+    "concealed": false,
+    "icon": "thaumcraft:textures/blocks/woodplain.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "ARCTABLE",
+    "category": "ARTIFICE",
+    "x": -1,
+    "y": -3,
+    "parents": [
+      "TABLE"
+    ],
+    "pages": [
+      "tc.research_page.ARCTABLE.1"
+    ],
+    "auto": true,
+    "round": true,
+    "concealed": false,
+    "icon": "thaumcraft:textures/blocks/woodplain.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "RESTABLE",
+    "category": "ARTIFICE",
+    "x": 1,
+    "y": -3,
+    "parents": [
+      "TABLE"
+    ],
+    "pages": [
+      "tc.research_page.RESTABLE.1"
+    ],
+    "auto": true,
+    "round": true,
+    "concealed": false,
+    "icon": "thaumcraft:textures/blocks/woodplain.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "THAUMOMETER",
+    "category": "ARTIFICE",
+    "x": 2,
+    "y": 1,
+    "parents": [],
+    "pages": [
+      "tc.research_page.THAUMOMETER.1"
+    ],
+    "auto": true,
+    "round": true,
+    "concealed": false,
+    "icon": "thaumcraft:textures/items/gogglesrevealing.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "PAVETRAVEL",
+    "category": "ARTIFICE",
+    "x": 4,
+    "y": -4,
+    "parents": [
+      "ARCANESTONE"
+    ],
+    "pages": [
+      "tc.research_page.PAVETRAVEL.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": false,
+    "icon": "thaumcraft:textures/blocks/arcane_stone.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "PAVEWARD",
+    "category": "ARTIFICE",
+    "x": 6,
+    "y": -4,
+    "parents": [
+      "ARCANESTONE"
+    ],
+    "pages": [
+      "tc.research_page.PAVEWARD.1",
+      "tc.research_page.PAVEWARD.2"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": false,
+    "icon": "thaumcraft:textures/blocks/arcane_stone.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "GOGGLES",
+    "category": "ARTIFICE",
+    "x": 4,
+    "y": 1,
+    "parents": [
+      "THAUMOMETER"
+    ],
+    "pages": [
+      "tc.research_page.GOGGLES.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/gogglesrevealing.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "ARCANEEAR",
+    "category": "ARTIFICE",
+    "x": 6,
+    "y": 0,
+    "parents": [
+      "GOGGLES"
+    ],
+    "pages": [
+      "tc.research_page.ARCANEEAR.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/blocks/woodplain.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "SINSTONE",
+    "category": "ARTIFICE",
+    "x": 6,
+    "y": 2,
+    "parents": [
+      "GOGGLES"
+    ],
+    "pages": [
+      "tc.research_page.SINSTONE.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/sinister_stone.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "LEVITATOR",
+    "category": "ARTIFICE",
+    "x": -3,
+    "y": -3,
+    "parents": [
+      "NITOR"
+    ],
+    "pages": [
+      "tc.research_page.LEVITATOR.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/blocks/lifterside.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "INFERNALFURNACE",
+    "category": "ARTIFICE",
+    "x": -4,
+    "y": -1,
+    "parents": [
+      "NITOR",
+      "ALUMENTUM"
+    ],
+    "pages": [
+      "tc.research_page.INFERNALFURNACE.1",
+      "tc.research_page.INFERNALFURNACE.2"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/misc/r_infernalfurnace.png",
+    "iconWidth": 32,
+    "iconHeight": 32
+  },
+  {
+    "key": "BELLOWS",
+    "category": "ARTIFICE",
+    "x": -6,
+    "y": -2,
+    "parents": [
+      "INFERNALFURNACE"
+    ],
+    "pages": [
+      "tc.research_page.BELLOWS.1",
+      "tc.research_page.BELLOWS.2"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/blocks/woodplain.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "ARCANEBORE",
+    "category": "ARTIFICE",
+    "x": -3,
+    "y": 8,
+    "parents": [
+      "FOCUSEXCAVATION",
+      "INFUSION"
+    ],
+    "pages": [
+      "tc.research_page.ARCANEBORE.1",
+      "tc.research_page.ARCANEBORE.2",
+      "tc.research_page.ARCANEBORE.3"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/blocks/woodplain.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "ARCANELAMP",
+    "category": "ARTIFICE",
+    "x": -3,
+    "y": 1,
+    "parents": [
+      "NITOR"
+    ],
+    "pages": [
+      "tc.research_page.ARCANELAMP.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": false,
+    "icon": "thaumcraft:textures/blocks/crucible1.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "ENCHFABRIC",
+    "category": "ARTIFICE",
+    "x": 0,
+    "y": 3,
+    "parents": [],
+    "pages": [
+      "tc.research_page.ENCHFABRIC.1",
+      "tc.research_page.ENCHFABRIC.2"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": false,
+    "icon": "thaumcraft:textures/items/cloth.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "RUNICARMOR",
+    "category": "ARTIFICE",
+    "x": 3,
+    "y": 4,
+    "parents": [
+      "ENCHFABRIC"
+    ],
+    "pages": [
+      "tc.research_page.RUNICARMOR.1",
+      "tc.research_page.RUNICARMOR.2"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/runic_ring.png",
+    "iconWidth": 16,
+    "iconHeight": 64
+  },
+  {
+    "key": "RUNICCHARGED",
+    "category": "ARTIFICE",
+    "x": 2,
+    "y": 3,
+    "parents": [
+      "RUNICARMOR"
+    ],
+    "pages": [
+      "tc.research_page.RUNICCHARGED.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/runic_ring.png",
+    "iconWidth": 16,
+    "iconHeight": 64
+  },
+  {
+    "key": "RUNICHEALING",
+    "category": "ARTIFICE",
+    "x": 4,
+    "y": 3,
+    "parents": [
+      "RUNICARMOR"
+    ],
+    "pages": [
+      "tc.research_page.RUNICHEALING.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/runic_ring.png",
+    "iconWidth": 16,
+    "iconHeight": 64
+  },
+  {
+    "key": "RUNICKINETIC",
+    "category": "ARTIFICE",
+    "x": 2,
+    "y": 5,
+    "parents": [
+      "RUNICARMOR"
+    ],
+    "pages": [
+      "tc.research_page.RUNICKINETIC.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/runic_girdle.png",
+    "iconWidth": 16,
+    "iconHeight": 64
+  },
+  {
+    "key": "RUNICEMERGENCY",
+    "category": "ARTIFICE",
+    "x": 4,
+    "y": 5,
+    "parents": [
+      "RUNICARMOR"
+    ],
+    "pages": [
+      "tc.research_page.RUNICEMERGENCY.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/runic_amulet.png",
+    "iconWidth": 16,
+    "iconHeight": 64
+  },
+  {
+    "key": "RUNICAUGMENTATION",
+    "category": "ARTIFICE",
+    "x": 6,
+    "y": 4,
+    "parents": [
+      "RUNICARMOR"
+    ],
+    "pages": [
+      "tc.research_page.RUNICAUGMENTATION.1",
+      "tc.research_page.RUNICAUGMENTATION.2"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/misc/r_runicupg.png",
+    "iconWidth": 32,
+    "iconHeight": 32
+  },
+  {
+    "key": "BANNERS",
+    "category": "ARTIFICE",
+    "x": 4,
+    "y": 8,
+    "parents": [],
+    "pages": [
+      "tc.research_page.BANNERS.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/models/banner_blank.png",
+    "iconWidth": 256,
+    "iconHeight": 128
+  },
+  {
+    "key": "ELEMENTALAXE",
+    "category": "ARTIFICE",
+    "x": -7,
+    "y": 4,
+    "parents": [
+      "THAUMIUM",
+      "INFUSION"
+    ],
+    "pages": [
+      "tc.research_page.ELEMENTALAXE.1",
+      "tc.research_page.ELEMENTALAXE.2"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/elementalaxe.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "ELEMENTALPICK",
+    "category": "ARTIFICE",
+    "x": -7,
+    "y": 3,
+    "parents": [
+      "THAUMIUM",
+      "INFUSION"
+    ],
+    "pages": [
+      "tc.research_page.ELEMENTALPICK.1",
+      "tc.research_page.ELEMENTALPICK.2"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/elementalpick.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "ELEMENTALSWORD",
+    "category": "ARTIFICE",
+    "x": -7,
+    "y": 5,
+    "parents": [
+      "THAUMIUM",
+      "INFUSION"
+    ],
+    "pages": [
+      "tc.research_page.ELEMENTALSWORD.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/elementalsword.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "ELEMENTALSHOVEL",
+    "category": "ARTIFICE",
+    "x": -7,
+    "y": 6,
+    "parents": [
+      "THAUMIUM",
+      "INFUSION"
+    ],
+    "pages": [
+      "tc.research_page.ELEMENTALSHOVEL.1",
+      "tc.research_page.ELEMENTALSHOVEL.2"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/elementalshovel.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "ELEMENTALHOE",
+    "category": "ARTIFICE",
+    "x": -7,
+    "y": 7,
+    "parents": [
+      "THAUMIUM",
+      "INFUSION"
+    ],
+    "pages": [
+      "tc.research_page.ELEMENTALHOE.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/elementalhoe.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "WARDEDARCANA",
+    "category": "ARTIFICE",
+    "x": -5,
+    "y": -4,
+    "parents": [
+      "THAUMIUM"
+    ],
+    "pages": [
+      "tc.research_page.WARDEDARCANA.1",
+      "tc.research_page.WARDEDARCANA.2",
+      "tc.research_page.WARDEDARCANA.3",
+      "tc.research_page.WARDEDARCANA.4"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": false,
+    "icon": "thaumcraft:textures/items/arcanedoor.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "BONEBOW",
+    "category": "ARTIFICE",
+    "x": -7,
+    "y": 1,
+    "parents": [],
+    "pages": [
+      "tc.research_page.BONEBOW.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/bonebow.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "PRIMALARROW",
+    "category": "ARTIFICE",
+    "x": -9,
+    "y": 0,
+    "parents": [
+      "BONEBOW"
+    ],
+    "pages": [
+      "tc.research_page.PRIMALARROW.1",
+      "tc.research_page.PRIMALARROW.2",
+      "tc.research_page.PRIMALARROW.3"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/el_arrow_air.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "INFUSION",
+    "category": "ARTIFICE",
+    "x": -4,
+    "y": 5,
+    "parents": [
+      "DISTILESSENTIA"
+    ],
+    "pages": [
+      "tc.research_page.INFUSION.1",
+      "tc.research_page.INFUSION.2",
+      "tc.research_page.INFUSION.3",
+      "tc.research_page.INFUSION.4",
+      "tc.research_page.INFUSION.5"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/blocks/al_furnace_side.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "LAMPGROWTH",
+    "category": "ARTIFICE",
+    "x": -4,
+    "y": 3,
+    "parents": [
+      "ARCANELAMP",
+      "INFUSION"
+    ],
+    "pages": [
+      "tc.research_page.LAMPGROWTH.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/blocks/crucible1.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "LAMPFERTILITY",
+    "category": "ARTIFICE",
+    "x": -2,
+    "y": 3,
+    "parents": [
+      "ARCANELAMP",
+      "INFUSION"
+    ],
+    "pages": [
+      "tc.research_page.LAMPFERTILITY.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/blocks/crucible1.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "MIRROR",
+    "category": "ARTIFICE",
+    "x": -1,
+    "y": 8,
+    "parents": [
+      "INFUSION"
+    ],
+    "pages": [
+      "tc.research_page.MIRROR.1",
+      "tc.research_page.MIRROR.2",
+      "tc.research_page.MIRROR.3"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/mirrorframe.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "MIRRORHAND",
+    "category": "ARTIFICE",
+    "x": 1,
+    "y": 9,
+    "parents": [
+      "MIRROR"
+    ],
+    "pages": [
+      "tc.research_page.MIRRORHAND.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/mirrorhand.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "MIRRORESSENTIA",
+    "category": "ARTIFICE",
+    "x": -1,
+    "y": 10,
+    "parents": [
+      "MIRROR"
+    ],
+    "pages": [
+      "tc.research_page.MIRRORESSENTIA.1",
+      "tc.research_page.MIRRORESSENTIA.2"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/mirrorframe.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "JARBRAIN",
+    "category": "ARTIFICE",
+    "x": -5,
+    "y": 9,
+    "parents": [
+      "INFUSION"
+    ],
+    "pages": [
+      "tc.research_page.JARBRAIN.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/brain.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "INFUSIONENCHANTMENT",
+    "category": "ARTIFICE",
+    "x": -6,
+    "y": 11,
+    "parents": [
+      "JARBRAIN"
+    ],
+    "pages": [
+      "tc.research_page.INFUSIONENCHANTMENT.1",
+      "tc.research_page.INFUSIONENCHANTMENT.2",
+      "tc.research_page.INFUSIONENCHANTMENT.3"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/misc/r_enchant.png",
+    "iconWidth": 32,
+    "iconHeight": 32
+  },
+  {
+    "key": "ARMORFORTRESS",
+    "category": "ARTIFICE",
+    "x": -8,
+    "y": 9,
+    "parents": [
+      "THAUMIUM",
+      "INFUSIONENCHANTMENT"
+    ],
+    "pages": [
+      "tc.research_page.ARMORFORTRESS.1",
+      "tc.research_page.ARMORFORTRESS.2"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/thaumiumfortresshelm.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "HELMGOGGLES",
+    "category": "ARTIFICE",
+    "x": -9,
+    "y": 7,
+    "parents": [
+      "ARMORFORTRESS"
+    ],
+    "pages": [
+      "tc.research_page.HELMGOGGLES.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/gogglesrevealing.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "MASKGRINNINGDEVIL",
+    "category": "ARTIFICE",
+    "x": -10,
+    "y": 8,
+    "parents": [
+      "ARMORFORTRESS"
+    ],
+    "pages": [
+      "tc.research_page.MASKGRINNINGDEVIL.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/misc/r_mask0.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "MASKANGRYGHOST",
+    "category": "ARTIFICE",
+    "x": -10,
+    "y": 9,
+    "parents": [
+      "ARMORFORTRESS"
+    ],
+    "pages": [
+      "tc.research_page.MASKANGRYGHOST.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/misc/r_mask1.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "MASKSIPPINGFIEND",
+    "category": "ARTIFICE",
+    "x": -10,
+    "y": 10,
+    "parents": [
+      "ARMORFORTRESS"
+    ],
+    "pages": [
+      "tc.research_page.MASKSIPPINGFIEND.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/misc/r_mask2.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "BOOTSTRAVELLER",
+    "category": "ARTIFICE",
+    "x": -1,
+    "y": 5,
+    "parents": [
+      "ENCHFABRIC",
+      "INFUSION"
+    ],
+    "pages": [
+      "tc.research_page.BOOTSTRAVELLER.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/bootstraveler.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "HOVERHARNESS",
+    "category": "ARTIFICE",
+    "x": 1,
+    "y": 7,
+    "parents": [
+      "BOOTSTRAVELLER"
+    ],
+    "pages": [
+      "tc.research_page.HOVERHARNESS.1",
+      "tc.research_page.HOVERHARNESS.2"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/hoverharness.png",
+    "iconWidth": 32,
+    "iconHeight": 32
+  },
+  {
+    "key": "HOVERGIRDLE",
+    "category": "ARTIFICE",
+    "x": 2,
+    "y": 7,
+    "parents": [
+      "HOVERHARNESS"
+    ],
+    "pages": [
+      "tc.research_page.HOVERGIRDLE.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/hovergirdle.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "BASICARTIFACE",
+    "category": "ARTIFICE",
+    "x": 0,
+    "y": 1,
+    "parents": [],
+    "pages": [
+      "tc.research_page.BASICARTIFACE.1"
+    ],
+    "auto": true,
+    "round": true,
+    "concealed": false,
+    "icon": "thaumcraft:textures/items/charm.png",
+    "iconWidth": 16,
+    "iconHeight": 480
+  },
+  {
+    "key": "FLUXSCRUB",
+    "category": "ARTIFICE",
+    "x": -8,
+    "y": -3,
+    "parents": [
+      "VISPOWER",
+      "BELLOWS",
+      "TUBES"
+    ],
+    "pages": [
+      "tc.research_page.FLUXSCRUB.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": false,
+    "icon": "thaumcraft:textures/blocks/al_furnace_side.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "HUNGRYCHEST",
+    "category": "GOLEMANCY",
+    "x": -1,
+    "y": 0,
+    "parents": [],
+    "pages": [
+      "tc.research_page.HUNGRYCHEST.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": false,
+    "icon": "thaumcraft:textures/blocks/chesthungry.png",
+    "iconWidth": 64,
+    "iconHeight": 64
+  },
+  {
+    "key": "TINYHAT",
+    "category": "GOLEMANCY",
+    "x": 5,
+    "y": 10,
+    "parents": [],
+    "pages": [
+      "tc.research_page.TINYHAT.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/golemdecotophat.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "TINYGLASSES",
+    "category": "GOLEMANCY",
+    "x": 6,
+    "y": 10,
+    "parents": [],
+    "pages": [
+      "tc.research_page.TINYGLASSES.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/golemdecoglasses.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "TINYBOWTIE",
+    "category": "GOLEMANCY",
+    "x": 7,
+    "y": 10,
+    "parents": [],
+    "pages": [
+      "tc.research_page.TINYBOWTIE.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/golemdecobowtie.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "TINYFEZ",
+    "category": "GOLEMANCY",
+    "x": 8,
+    "y": 10,
+    "parents": [],
+    "pages": [
+      "tc.research_page.TINYFEZ.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/golemdecofez.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "TINYDART",
+    "category": "GOLEMANCY",
+    "x": 5,
+    "y": 11,
+    "parents": [],
+    "pages": [
+      "tc.research_page.TINYDART.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/golemdecodart.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "TINYVISOR",
+    "category": "GOLEMANCY",
+    "x": 6,
+    "y": 11,
+    "parents": [],
+    "pages": [
+      "tc.research_page.TINYVISOR.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/golemdecovisor.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "TINYARMOR",
+    "category": "GOLEMANCY",
+    "x": 7,
+    "y": 11,
+    "parents": [],
+    "pages": [
+      "tc.research_page.TINYARMOR.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/golemdecoarmor.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "TINYHAMMER",
+    "category": "GOLEMANCY",
+    "x": 8,
+    "y": 11,
+    "parents": [],
+    "pages": [
+      "tc.research_page.TINYHAMMER.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/golemdecomace.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "GOLEMSTRAW",
+    "category": "GOLEMANCY",
+    "x": 0,
+    "y": 2,
+    "parents": [
+      "HUNGRYCHEST"
+    ],
+    "pages": [
+      "tc.research_page.GOLEMSTRAW.1",
+      "tc.research_page.GOLEMSTRAW.2",
+      "tc.research_page.GOLEMSTRAW.3"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": false,
+    "icon": "thaumcraft:textures/items/golem_straw.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "GOLEMBELL",
+    "category": "GOLEMANCY",
+    "x": 3,
+    "y": 0,
+    "parents": [
+      "GOLEMSTRAW"
+    ],
+    "pages": [
+      "tc.research_page.GOLEMBELL.1",
+      "tc.research_page.GOLEMBELL.2"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": false,
+    "icon": "thaumcraft:textures/items/ironbell.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "GOLEMWOOD",
+    "category": "GOLEMANCY",
+    "x": 2,
+    "y": 4,
+    "parents": [
+      "GOLEMSTRAW"
+    ],
+    "pages": [
+      "tc.research_page.GOLEMWOOD.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": false,
+    "icon": "thaumcraft:textures/items/golem_wood.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "GOLEMCLAY",
+    "category": "GOLEMANCY",
+    "x": 2,
+    "y": 6,
+    "parents": [
+      "GOLEMWOOD"
+    ],
+    "pages": [
+      "tc.research_page.GOLEMCLAY.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/golem_clay.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "GOLEMSTONE",
+    "category": "GOLEMANCY",
+    "x": 2,
+    "y": 8,
+    "parents": [
+      "GOLEMCLAY"
+    ],
+    "pages": [
+      "tc.research_page.GOLEMSTONE.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/golem_stone.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "GOLEMIRON",
+    "category": "GOLEMANCY",
+    "x": 0,
+    "y": 10,
+    "parents": [
+      "GOLEMSTONE"
+    ],
+    "pages": [
+      "tc.research_page.GOLEMIRON.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/golem_iron.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "GOLEMTHAUMIUM",
+    "category": "GOLEMANCY",
+    "x": 2,
+    "y": 10,
+    "parents": [
+      "GOLEMIRON",
+      "THAUMIUM"
+    ],
+    "pages": [
+      "tc.research_page.GOLEMTHAUMIUM.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/golem_thaumium.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "GOLEMFLESH",
+    "category": "GOLEMANCY",
+    "x": 4,
+    "y": 4,
+    "parents": [
+      "GOLEMWOOD"
+    ],
+    "pages": [
+      "tc.research_page.GOLEMFLESH.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/golem_flesh.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "GOLEMTALLOW",
+    "category": "GOLEMANCY",
+    "x": 4,
+    "y": 6,
+    "parents": [
+      "GOLEMCLAY",
+      "TALLOW"
+    ],
+    "pages": [
+      "tc.research_page.GOLEMTALLOW.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/golem_tallow.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "GOLEMFETTER",
+    "category": "GOLEMANCY",
+    "x": 4,
+    "y": 8,
+    "parents": [
+      "GOLEMSTONE"
+    ],
+    "pages": [
+      "tc.research_page.GOLEMFETTER.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": false,
+    "icon": "thaumcraft:textures/blocks/arcane_stone.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "UPGRADEAIR",
+    "category": "GOLEMANCY",
+    "x": 7,
+    "y": -3,
+    "parents": [
+      "GOLEMBELL"
+    ],
+    "pages": [
+      "tc.research_page.UPGRADEAIR.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/golem_upgrade_air.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "UPGRADEEARTH",
+    "category": "GOLEMANCY",
+    "x": 6,
+    "y": -2,
+    "parents": [
+      "GOLEMBELL"
+    ],
+    "pages": [
+      "tc.research_page.UPGRADEEARTH.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/golem_upgrade_earth.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "UPGRADEFIRE",
+    "category": "GOLEMANCY",
+    "x": 5,
+    "y": -1,
+    "parents": [
+      "GOLEMBELL"
+    ],
+    "pages": [
+      "tc.research_page.UPGRADEFIRE.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/golem_upgrade_fire.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "UPGRADEWATER",
+    "category": "GOLEMANCY",
+    "x": 5,
+    "y": 1,
+    "parents": [
+      "GOLEMBELL"
+    ],
+    "pages": [
+      "tc.research_page.UPGRADEWATER.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/golem_upgrade_water.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "UPGRADEORDER",
+    "category": "GOLEMANCY",
+    "x": 6,
+    "y": 2,
+    "parents": [
+      "GOLEMBELL"
+    ],
+    "pages": [
+      "tc.research_page.UPGRADEORDER.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/golem_upgrade_order.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "UPGRADEENTROPY",
+    "category": "GOLEMANCY",
+    "x": 7,
+    "y": 3,
+    "parents": [
+      "GOLEMBELL"
+    ],
+    "pages": [
+      "tc.research_page.UPGRADEENTROPY.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/golem_upgrade_entropy.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "TRAVELTRUNK",
+    "category": "GOLEMANCY",
+    "x": 0,
+    "y": 4,
+    "parents": [
+      "INFUSION",
+      "GOLEMWOOD"
+    ],
+    "pages": [
+      "tc.research_page.TRAVELTRUNK.1",
+      "tc.research_page.TRAVELTRUNK.2"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/models/trunk.png",
+    "iconWidth": 64,
+    "iconHeight": 64
+  },
+  {
+    "key": "COREGATHER",
+    "category": "GOLEMANCY",
+    "x": -3,
+    "y": 3,
+    "parents": [
+      "GOLEMSTRAW"
+    ],
+    "pages": [
+      "tc.research_page.COREGATHER.1",
+      "tc.research_page.COREGATHER.2"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/golem_core_gather.png",
+    "iconWidth": 16,
+    "iconHeight": 48
+  },
+  {
+    "key": "COREFILL",
+    "category": "GOLEMANCY",
+    "x": -5,
+    "y": 3,
+    "parents": [
+      "COREGATHER"
+    ],
+    "pages": [
+      "tc.research_page.COREFILL.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/golem_core_fill.png",
+    "iconWidth": 16,
+    "iconHeight": 48
+  },
+  {
+    "key": "COREEMPTY",
+    "category": "GOLEMANCY",
+    "x": -5,
+    "y": 1,
+    "parents": [
+      "COREGATHER"
+    ],
+    "pages": [
+      "tc.research_page.COREEMPTY.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/golem_core_empty.png",
+    "iconWidth": 16,
+    "iconHeight": 48
+  },
+  {
+    "key": "CORESORTING",
+    "category": "GOLEMANCY",
+    "x": -7,
+    "y": 2,
+    "parents": [
+      "COREEMPTY",
+      "COREFILL",
+      "INFUSION"
+    ],
+    "pages": [
+      "tc.research_page.CORESORTING.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/golem_core_sorting.png",
+    "iconWidth": 16,
+    "iconHeight": 48
+  },
+  {
+    "key": "COREUSE",
+    "category": "GOLEMANCY",
+    "x": -7,
+    "y": 0,
+    "parents": [
+      "COREEMPTY",
+      "INFUSION"
+    ],
+    "pages": [
+      "tc.research_page.COREUSE.1",
+      "tc.research_page.COREUSE.2"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/golem_core_use.png",
+    "iconWidth": 16,
+    "iconHeight": 48
+  },
+  {
+    "key": "COREHARVEST",
+    "category": "GOLEMANCY",
+    "x": -2,
+    "y": 5,
+    "parents": [
+      "COREGATHER"
+    ],
+    "pages": [
+      "tc.research_page.COREHARVEST.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/golem_core_harvest.png",
+    "iconWidth": 16,
+    "iconHeight": 48
+  },
+  {
+    "key": "COREFISHING",
+    "category": "GOLEMANCY",
+    "x": -2,
+    "y": 7,
+    "parents": [
+      "COREHARVEST",
+      "INFUSION"
+    ],
+    "pages": [
+      "tc.research_page.COREFISHING.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/golem_core_fish.png",
+    "iconWidth": 16,
+    "iconHeight": 48
+  },
+  {
+    "key": "CORELUMBER",
+    "category": "GOLEMANCY",
+    "x": -1,
+    "y": 7,
+    "parents": [
+      "COREHARVEST",
+      "ELEMENTALAXE"
+    ],
+    "pages": [
+      "tc.research_page.CORELUMBER.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/golem_core_lumber.png",
+    "iconWidth": 16,
+    "iconHeight": 48
+  },
+  {
+    "key": "COREGUARD",
+    "category": "GOLEMANCY",
+    "x": -4,
+    "y": 5,
+    "parents": [
+      "COREGATHER"
+    ],
+    "pages": [
+      "tc.research_page.COREGUARD.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/golem_core_guard.png",
+    "iconWidth": 16,
+    "iconHeight": 48
+  },
+  {
+    "key": "COREBUTCHER",
+    "category": "GOLEMANCY",
+    "x": -3,
+    "y": 7,
+    "parents": [
+      "COREGUARD",
+      "COREHARVEST"
+    ],
+    "pages": [
+      "tc.research_page.COREBUTCHER.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/golem_core_butcher.png",
+    "iconWidth": 16,
+    "iconHeight": 48
+  },
+  {
+    "key": "CORELIQUID",
+    "category": "GOLEMANCY",
+    "x": -7,
+    "y": 4,
+    "parents": [
+      "COREFILL"
+    ],
+    "pages": [
+      "tc.research_page.CORELIQUID.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/golem_core_liquid.png",
+    "iconWidth": 16,
+    "iconHeight": 48
+  },
+  {
+    "key": "COREALCHEMY",
+    "category": "GOLEMANCY",
+    "x": -9,
+    "y": 3,
+    "parents": [
+      "CORELIQUID",
+      "INFUSION"
+    ],
+    "pages": [
+      "tc.research_page.COREALCHEMY.1",
+      "tc.research_page.COREALCHEMY.2"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/golem_core_essentia.png",
+    "iconWidth": 16,
+    "iconHeight": 48
+  },
+  {
+    "key": "ADVANCEDGOLEM",
+    "category": "GOLEMANCY",
+    "x": 8,
+    "y": 0,
+    "parents": [
+      "INFUSION",
+      "UPGRADEAIR",
+      "UPGRADEEARTH",
+      "UPGRADEFIRE",
+      "UPGRADEWATER",
+      "UPGRADEORDER",
+      "UPGRADEENTROPY"
+    ],
+    "pages": [
+      "tc.research_page.ADVANCEDGOLEM.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/golem_thaumium.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "ELDRITCHMINOR",
+    "category": "ELDRITCH",
+    "x": 1,
+    "y": 0,
+    "parents": [],
+    "pages": [
+      "tc.research_page.ELDRITCHMINOR.1"
+    ],
+    "auto": false,
+    "round": true,
+    "concealed": true,
+    "icon": "thaumcraft:textures/misc/r_eldritchminor.png",
+    "iconWidth": 32,
+    "iconHeight": 32
+  },
+  {
+    "key": "OCULUS",
+    "category": "ELDRITCH",
+    "x": -2,
+    "y": 2,
+    "parents": [
+      "CRIMSON",
+      "ELDRITCHMAJOR"
+    ],
+    "pages": [
+      "tc.research_page.OCULUS.1",
+      "tc.research_page.OCULUS.2"
+    ],
+    "auto": false,
+    "round": true,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/eldritch_object.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "ENTEROUTER",
+    "category": "ELDRITCH",
+    "x": -3,
+    "y": 4,
+    "parents": [
+      "OCULUS"
+    ],
+    "pages": [
+      "tc.research_page.ENTEROUTER.1"
+    ],
+    "auto": false,
+    "round": true,
+    "concealed": true,
+    "icon": "thaumcraft:textures/misc/r_outer.png",
+    "iconWidth": 32,
+    "iconHeight": 32
+  },
+  {
+    "key": "OUTERREV",
+    "category": "ELDRITCH",
+    "x": -5,
+    "y": 3,
+    "parents": [
+      "ENTEROUTER"
+    ],
+    "pages": [
+      "tc.research_page.OUTERREV.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": false,
+    "icon": "thaumcraft:textures/misc/r_outerrev.png",
+    "iconWidth": 32,
+    "iconHeight": 32
+  },
+  {
+    "key": "PRIMPEARL",
+    "category": "ELDRITCH",
+    "x": 0,
+    "y": 4,
+    "parents": [
+      "ELDRITCHMINOR"
+    ],
+    "pages": [
+      "tc.research_page.PRIMPEARL.1",
+      "tc.research_page.PRIMPEARL.2"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": false,
+    "icon": "thaumcraft:textures/items/eldritch_object.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "PRIMNODE",
+    "category": "ELDRITCH",
+    "x": 0,
+    "y": 6,
+    "parents": [
+      "PRIMPEARL"
+    ],
+    "pages": [
+      "tc.research_page.PRIMNODE.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": false,
+    "icon": "thaumcraft:textures/misc/r_nodes_2.png",
+    "iconWidth": 32,
+    "iconHeight": 32
+  },
+  {
+    "key": "ADVALCHEMYFURNACE",
+    "category": "ELDRITCH",
+    "x": -2,
+    "y": 6,
+    "parents": [
+      "PRIMPEARL",
+      "DISTILESSENTIA",
+      "VISPOWER"
+    ],
+    "pages": [
+      "tc.research_page.ADVALCHEMYFURNACE.1",
+      "tc.research_page.ADVALCHEMYFURNACE.2"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": false,
+    "icon": "thaumcraft:textures/blocks/crucible1.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "PRIMALCRUSHER",
+    "category": "ELDRITCH",
+    "x": 2,
+    "y": 5,
+    "parents": [
+      "PRIMPEARL"
+    ],
+    "pages": [
+      "tc.research_page.PRIMALCRUSHER.1",
+      "tc.research_page.PRIMALCRUSHER.2"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/primal_crusher.png",
+    "iconWidth": 16,
+    "iconHeight": 288
+  },
+  {
+    "key": "VOIDMETAL",
+    "category": "ELDRITCH",
+    "x": 2,
+    "y": -2,
+    "parents": [
+      "THAUMIUM",
+      "ELDRITCHMINOR"
+    ],
+    "pages": [
+      "tc.research_page.VOIDMETAL.1",
+      "tc.research_page.VOIDMETAL.2"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": false,
+    "icon": "thaumcraft:textures/items/voidingot.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "ESSENTIARESERVOIR",
+    "category": "ELDRITCH",
+    "x": 4,
+    "y": -3,
+    "parents": [
+      "VOIDMETAL",
+      "CENTRIFUGE",
+      "INFUSION"
+    ],
+    "pages": [
+      "tc.research_page.ESSENTIARESERVOIR.1",
+      "tc.research_page.ESSENTIARESERVOIR.2"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": false,
+    "icon": "thaumcraft:textures/blocks/essentiareservoir.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "CAP_void",
+    "category": "ELDRITCH",
+    "x": 5,
+    "y": -1,
+    "parents": [
+      "CAP_thaumium",
+      "VOIDMETAL"
+    ],
+    "pages": [
+      "tc.research_page.CAP_void.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/wand_cap_void.png",
+    "iconWidth": 16,
+    "iconHeight": 48
+  },
+  {
+    "key": "ARMORVOIDFORTRESS",
+    "category": "ELDRITCH",
+    "x": 0,
+    "y": -3,
+    "parents": [
+      "VOIDMETAL",
+      "ENCHFABRIC",
+      "ELDRITCHMAJOR"
+    ],
+    "pages": [
+      "tc.research_page.ARMORVOIDFORTRESS.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/voidrobehelm.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "FOCUSPRIMAL",
+    "category": "ELDRITCH",
+    "x": 4,
+    "y": 1,
+    "parents": [
+      "ELDRITCHMINOR"
+    ],
+    "pages": [
+      "tc.research_page.FOCUSPRIMAL.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/focus_primal.png",
+    "iconWidth": 16,
+    "iconHeight": 480
+  },
+  {
+    "key": "SANITYCHECK",
+    "category": "ELDRITCH",
+    "x": 2,
+    "y": 2,
+    "parents": [
+      "ELDRITCHMINOR"
+    ],
+    "pages": [
+      "tc.research_page.SANITYCHECK.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": false,
+    "icon": "thaumcraft:textures/items/sanitychecker.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "ROD_primal_staff",
+    "category": "ELDRITCH",
+    "x": 6,
+    "y": 2,
+    "parents": [
+      "FOCUSPRIMAL"
+    ],
+    "pages": [
+      "tc.research_page.ROD_primal_staff.1"
+    ],
+    "auto": false,
+    "round": false,
+    "concealed": true,
+    "icon": "thaumcraft:textures/items/staff_rod_primal.png",
+    "iconWidth": 16,
+    "iconHeight": 16
+  },
+  {
+    "key": "ELDRITCHMAJOR",
+    "category": "ELDRITCH",
+    "x": -1,
+    "y": 0,
+    "parents": [],
+    "pages": [
+      "tc.research_page.ELDRITCHMAJOR.1",
+      "tc.research_page.ELDRITCHMAJOR.2"
+    ],
+    "auto": false,
+    "round": true,
+    "concealed": true,
+    "icon": "thaumcraft:textures/misc/r_eldritchmajor.png",
+    "iconWidth": 32,
+    "iconHeight": 32
+  }
+]
