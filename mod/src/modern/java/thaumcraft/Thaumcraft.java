@@ -2,12 +2,15 @@ package thaumcraft;
 
 import com.mojang.logging.LogUtils;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.common.commands.AspectCommands;
 import thaumcraft.common.config.ConfigAspects;
+import thaumcraft.common.items.ModItems;
 
 /**
  * Forge 1.20.1 entry point for the Thaumcraft 4 port.
@@ -21,6 +24,9 @@ public final class Thaumcraft {
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public Thaumcraft() {
+        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        ModItems.register(modEventBus);
+
         validateAspectRegistry();
         ConfigAspects.init();
         MinecraftForge.EVENT_BUS.addListener(AspectCommands::onRegisterCommands);
