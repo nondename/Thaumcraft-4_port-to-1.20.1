@@ -92,6 +92,11 @@ tasks.named('processResources', ProcessResources).configure {
             mod_description        : mod_description
     ]
 
+    // Keep legacy source/resources excluded globally, but package the exact TC4 aura-node atlas.
+    from('src/main/resources/assets/thaumcraft/textures/misc/nodes.png') {
+        into 'assets/thaumcraft/textures/misc'
+    }
+
     inputs.properties replaceProperties
 
     filesMatching(['META-INF/mods.toml']) {
