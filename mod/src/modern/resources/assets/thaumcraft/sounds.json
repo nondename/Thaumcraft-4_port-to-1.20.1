@@ -22,5 +22,12 @@
       "thaumcraft:wand2",
       "thaumcraft:wand3"
     ]
+  },
+  "zap": {
+    "category": "master",
+    "sounds": [
+      "thaumcraft:zap1",
+      "thaumcraft:zap2"
+    ]
   }
 }
