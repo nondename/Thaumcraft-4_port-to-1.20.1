@@ -3,20 +3,37 @@ package thaumcraft.common.nodes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.nodes.INode;
 import thaumcraft.api.nodes.NodeModifier;
 import thaumcraft.api.nodes.NodeType;
 
-/** Persistent current/base vis, type and modifier for a TC4-style aura node. */
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Persistent current/base vis, type and modifier for a TC4-style aura node.
+ *
+ * <p>The server tick intentionally mirrors the important parts of TC4 4.2.3.5 TileNode:
+ * neighbouring stronger nodes discharge weaker nodes, can permanently grow their base vis,
+ * donors can permanently weaken, empty aspects decay, and current vis slowly recharges toward
+ * base vis. Node stabilizer locks are added when the stabilizer block itself is ported.</p>
+ */
 public final class AuraNodeBlockEntity extends BlockEntity implements INode {
     private final AspectList aspects = new AspectList();
     private final AspectList baseAspects = new AspectList();
     private NodeType nodeType = NodeType.NORMAL;
     private NodeModifier nodeModifier;
     private String nodeId = "";
+
+    private int count;
+    private int regeneration = -1;
+    private int wait;
 
     public AuraNodeBlockEntity(BlockPos pos, BlockState state) {
         super(ModNodes.AURA_NODE_ENTITY.get(), pos, state);
@@ -31,8 +48,205 @@ public final class AuraNodeBlockEntity extends BlockEntity implements INode {
             aspects.add(generatedAspects);
             baseAspects.add(generatedAspects);
         }
+        regeneration = -1;
+        wait = 0;
         ensureNodeId();
         setChangedAndSync();
+    }
+
+    public static void serverTick(Level level, BlockPos pos, BlockState state, AuraNodeBlockEntity node) {
+        if (!(level instanceof ServerLevel serverLevel) || node.isRemoved()) {
+            return;
+        }
+        node.tickServer(serverLevel);
+    }
+
+    private void tickServer(ServerLevel level) {
+        count++;
+        boolean changed = false;
+        changed |= handleDischarge(level);
+        changed |= handleRecharge(level);
+        if (changed && !isRemoved()) {
+            setChangedAndSync();
+        }
+    }
+
+    /** TC4 TileNode.handleDischarge: a stronger nearby node gradually consumes a weaker one. */
+    private boolean handleDischarge(ServerLevel level) {
+        if (nodeModifier == NodeModifier.FADING) {
+            return false;
+        }
+
+        boolean shiny = nodeType == NodeType.HUNGRY || nodeModifier == NodeModifier.BRIGHT;
+        int interval = nodeModifier == null ? 2 : (shiny ? 1 : (nodeModifier == NodeModifier.PALE ? 3 : 2));
+        if (count % interval != 0) {
+            return false;
+        }
+
+        var random = level.random;
+        int dx = random.nextInt(5) - random.nextInt(5);
+        int dy = random.nextInt(5) - random.nextInt(5);
+        int dz = random.nextInt(5) - random.nextInt(5);
+        if (nodeModifier == NodeModifier.PALE && random.nextBoolean()) {
+            return false;
+        }
+        if (dx == 0 && dy == 0 && dz == 0) {
+            return false;
+        }
+
+        BlockPos donorPos = worldPosition.offset(dx, dy, dz);
+        if (!(level.getBlockEntity(donorPos) instanceof AuraNodeBlockEntity donor) || donor.isRemoved()) {
+            return false;
+        }
+
+        int donorStrength = (donor.aspects.visSize() + donor.baseAspects.visSize()) / 2;
+        int thisStrength = (aspects.visSize() + baseAspects.visSize()) / 2;
+        if (donorStrength >= thisStrength || donor.aspects.size() <= 0) {
+            return false;
+        }
+
+        Aspect[] donorAspects = donor.aspects.getAspects();
+        if (donorAspects.length == 0) {
+            return false;
+        }
+        Aspect aspect = donorAspects[random.nextInt(donorAspects.length)];
+        if (aspect == null) {
+            return false;
+        }
+
+        boolean consumed = false;
+        if (aspects.getAmount(aspect) < baseAspects.getAmount(aspect) && donor.takeCurrent(aspect, 1)) {
+            addCurrentCapped(aspect, 1);
+            consumed = true;
+        } else if (donor.takeCurrent(aspect, 1)) {
+            // Original chance: 1 / (1 + floor(base / multiplier)). Hungry and Bright use 1.5.
+            double divisor = shiny ? 1.5D : 1.0D;
+            int bound = 1 + (int) (baseAspects.getAmount(aspect) / divisor);
+            if (random.nextInt(Math.max(1, bound)) == 0) {
+                baseAspects.add(aspect, 1);
+
+                if (nodeModifier == NodeModifier.PALE && random.nextInt(100) == 0) {
+                    nodeModifier = null;
+                    regeneration = -1;
+                }
+
+                // In TC4 the donor permanently loses one point of base vis one third of the time.
+                if (random.nextInt(3) == 0) {
+                    donor.decreaseBase(aspect, 1);
+                }
+            }
+            consumed = true;
+        }
+
+        if (!consumed) {
+            return false;
+        }
+
+        donor.ensureRegeneration();
+        donor.wait = donor.regeneration / 2;
+        donor.setChangedAndSync();
+        return true;
+    }
+
+    /** TC4 TileNode.handleRecharge including slow decay of completely drained aspects. */
+    private boolean handleRecharge(ServerLevel level) {
+        ensureRegeneration();
+        boolean changed = false;
+
+        if (count % 1200 == 0) {
+            Aspect[] current = aspects.getAspects();
+            for (Aspect aspect : current) {
+                if (aspect == null || aspects.getAmount(aspect) > 0) {
+                    continue;
+                }
+
+                decreaseBase(aspect, 1);
+                if (level.random.nextInt(20) == 0 || baseAspects.getAmount(aspect) <= 0) {
+                    aspects.remove(aspect);
+                    baseAspects.remove(aspect);
+
+                    if (level.random.nextInt(5) == 0) {
+                        if (nodeModifier == NodeModifier.BRIGHT) {
+                            nodeModifier = null;
+                        } else if (nodeModifier == null) {
+                            nodeModifier = NodeModifier.PALE;
+                        }
+                        if (nodeModifier == NodeModifier.PALE && level.random.nextInt(5) == 0) {
+                            nodeModifier = NodeModifier.FADING;
+                        }
+                        regeneration = -1;
+                    }
+                }
+                changed = true;
+                break;
+            }
+
+            if (aspects.size() <= 0) {
+                level.removeBlock(worldPosition, false);
+                return false;
+            }
+        }
+
+        if (wait > 0) {
+            wait--;
+        }
+
+        if (regeneration > 0 && wait == 0 && count % regeneration == 0) {
+            List<Aspect> depleted = new ArrayList<>();
+            for (Aspect aspect : aspects.getAspects()) {
+                if (aspect != null && aspects.getAmount(aspect) < baseAspects.getAmount(aspect)) {
+                    depleted.add(aspect);
+                }
+            }
+            if (!depleted.isEmpty()) {
+                Aspect aspect = depleted.get(level.random.nextInt(depleted.size()));
+                addCurrentCapped(aspect, 1);
+                changed = true;
+            }
+        }
+
+        return changed;
+    }
+
+    private void ensureRegeneration() {
+        if (regeneration >= 0) {
+            return;
+        }
+        regeneration = 600;
+        if (nodeModifier == NodeModifier.BRIGHT) {
+            regeneration = 400;
+        } else if (nodeModifier == NodeModifier.PALE) {
+            regeneration = 900;
+        } else if (nodeModifier == NodeModifier.FADING) {
+            regeneration = 0;
+        }
+    }
+
+    private boolean takeCurrent(Aspect aspect, int amount) {
+        return aspect != null && amount > 0 && aspects.reduce(aspect, amount);
+    }
+
+    private void addCurrentCapped(Aspect aspect, int amount) {
+        if (aspect == null || amount <= 0) {
+            return;
+        }
+        int room = Math.max(0, baseAspects.getAmount(aspect) - aspects.getAmount(aspect));
+        if (room > 0) {
+            aspects.add(aspect, Math.min(room, amount));
+        }
+    }
+
+    private void decreaseBase(Aspect aspect, int amount) {
+        if (aspect == null || amount <= 0) {
+            return;
+        }
+        int next = Math.max(0, baseAspects.getAmount(aspect) - amount);
+        if (next <= 0) {
+            baseAspects.remove(aspect);
+        } else {
+            baseAspects.remove(aspect);
+            baseAspects.add(aspect, next);
+        }
     }
 
     @Override
@@ -62,6 +276,7 @@ public final class AuraNodeBlockEntity extends BlockEntity implements INode {
 
     public void setNodeModifier(NodeModifier modifier) {
         nodeModifier = modifier;
+        regeneration = -1;
         setChangedAndSync();
     }
 
@@ -108,6 +323,8 @@ public final class AuraNodeBlockEntity extends BlockEntity implements INode {
         nodeId = tag.getString("nodeId");
         nodeType = parseType(tag.getString("type"));
         nodeModifier = parseModifier(tag.getString("modifier"));
+        regeneration = -1;
+        wait = 0;
         aspects.readFromNBT(tag, "Aspects");
         baseAspects.readFromNBT(tag, "AspectsBase");
         if (baseAspects.size() == 0 && aspects.size() > 0) {
