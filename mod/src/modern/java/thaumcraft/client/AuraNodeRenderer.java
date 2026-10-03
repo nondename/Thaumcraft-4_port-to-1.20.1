@@ -13,7 +13,6 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import thaumcraft.Thaumcraft;
 import thaumcraft.api.aspects.Aspect;
@@ -45,10 +44,10 @@ public final class AuraNodeRenderer implements BlockEntityRenderer<AuraNodeBlock
         Vec3 center = Vec3.atCenterOf(node.getBlockPos());
         double distance = viewer.getEyePosition(partialTick).distanceTo(center);
 
-        // TC4 TileNodeRenderer#174-199: a helmet IRevealer (goggles of revealing) wins
-        // outright and draws the node through walls inside the 64-block band; only then
-        // does the held thaumometer reveal it under TC4 UtilsFX#isVisibleTo(0.44, ...).
-        // depthIgnore reproduces the original glDisable(GL_DEPTH_TEST) for revealed nodes.
+        // TC4 TileNodeRenderer: goggles reveal nodes through walls. A held thaumometer calls
+        // UtilsFX.isVisibleTo(0.44F, ...), whose old FOV formula effectively accepts every
+        // first-person direction at normal FOV values. Do not add a modern angular cone here:
+        // it makes nodes pop out near one side of the physical thaumometer lens.
         boolean depthIgnore = false;
         boolean revealed = false;
         double viewDistance = FAINT_VIEW_DISTANCE;
@@ -58,7 +57,7 @@ public final class AuraNodeRenderer implements BlockEntityRenderer<AuraNodeBlock
         if (helmet.getItem() instanceof IRevealer revealer && revealer.showNodes(helmet, viewer)) {
             revealed = true;
             depthIgnore = true;
-        } else if (holdingThaumometer && isVisibleTo(viewer, distance, center)) {
+        } else if (holdingThaumometer) {
             viewDistance = THAUMOMETER_VIEW_DISTANCE;
             revealed = true;
             depthIgnore = true;
@@ -191,24 +190,6 @@ public final class AuraNodeRenderer implements BlockEntityRenderer<AuraNodeBlock
                 .uv(u, v)
                 .uv2(LightTexture.FULL_BRIGHT)
                 .endVertex();
-    }
-
-    /**
-     * TC4 UtilsFX#900-928: nodes within 2 blocks always reveal; farther away the angle to
-     * the node is compared with (0.44 + FOV/2) in first person, while third person only
-     * keeps the 400-block band. The original mixes radians with a degrees-style bound, so
-     * at any normal FOV the test passes at every viewing angle — kept verbatim for parity.
-     */
-    private static boolean isVisibleTo(Player viewer, double distance, Vec3 target) {
-        if (distance < 2.0D) return true;
-        if (distance >= 400.0D) return false;
-        var options = Minecraft.getInstance().options;
-        if (!options.getCameraType().isFirstPerson()) return true;
-        Vec3 delta = target.subtract(viewer.getEyePosition());
-        if (delta.lengthSqr() < 1.0E-4D) return true;
-        double dot = delta.normalize().dot(viewer.getViewVector(1.0F));
-        double angle = Math.acos(Mth.clamp(dot, -1.0D, 1.0D));
-        return angle < 0.44D + options.fov().get() / 2.0D;
     }
 
     private static void vertex(VertexConsumer vertices, PoseStack.Pose pose,
