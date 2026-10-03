@@ -28,6 +28,11 @@ public final class ThaumometerItemRenderer extends BlockEntityWithoutLevelRender
     public static final ResourceLocation MODEL = ResourceLocation.fromNamespaceAndPath(Thaumcraft.MODID, "item/thaumometer_mesh");
     private static final ResourceLocation SCREEN_TEXTURE =
             ResourceLocation.fromNamespaceAndPath(Thaumcraft.MODID, "textures/models/scanscreen.png");
+
+    // Same mesh-basis correction used by the 1.12.2 port's ItemThaumometerRenderer.
+    private static final float TC4_TO_TC6_VERTICAL_CENTER = -0.1F;
+    private static final float TC4_TO_TC6_Y_ROTATION = -90.0F;
+    private static final float HUD_SCALE_MULTIPLIER = 1.875F;
     private static final int MAX_READOUT_ASPECTS = 15;
 
     public ThaumometerItemRenderer() {
@@ -38,7 +43,13 @@ public final class ThaumometerItemRenderer extends BlockEntityWithoutLevelRender
     public void renderByItem(ItemStack stack, ItemDisplayContext context, PoseStack poseStack,
                              MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
         poseStack.pushPose();
+
+        // ItemRenderer offsets custom renderers by -0.5 before BEWLR; cancel that first,
+        // then reproduce the 1.12.2 TC4->TC6 scanner basis conversion.
         poseStack.translate(0.5D, 0.5D, 0.5D);
+        poseStack.translate(0.0D, TC4_TO_TC6_VERTICAL_CENTER, 0.0D);
+        poseStack.mulPose(Axis.YP.rotationDegrees(TC4_TO_TC6_Y_ROTATION));
+
         Minecraft minecraft = Minecraft.getInstance();
         BakedModel model = minecraft.getModelManager().getModel(MODEL);
         for (BakedModel pass : model.getRenderPasses(stack, false)) {
@@ -87,8 +98,12 @@ public final class ThaumometerItemRenderer extends BlockEntityWithoutLevelRender
                 : null;
 
         poseStack.pushPose();
-        poseStack.translate(0.0D, 0.12D, 0.0D);
+        // Match the 1.12.2 screen plane: the HUD is drawn inside the same scanner plane,
+        // then flipped 180 degrees because the local font/tag axes are inverted there.
+        poseStack.translate(0.0D, 0.11D, -0.01D);
         poseStack.mulPose(Axis.XP.rotationDegrees(90.0F));
+        poseStack.mulPose(Axis.ZP.rotationDegrees(90.0F));
+        poseStack.mulPose(Axis.ZP.rotationDegrees(180.0F));
         renderAspectIcons(minecraft, poseStack, bufferSource, aspects);
         renderTargetName(minecraft.font, poseStack, bufferSource, scan.readoutName(knowledge).getString());
         poseStack.popPose();
@@ -110,7 +125,9 @@ public final class ThaumometerItemRenderer extends BlockEntityWithoutLevelRender
             Aspect aspect = sorted[index];
             if (aspect != null) {
                 poseStack.pushPose();
-                poseStack.scale(0.023F, 0.023F, 0.023F);
+                poseStack.scale(0.0075F * HUD_SCALE_MULTIPLIER,
+                        0.0075F * HUD_SCALE_MULTIPLIER,
+                        0.0075F * HUD_SCALE_MULTIPLIER);
                 drawTexture(bufferSource, poseStack, aspect.getImage(),
                         -baseX + posX * 16, -8 + posY * 16, 16, 16, LightTexture.FULL_BRIGHT, aspect.getColor());
                 String amount = Integer.toString(aspects.getAmount(aspect));
@@ -133,9 +150,9 @@ public final class ThaumometerItemRenderer extends BlockEntityWithoutLevelRender
             return;
         }
         poseStack.pushPose();
-        poseStack.translate(0.0D, -0.5D, 0.0D);
-        float scale = Math.min(0.020F, 1.9F / Math.max(1, font.width(name)));
+        poseStack.translate(0.0D, -0.25D, 0.0D);
         int width = font.width(name);
+        float scale = 0.005F * HUD_SCALE_MULTIPLIER;
         if (width > 90) {
             scale -= 0.000025F * (width - 90);
         }
