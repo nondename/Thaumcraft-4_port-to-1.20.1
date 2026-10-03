@@ -105,7 +105,8 @@ public class ItemThaumometer extends Item {
             level.playLocalSound(
                     player.getX(), player.getY(), player.getZ(),
                     ModSounds.CAMERA_TICKS.get(),
-                    SoundSource.PLAYERS,
+                    // TC4 sounds.json: cameraticks lives in the "master" category
+                    SoundSource.MASTER,
                     0.2F,
                     0.45F + level.random.nextFloat() * 0.1F,
                     false

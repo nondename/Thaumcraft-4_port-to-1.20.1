@@ -50,7 +50,8 @@ public final class ItemWand extends Item {
             level.addFreshEntity(book);
             server.sendParticles(ParticleTypes.ENCHANT, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
                     32, 0.3, 0.3, 0.3, 0.2);
-            level.playSound(null, pos, ModSounds.WAND.get(), SoundSource.PLAYERS, 1, 1);
+            // TC4 sounds.json: the wand event lives in the "master" category
+            level.playSound(null, pos, ModSounds.WAND.get(), SoundSource.MASTER, 1, 1);
         }
         return InteractionResult.sidedSuccess(level.isClientSide);
     }

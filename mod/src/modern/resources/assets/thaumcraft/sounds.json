@@ -17,6 +17,7 @@
     ]
   },
   "wand": {
+    "category": "master",
     "sounds": [
       "thaumcraft:wand1",
       "thaumcraft:wand2",

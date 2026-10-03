@@ -59,8 +59,9 @@ public final class AuraNodeRenderer implements BlockEntityRenderer<AuraNodeBlock
         boolean revealed = false;
         double viewDistance = FAINT_VIEW_DISTANCE;
         var helmet = viewer.getItemBySlot(EquipmentSlot.HEAD);
-        boolean holdingThaumometer = viewer.getMainHandItem().is(ModItems.THAUMOMETER.get())
-                || viewer.getOffhandItem().is(ModItems.THAUMOMETER.get());
+        // TileNodeRenderer#192 checks inventory.getCurrentItem() — the main hand only;
+        // 1.7.10 had no off-hand slot, so a scanner held in the off-hand reveals nothing.
+        boolean holdingThaumometer = viewer.getMainHandItem().is(ModItems.THAUMOMETER.get());
         if (helmet.getItem() instanceof IRevealer revealer && revealer.showNodes(helmet, viewer)) {
             revealed = true;
             depthIgnore = true;
