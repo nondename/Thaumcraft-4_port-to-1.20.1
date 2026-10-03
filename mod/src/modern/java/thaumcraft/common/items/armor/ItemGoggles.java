@@ -6,7 +6,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ArmorMaterials;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
@@ -19,15 +18,16 @@ import thaumcraft.api.nodes.IRevealer;
 /**
  * Goggles of Revealing — port of TC4 ItemGoggles (decompiled): a rare helmet repaired
  * with a gold ingot, granting a 5% vis discount and, through {@link IRevealer}, the
- * through-wall aura node readout. Durability 350 and helmet defense 1 match the
- * original "SPECIAL" armor material; the worn layer keeps the vanilla material
- * texture until a custom armor layer is ported.
+ * through-wall aura node readout. Durability 350, helmet defense 1 and enchantability 25
+ * match the original "SPECIAL" armor material; the worn layer renders the original TC4
+ * texture through {@link GogglesArmorMaterial}'s name resolution.
  */
 public class ItemGoggles extends ArmorItem implements IVisDiscountGear, IRevealer {
 
     public ItemGoggles(Properties properties) {
-        // TC4 armorMatSpecial {1,3,2,1}: the helmet piece defends 1, like leather.
-        super(ArmorMaterials.LEATHER, Type.HELMET, properties);
+        // TC4 armorMatSpecial {1,3,2,1} + enchantability 25; the custom material name also
+        // resolves the original worn texture (see GogglesArmorMaterial).
+        super(new GogglesArmorMaterial(), Type.HELMET, properties);
     }
 
     @Override

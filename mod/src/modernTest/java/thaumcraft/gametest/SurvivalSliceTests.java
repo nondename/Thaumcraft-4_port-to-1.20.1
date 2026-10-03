@@ -125,10 +125,16 @@ public final class SurvivalSliceTests {
     public static void gogglesRevealAndContracts(GameTestHelper helper) {
         var level = helper.getLevel();
         var goggles = ModItems.GOGGLES.get();
-        helper.assertTrue(goggles instanceof ArmorItem armor
-                        && armor.getType() == ArmorItem.Type.HELMET
+        helper.assertTrue(goggles instanceof ArmorItem, "Goggles must be an armor item");
+        var armor = (ArmorItem) goggles;
+        helper.assertTrue(armor.getType() == ArmorItem.Type.HELMET
                         && armor.getEquipmentSlot() == EquipmentSlot.HEAD,
                 "Goggles must be a helmet armor item");
+        helper.assertTrue(armor.getMaterial().getName().equals("thaumcraft:goggles"),
+                "Material name must resolve the original TC4 worn texture path");
+        helper.assertTrue(armor.getEnchantmentValue() == 25, "TC4 armorMatSpecial enchantability is 25");
+        helper.assertTrue(armor.getMaterial().getDefenseForType(ArmorItem.Type.HELMET) == 1,
+                "TC4 armorMatSpecial gives the helmet 1 defense");
         helper.assertTrue(goggles.getMaxDamage() == 350, "TC4 ItemGoggles sets max damage 350");
         helper.assertTrue(goggles.getRarity(new ItemStack(goggles)) == Rarity.RARE, "TC4 ItemGoggles rarity is rare");
         helper.assertTrue(goggles.isValidRepairItem(new ItemStack(goggles), new ItemStack(Items.GOLD_INGOT)),
