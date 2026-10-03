@@ -46,20 +46,33 @@ public final class ThaumometerHands {
         PoseStack poseStack = event.getPoseStack();
         poseStack.pushPose();
 
+        float partialTick = event.getPartialTick();
+        float armPitch = Mth.lerp(partialTick, player.xBobO, player.xBob);
+        float armYaw = Mth.lerp(partialTick, player.yBobO, player.yBob);
+        float pitchCorrection = (player.getXRot() - armPitch) * 0.1F;
+        float yawCorrection = (player.getYRot() - armYaw) * 0.1F;
+
+        /*
+         * The original IItemRenderer was NOT called from a clean camera matrix. Minecraft 1.7.10's
+         * ItemRenderer.renderItemInFirstPerson() first applied this ordinary held-item transform and
+         * only then called Forge's custom item renderer. Omitting this outer stage was why the first
+         * direct TC4 port appeared edge-on and far off-centre in 1.20.1.
+         */
+        poseStack.mulPose(Axis.XP.rotationDegrees(pitchCorrection));
+        poseStack.mulPose(Axis.YP.rotationDegrees(yawCorrection));
+        applyVanilla1710HeldItemBasis(player, poseStack, event);
+
         // Exact first-person foundation from TC4 4.2.3.5 ItemThaumometerRenderer:
         // glTranslatef(1, .75, -1), then glRotatef(135, 0, -1, 0).
         poseStack.translate(1.0D, 0.75D, -1.0D);
         poseStack.mulPose(Axis.YP.rotationDegrees(-135.0F));
 
-        // TC4 used the smoothed render-arm pitch/yaw here. LocalPlayer's xBob/yBob fields are
-        // their modern equivalents, so preserve the small 10% camera-follow correction.
-        float armPitch = Mth.lerp(event.getPartialTick(), player.xBobO, player.xBob);
-        float armYaw = Mth.lerp(event.getPartialTick(), player.yBobO, player.yBob);
-        poseStack.mulPose(Axis.XP.rotationDegrees((player.getXRot() - armPitch) * 0.1F));
-        poseStack.mulPose(Axis.YP.rotationDegrees((player.getYRot() - armYaw) * 0.1F));
+        // TC4's renderer applies the render-arm smoothing correction a second time internally.
+        poseStack.mulPose(Axis.XP.rotationDegrees(pitchCorrection));
+        poseStack.mulPose(Axis.YP.rotationDegrees(yawCorrection));
 
-        // Original f9 was 0.8. Modern RenderHandEvent exposes the unequip motion directly as
-        // equipProgress (0 when fully raised), so this is the same vertical draw animation.
+        // Original f9 was 0.8. RenderHandEvent equipProgress is the modern unequip amount
+        // (0 when fully raised), matching the old (1 - equippedProgress) terms below.
         poseStack.translate(-0.56D, 0.52D + event.getEquipProgress() * 1.5D, 0.72D);
         poseStack.mulPose(Axis.YP.rotationDegrees(90.0F));
         poseStack.translate(0.0D, 0.0D, -0.72D);
@@ -75,6 +88,41 @@ public final class ThaumometerHands {
                 stack, poseStack, event.getMultiBufferSource(), event.getPackedLight());
 
         poseStack.popPose();
+    }
+
+    /**
+     * Reproduces the vanilla 1.7.10 matrix that surrounded Forge's EQUIPPED_FIRST_PERSON
+     * IItemRenderer call. These transforms are part of the original thaumometer pose even though
+     * they lived in Minecraft rather than Thaumcraft itself.
+     */
+    private static void applyVanilla1710HeldItemBasis(LocalPlayer player, PoseStack poseStack,
+                                                       RenderHandEvent event) {
+        float swing = player.getAttackAnim(event.getPartialTick());
+        float sinSwing = Mth.sin(swing * Mth.PI);
+        float sinSqrtSwing = Mth.sin(Mth.sqrt(swing) * Mth.PI);
+
+        // In 1.7.10 this initial swing translation was skipped while an item with EnumAction.none
+        // was being used. That is exactly the state of a thaumometer during its 25-tick scan.
+        if (!player.isUsingItem()) {
+            poseStack.translate(
+                    -sinSqrtSwing * 0.4F,
+                    Mth.sin(Mth.sqrt(swing) * Mth.PI * 2.0F) * 0.2F,
+                    -sinSwing * 0.2F
+            );
+        }
+
+        poseStack.translate(
+                0.56D,
+                -0.52D - event.getEquipProgress() * 0.6D,
+                -0.72D
+        );
+        poseStack.mulPose(Axis.YP.rotationDegrees(45.0F));
+
+        float sinSwingSquared = Mth.sin(swing * swing * Mth.PI);
+        poseStack.mulPose(Axis.YP.rotationDegrees(-sinSwingSquared * 20.0F));
+        poseStack.mulPose(Axis.ZP.rotationDegrees(-sinSqrtSwing * 20.0F));
+        poseStack.mulPose(Axis.XP.rotationDegrees(-sinSqrtSwing * 80.0F));
+        poseStack.scale(0.4F, 0.4F, 0.4F);
     }
 
     private static void renderTc4Arms(Minecraft minecraft, LocalPlayer player, PoseStack poseStack,
