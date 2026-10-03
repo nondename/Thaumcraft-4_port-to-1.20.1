@@ -29,7 +29,8 @@ public final class ThaumometerItemRenderer extends BlockEntityWithoutLevelRender
     private static final ResourceLocation SCREEN_TEXTURE =
             ResourceLocation.fromNamespaceAndPath(Thaumcraft.MODID, "textures/models/scanscreen.png");
 
-    // Same mesh-basis correction used by the 1.12.2 port's ItemThaumometerRenderer.
+    // Same mesh-basis correction used by the 1.12.2 port for ordinary item display contexts.
+    // The TC4 first-person path bypasses it and uses the original 1.7.10 matrix stack instead.
     private static final float TC4_TO_TC6_VERTICAL_CENTER = -0.1F;
     private static final float TC4_TO_TC6_Y_ROTATION = -90.0F;
     private static final float HUD_SCALE_MULTIPLIER = 1.875F;
@@ -45,12 +46,35 @@ public final class ThaumometerItemRenderer extends BlockEntityWithoutLevelRender
         poseStack.pushPose();
 
         // ItemRenderer offsets custom renderers by -0.5 before BEWLR; cancel that first,
-        // then reproduce the 1.12.2 TC4->TC6 scanner basis conversion.
+        // then reproduce the 1.12.2 TC4->TC6 scanner basis conversion for inventory/world use.
         poseStack.translate(0.5D, 0.5D, 0.5D);
         poseStack.translate(0.0D, TC4_TO_TC6_VERTICAL_CENTER, 0.0D);
         poseStack.mulPose(Axis.YP.rotationDegrees(TC4_TO_TC6_Y_ROTATION));
 
         Minecraft minecraft = Minecraft.getInstance();
+        renderScannerMesh(minecraft, stack, poseStack, bufferSource, packedLight, packedOverlay);
+        renderScannerLens(poseStack, bufferSource, LightTexture.FULL_BRIGHT);
+        if (context == ItemDisplayContext.FIRST_PERSON_LEFT_HAND
+                || context == ItemDisplayContext.FIRST_PERSON_RIGHT_HAND) {
+            renderReadout(minecraft, poseStack, bufferSource);
+        }
+        poseStack.popPose();
+    }
+
+    /**
+     * Draws the scanner in the raw TC4 OBJ basis. The caller owns the original first-person
+     * transforms (including the two player arms), so no 1.12.2 donor-model correction is applied.
+     */
+    public static void renderTc4FirstPerson(ItemStack stack, PoseStack poseStack,
+                                            MultiBufferSource bufferSource, int packedLight) {
+        Minecraft minecraft = Minecraft.getInstance();
+        renderScannerMesh(minecraft, stack, poseStack, bufferSource, packedLight, OverlayTexture.NO_OVERLAY);
+        renderScannerLens(poseStack, bufferSource, LightTexture.FULL_BRIGHT);
+        renderReadout(minecraft, poseStack, bufferSource);
+    }
+
+    private static void renderScannerMesh(Minecraft minecraft, ItemStack stack, PoseStack poseStack,
+                                          MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
         BakedModel model = minecraft.getModelManager().getModel(MODEL);
         for (BakedModel pass : model.getRenderPasses(stack, false)) {
             for (RenderType renderType : pass.getRenderTypes(stack, false)) {
@@ -59,13 +83,6 @@ public final class ThaumometerItemRenderer extends BlockEntityWithoutLevelRender
                         pass, stack, packedLight, packedOverlay, poseStack, vertices);
             }
         }
-
-        renderScannerLens(poseStack, bufferSource, LightTexture.FULL_BRIGHT);
-        if (context == ItemDisplayContext.FIRST_PERSON_LEFT_HAND
-                || context == ItemDisplayContext.FIRST_PERSON_RIGHT_HAND) {
-            renderReadout(minecraft, poseStack, bufferSource);
-        }
-        poseStack.popPose();
     }
 
     private static void renderScannerLens(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
@@ -98,8 +115,6 @@ public final class ThaumometerItemRenderer extends BlockEntityWithoutLevelRender
                 : null;
 
         poseStack.pushPose();
-        // Match the 1.12.2 screen plane: the HUD is drawn inside the same scanner plane,
-        // then flipped 180 degrees because the local font/tag axes are inverted there.
         poseStack.translate(0.0D, 0.11D, -0.01D);
         poseStack.mulPose(Axis.XP.rotationDegrees(90.0F));
         poseStack.mulPose(Axis.ZP.rotationDegrees(90.0F));
