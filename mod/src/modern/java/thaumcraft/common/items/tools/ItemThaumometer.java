@@ -1,6 +1,5 @@
 package thaumcraft.common.items.tools;
 
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -13,13 +12,15 @@ import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
-import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.common.lib.capabilities.IThaumometerKnowledge;
 import thaumcraft.common.lib.capabilities.ThaumometerKnowledgeProvider;
 import thaumcraft.common.lib.network.ModNetwork;
 import thaumcraft.common.sounds.ModSounds;
 
+import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 
 /**
@@ -28,8 +29,13 @@ import java.util.function.Consumer;
  */
 public class ItemThaumometer extends Item {
     private static final int SCAN_DURATION_TICKS = 25;
-    private static final double SCAN_RANGE = 10.0;
-    private static final String SCAN_TARGET_TAG = "ThaumometerTarget";
+
+    /**
+     * TC4 kept the active ScanResult as transient item logic state, not in the ItemStack NBT.
+     * Keeping it per player preserves that behaviour and, importantly, avoids forcing the modern
+     * first-person item renderer to re-equip the thaumometer when scanning starts/finishes.
+     */
+    private static final Map<UUID, String> ACTIVE_SCAN_TARGETS = new ConcurrentHashMap<>();
 
     public ItemThaumometer(Properties properties) {
         super(properties);
@@ -71,7 +77,8 @@ public class ItemThaumometer extends Item {
             if (!level.isClientSide) player.displayClientMessage(error, true);
             return InteractionResultHolder.fail(stack);
         }
-        stack.getOrCreateTag().putString(SCAN_TARGET_TAG, target);
+
+        ACTIVE_SCAN_TARGETS.put(player.getUUID(), target);
         player.startUsingItem(hand);
 
         // SUCCESS makes modern Minecraft play a hand swing/equip reaction. TC4 simply entered the
@@ -85,11 +92,11 @@ public class ItemThaumometer extends Item {
             return;
         }
 
-        String startedTarget = stack.hasTag() ? stack.getTag().getString(SCAN_TARGET_TAG) : "";
+        String startedTarget = ACTIVE_SCAN_TARGETS.getOrDefault(player.getUUID(), "");
         var scan = ThaumometerTargets.find(player);
         String currentTarget = scan == null ? null : scan.identity();
         if (startedTarget.isEmpty() || !startedTarget.equals(currentTarget)) {
-            releaseUsing(stack, level, player, remainingUseDuration);
+            clearScan(player);
             player.stopUsingItem();
             return;
         }
@@ -109,7 +116,7 @@ public class ItemThaumometer extends Item {
             if (!level.isClientSide) {
                 finishScan(level, player, scan);
             }
-            releaseUsing(stack, level, player, remainingUseDuration);
+            clearScan(player);
             player.stopUsingItem();
         }
     }
@@ -121,12 +128,13 @@ public class ItemThaumometer extends Item {
 
     @Override
     public void releaseUsing(ItemStack stack, Level level, LivingEntity entity, int timeLeft) {
-        if (stack.hasTag()) {
-            stack.getTag().remove(SCAN_TARGET_TAG);
-            if (stack.getTag().isEmpty()) {
-                stack.setTag(null);
-            }
+        if (entity instanceof Player player) {
+            clearScan(player);
         }
+    }
+
+    private static void clearScan(Player player) {
+        ACTIVE_SCAN_TARGETS.remove(player.getUUID());
     }
 
     private static Component rejection(ThaumometerTargets.Target target, IThaumometerKnowledge knowledge, Level level) {
