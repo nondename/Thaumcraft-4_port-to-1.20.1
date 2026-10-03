@@ -22,6 +22,7 @@ import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.common.items.ModItems;
+import thaumcraft.common.nodes.ModNodes;
 
 /** Flattened metadata 1..6 from TC4 BlockCustomOre, with the original shard values. */
 public final class ModOres {
@@ -55,6 +56,8 @@ public final class ModOres {
                     output.accept(thaumcraft.common.research.ModResearch.PHIAL.get());
                     SHARDS.values().forEach(item -> output.accept(item.get()));
                     ORES.values().forEach(block -> output.accept(block.get()));
+                    // TC4 BlockAiry contributes exactly one metadata-0 Aura Node creative item.
+                    output.accept(ModNodes.AURA_NODE_ITEM.get());
                 }).build());
     }
 
