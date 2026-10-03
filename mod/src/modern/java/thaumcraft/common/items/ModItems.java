@@ -24,6 +24,12 @@ public final class ModItems {
     public static final RegistryObject<Item> WAND = ITEMS.register("wand", () -> new thaumcraft.common.items.tools.ItemWand(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> THAUMONOMICON = ITEMS.register("thaumonomicon", () -> new thaumcraft.common.items.tools.ItemThaumonomicon(new Item.Properties().stacksTo(1)));
 
+    // TC4 ItemGoggles: durability 350 (Item.Properties#durability wins over the material default).
+    public static final RegistryObject<Item> GOGGLES = ITEMS.register(
+            "gogglesrevealing",
+            () -> new thaumcraft.common.items.armor.ItemGoggles(new Item.Properties().durability(350))
+    );
+
     private ModItems() {
     }
 

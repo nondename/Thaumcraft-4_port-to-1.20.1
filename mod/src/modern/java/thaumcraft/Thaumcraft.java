@@ -50,6 +50,8 @@ public final class Thaumcraft {
 
     private void commonSetup(net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent event) {
         event.enqueueWork(thaumcraft.common.blocks.ModOres::registerAspects);
+        // Modded items only exist after the registry events (ConfigAspects#initModItems).
+        event.enqueueWork(thaumcraft.common.config.ConfigAspects::initModItems);
     }
 
     private static void validateAspectRegistry() {

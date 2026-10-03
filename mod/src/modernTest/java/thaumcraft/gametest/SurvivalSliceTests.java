@@ -6,9 +6,12 @@ import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.level.block.Block;
@@ -17,8 +20,10 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.gametest.GameTestHolder;
 import net.minecraftforge.gametest.PrefixGameTestTemplate;
+import thaumcraft.api.IVisDiscountGear;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
+import thaumcraft.api.nodes.IRevealer;
 import thaumcraft.common.blocks.ModOres;
 import thaumcraft.common.items.ModItems;
 import thaumcraft.common.items.tools.ThaumometerTargets;
@@ -113,6 +118,36 @@ public final class SurvivalSliceTests {
         scanner.getItem().use(level, player, InteractionHand.MAIN_HAND);
         scanner.getItem().onUseTick(level, player, scanner, 5);
         helper.assertTrue(knowledge.hasDiscoveredAspect(Aspect.CRYSTAL), "Completed glass scan must discover Crystal");
+        helper.succeed();
+    }
+
+    @GameTest(templateNamespace = "thaumcraft", template = "empty")
+    public static void gogglesRevealAndContracts(GameTestHelper helper) {
+        var level = helper.getLevel();
+        var goggles = ModItems.GOGGLES.get();
+        helper.assertTrue(goggles instanceof ArmorItem armor
+                        && armor.getType() == ArmorItem.Type.HELMET
+                        && armor.getEquipmentSlot() == EquipmentSlot.HEAD,
+                "Goggles must be a helmet armor item");
+        helper.assertTrue(goggles.getMaxDamage() == 350, "TC4 ItemGoggles sets max damage 350");
+        helper.assertTrue(goggles.getRarity(new ItemStack(goggles)) == Rarity.RARE, "TC4 ItemGoggles rarity is rare");
+        helper.assertTrue(goggles.isValidRepairItem(new ItemStack(goggles), new ItemStack(Items.GOLD_INGOT)),
+                "TC4 ItemGoggles repair with a gold ingot");
+        helper.assertTrue(((IVisDiscountGear) goggles).getVisDiscount(new ItemStack(goggles), null, null) == 5,
+                "TC4 ItemGoggles grant a 5% vis discount");
+        helper.assertTrue(((IRevealer) goggles).showNodes(new ItemStack(goggles), helper.makeMockPlayer()),
+                "Goggles reveal aura nodes");
+        var aspects = ThaumcraftApi.getObjectAspects(new ItemStack(goggles));
+        helper.assertTrue(aspects != null && aspects.getAmount(Aspect.SENSES) == 4,
+                "TC4 ConfigAspects#677 registers the goggles as SENSES 4");
+        // TC4 ConfigRecipesArcaneSlice#477: "LGL","L L","TGT" from leather, gold, thaumometer.
+        var recipe = level.getRecipeManager().byKey(ResourceLocation.fromNamespaceAndPath("thaumcraft", "goggles")).orElseThrow();
+        helper.assertTrue(recipe instanceof ShapedRecipe && recipe.getResultItem(level.registryAccess()).is(goggles),
+                "Goggles recipe must load");
+        helper.assertTrue(recipe.getIngredients().get(0).test(new ItemStack(Items.LEATHER))
+                        && recipe.getIngredients().get(1).test(new ItemStack(Items.GOLD_INGOT))
+                        && recipe.getIngredients().get(6).test(new ItemStack(ModItems.THAUMOMETER.get())),
+                "Goggles recipe must take leather, gold and a thaumometer");
         helper.succeed();
     }
 }

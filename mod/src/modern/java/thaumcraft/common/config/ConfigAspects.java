@@ -295,6 +295,16 @@ public final class ConfigAspects {
         register(Blocks.END_PORTAL, new AspectList().add(Aspect.ELDRITCH, 4).add(Aspect.TRAVEL, 4));
     }
 
+    /**
+     * Modded items only exist after the registry events, so this runs from
+     * FMLCommonSetup like ModOres#registerAspects — not from {@link #init()}.
+     */
+    public static void initModItems() {
+        // TC4 ConfigAspects#677: the goggles themselves read as SENSES 4.
+        register(thaumcraft.common.items.ModItems.GOGGLES.get(),
+                new AspectList().add(Aspect.SENSES, 4));
+    }
+
     private static void register(Item item, AspectList aspects) {
         ThaumcraftApi.registerObjectTag(new ItemStack(item), aspects);
     }

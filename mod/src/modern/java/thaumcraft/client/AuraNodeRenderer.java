@@ -12,9 +12,12 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import thaumcraft.Thaumcraft;
 import thaumcraft.api.aspects.Aspect;
+import thaumcraft.api.nodes.IRevealer;
 import thaumcraft.api.nodes.NodeModifier;
 import thaumcraft.api.nodes.NodeType;
 import thaumcraft.common.items.ModItems;
@@ -41,26 +44,36 @@ public final class AuraNodeRenderer implements BlockEntityRenderer<AuraNodeBlock
 
         Vec3 center = Vec3.atCenterOf(node.getBlockPos());
         double distance = viewer.getEyePosition(partialTick).distanceTo(center);
-        if (distance > FAINT_VIEW_DISTANCE) return;
 
+        // TC4 TileNodeRenderer#174-199: a helmet IRevealer (goggles of revealing) wins
+        // outright and draws the node through walls inside the 64-block band; only then
+        // does the held thaumometer reveal it under TC4 UtilsFX#isVisibleTo(0.44, ...).
+        // depthIgnore reproduces the original glDisable(GL_DEPTH_TEST) for revealed nodes.
+        boolean depthIgnore = false;
+        boolean revealed = false;
+        double viewDistance = FAINT_VIEW_DISTANCE;
+        var helmet = viewer.getItemBySlot(EquipmentSlot.HEAD);
         boolean holdingThaumometer = viewer.getMainHandItem().is(ModItems.THAUMOMETER.get())
                 || viewer.getOffhandItem().is(ModItems.THAUMOMETER.get());
-        Vec3 towardNode = center.subtract(viewer.getEyePosition(partialTick)).normalize();
-        double alignment = viewer.getViewVector(partialTick).dot(towardNode);
-        boolean revealed = holdingThaumometer
-                && distance <= THAUMOMETER_VIEW_DISTANCE
-                && alignment > 0.86D;
+        if (helmet.getItem() instanceof IRevealer revealer && revealer.showNodes(helmet, viewer)) {
+            revealed = true;
+            depthIgnore = true;
+        } else if (holdingThaumometer && isVisibleTo(viewer, distance, center)) {
+            viewDistance = THAUMOMETER_VIEW_DISTANCE;
+            revealed = true;
+            depthIgnore = true;
+        }
+        if (distance > viewDistance) return;
 
         int frame = (int) ((System.nanoTime() / 40_000_000L + node.getBlockPos().getX()) % FRAMES);
         if (!revealed) {
             // TC4's hidden/faint node pass uses GL_SRC_ALPHA, GL_ONE.
             drawLayer(poseStack, bufferSource, minecraft, 0.50F, 0.0F, 0.10F,
-                    1, frame, 0xFFFFFF, true);
+                    1, frame, 0xFFFFFF, true, false);
             return;
         }
 
-        float alpha = (float) Mth.clamp((THAUMOMETER_VIEW_DISTANCE - distance) / THAUMOMETER_VIEW_DISTANCE,
-                0.0D, 1.0D);
+        float alpha = (float) Mth.clamp((viewDistance - distance) / viewDistance, 0.0D, 1.0D);
         NodeModifier modifier = node.getNodeModifier();
         if (modifier == NodeModifier.BRIGHT) alpha *= 1.5F;
         else if (modifier == NodeModifier.PALE) alpha *= 0.66F;
@@ -87,7 +100,8 @@ public final class AuraNodeRenderer implements BlockEntityRenderer<AuraNodeBlock
             boolean additive = aspect.getBlend() != 771;
             float aspectAlpha = alpha * (additive ? 1.0F : 1.5F);
             drawLayer(poseStack, bufferSource, minecraft, scale, lastAngle,
-                    aspectAlpha / Math.max(1.0F, aspectCount / 2.0F), 0, frame, aspect.getColor(), additive);
+                    aspectAlpha / Math.max(1.0F, aspectCount / 2.0F), 0, frame, aspect.getColor(),
+                    additive, depthIgnore);
             count++;
         }
 
@@ -108,7 +122,7 @@ public final class AuraNodeRenderer implements BlockEntityRenderer<AuraNodeBlock
         }
 
         drawLayer(poseStack, bufferSource, minecraft, coreScale, coreAngle, alpha,
-                strip, frame, 0xFFFFFF, additiveCore);
+                strip, frame, 0xFFFFFF, additiveCore, depthIgnore);
     }
 
     private static int stripFor(NodeType type) {
@@ -124,7 +138,7 @@ public final class AuraNodeRenderer implements BlockEntityRenderer<AuraNodeBlock
 
     private static void drawLayer(PoseStack poseStack, MultiBufferSource bufferSource, Minecraft minecraft,
                                   float scale, float angle, float alpha, int strip, int frame, int color,
-                                  boolean additive) {
+                                  boolean additive, boolean throughWalls) {
         poseStack.pushPose();
         poseStack.translate(0.5D, 0.5D, 0.5D);
         poseStack.mulPose(minecraft.getEntityRenderDispatcher().cameraOrientation());
@@ -141,18 +155,60 @@ public final class AuraNodeRenderer implements BlockEntityRenderer<AuraNodeBlock
         int blue = color & 255;
         int a = Mth.clamp((int) (alpha * 255.0F), 0, 255);
 
-        // energySwirl uses the additive transparency state (SRC_ALPHA, ONE), which matches
-        // TC4's GL_ONE blend destination. entityTranslucent is the 771/ONE_MINUS_SRC_ALPHA path.
-        RenderType renderType = additive
-                ? RenderType.energySwirl(NODE_TEXTURE, 0.0F, 0.0F)
-                : RenderType.entityTranslucent(NODE_TEXTURE);
+        // TC4 draws revealed nodes with GL_DEPTH_TEST disabled (TileNodeRenderer#71/151).
+        // Forge's see-through text type is the 1.20.1 equivalent: NO_DEPTH_TEST with the
+        // POSITION_COLOR_TEX_LIGHTMAP format, so those vertices drop overlay/normal and
+        // trade the additive blend for plain translucency through walls.
+        RenderType renderType;
+        if (throughWalls) {
+            renderType = RenderType.textSeeThrough(NODE_TEXTURE);
+        } else {
+            renderType = additive
+                    ? RenderType.energySwirl(NODE_TEXTURE, 0.0F, 0.0F)
+                    : RenderType.entityTranslucent(NODE_TEXTURE);
+        }
         VertexConsumer vertices = bufferSource.getBuffer(renderType);
         PoseStack.Pose pose = poseStack.last();
-        vertex(vertices, pose, -0.5F, 0.5F, u0, v0, red, green, blue, a);
-        vertex(vertices, pose, 0.5F, 0.5F, u1, v0, red, green, blue, a);
-        vertex(vertices, pose, 0.5F, -0.5F, u1, v1, red, green, blue, a);
-        vertex(vertices, pose, -0.5F, -0.5F, u0, v1, red, green, blue, a);
+        if (throughWalls) {
+            vertexThroughWalls(vertices, pose, -0.5F, 0.5F, u0, v0, red, green, blue, a);
+            vertexThroughWalls(vertices, pose, 0.5F, 0.5F, u1, v0, red, green, blue, a);
+            vertexThroughWalls(vertices, pose, 0.5F, -0.5F, u1, v1, red, green, blue, a);
+            vertexThroughWalls(vertices, pose, -0.5F, -0.5F, u0, v1, red, green, blue, a);
+        } else {
+            vertex(vertices, pose, -0.5F, 0.5F, u0, v0, red, green, blue, a);
+            vertex(vertices, pose, 0.5F, 0.5F, u1, v0, red, green, blue, a);
+            vertex(vertices, pose, 0.5F, -0.5F, u1, v1, red, green, blue, a);
+            vertex(vertices, pose, -0.5F, -0.5F, u0, v1, red, green, blue, a);
+        }
         poseStack.popPose();
+    }
+
+    private static void vertexThroughWalls(VertexConsumer vertices, PoseStack.Pose pose,
+                                           float x, float y, float u, float v,
+                                           int red, int green, int blue, int alpha) {
+        vertices.vertex(pose.pose(), x, y, 0.0F)
+                .color(red, green, blue, alpha)
+                .uv(u, v)
+                .uv2(LightTexture.FULL_BRIGHT)
+                .endVertex();
+    }
+
+    /**
+     * TC4 UtilsFX#900-928: nodes within 2 blocks always reveal; farther away the angle to
+     * the node is compared with (0.44 + FOV/2) in first person, while third person only
+     * keeps the 400-block band. The original mixes radians with a degrees-style bound, so
+     * at any normal FOV the test passes at every viewing angle — kept verbatim for parity.
+     */
+    private static boolean isVisibleTo(Player viewer, double distance, Vec3 target) {
+        if (distance < 2.0D) return true;
+        if (distance >= 400.0D) return false;
+        var options = Minecraft.getInstance().options;
+        if (!options.getCameraType().isFirstPerson()) return true;
+        Vec3 delta = target.subtract(viewer.getEyePosition());
+        if (delta.lengthSqr() < 1.0E-4D) return true;
+        double dot = delta.normalize().dot(viewer.getViewVector(1.0F));
+        double angle = Math.acos(Mth.clamp(dot, -1.0D, 1.0D));
+        return angle < 0.44D + options.fov().get() / 2.0D;
     }
 
     private static void vertex(VertexConsumer vertices, PoseStack.Pose pose,

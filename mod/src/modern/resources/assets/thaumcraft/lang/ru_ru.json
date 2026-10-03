@@ -31,6 +31,8 @@
   "nodemod.BRIGHT.name": "Яркий",
   "nodemod.PALE.name": "Тусклый",
   "nodemod.FADING.name": "Увядающий",
+  "item.thaumcraft.gogglesrevealing": "Очки откровения",
+  "tc.visdiscount": "Уменьшение затрат Вис",
   "tc.scan.success": "Изучено: %s",
   "block.thaumcraft.table": "Стол",
   "item.thaumcraft.scribing_tools": "Письменные принадлежности",

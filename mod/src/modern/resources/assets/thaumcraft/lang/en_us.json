@@ -31,6 +31,8 @@
   "nodemod.BRIGHT.name": "Bright",
   "nodemod.PALE.name": "Pale",
   "nodemod.FADING.name": "Fading",
+  "item.thaumcraft.gogglesrevealing": "Goggles of Revealing",
+  "tc.visdiscount": "Vis discount",
   "tc.scan.success": "Scanned %s",
   "block.thaumcraft.table": "Table",
   "item.thaumcraft.scribing_tools": "Scribing Tools",
