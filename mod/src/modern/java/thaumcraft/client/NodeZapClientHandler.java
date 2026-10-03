@@ -6,12 +6,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RenderLevelStageEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import thaumcraft.Thaumcraft;
+import thaumcraft.common.nodes.AuraNodeBlockEntity;
+import thaumcraft.common.sounds.ModSounds;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,11 +18,11 @@ import java.util.Random;
 /**
  * Client-side TC4-style node discharge bolt.
  *
- * <p>The original PacketFXBlockZap did not spawn a chain of particles. It created an
- * FXLightningBolt with a 10-tick lifetime, type 0 purple additive rendering and a fractal
- * path. Keep the same shape/lifetime model here and render it as camera-facing ribbons.</p>
+ * <p>TC4 PacketFXBlockZap creates a 10-tick FXLightningBolt, calls defaultFractal(),
+ * renders it as type 0 purple additive lightning and plays thaumcraft:zap. Modern
+ * rendering is deliberately attached to the AuraNode block-entity renderer instead of
+ * a detached world render stage so it uses the same proven camera/buffer pipeline as the node.</p>
  */
-@Mod.EventBusSubscriber(modid = Thaumcraft.MODID, value = Dist.CLIENT)
 public final class NodeZapClientHandler {
     private static final int LIFETIME_TICKS = 10;
     private static final List<ActiveZap> ACTIVE = new ArrayList<>();
@@ -35,69 +33,75 @@ public final class NodeZapClientHandler {
     public static void spawn(BlockPos from, BlockPos to) {
         Minecraft minecraft = Minecraft.getInstance();
         var level = minecraft.level;
-        if (level == null) {
-            return;
-        }
-
-        Vec3 start = Vec3.atCenterOf(from);
-        Vec3 end = Vec3.atCenterOf(to);
-        if (start.distanceToSqr(end) < 1.0E-6D) {
-            return;
-        }
-
-        ACTIVE.add(new ActiveZap(start, end, level.getGameTime(), level.random.nextLong()));
-    }
-
-    @SubscribeEvent
-    public static void render(RenderLevelStageEvent event) {
-        if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_PARTICLES) {
-            return;
-        }
-
-        Minecraft minecraft = Minecraft.getInstance();
-        var level = minecraft.level;
-        if (level == null || ACTIVE.isEmpty()) {
+        if (level == null || from.equals(to)) {
             return;
         }
 
         long now = level.getGameTime();
         ACTIVE.removeIf(zap -> now - zap.createdTick >= LIFETIME_TICKS);
+        ACTIVE.add(new ActiveZap(from.immutable(), to.immutable(), now, level.random.nextLong()));
+
+        // Exact TC4 PacketFXBlockZap sound: thaumcraft:zap, volume 0.1, pitch 1.0..1.2.
+        level.playLocalSound(
+                from.getX() + 0.5D,
+                from.getY() + 0.5D,
+                from.getZ() + 0.5D,
+                ModSounds.ZAP.get(),
+                SoundSource.MASTER,
+                0.1F,
+                1.0F + level.random.nextFloat() * 0.2F,
+                false
+        );
+    }
+
+    /**
+     * Called from AuraNodeRenderer for the consuming node. The supplied pose stack is already
+     * block-local and camera transformed by Minecraft's block-entity dispatcher, so every bolt
+     * vertex is expressed relative to the target node instead of trying to rebuild world render
+     * matrices in a separate RenderLevelStageEvent.
+     */
+    public static void renderForNode(AuraNodeBlockEntity node, float partialTick,
+                                     PoseStack poseStack, MultiBufferSource bufferSource) {
+        if (ACTIVE.isEmpty() || node.getLevel() == null) {
+            return;
+        }
+
+        long now = node.getLevel().getGameTime();
+        ACTIVE.removeIf(zap -> now - zap.createdTick >= LIFETIME_TICKS);
         if (ACTIVE.isEmpty()) {
             return;
         }
 
-        Vec3 camera = event.getCamera().getPosition();
-        PoseStack poseStack = event.getPoseStack();
-        poseStack.pushPose();
-        poseStack.translate(-camera.x, -camera.y, -camera.z);
-
-        MultiBufferSource.BufferSource buffers = minecraft.renderBuffers().bufferSource();
-        VertexConsumer vertices = buffers.getBuffer(RenderType.lightning());
+        BlockPos target = node.getBlockPos();
+        Vec3 targetOrigin = Vec3.atLowerCornerOf(target);
+        Vec3 cameraLocal = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition().subtract(targetOrigin);
+        VertexConsumer vertices = bufferSource.getBuffer(RenderType.lightning());
         PoseStack.Pose pose = poseStack.last();
 
         for (ActiveZap zap : ACTIVE) {
-            float age = Math.max(0.0F, Math.min(1.0F,
-                    (float) (now - zap.createdTick) / (float) LIFETIME_TICKS));
+            if (!zap.to.equals(target)) {
+                continue;
+            }
 
-            // TC4 type 0 uses a dark purple outer additive pass and a bright pink-white core.
+            float age = Math.max(0.0F, Math.min(1.0F,
+                    ((float) (now - zap.createdTick) + partialTick) / (float) LIFETIME_TICKS));
+
+            // TC4 lightning type 0: dark purple outer pass + bright pink-white inner pass.
             float outerAlpha = (1.0F - age) * 0.40F;
             float innerAlpha = 1.0F - age * 0.50F;
 
-            drawPath(vertices, pose, camera, zap.mainPath, 0.050F,
+            drawPath(vertices, pose, cameraLocal, zap.mainPath, 0.050F,
                     153, 77, 153, alpha(outerAlpha));
-            drawPath(vertices, pose, camera, zap.mainPath, 0.020F,
+            drawPath(vertices, pose, cameraLocal, zap.mainPath, 0.020F,
                     255, 153, 255, alpha(innerAlpha));
 
             for (List<Vec3> branch : zap.branches) {
-                drawPath(vertices, pose, camera, branch, 0.030F,
+                drawPath(vertices, pose, cameraLocal, branch, 0.030F,
                         153, 77, 153, alpha(outerAlpha * 0.75F));
-                drawPath(vertices, pose, camera, branch, 0.011F,
+                drawPath(vertices, pose, cameraLocal, branch, 0.011F,
                         255, 153, 255, alpha(innerAlpha * 0.80F));
             }
         }
-
-        buffers.endBatch(RenderType.lightning());
-        poseStack.popPose();
     }
 
     private static int alpha(float value) {
@@ -131,15 +135,10 @@ public final class NodeZapClientHandler {
             }
             side = side.normalize().scale(width);
 
-            Vec3 a = start.subtract(side);
-            Vec3 b = end.subtract(side);
-            Vec3 c = end.add(side);
-            Vec3 d = start.add(side);
-
-            vertex(vertices, pose, a, red, green, blue, alpha);
-            vertex(vertices, pose, b, red, green, blue, alpha);
-            vertex(vertices, pose, c, red, green, blue, alpha);
-            vertex(vertices, pose, d, red, green, blue, alpha);
+            vertex(vertices, pose, start.subtract(side), red, green, blue, alpha);
+            vertex(vertices, pose, end.subtract(side), red, green, blue, alpha);
+            vertex(vertices, pose, end.add(side), red, green, blue, alpha);
+            vertex(vertices, pose, start.add(side), red, green, blue, alpha);
         }
     }
 
@@ -220,12 +219,24 @@ public final class NodeZapClientHandler {
     }
 
     private static final class ActiveZap {
+        private final BlockPos to;
         private final long createdTick;
         private final List<Vec3> mainPath;
         private final List<List<Vec3>> branches;
 
-        private ActiveZap(Vec3 start, Vec3 end, long createdTick, long seed) {
+        private ActiveZap(BlockPos from, BlockPos to, long createdTick, long seed) {
+            this.to = to;
             this.createdTick = createdTick;
+
+            // Store geometry in the target node's local coordinate system. The target center is
+            // always (0.5, 0.5, 0.5); the donor is offset by the two block positions.
+            Vec3 start = new Vec3(
+                    from.getX() - to.getX() + 0.5D,
+                    from.getY() - to.getY() + 0.5D,
+                    from.getZ() - to.getZ() + 0.5D
+            );
+            Vec3 end = new Vec3(0.5D, 0.5D, 0.5D);
+
             Random random = new Random(seed);
             double length = start.distanceTo(end);
             this.mainPath = buildFractalPath(start, end, random, 4,
