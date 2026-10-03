@@ -29,6 +29,8 @@
 
 - **Таумометр: `mod/src/modern/java/thaumcraft/common/items/tools/{ItemThaumometer,ThaumometerTargets,ScanInteractions}.java`, `mod/src/modern/java/thaumcraft/common/config/EntityAspects.java`, `mod/src/modern/java/thaumcraft/common/config/ConfigAspects.java` (только ведра/вода/лава), `mod/src/modern/java/thaumcraft/client/ThaumometerItemRenderer.java`, `mod/src/modern/resources/data/thaumcraft/recipes/thaumometer.json` — MiMo (2026-10-03).** Сверка с оригиналом 1.7.10: рецепт (золото вместо железа), дальность луча 5, сканирование игроков, нормализация аспектов узла при выдаче, звук/отмена кликов, строка типа узла в HUD. Файлы capability ChatGPT (`IThaumometerKnowledge`, `ThaumometerKnowledge`) трогать не планируется; если понадобится — допишу сюда до правки.
 
+- **Очки откровения: новые `mod/src/modern/java/thaumcraft/common/items/armor/**`, `mod/src/modern/java/thaumcraft/api/nodes/IRevealer.java`, `mod/src/modern/java/thaumcraft/api/IVisDiscountGear.java`, правки `mod/src/modern/java/thaumcraft/client/AuraNodeRenderer.java`, `mod/src/modern/java/thaumcraft/common/items/ModItems.java`, `mod/src/modern/java/thaumcraft/common/config/ConfigAspects.java`, `mod/src/modern/java/thaumcraft/Thaumcraft.java` (одна строка enqueueWork), `mod/src/modern/resources/data/thaumcraft/recipes/goggles.json`, `mod/src/modern/resources/assets/thaumcraft/{models/item/gogglesrevealing.json,lang/**}` — MiMo (2026-10-03).** Первый предмет брони в modern-слайсе: по оригиналу `decompiled/` (ItemGoggles, TileNodeRenderer#174-199, ConfigAspects#677) — IRevealer-подсветка узлов сквозь стены, редкость, ремонт золотом, скидка 5%, аспект SENSES 4, рецепт и локализация.
+
 ---
 
 ## Снятые заявки
