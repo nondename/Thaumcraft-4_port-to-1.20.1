@@ -8,6 +8,7 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderHandEvent;
@@ -16,7 +17,7 @@ import net.minecraftforge.fml.common.Mod;
 import thaumcraft.Thaumcraft;
 import thaumcraft.common.items.ModItems;
 
-/** First-person TC4 thaumometer pose and its two real player arms. */
+/** First-person TC4 thaumometer pose, with a modern one-handed fallback when the other hand is occupied. */
 @Mod.EventBusSubscriber(modid = Thaumcraft.MODID, value = Dist.CLIENT)
 public final class ThaumometerHands {
     private ThaumometerHands() {
@@ -35,16 +36,46 @@ public final class ThaumometerHands {
             return;
         }
 
-        // TC4 predates the offhand. While the scanner is raised it owns the complete first-person
-        // hand render, so suppress both vanilla hand passes and draw the original two-handed pose once.
-        event.setCanceled(true);
-        if (event.getHand() != thaumometerHand) {
+        InteractionHand supportHand = opposite(thaumometerHand);
+        boolean supportHandFree = player.getItemInHand(supportHand).isEmpty();
+
+        if (supportHandFree) {
+            // TC4 predates the offhand. With a free support hand the scanner owns both first-person
+            // hand passes and reproduces the original two-handed pose.
+            event.setCanceled(true);
+            if (event.getHand() != thaumometerHand) {
+                return;
+            }
+            renderThaumometer(minecraft, player, event, thaumometerHand, true);
             return;
         }
 
+        // Modern compatibility rule: when the other hand contains an item, leave that hand entirely
+        // to vanilla and replace only the thaumometer hand. This prevents shields, totems, torches,
+        // etc. from being swallowed by the TC4 two-handed renderer.
+        if (event.getHand() != thaumometerHand) {
+            return;
+        }
+        event.setCanceled(true);
+        renderThaumometer(minecraft, player, event, thaumometerHand, false);
+    }
+
+    private static void renderThaumometer(Minecraft minecraft, LocalPlayer player, RenderHandEvent event,
+                                           InteractionHand thaumometerHand, boolean twoHanded) {
         ItemStack stack = player.getItemInHand(thaumometerHand);
         PoseStack poseStack = event.getPoseStack();
         poseStack.pushPose();
+
+        HumanoidArm holdingArm = physicalArm(player, thaumometerHand);
+        int screenSide = holdingArm == HumanoidArm.RIGHT ? 1 : -1;
+
+        // A one-handed scanner is deliberately less comfortable than the proper TC4 grip: it sits
+        // a little toward the holding hand and slightly farther from the camera, like a one-handed map.
+        // The scanner/arm relationship itself still comes from the original TC4 renderer.
+        if (!twoHanded) {
+            poseStack.translate(0.24D * screenSide, 0.04D, -0.12D);
+            poseStack.scale(0.88F, 0.88F, 0.88F);
+        }
 
         float partialTick = event.getPartialTick();
         float armPitch = Mth.lerp(partialTick, player.xBobO, player.xBob);
@@ -55,8 +86,7 @@ public final class ThaumometerHands {
         /*
          * The original IItemRenderer was NOT called from a clean camera matrix. Minecraft 1.7.10's
          * ItemRenderer.renderItemInFirstPerson() first applied this ordinary held-item transform and
-         * only then called Forge's custom item renderer. Omitting this outer stage was why the first
-         * direct TC4 port appeared edge-on and far off-centre in 1.20.1.
+         * only then called Forge's custom item renderer.
          */
         poseStack.mulPose(Axis.XP.rotationDegrees(pitchCorrection));
         poseStack.mulPose(Axis.YP.rotationDegrees(yawCorrection));
@@ -78,9 +108,13 @@ public final class ThaumometerHands {
         poseStack.translate(0.0D, 0.0D, -0.72D);
         poseStack.mulPose(Axis.YP.rotationDegrees(90.0F));
 
-        renderTc4Arms(minecraft, player, poseStack, event);
+        if (twoHanded) {
+            renderTc4Arms(minecraft, player, poseStack, event);
+        } else {
+            renderTc4Arm(minecraft, player, poseStack, event, holdingArm);
+        }
 
-        // Exact scanner transform applied after the two arms in TC4.
+        // Exact scanner transform applied after the arm(s) in TC4.
         poseStack.mulPose(Axis.ZP.rotationDegrees(90.0F));
         poseStack.translate(0.4D, -0.4D, 0.0D);
         poseStack.scale(2.0F, 2.0F, 2.0F);
@@ -139,26 +173,52 @@ public final class ThaumometerHands {
         poseStack.pushPose();
         // TC4 scales the player arm model by five before placing each arm around the scanner.
         poseStack.scale(5.0F, 5.0F, 5.0F);
+        renderTc4Arm(playerRenderer, player, poseStack, event, HumanoidArm.RIGHT);
+        renderTc4Arm(playerRenderer, player, poseStack, event, HumanoidArm.LEFT);
+        poseStack.popPose();
+    }
 
-        for (int index = 0; index < 2; index++) {
-            int side = index * 2 - 1; // -1, +1 exactly as the original renderer.
-            poseStack.pushPose();
-            poseStack.translate(0.0D, -0.6D, 1.1D * side);
-            poseStack.mulPose(Axis.XP.rotationDegrees(-45.0F * side));
-            poseStack.mulPose(Axis.ZP.rotationDegrees(-90.0F));
-            poseStack.mulPose(Axis.ZP.rotationDegrees(59.0F));
-            poseStack.mulPose(Axis.YP.rotationDegrees(-65.0F * side));
+    private static void renderTc4Arm(Minecraft minecraft, LocalPlayer player, PoseStack poseStack,
+                                     RenderHandEvent event, HumanoidArm arm) {
+        if (player.isInvisible()) {
+            return;
+        }
+        EntityRenderer<?> entityRenderer = minecraft.getEntityRenderDispatcher().getRenderer(player);
+        if (!(entityRenderer instanceof PlayerRenderer playerRenderer)) {
+            return;
+        }
+        poseStack.pushPose();
+        poseStack.scale(5.0F, 5.0F, 5.0F);
+        renderTc4Arm(playerRenderer, player, poseStack, event, arm);
+        poseStack.popPose();
+    }
 
-            if (side < 0) {
-                playerRenderer.renderRightHand(
-                        poseStack, event.getMultiBufferSource(), event.getPackedLight(), player);
-            } else {
-                playerRenderer.renderLeftHand(
-                        poseStack, event.getMultiBufferSource(), event.getPackedLight(), player);
-            }
-            poseStack.popPose();
+    private static void renderTc4Arm(PlayerRenderer playerRenderer, LocalPlayer player, PoseStack poseStack,
+                                     RenderHandEvent event, HumanoidArm arm) {
+        int side = arm == HumanoidArm.RIGHT ? -1 : 1; // original TC4 arm-space convention
+        poseStack.pushPose();
+        poseStack.translate(0.0D, -0.6D, 1.1D * side);
+        poseStack.mulPose(Axis.XP.rotationDegrees(-45.0F * side));
+        poseStack.mulPose(Axis.ZP.rotationDegrees(-90.0F));
+        poseStack.mulPose(Axis.ZP.rotationDegrees(59.0F));
+        poseStack.mulPose(Axis.YP.rotationDegrees(-65.0F * side));
+
+        if (arm == HumanoidArm.RIGHT) {
+            playerRenderer.renderRightHand(
+                    poseStack, event.getMultiBufferSource(), event.getPackedLight(), player);
+        } else {
+            playerRenderer.renderLeftHand(
+                    poseStack, event.getMultiBufferSource(), event.getPackedLight(), player);
         }
         poseStack.popPose();
+    }
+
+    private static HumanoidArm physicalArm(LocalPlayer player, InteractionHand hand) {
+        return hand == InteractionHand.MAIN_HAND ? player.getMainArm() : player.getMainArm().getOpposite();
+    }
+
+    private static InteractionHand opposite(InteractionHand hand) {
+        return hand == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND;
     }
 
     private static InteractionHand getThaumometerHand(LocalPlayer player) {
