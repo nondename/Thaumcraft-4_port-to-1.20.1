@@ -3,18 +3,16 @@ package thaumcraft.client;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
+import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.phys.Vec3;
-import thaumcraft.Thaumcraft;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.nodes.IRevealer;
 import thaumcraft.api.nodes.NodeModifier;
@@ -24,12 +22,23 @@ import thaumcraft.common.nodes.AuraNodeBlockEntity;
 
 /** Billboard renderer ported from TC4 TileNodeRenderer's 32-frame node atlas. */
 public final class AuraNodeRenderer implements BlockEntityRenderer<AuraNodeBlockEntity> {
-    private static final ResourceLocation NODE_TEXTURE =
-            ResourceLocation.fromNamespaceAndPath(Thaumcraft.MODID, "textures/misc/nodes.png");
     private static final int FRAMES = 32;
     private static final int ATLAS_ROWS = 32;
     private static final double THAUMOMETER_VIEW_DISTANCE = 48.0D;
     private static final double FAINT_VIEW_DISTANCE = 64.0D;
+
+    /**
+     * Physical glass opening of our current first-person Thaumometer model, measured from the
+     * gameplay capture. Coordinates are normalized screen coordinates, not a generic FOV cone.
+     */
+    private static final double[][] THAUMOMETER_LENS = {
+            {0.477D, 0.176D},
+            {0.625D, 0.176D},
+            {0.708D, 0.422D},
+            {0.625D, 0.618D},
+            {0.477D, 0.618D},
+            {0.404D, 0.422D}
+    };
 
     public AuraNodeRenderer(BlockEntityRendererProvider.Context context) {
     }
@@ -42,8 +51,6 @@ public final class AuraNodeRenderer implements BlockEntityRenderer<AuraNodeBlock
         if (viewer == null || node.getLevel() == null) return;
 
         // Discharge bolts are rendered in the same block-entity pipeline as the node itself.
-        // This keeps their matrices/buffers valid on 1.20.1 and avoids the vanished bolt caused
-        // by the detached RenderLevelStageEvent implementation.
         NodeZapClientHandler.renderForNode(node, partialTick, poseStack, bufferSource);
 
         if (node.getAspects().size() == 0) return;
@@ -51,21 +58,21 @@ public final class AuraNodeRenderer implements BlockEntityRenderer<AuraNodeBlock
         Vec3 center = Vec3.atCenterOf(node.getBlockPos());
         double distance = viewer.getEyePosition(partialTick).distanceTo(center);
 
-        // TC4 TileNodeRenderer: goggles reveal nodes through walls. A held thaumometer calls
-        // UtilsFX.isVisibleTo(0.44F, ...), whose old FOV formula effectively accepts every
-        // first-person direction at normal FOV values. Do not add a modern angular cone here:
-        // it makes nodes pop out near one side of the physical thaumometer lens.
         boolean depthIgnore = false;
         boolean revealed = false;
         double viewDistance = FAINT_VIEW_DISTANCE;
         var helmet = viewer.getItemBySlot(EquipmentSlot.HEAD);
-        // TileNodeRenderer#192 checks inventory.getCurrentItem() — the main hand only;
-        // 1.7.10 had no off-hand slot, so a scanner held in the off-hand reveals nothing.
         boolean holdingThaumometer = viewer.getMainHandItem().is(ModItems.THAUMOMETER.get());
+        boolean firstPerson = minecraft.options.getCameraType().isFirstPerson();
+
+        // TC4 goggles reveal nodes independently of where the player is aiming. The Thaumometer
+        // is different: on our 1.20.1 first-person model it is a physical viewport, so full node
+        // rendering is clipped to the actual glass opening. Outside the glass the same node falls
+        // back to the ordinary alpha-0.1 ghost core instead of remaining fully revealed.
         if (helmet.getItem() instanceof IRevealer revealer && revealer.showNodes(helmet, viewer)) {
             revealed = true;
             depthIgnore = true;
-        } else if (holdingThaumometer) {
+        } else if (holdingThaumometer && firstPerson && isInsideThaumometerLens(minecraft, node)) {
             viewDistance = THAUMOMETER_VIEW_DISTANCE;
             revealed = true;
             depthIgnore = true;
@@ -74,7 +81,7 @@ public final class AuraNodeRenderer implements BlockEntityRenderer<AuraNodeBlock
 
         int frame = (int) ((System.nanoTime() / 40_000_000L + node.getBlockPos().getX()) % FRAMES);
         if (!revealed) {
-            // TC4's hidden/faint node pass uses GL_SRC_ALPHA, GL_ONE.
+            // TC4 TileNodeRenderer leaves a faint central core visible even with no revealing gear.
             drawLayer(poseStack, bufferSource, minecraft, 0.50F, 0.0F, 0.10F,
                     1, frame, 0xFFFFFF, true, false);
             return;
@@ -102,8 +109,8 @@ public final class AuraNodeRenderer implements BlockEntityRenderer<AuraNodeBlock
             lastAngle = (float) ((System.nanoTime() / 5_000_000L) % (5000L + 500L * count))
                     / (5000.0F + 500.0F * count) * Mth.TWO_PI;
 
-            // Aspect#getBlend in TC4 is fed directly to glBlendFunc(GL_SRC_ALPHA, blend).
-            // 1 = additive, 771 = normal alpha. TC4 also boosts alpha 1.5x for the latter.
+            // TC4 feeds Aspect#getBlend directly to glBlendFunc(GL_SRC_ALPHA, blend):
+            // 1 = additive, 771 = ordinary alpha.
             boolean additive = aspect.getBlend() != 771;
             float aspectAlpha = alpha * (additive ? 1.0F : 1.5F);
             drawLayer(poseStack, bufferSource, minecraft, scale, lastAngle,
@@ -119,7 +126,6 @@ public final class AuraNodeRenderer implements BlockEntityRenderer<AuraNodeBlock
         boolean additiveCore = true;
         float coreAngle = lastAngle;
 
-        // Exact TC4 core blend/strip mapping from TileNodeRenderer.
         switch (nodeType) {
             case UNSTABLE -> coreAngle = 0.0F;
             case DARK, TAINTED -> additiveCore = false;
@@ -130,6 +136,49 @@ public final class AuraNodeRenderer implements BlockEntityRenderer<AuraNodeBlock
 
         drawLayer(poseStack, bufferSource, minecraft, coreScale, coreAngle, alpha,
                 strip, frame, 0xFFFFFF, additiveCore, depthIgnore);
+    }
+
+    private static boolean isInsideThaumometerLens(Minecraft minecraft, AuraNodeBlockEntity node) {
+        Camera camera = minecraft.gameRenderer.getMainCamera();
+        Vec3 relative = Vec3.atCenterOf(node.getBlockPos()).subtract(camera.getPosition());
+        Vec3 forward = Vec3.directionFromRotation(camera.getXRot(), camera.getYRot()).normalize();
+        double depth = relative.dot(forward);
+        if (depth <= 0.05D) return false;
+
+        Vec3 right = forward.cross(new Vec3(0.0D, 1.0D, 0.0D));
+        if (right.lengthSqr() < 1.0E-8D) {
+            right = new Vec3(1.0D, 0.0D, 0.0D);
+        } else {
+            right = right.normalize();
+        }
+        Vec3 up = right.cross(forward).normalize();
+
+        double horizontal = relative.dot(right);
+        double vertical = relative.dot(up);
+        double tanHalfFov = Math.tan(Math.toRadians(minecraft.options.fov().get() * 0.5D));
+        if (tanHalfFov <= 0.0D) return false;
+
+        double screenAspect = (double) minecraft.getWindow().getWidth()
+                / Math.max(1.0D, (double) minecraft.getWindow().getHeight());
+        double ndcX = horizontal / (depth * tanHalfFov * screenAspect);
+        double ndcY = vertical / (depth * tanHalfFov);
+        double screenX = 0.5D + ndcX * 0.5D;
+        double screenY = 0.5D - ndcY * 0.5D;
+        return pointInPolygon(screenX, screenY, THAUMOMETER_LENS);
+    }
+
+    private static boolean pointInPolygon(double x, double y, double[][] polygon) {
+        boolean inside = false;
+        for (int i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
+            double xi = polygon[i][0];
+            double yi = polygon[i][1];
+            double xj = polygon[j][0];
+            double yj = polygon[j][1];
+            boolean crosses = ((yi > y) != (yj > y))
+                    && x < (xj - xi) * (y - yi) / ((yj - yi) + 1.0E-12D) + xi;
+            if (crosses) inside = !inside;
+        }
+        return inside;
     }
 
     private static int stripFor(NodeType type) {
@@ -162,42 +211,16 @@ public final class AuraNodeRenderer implements BlockEntityRenderer<AuraNodeBlock
         int blue = color & 255;
         int a = Mth.clamp((int) (alpha * 255.0F), 0, 255);
 
-        // TC4 draws revealed nodes with GL_DEPTH_TEST disabled (TileNodeRenderer#71/151).
-        // Forge's see-through text type is the 1.20.1 equivalent: NO_DEPTH_TEST with the
-        // POSITION_COLOR_TEX_LIGHTMAP format, so those vertices drop overlay/normal and
-        // trade the additive blend for plain translucency through walls.
-        RenderType renderType;
-        if (throughWalls) {
-            renderType = RenderType.textSeeThrough(NODE_TEXTURE);
-        } else {
-            renderType = additive
-                    ? RenderType.energySwirl(NODE_TEXTURE, 0.0F, 0.0F)
-                    : RenderType.entityTranslucent(NODE_TEXTURE);
-        }
-        VertexConsumer vertices = bufferSource.getBuffer(renderType);
+        // Keep TC4's blend mode even when depth testing is disabled. textSeeThrough() used here
+        // previously forced ordinary translucency and was the reason revealed nodes became hard,
+        // flat coloured discs in the gameplay capture.
+        VertexConsumer vertices = bufferSource.getBuffer(ThaumcraftRenderTypes.node(additive, throughWalls));
         PoseStack.Pose pose = poseStack.last();
-        if (throughWalls) {
-            vertexThroughWalls(vertices, pose, -0.5F, 0.5F, u0, v0, red, green, blue, a);
-            vertexThroughWalls(vertices, pose, 0.5F, 0.5F, u1, v0, red, green, blue, a);
-            vertexThroughWalls(vertices, pose, 0.5F, -0.5F, u1, v1, red, green, blue, a);
-            vertexThroughWalls(vertices, pose, -0.5F, -0.5F, u0, v1, red, green, blue, a);
-        } else {
-            vertex(vertices, pose, -0.5F, 0.5F, u0, v0, red, green, blue, a);
-            vertex(vertices, pose, 0.5F, 0.5F, u1, v0, red, green, blue, a);
-            vertex(vertices, pose, 0.5F, -0.5F, u1, v1, red, green, blue, a);
-            vertex(vertices, pose, -0.5F, -0.5F, u0, v1, red, green, blue, a);
-        }
+        vertex(vertices, pose, -0.5F, 0.5F, u0, v0, red, green, blue, a);
+        vertex(vertices, pose, 0.5F, 0.5F, u1, v0, red, green, blue, a);
+        vertex(vertices, pose, 0.5F, -0.5F, u1, v1, red, green, blue, a);
+        vertex(vertices, pose, -0.5F, -0.5F, u0, v1, red, green, blue, a);
         poseStack.popPose();
-    }
-
-    private static void vertexThroughWalls(VertexConsumer vertices, PoseStack.Pose pose,
-                                           float x, float y, float u, float v,
-                                           int red, int green, int blue, int alpha) {
-        vertices.vertex(pose.pose(), x, y, 0.0F)
-                .color(red, green, blue, alpha)
-                .uv(u, v)
-                .uv2(LightTexture.FULL_BRIGHT)
-                .endVertex();
     }
 
     private static void vertex(VertexConsumer vertices, PoseStack.Pose pose,
