@@ -31,6 +31,8 @@
 
 - **Очки откровения: новые `mod/src/modern/java/thaumcraft/common/items/armor/**`, `mod/src/modern/java/thaumcraft/api/nodes/IRevealer.java`, `mod/src/modern/java/thaumcraft/api/IVisDiscountGear.java`, правки `mod/src/modern/java/thaumcraft/client/AuraNodeRenderer.java`, `mod/src/modern/java/thaumcraft/common/items/ModItems.java`, `mod/src/modern/java/thaumcraft/common/config/ConfigAspects.java`, `mod/src/modern/java/thaumcraft/Thaumcraft.java` (одна строка enqueueWork), `mod/src/modern/resources/data/thaumcraft/recipes/goggles.json`, `mod/src/modern/resources/assets/thaumcraft/{models/item/gogglesrevealing.json,lang/**}` — MiMo (2026-10-03).** Первый предмет брони в modern-слайсе: по оригиналу `decompiled/` (ItemGoggles, TileNodeRenderer#174-199, ConfigAspects#677) — IRevealer-подсветка узлов сквозь стены, редкость, ремонт золотом, скидка 5%, аспект SENSES 4, рецепт и локализация.
 
+- **Звуковая/поведенческая сверка: `mod/src/modern/java/thaumcraft/common/items/tools/ItemWand.java` (одна строка категории звука), `mod/src/modern/resources/data/thaumcraft/advancements/recipes/**`, `mod/src/modern/resources/assets/thaumcraft/sounds.json`, `mod/src/modern/resources/assets/thaumcraft/sounds/**` — MiMo (2026-10-03).** Сверка с `decompiled/`: категория звуков wand/cameraticks = master (как в оригинальном `sounds.json` и у zap от другого агента), advance-манифест книги рецептов очков по образцу thaumometer/wand, точечная правка reveal-ветки таумометра в `AuraNodeRenderer` (main-hand по оригиналу `inventory.getCurrentItem()`).
+
 ---
 
 ## Снятые заявки
