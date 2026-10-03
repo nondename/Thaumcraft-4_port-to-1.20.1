@@ -146,13 +146,16 @@ public class ItemThaumometer extends Item {
     private static void finishScan(Level level, Player player, ThaumometerTargets.Target target) {
         var knowledge = player.getCapability(ThaumometerKnowledgeProvider.CAPABILITY).orElse(null);
         if (target == null || knowledge == null || rejection(target, knowledge, level) != null) return;
-        var aspects = target.aspects(level);
+        // TC4 awards ScanManager#generateNodeAspects for nodes (normalized + type bonus),
+        // while every other target pays out the same list the lens displays.
+        var aspects = target.awardAspects(level);
         target.markScanned(knowledge);
-        for (Aspect aspect : aspects.getAspectsSorted()) {
-            if (aspect != null) knowledge.awardAspect(aspect, aspects.getAmount(aspect));
+        if (aspects != null) {
+            for (Aspect aspect : aspects.getAspectsSorted()) {
+                if (aspect != null) knowledge.awardAspect(aspect, aspects.getAmount(aspect));
+            }
         }
         ModNetwork.syncThaumometerKnowledge(player);
-        level.playSound(null, player.blockPosition(), ModSounds.CAMERA_CLACK.get(), SoundSource.PLAYERS, 0.5F, 1.0F);
         player.displayClientMessage(Component.translatable("tc.scan.success", target.name()), true);
     }
 }

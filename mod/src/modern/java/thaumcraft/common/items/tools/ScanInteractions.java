@@ -23,6 +23,9 @@ public final class ScanInteractions {
     private static void scan(PlayerInteractEvent event) {
         if (!(event.getItemStack().getItem() instanceof ItemThaumometer scanner)) return;
         var result = scanner.use(event.getLevel(), event.getEntity(), event.getHand());
+        // Only take the click over when the scanner actually engaged; a PASS keeps
+        // trading, mounting and vanilla mob interactions working.
+        if (result.getResult() == net.minecraft.world.InteractionResult.PASS) return;
         event.setCancellationResult(result.getResult());
         event.setCanceled(true);
     }

@@ -33,8 +33,6 @@ public final class ThaumometerItemRenderer extends BlockEntityWithoutLevelRender
     // The TC4 first-person path bypasses it and uses the original 1.7.10 matrix stack instead.
     private static final float TC4_TO_TC6_VERTICAL_CENTER = -0.1F;
     private static final float TC4_TO_TC6_Y_ROTATION = -90.0F;
-    private static final float HUD_SCALE_MULTIPLIER = 1.875F;
-    private static final int MAX_READOUT_ASPECTS = 15;
 
     public ThaumometerItemRenderer() {
         super(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels());
@@ -122,6 +120,32 @@ public final class ThaumometerItemRenderer extends BlockEntityWithoutLevelRender
         // rotation made target names and aspect amounts appear upside-down in first person.
         renderAspectIcons(minecraft, poseStack, bufferSource, aspects);
         renderTargetName(minecraft.font, poseStack, bufferSource, scan.readoutName(knowledge).getString());
+        if (scan.node() != null && knowledge != null && scan.scanned(knowledge)) {
+            renderNodeType(minecraft.font, poseStack, bufferSource, scan.node());
+        }
+        poseStack.popPose();
+    }
+
+    /**
+     * TC4 ItemThaumometerRenderer#182-195: after a scan the node type/modifier gets its own
+     * line at scale 0.004 and y = -40px (= -0.16 HUD units), colored 15642134 (0xEEAE16).
+     */
+    private static void renderNodeType(Font font, PoseStack poseStack, MultiBufferSource bufferSource,
+                                       thaumcraft.common.nodes.AuraNodeBlockEntity node) {
+        String text = net.minecraft.network.chat.Component.translatable(
+                "nodetype." + node.getNodeType() + ".name").getString();
+        if (node.getNodeModifier() != null) {
+            text += ", " + net.minecraft.network.chat.Component.translatable(
+                    "nodemod." + node.getNodeModifier() + ".name").getString();
+        }
+        if (text.isEmpty()) {
+            return;
+        }
+        poseStack.pushPose();
+        poseStack.translate(0.0D, -0.16D, 0.0D);
+        int width = font.width(text);
+        poseStack.scale(0.004F, 0.004F, 0.004F);
+        drawText(font, poseStack, bufferSource, text, -width / 2.0F, 0.0F, 0xFFEEAE16, 1.0F);
         poseStack.popPose();
     }
 
@@ -132,7 +156,8 @@ public final class ThaumometerItemRenderer extends BlockEntityWithoutLevelRender
         }
 
         Aspect[] sorted = aspects.getAspectsSorted();
-        int count = Math.min(sorted.length, MAX_READOUT_ASPECTS);
+        // TC4 lists every aspect of the target with no cap.
+        int count = sorted.length;
         int posX = 0;
         int posY = 0;
         int remaining = count;
@@ -141,9 +166,7 @@ public final class ThaumometerItemRenderer extends BlockEntityWithoutLevelRender
             Aspect aspect = sorted[index];
             if (aspect != null) {
                 poseStack.pushPose();
-                poseStack.scale(0.0075F * HUD_SCALE_MULTIPLIER,
-                        0.0075F * HUD_SCALE_MULTIPLIER,
-                        0.0075F * HUD_SCALE_MULTIPLIER);
+                poseStack.scale(0.0075F, 0.0075F, 0.0075F);
                 drawTexture(bufferSource, poseStack, aspect.getImage(),
                         -baseX + posX * 16, -8 + posY * 16, 16, 16, LightTexture.FULL_BRIGHT, aspect.getColor());
                 String amount = Integer.toString(aspects.getAmount(aspect));
@@ -168,7 +191,7 @@ public final class ThaumometerItemRenderer extends BlockEntityWithoutLevelRender
         poseStack.pushPose();
         poseStack.translate(0.0D, -0.25D, 0.0D);
         int width = font.width(name);
-        float scale = 0.005F * HUD_SCALE_MULTIPLIER;
+        float scale = 0.005F;
         if (width > 90) {
             scale -= 0.000025F * (width - 90);
         }

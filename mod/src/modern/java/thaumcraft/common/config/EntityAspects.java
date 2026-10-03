@@ -58,6 +58,27 @@ public final class EntityAspects {
         return entity instanceof Creeper creeper && creeper.isPowered() ? "/charged" : "";
     }
     public static AspectList get(Entity entity) {
+        if (entity instanceof net.minecraft.world.entity.player.Player player) {
+            // TC4 ScanManager#generateEntityAspects: MAN 4 plus three seeded random aspects,
+            // with the original author/modder easter eggs kept verbatim.
+            String name = player.getScoreboardName();
+            AspectList result = new AspectList().add(Aspect.MAN, 4);
+            String lower = name.toLowerCase(java.util.Locale.ROOT);
+            if (lower.equals("azanor")) {
+                result.add(Aspect.ELDRITCH, 20);
+            } else if (lower.equals("direwolf20")) {
+                result.add(Aspect.BEAST, 20);
+            } else if (lower.equals("pahimar")) {
+                result.add(Aspect.EXCHANGE, 20);
+            } else {
+                java.util.Random random = new java.util.Random(("player_" + name).hashCode());
+                Aspect[] pool = Aspect.aspects.values().toArray(new Aspect[0]);
+                result.add(pool[random.nextInt(pool.length)], 4);
+                result.add(pool[random.nextInt(pool.length)], 4);
+                result.add(pool[random.nextInt(pool.length)], 4);
+            }
+            return result;
+        }
         if (entity instanceof Creeper creeper && creeper.isPowered())
             return new AspectList().add(Aspect.PLANT, 3).add(Aspect.FIRE, 3).add(Aspect.ENERGY, 3);
         var id = BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType());

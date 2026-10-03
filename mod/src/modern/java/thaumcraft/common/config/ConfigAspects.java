@@ -126,8 +126,10 @@ public final class ConfigAspects {
         register(Items.WHEAT_SEEDS, new AspectList().add(Aspect.PLANT, 1));
         register(Items.MELON_SEEDS, new AspectList().add(Aspect.PLANT, 1));
         register(Items.PUMPKIN_SEEDS, new AspectList().add(Aspect.PLANT, 1));
-        register(Items.WATER_BUCKET, new AspectList().add(Aspect.WATER, 3));
-        register(Items.LAVA_BUCKET, new AspectList().add(Aspect.FIRE, 3).add(Aspect.EARTH, 1));
+        // TC4 ConfigAspects#456-459: filled buckets derive from the empty bucket (METAL 8 + VOID 1).
+        register(Items.WATER_BUCKET, new AspectList().add(Aspect.METAL, 8).add(Aspect.VOID, 1).add(Aspect.WATER, 4));
+        register(Items.LAVA_BUCKET, new AspectList().add(Aspect.METAL, 8).add(Aspect.VOID, 1)
+                .add(Aspect.FIRE, 4).add(Aspect.EARTH, 1));
     }
 
     private static void registerMiscellaneousItems() {
@@ -285,6 +287,12 @@ public final class ConfigAspects {
         register(Blocks.NETHER_WART_BLOCK, new AspectList().add(Aspect.PLANT, 2).add(Aspect.FIRE, 2).add(Aspect.TRAP, 2));
         register(Blocks.RED_NETHER_BRICKS, new AspectList().add(Aspect.EARTH, 2).add(Aspect.FIRE, 2));
         register(Blocks.DIRT_PATH, new AspectList().add(Aspect.EARTH, 1).add(Aspect.PLANT, 1));
+        // TC4 ConfigAspects#313-315, 434: blocks without an item form stay scannable in TC4,
+        // so they get block tags (fluids are found through the scan's block path, not buckets).
+        register(Blocks.FIRE, new AspectList().add(Aspect.FIRE, 4));
+        register(Blocks.WATER, new AspectList().add(Aspect.WATER, 4));
+        register(Blocks.LAVA, new AspectList().add(Aspect.FIRE, 3).add(Aspect.EARTH, 1));
+        register(Blocks.END_PORTAL, new AspectList().add(Aspect.ELDRITCH, 4).add(Aspect.TRAVEL, 4));
     }
 
     private static void register(Item item, AspectList aspects) {

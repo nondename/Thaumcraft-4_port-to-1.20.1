@@ -55,6 +55,10 @@ public final class SurvivalSliceTests {
                 && recipe.getIngredients().get(7).test(new ItemStack(ModOres.SHARDS.get("fire").get())), "Different primal shards must be accepted");
         var iron = new ItemStack(Items.IRON_PICKAXE);
         var silk = iron.copy(); silk.enchant(Enchantments.SILK_TOUCH, 1);
+        // TC4 4.2.3.5 ConfigRecipes#3987 builds the scanner from gold ingots ('I' key = gold).
+        helper.assertTrue(recipe.getIngredients().get(3).test(new ItemStack(Items.GOLD_INGOT))
+                && !recipe.getIngredients().get(3).test(new ItemStack(Items.IRON_INGOT)),
+                "Survival scanner recipe must take gold ingots, as in TC4 1.7.10");
         for (String name : ModOres.NAMES) {
             var ore = ModOres.ORES.get(name).get();
             var drops = Block.getDrops(ore.defaultBlockState(), level, helper.absolutePos(BlockPos.ZERO), null, null, iron);
