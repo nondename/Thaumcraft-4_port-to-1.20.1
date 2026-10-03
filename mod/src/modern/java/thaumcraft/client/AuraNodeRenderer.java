@@ -39,7 +39,14 @@ public final class AuraNodeRenderer implements BlockEntityRenderer<AuraNodeBlock
                        MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
         Minecraft minecraft = Minecraft.getInstance();
         var viewer = minecraft.player;
-        if (viewer == null || node.getLevel() == null || node.getAspects().size() == 0) return;
+        if (viewer == null || node.getLevel() == null) return;
+
+        // Discharge bolts are rendered in the same block-entity pipeline as the node itself.
+        // This keeps their matrices/buffers valid on 1.20.1 and avoids the vanished bolt caused
+        // by the detached RenderLevelStageEvent implementation.
+        NodeZapClientHandler.renderForNode(node, partialTick, poseStack, bufferSource);
+
+        if (node.getAspects().size() == 0) return;
 
         Vec3 center = Vec3.atCenterOf(node.getBlockPos());
         double distance = viewer.getEyePosition(partialTick).distanceTo(center);
