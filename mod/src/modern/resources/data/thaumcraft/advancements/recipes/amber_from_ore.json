@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "ingredients": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "thaumcraft:amber_ore"
+            ]
+          }
+        ]
+      }
+    },
+    "recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "thaumcraft:amber_from_ore"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "ingredients",
+      "recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "thaumcraft:amber_from_ore"
+    ]
+  }
+}

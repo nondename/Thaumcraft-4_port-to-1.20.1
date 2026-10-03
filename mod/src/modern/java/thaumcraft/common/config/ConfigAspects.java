@@ -168,6 +168,20 @@ public final class ConfigAspects {
         register(Blocks.COAL_ORE, new AspectList().add(Aspect.EARTH, 1).add(Aspect.ENERGY, 2).add(Aspect.FIRE, 1));
         register(Blocks.REDSTONE_ORE,
                 new AspectList().add(Aspect.EARTH, 1).add(Aspect.ENERGY, 2).add(Aspect.MECHANISM, 2));
+        // TC4 registered these by ore-dictionary name (oreIron, oreGold, ...); the flat 1.20.1
+        // port registers the vanilla blocks directly, incl. deepslate twins (1.7.10 had none).
+        // TC4's separate lit_redstone_ore block is a LIT blockstate property in 1.20.1, so it
+        // scans as plain REDSTONE_ORE; quartz ore is NETHER_QUARTZ_ORE here.
+        register(Blocks.IRON_ORE, new AspectList().add(Aspect.EARTH, 1).add(Aspect.METAL, 3));
+        register(Blocks.DEEPSLATE_IRON_ORE, new AspectList().add(Aspect.EARTH, 1).add(Aspect.METAL, 3));
+        register(Blocks.GOLD_ORE, new AspectList().add(Aspect.EARTH, 1).add(Aspect.METAL, 2).add(Aspect.GREED, 1));
+        register(Blocks.DEEPSLATE_GOLD_ORE, new AspectList().add(Aspect.EARTH, 1).add(Aspect.METAL, 2).add(Aspect.GREED, 1));
+        register(Blocks.DIAMOND_ORE, new AspectList().add(Aspect.EARTH, 1).add(Aspect.GREED, 3).add(Aspect.CRYSTAL, 3));
+        register(Blocks.DEEPSLATE_DIAMOND_ORE, new AspectList().add(Aspect.EARTH, 1).add(Aspect.GREED, 3).add(Aspect.CRYSTAL, 3));
+        register(Blocks.LAPIS_ORE, new AspectList().add(Aspect.EARTH, 1).add(Aspect.SENSES, 3));
+        register(Blocks.DEEPSLATE_LAPIS_ORE, new AspectList().add(Aspect.EARTH, 1).add(Aspect.SENSES, 3));
+        register(Blocks.EMERALD_ORE, new AspectList().add(Aspect.EARTH, 1).add(Aspect.GREED, 4).add(Aspect.CRYSTAL, 3));
+        register(Blocks.NETHER_QUARTZ_ORE, new AspectList().add(Aspect.EARTH, 1).add(Aspect.CRYSTAL, 3));
 
         register(Blocks.OBSIDIAN, new AspectList().add(Aspect.EARTH, 2).add(Aspect.FIRE, 2).add(Aspect.DARKNESS, 1));
         register(Blocks.ICE, new AspectList().add(Aspect.COLD, 4));

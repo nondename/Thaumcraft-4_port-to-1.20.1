@@ -58,7 +58,10 @@ public final class SurvivalSliceTests {
         for (String name : ModOres.NAMES) {
             var ore = ModOres.ORES.get(name).get();
             var drops = Block.getDrops(ore.defaultBlockState(), level, helper.absolutePos(BlockPos.ZERO), null, null, iron);
-            helper.assertTrue(drops.size() == 1 && drops.get(0).is(ModOres.SHARDS.get(name).get()) && drops.get(0).getCount() == 1, "Ore must drop its matching shard: " + name);
+            // TC4 BlockCustomOre#113: 1 + rand(2 + fortune) shards, so 1..2 without Fortune.
+            helper.assertTrue(drops.size() == 1 && drops.get(0).is(ModOres.SHARDS.get(name).get())
+                            && drops.get(0).getCount() >= 1 && drops.get(0).getCount() <= 2,
+                    "Ore must drop its matching shard (1..2 without Fortune): " + name);
             var silkDrops = Block.getDrops(ore.defaultBlockState(), level, helper.absolutePos(BlockPos.ZERO), null, null, silk);
             helper.assertTrue(silkDrops.size() == 1 && silkDrops.get(0).is(ore.asItem()), "Silk Touch must preserve ore");
         }
