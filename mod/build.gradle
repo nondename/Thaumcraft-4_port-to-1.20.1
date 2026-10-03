@@ -92,9 +92,19 @@ tasks.named('processResources', ProcessResources).configure {
             mod_description        : mod_description
     ]
 
-    // Keep legacy source/resources excluded globally, but package the exact TC4 aura-node atlas.
+    // Keep legacy source/resources excluded globally, but package exact TC4 assets
+    // that the modern renderer intentionally reuses.
     from('src/main/resources/assets/thaumcraft/textures/misc/nodes.png') {
         into 'assets/thaumcraft/textures/misc'
+    }
+    from('src/main/resources/assets/thaumcraft/textures/blocks/infusedorestone.png') {
+        into 'assets/thaumcraft/textures/blocks'
+    }
+    from('src/main/resources/assets/thaumcraft/textures/blocks/infusedore.png') {
+        into 'assets/thaumcraft/textures/blocks'
+    }
+    from('src/main/resources/assets/thaumcraft/textures/blocks/infusedore.png.mcmeta') {
+        into 'assets/thaumcraft/textures/blocks'
     }
 
     inputs.properties replaceProperties

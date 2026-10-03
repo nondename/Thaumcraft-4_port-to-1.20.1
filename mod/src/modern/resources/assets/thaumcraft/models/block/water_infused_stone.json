@@ -1,6 +1,7 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "thaumcraft:block/infused_stone",
   "textures": {
-    "all": "thaumcraft:block/infusedorestone_water"
+    "stone": "thaumcraft:blocks/infusedorestone",
+    "ore": "thaumcraft:blocks/infusedore"
   }
 }
