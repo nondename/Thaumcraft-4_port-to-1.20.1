@@ -1,6 +1,8 @@
 package thaumcraft.common.lib.network;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.network.NetworkRegistry;
@@ -9,6 +11,7 @@ import net.minecraftforge.network.simple.SimpleChannel;
 import thaumcraft.Thaumcraft;
 import thaumcraft.common.lib.capabilities.IThaumometerKnowledge;
 import thaumcraft.common.lib.capabilities.ThaumometerKnowledgeProvider;
+import thaumcraft.common.lib.network.message.AuraNodeZapMessage;
 import thaumcraft.common.lib.network.message.SyncThaumometerKnowledgeMessage;
 
 public final class ModNetwork {
@@ -31,6 +34,13 @@ public final class ModNetwork {
                 SyncThaumometerKnowledgeMessage::decode,
                 SyncThaumometerKnowledgeMessage::handle
         );
+        CHANNEL.registerMessage(
+                1,
+                AuraNodeZapMessage.class,
+                AuraNodeZapMessage::encode,
+                AuraNodeZapMessage::decode,
+                AuraNodeZapMessage::handle
+        );
     }
 
     public static void syncThaumometerKnowledge(Player player) {
@@ -44,5 +54,16 @@ public final class ModNetwork {
             CHANNEL.send(PacketDistributor.PLAYER.with(() -> serverPlayer),
                     new SyncThaumometerKnowledgeMessage(knowledge.serializeNBT()));
         }
+    }
+
+    /** Mirrors TC4 PacketFXBlockZap delivery: only nearby clients need the visual arc. */
+    public static void sendAuraNodeZap(ServerLevel level, BlockPos from, BlockPos to) {
+        CHANNEL.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(
+                        to.getX() + 0.5D,
+                        to.getY() + 0.5D,
+                        to.getZ() + 0.5D,
+                        32.0D,
+                        level.dimension())),
+                new AuraNodeZapMessage(from, to));
     }
 }
