@@ -106,6 +106,12 @@ tasks.named('processResources', ProcessResources).configure {
     from('src/main/resources/assets/thaumcraft/textures/blocks/infusedore.png.mcmeta') {
         into 'assets/thaumcraft/textures/block'
     }
+    from('src/main/resources/assets/thaumcraft/sounds/zap1.ogg') {
+        into 'assets/thaumcraft/sounds'
+    }
+    from('src/main/resources/assets/thaumcraft/sounds/zap2.ogg') {
+        into 'assets/thaumcraft/sounds'
+    }
 
     inputs.properties replaceProperties
 
