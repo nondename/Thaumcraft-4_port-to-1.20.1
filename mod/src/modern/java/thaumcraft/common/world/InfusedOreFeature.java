@@ -19,17 +19,19 @@ import thaumcraft.api.aspects.Aspect;
 import thaumcraft.common.blocks.ModOres;
 
 /**
- * TC4 4.2.3.5 ore pass adapted to 1.20.1's -64..320 world and deepslate.
+ * TC4 4.2.3.5 ore pass adapted to 1.20.1's taller -64..320 world.
  *
- * <p>Counts and distributions intentionally mirror the original generator: 18 single cinnabar
- * attempts in the bottom fifth of the world, 20 single amber attempts within 24 blocks of the
- * surface, and eight six-block infused-stone veins. One third of infused veins are biased toward
- * the biome's primal aspect just like BiomeHandler.getRandomBiomeTag in TC4.</p>
+ * <p>TC4 used 18 cinnabar attempts, 20 amber attempts and eight six-block infused-stone veins
+ * per 256-block-high chunk. Cinnabar and infused stone are volume-distributed, so on taller
+ * dimensions their attempt counts scale with total build height to preserve roughly the old
+ * ore density per vertical volume. Amber remains 20 attempts because its distribution is tied
+ * to a fixed 25-block band below the surface in both versions.</p>
  */
 public final class InfusedOreFeature extends Feature<NoneFeatureConfiguration> {
-    private static final int CINNABAR_ATTEMPTS = 18;
+    private static final int LEGACY_WORLD_HEIGHT = 256;
+    private static final int LEGACY_CINNABAR_ATTEMPTS = 18;
     private static final int AMBER_ATTEMPTS = 20;
-    private static final int INFUSED_ATTEMPTS = 8;
+    private static final int LEGACY_INFUSED_ATTEMPTS = 8;
     private static final int INFUSED_VEIN_SIZE = 6;
 
     private static final DeferredRegister<Feature<?>> FEATURES =
@@ -65,8 +67,9 @@ public final class InfusedOreFeature extends Feature<NoneFeatureConfiguration> {
         int minY = level.getMinBuildHeight();
         int worldHeight = level.getMaxBuildHeight() - minY;
         int deepBand = Math.max(1, worldHeight / 5);
+        int attempts = scaledAttempts(LEGACY_CINNABAR_ATTEMPTS, worldHeight);
 
-        for (int i = 0; i < CINNABAR_ATTEMPTS; i++) {
+        for (int i = 0; i < attempts; i++) {
             int x = context.origin().getX() + random.nextInt(16);
             int z = context.origin().getZ() + random.nextInt(16);
             int y = minY + random.nextInt(deepBand);
@@ -94,8 +97,10 @@ public final class InfusedOreFeature extends Feature<NoneFeatureConfiguration> {
                                         WorldGenLevel level, RandomSource random) {
         boolean placed = false;
         int minY = level.getMinBuildHeight();
+        int worldHeight = level.getMaxBuildHeight() - minY;
+        int attempts = scaledAttempts(LEGACY_INFUSED_ATTEMPTS, worldHeight);
 
-        for (int i = 0; i < INFUSED_ATTEMPTS; i++) {
+        for (int i = 0; i < attempts; i++) {
             int x = context.origin().getX() + random.nextInt(16);
             int z = context.origin().getZ() + random.nextInt(16);
             int surface = level.getHeight(Heightmap.Types.WORLD_SURFACE_WG, x, z);
@@ -120,6 +125,10 @@ public final class InfusedOreFeature extends Feature<NoneFeatureConfiguration> {
             placed |= Feature.ORE.place(config, level, context.chunkGenerator(), random, position);
         }
         return placed;
+    }
+
+    private static int scaledAttempts(int legacyAttempts, int currentWorldHeight) {
+        return Math.max(1, Math.round(legacyAttempts * (currentWorldHeight / (float) LEGACY_WORLD_HEIGHT)));
     }
 
     private static boolean placeSingleOre(WorldGenLevel level, BlockPos pos, Block ore) {
