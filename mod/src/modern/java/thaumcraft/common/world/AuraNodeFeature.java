@@ -2,7 +2,7 @@ package thaumcraft.common.world;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
@@ -12,7 +12,7 @@ import thaumcraft.Thaumcraft;
 import thaumcraft.common.nodes.AuraNodeBlockEntity;
 import thaumcraft.common.nodes.ModNodes;
 
-/** Places one wild aura node when the 1/36 placed-feature rarity check succeeds. */
+/** Places one TC4-style wild aura node when the 1/36 placed-feature rarity check succeeds. */
 public final class AuraNodeFeature extends Feature<NoneFeatureConfiguration> {
     private static final DeferredRegister<Feature<?>> FEATURES =
             DeferredRegister.create(Registries.FEATURE, Thaumcraft.MODID);
@@ -36,17 +36,35 @@ public final class AuraNodeFeature extends Feature<NoneFeatureConfiguration> {
 
         int x = context.origin().getX() + random.nextInt(16);
         int z = context.origin().getZ() + random.nextInt(16);
-        int surface = level.getHeight(Heightmap.Types.WORLD_SURFACE_WG, x, z);
-        if (surface <= level.getMinBuildHeight() + 1 || surface >= level.getMaxBuildHeight() - 5) {
+
+        // TC4's Utils.getFirstUncoveredY did NOT use the world surface. It scanned upward from
+        // near the bottom until the first air block appeared above the scan position, which is why
+        // wild nodes could occur in caves. 1.20.1 extends the world below y=0, so use minY+5 as the
+        // modern equivalent of the old hard-coded y=5 start.
+        int q = getFirstUncoveredY(level, x, z);
+        if (q == Integer.MIN_VALUE) {
             return false;
         }
 
-        // TC4 nudges a wild node a few blocks into open air above the first uncovered surface.
-        BlockPos pos = new BlockPos(x, surface + 1 + random.nextInt(4), z);
-        for (int i = 0; i < 4 && !level.getBlockState(pos).canBeReplaced(); i++) {
-            pos = pos.above();
+        BlockPos above = new BlockPos(x, q + 1, z);
+        if (level.isEmptyBlock(above)) {
+            q++;
         }
-        if (pos.getY() >= level.getMaxBuildHeight() || !level.getBlockState(pos).canBeReplaced()) {
+
+        int p = random.nextInt(4);
+        BlockPos candidate = new BlockPos(x, q + p, z);
+        if (level.isEmptyBlock(candidate) || level.getBlockState(candidate).canBeReplaced()) {
+            q += p;
+        }
+
+        if (q >= level.getMaxBuildHeight()) {
+            return false;
+        }
+
+        BlockPos pos = new BlockPos(x, q, z);
+        // createNodeAt in TC4 only installed BlockAiry when the final position was actually air.
+        // Preserve that behaviour rather than silently eating grass, flowers, snow layers, etc.
+        if (!level.isEmptyBlock(pos)) {
             return false;
         }
 
@@ -62,5 +80,19 @@ public final class AuraNodeFeature extends Feature<NoneFeatureConfiguration> {
         // Never leave an inert invisible carrier behind if BE creation failed.
         level.removeBlock(pos, false);
         return false;
+    }
+
+    private static int getFirstUncoveredY(WorldGenLevel level, int x, int z) {
+        int start = level.getMinBuildHeight() + 5;
+        int limit = level.getMaxBuildHeight() - 1;
+        BlockPos.MutableBlockPos cursor = new BlockPos.MutableBlockPos();
+
+        for (int y = start; y < limit; y++) {
+            cursor.set(x, y + 1, z);
+            if (level.isEmptyBlock(cursor)) {
+                return y;
+            }
+        }
+        return Integer.MIN_VALUE;
     }
 }
