@@ -4,7 +4,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.phys.Vec3;
@@ -54,12 +53,7 @@ public final class NodeZapClientHandler {
         );
     }
 
-    /**
-     * Called from AuraNodeRenderer for the consuming node. The supplied pose stack is already
-     * block-local and camera transformed by Minecraft's block-entity dispatcher, so every bolt
-     * vertex is expressed relative to the target node instead of trying to rebuild world render
-     * matrices in a separate RenderLevelStageEvent.
-     */
+    /** Render all zaps whose consuming/target node is this block entity. */
     public static void renderForNode(AuraNodeBlockEntity node, float partialTick,
                                      PoseStack poseStack, MultiBufferSource bufferSource) {
         if (ACTIVE.isEmpty() || node.getLevel() == null) {
@@ -75,7 +69,11 @@ public final class NodeZapClientHandler {
         BlockPos target = node.getBlockPos();
         Vec3 targetOrigin = Vec3.atLowerCornerOf(target);
         Vec3 cameraLocal = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition().subtract(targetOrigin);
-        VertexConsumer vertices = bufferSource.getBuffer(RenderType.lightning());
+
+        // RenderType.lightning() did not reproduce TC4's GL_SRC_ALPHA,GL_ONE path reliably in
+        // this block-entity buffer, which is why the packet/sound worked while the bolt vanished.
+        // Our dedicated type is additive, no-cull, colour-only and does not write depth.
+        VertexConsumer vertices = bufferSource.getBuffer(ThaumcraftRenderTypes.nodeLightning());
         PoseStack.Pose pose = poseStack.last();
 
         for (ActiveZap zap : ACTIVE) {
@@ -228,8 +226,6 @@ public final class NodeZapClientHandler {
             this.to = to;
             this.createdTick = createdTick;
 
-            // Store geometry in the target node's local coordinate system. The target center is
-            // always (0.5, 0.5, 0.5); the donor is offset by the two block positions.
             Vec3 start = new Vec3(
                     from.getX() - to.getX() + 0.5D,
                     from.getY() - to.getY() + 0.5D,
