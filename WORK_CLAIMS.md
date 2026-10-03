@@ -25,6 +25,10 @@
 
 - **`mod/src/modern/java/thaumcraft/common/lib/capabilities/IThaumometerKnowledge.java`, `mod/src/modern/java/thaumcraft/common/lib/capabilities/ThaumometerKnowledge.java`, `mod/src/modern/java/thaumcraft/common/commands/AspectCommands.java`, `mod/src/modern/java/thaumcraft/client/ResearchTreeScreen.java` — ChatGPT (2026-10-02).** Первый persistent/synced research-state: ключи исследований, тестовая выдача и блокировка дерева по прогрессу.
 
+- **Руды: `mod/src/modern/java/thaumcraft/common/blocks/ModOres.java`, `mod/src/modern/java/thaumcraft/common/items/ModItems.java`, `mod/src/modern/java/thaumcraft/common/world/InfusedOreFeature.java` + новые `CinnabarOreFeature.java`/`AmberOreFeature.java`, `mod/src/modern/java/thaumcraft/common/config/ConfigAspects.java`, `mod/src/modern/resources/data/thaumcraft/{loot_tables,worldgen,recipes}/**`, `mod/src/modern/resources/data/minecraft/tags/blocks/**`, `mod/src/modern/resources/assets/thaumcraft/{blockstates,models,textures,lang}/**` — MiMo (2026-10-03).** Сверка руд с оригиналом 1.7.10 (`decompiled/`): киноварь и янтарь (meta 0/7) со всеми генерацией/лутом/плавкой, предметы «Ртуть»/«Янтарь», точечные баги (hardness 3.0→1.5, опыт, лут Fortune, тег инструмента), аспекты ванильных руд.
+
+- **Таумометр: `mod/src/modern/java/thaumcraft/common/items/tools/{ItemThaumometer,ThaumometerTargets,ScanInteractions}.java`, `mod/src/modern/java/thaumcraft/common/config/EntityAspects.java`, `mod/src/modern/java/thaumcraft/common/config/ConfigAspects.java` (только ведра/вода/лава), `mod/src/modern/java/thaumcraft/client/ThaumometerItemRenderer.java`, `mod/src/modern/resources/data/thaumcraft/recipes/thaumometer.json` — MiMo (2026-10-03).** Сверка с оригиналом 1.7.10: рецепт (золото вместо железа), дальность луча 5, сканирование игроков, нормализация аспектов узла при выдаче, звук/отмена кликов, строка типа узла в HUD. Файлы capability ChatGPT (`IThaumometerKnowledge`, `ThaumometerKnowledge`) трогать не планируется; если понадобится — допишу сюда до правки.
+
 ---
 
 ## Снятые заявки
