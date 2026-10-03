@@ -8,7 +8,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 import thaumcraft.Thaumcraft;
 
-/** Sound events used by the Thaumcraft scanner. */
+/** Sound events currently used by the modern Thaumcraft port. */
 public final class ModSounds {
     private static final DeferredRegister<SoundEvent> SOUNDS =
             DeferredRegister.create(Registries.SOUND_EVENT, Thaumcraft.MODID);
@@ -16,6 +16,7 @@ public final class ModSounds {
     public static final RegistryObject<SoundEvent> WAND = register("wand");
     public static final RegistryObject<SoundEvent> CAMERA_TICKS = register("cameraticks");
     public static final RegistryObject<SoundEvent> CAMERA_CLACK = register("cameraclack");
+    public static final RegistryObject<SoundEvent> ZAP = register("zap");
 
     private ModSounds() {
     }
