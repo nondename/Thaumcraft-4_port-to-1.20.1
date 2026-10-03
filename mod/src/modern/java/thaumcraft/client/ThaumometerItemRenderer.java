@@ -118,7 +118,8 @@ public final class ThaumometerItemRenderer extends BlockEntityWithoutLevelRender
         poseStack.translate(0.0D, 0.11D, -0.01D);
         poseStack.mulPose(Axis.XP.rotationDegrees(90.0F));
         poseStack.mulPose(Axis.ZP.rotationDegrees(90.0F));
-        poseStack.mulPose(Axis.ZP.rotationDegrees(180.0F));
+        // Keep the HUD in the same orientation as the scanner lens. The previous extra 180°
+        // rotation made target names and aspect amounts appear upside-down in first person.
         renderAspectIcons(minecraft, poseStack, bufferSource, aspects);
         renderTargetName(minecraft.font, poseStack, bufferSource, scan.readoutName(knowledge).getString());
         poseStack.popPose();
