@@ -12,6 +12,7 @@ import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.nodes.INode;
 import thaumcraft.api.nodes.NodeModifier;
 import thaumcraft.api.nodes.NodeType;
+import thaumcraft.common.lib.network.ModNetwork;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -145,6 +146,7 @@ public final class AuraNodeBlockEntity extends BlockEntity implements INode {
         donor.ensureRegeneration();
         donor.wait = donor.regeneration / 2;
         donor.setChangedAndSync();
+        ModNetwork.sendAuraNodeZap(level, donorPos, worldPosition);
         return true;
     }
 
