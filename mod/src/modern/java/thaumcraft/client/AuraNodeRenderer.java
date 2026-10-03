@@ -20,7 +20,7 @@ import thaumcraft.api.nodes.NodeType;
 import thaumcraft.common.items.ModItems;
 import thaumcraft.common.nodes.AuraNodeBlockEntity;
 
-/** Billboard renderer based directly on TC4 TileNodeRenderer's 32-frame node atlas. */
+/** Billboard renderer ported from TC4 TileNodeRenderer's 32-frame node atlas. */
 public final class AuraNodeRenderer implements BlockEntityRenderer<AuraNodeBlockEntity> {
     private static final ResourceLocation NODE_TEXTURE =
             ResourceLocation.fromNamespaceAndPath(Thaumcraft.MODID, "textures/misc/nodes.png");
@@ -53,8 +53,9 @@ public final class AuraNodeRenderer implements BlockEntityRenderer<AuraNodeBlock
 
         int frame = (int) ((System.nanoTime() / 40_000_000L + node.getBlockPos().getX()) % FRAMES);
         if (!revealed) {
+            // TC4's hidden/faint node pass uses GL_SRC_ALPHA, GL_ONE.
             drawLayer(poseStack, bufferSource, minecraft, 0.50F, 0.0F, 0.10F,
-                    1, frame, 0xFFFFFF);
+                    1, frame, 0xFFFFFF, true);
             return;
         }
 
@@ -70,6 +71,7 @@ public final class AuraNodeRenderer implements BlockEntityRenderer<AuraNodeBlock
 
         int count = 0;
         float average = 0.0F;
+        float lastAngle = 0.0F;
         int aspectCount = Math.max(1, node.getAspects().size());
         for (Aspect aspect : node.getAspects().getAspects()) {
             if (aspect == null) continue;
@@ -77,19 +79,36 @@ public final class AuraNodeRenderer implements BlockEntityRenderer<AuraNodeBlock
             average += amount;
             float pulse = Mth.sin((viewer.tickCount + partialTick) / (14.0F - Math.min(count, 12))) * 0.25F + 0.50F;
             float scale = 0.20F + pulse * ((float) amount / 50.0F);
-            float angle = (float) ((System.nanoTime() / 5_000_000L) % (5000L + 500L * count))
+            lastAngle = (float) ((System.nanoTime() / 5_000_000L) % (5000L + 500L * count))
                     / (5000.0F + 500.0F * count) * Mth.TWO_PI;
-            drawLayer(poseStack, bufferSource, minecraft, scale, angle,
-                    alpha / Math.max(1.0F, aspectCount / 2.0F), 0, frame, aspect.getColor());
+
+            // Aspect#getBlend in TC4 is fed directly to glBlendFunc(GL_SRC_ALPHA, blend).
+            // 1 = additive, 771 = normal alpha. TC4 also boosts alpha 1.5x for the latter.
+            boolean additive = aspect.getBlend() != 771;
+            float aspectAlpha = alpha * (additive ? 1.0F : 1.5F);
+            drawLayer(poseStack, bufferSource, minecraft, scale, lastAngle,
+                    aspectAlpha / Math.max(1.0F, aspectCount / 2.0F), 0, frame, aspect.getColor(), additive);
             count++;
         }
 
         average /= aspectCount;
         float coreScale = 0.10F + average / 150.0F;
-        int strip = stripFor(node.getNodeType());
-        if (node.getNodeType() == NodeType.HUNGRY) coreScale *= 0.75F;
-        drawLayer(poseStack, bufferSource, minecraft, coreScale, 0.0F, alpha,
-                strip, frame, 0xFFFFFF);
+        NodeType nodeType = node.getNodeType();
+        int strip = stripFor(nodeType);
+        boolean additiveCore = true;
+        float coreAngle = lastAngle;
+
+        // Exact TC4 core blend/strip mapping from TileNodeRenderer.
+        switch (nodeType) {
+            case UNSTABLE -> coreAngle = 0.0F;
+            case DARK, TAINTED -> additiveCore = false;
+            case HUNGRY -> coreScale *= 0.75F;
+            default -> {
+            }
+        }
+
+        drawLayer(poseStack, bufferSource, minecraft, coreScale, coreAngle, alpha,
+                strip, frame, 0xFFFFFF, additiveCore);
     }
 
     private static int stripFor(NodeType type) {
@@ -104,7 +123,8 @@ public final class AuraNodeRenderer implements BlockEntityRenderer<AuraNodeBlock
     }
 
     private static void drawLayer(PoseStack poseStack, MultiBufferSource bufferSource, Minecraft minecraft,
-                                  float scale, float angle, float alpha, int strip, int frame, int color) {
+                                  float scale, float angle, float alpha, int strip, int frame, int color,
+                                  boolean additive) {
         poseStack.pushPose();
         poseStack.translate(0.5D, 0.5D, 0.5D);
         poseStack.mulPose(minecraft.getEntityRenderDispatcher().cameraOrientation());
@@ -121,7 +141,12 @@ public final class AuraNodeRenderer implements BlockEntityRenderer<AuraNodeBlock
         int blue = color & 255;
         int a = Mth.clamp((int) (alpha * 255.0F), 0, 255);
 
-        VertexConsumer vertices = bufferSource.getBuffer(RenderType.entityTranslucent(NODE_TEXTURE));
+        // energySwirl uses the additive transparency state (SRC_ALPHA, ONE), which matches
+        // TC4's GL_ONE blend destination. entityTranslucent is the 771/ONE_MINUS_SRC_ALPHA path.
+        RenderType renderType = additive
+                ? RenderType.energySwirl(NODE_TEXTURE, 0.0F, 0.0F)
+                : RenderType.entityTranslucent(NODE_TEXTURE);
+        VertexConsumer vertices = bufferSource.getBuffer(renderType);
         PoseStack.Pose pose = poseStack.last();
         vertex(vertices, pose, -0.5F, 0.5F, u0, v0, red, green, blue, a);
         vertex(vertices, pose, 0.5F, 0.5F, u1, v0, red, green, blue, a);
