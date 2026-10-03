@@ -29,15 +29,16 @@ public final class AuraNodeRenderer implements BlockEntityRenderer<AuraNodeBlock
 
     /**
      * Physical glass opening of our current first-person Thaumometer model, measured from the
-     * gameplay capture. Coordinates are normalized screen coordinates, not a generic FOV cone.
+     * full 1920x1020 gameplay capture. Coordinates are normalized screen coordinates, not a
+     * generic FOV cone.
      */
     private static final double[][] THAUMOMETER_LENS = {
-            {0.477D, 0.176D},
-            {0.625D, 0.176D},
-            {0.708D, 0.422D},
-            {0.625D, 0.618D},
-            {0.477D, 0.618D},
-            {0.404D, 0.422D}
+            {0.471D, 0.184D},
+            {0.643D, 0.184D},
+            {0.720D, 0.447D},
+            {0.638D, 0.717D},
+            {0.472D, 0.717D},
+            {0.393D, 0.447D}
     };
 
     public AuraNodeRenderer(BlockEntityRendererProvider.Context context) {
