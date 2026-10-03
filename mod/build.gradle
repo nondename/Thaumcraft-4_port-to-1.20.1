@@ -98,13 +98,13 @@ tasks.named('processResources', ProcessResources).configure {
         into 'assets/thaumcraft/textures/misc'
     }
     from('src/main/resources/assets/thaumcraft/textures/blocks/infusedorestone.png') {
-        into 'assets/thaumcraft/textures/blocks'
+        into 'assets/thaumcraft/textures/block'
     }
     from('src/main/resources/assets/thaumcraft/textures/blocks/infusedore.png') {
-        into 'assets/thaumcraft/textures/blocks'
+        into 'assets/thaumcraft/textures/block'
     }
     from('src/main/resources/assets/thaumcraft/textures/blocks/infusedore.png.mcmeta') {
-        into 'assets/thaumcraft/textures/blocks'
+        into 'assets/thaumcraft/textures/block'
     }
 
     inputs.properties replaceProperties

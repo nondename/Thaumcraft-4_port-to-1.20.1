@@ -1,7 +1,7 @@
 {
   "parent": "thaumcraft:block/infused_stone",
   "textures": {
-    "stone": "thaumcraft:blocks/infusedorestone",
-    "ore": "thaumcraft:blocks/infusedore"
+    "stone": "thaumcraft:block/infusedorestone",
+    "ore": "thaumcraft:block/infusedore"
   }
 }
