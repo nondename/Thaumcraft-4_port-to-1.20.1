@@ -73,7 +73,10 @@ public class ItemThaumometer extends Item {
         }
         stack.getOrCreateTag().putString(SCAN_TARGET_TAG, target);
         player.startUsingItem(hand);
-        return InteractionResultHolder.sidedSuccess(stack, level.isClientSide);
+
+        // SUCCESS makes modern Minecraft play a hand swing/equip reaction. TC4 simply entered the
+        // 25-tick use state with EnumAction.none, so CONSUME is the modern no-swing equivalent.
+        return InteractionResultHolder.consume(stack);
     }
 
     @Override
