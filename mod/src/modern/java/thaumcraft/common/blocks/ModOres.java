@@ -69,6 +69,8 @@ public final class ModOres {
                     output.accept(ModItems.THAUMONOMICON.get());
                     output.accept(ModItems.IRON_WAND_CAP.get());
                     output.accept(ModItems.THAUMOMETER.get());
+                    // TC4 ConfigItems#371-373: the goggles register right after the thaumometer.
+                    output.accept(ModItems.GOGGLES.get());
                     output.accept(thaumcraft.common.research.ModResearch.TABLE_ITEM.get());
                     output.accept(thaumcraft.common.research.ModResearch.SCRIBING_TOOLS.get());
                     output.accept(thaumcraft.common.research.ModResearch.PHIAL.get());
