@@ -17,6 +17,12 @@
 
 ## Активные заявки
 
+- **`mod/src/modernTest/**`, `mod/build.gradle` (секция `dependencies` с тестовыми
+  зависимостями), `.github/workflows/port-1.20.1.yml` — MiMo (2026-10-03).**
+  Этап 0: настоящие unit-тесты в `modernTest` (сейчас `gradlew test` прогоняет
+  0 тестов — JUnit не подключён), первые guard-тесты, ассерт на ванильные рецепты
+  в GameTest и прогон `runGameTestServer` в CI.
+
 - **`mod/src/modern/java/thaumcraft/common/lib/capabilities/IThaumometerKnowledge.java`, `mod/src/modern/java/thaumcraft/common/lib/capabilities/ThaumometerKnowledge.java`, `mod/src/modern/java/thaumcraft/common/commands/AspectCommands.java`, `mod/src/modern/java/thaumcraft/client/ResearchTreeScreen.java` — ChatGPT (2026-10-02).** Первый persistent/synced research-state: ключи исследований, тестовая выдача и блокировка дерева по прогрессу.
 
 ---
