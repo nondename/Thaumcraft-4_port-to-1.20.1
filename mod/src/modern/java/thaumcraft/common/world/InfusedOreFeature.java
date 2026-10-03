@@ -138,7 +138,4 @@ public final class InfusedOreFeature extends Feature<NoneFeatureConfiguration> {
         if (aspect == Aspect.ENTROPY) return "entropy";
         return null;
     }
-
-    private InfusedOreFeature() {
-    }
 }
