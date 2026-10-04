@@ -51,6 +51,13 @@ public final class ArcaneWorkbenchScreen extends AbstractContainerScreen<ArcaneW
     }
 
     @Override
+    public void render(GuiGraphics g, int mouseX, int mouseY, float partialTick) {
+        renderBackground(g);
+        super.render(g, mouseX, mouseY, partialTick);
+        renderTooltip(g, mouseX, mouseY);
+    }
+
+    @Override
     protected void renderBg(GuiGraphics g, float partialTick, int mouseX, int mouseY) {
         g.pose().pushPose();
         try {
@@ -62,7 +69,11 @@ public final class ArcaneWorkbenchScreen extends AbstractContainerScreen<ArcaneW
     }
 
     private void renderWorkbenchBackground(GuiGraphics g) {
+        RenderSystem.setShaderColor(1, 1, 1, 1);
+        RenderSystem.enableBlend();
+        RenderSystem.defaultBlendFunc();
         g.blit(TEXTURE, 0, 0, 0, 0, imageWidth, imageHeight);
+        RenderSystem.disableBlend();
         if (this.minecraft == null || this.minecraft.level == null || this.minecraft.player == null) {
             return;
         }

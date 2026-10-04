@@ -48,10 +48,9 @@ import thaumcraft.common.research.ResearchTableBlock;
  *   <li>the arcane worktable is its own block + {@code BlockItem} (original shared the one
  *       {@code blockTable} item across metas; {@code damageDropped} line 110 kept meta 15
  *       pointing at itself, so the behaviour is equivalent);</li>
- *   <li>the original rendered one flat {@code woodplain} cube through
- *       {@code BlockTable#getIcon} for every table meta; this port keeps the modern
- *       table model (as the research table port does) with a dedicated woodplain texture;</li>
- *   <li>the original TESR/table decor is not part of this slice.</li>
+ *   <li>the six cuboids and atlas UVs of {@code ModelArcaneWorkbench} are baked into
+ *       a block model using the original {@code textures/models/worktable.png};
+ *       only the inserted wand needs a block entity renderer.</li>
  * </ul>
  */
 public final class ArcaneWorkbenchBlock extends BaseEntityBlock {
@@ -71,9 +70,10 @@ public final class ArcaneWorkbenchBlock extends BaseEntityBlock {
         BLOCK_ENTITIES.register(bus);
     }
 
-    // Same table silhouette as the research table (original BlockTable bounds).
-    private static final VoxelShape SHAPE = Shapes.or(box(0, 12, 0, 16, 16, 16), box(0, 0, 4, 16, 4, 12),
-            box(2, 4, 6, 6, 12, 10), box(10, 4, 6, 14, 12, 10));
+    // ModelArcaneWorkbench: 16x8x16 top, 16x4x16 base and four 4x4x4 legs.
+    private static final VoxelShape SHAPE = Shapes.or(box(0, 8, 0, 16, 16, 16), box(0, 0, 0, 16, 4, 16),
+            box(1, 4, 1, 5, 8, 5), box(11, 4, 1, 15, 8, 5),
+            box(1, 4, 11, 5, 8, 15), box(11, 4, 11, 15, 8, 15));
 
     public ArcaneWorkbenchBlock(BlockBehaviour.Properties properties) {
         super(properties);

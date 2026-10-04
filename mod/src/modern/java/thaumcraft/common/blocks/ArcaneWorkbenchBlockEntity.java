@@ -6,6 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.player.Inventory;
@@ -117,6 +118,20 @@ public final class ArcaneWorkbenchBlockEntity extends BlockEntity implements Con
     public void setChanged() {
         super.setChanged();
         notifyMenu();
+        if (updateDepth == 0 && level != null && !level.isClientSide
+                && level.getBlockEntity(worldPosition) == this) {
+            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
+        }
+    }
+
+    @Override
+    public CompoundTag getUpdateTag() {
+        return saveWithoutMetadata();
+    }
+
+    @Override
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     @Override
