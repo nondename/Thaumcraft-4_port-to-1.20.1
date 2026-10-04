@@ -1,0 +1,16 @@
+{
+  "key": {
+    "N": {
+      "tag": "forge:nuggets/thaumium"
+    }
+  },
+  "result": {
+    "item": "thaumcraft:thaumium_ingot"
+  },
+  "pattern": [
+    "NNN",
+    "NNN",
+    "NNN"
+  ],
+  "type": "minecraft:crafting_shaped"
+}

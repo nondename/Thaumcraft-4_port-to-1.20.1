@@ -859,5 +859,10 @@
   "item.Wand.void.cap": "Void Aspected",
   "item.capacity.text": "Capacity",
   "tc.vis.cost": "vis cost",
-  "tc.vis.costavg": "avg vis cost"
+  "tc.vis.costavg": "avg vis cost",
+  "item.thaumcraft.void_nugget": "Void Metal Nugget",
+  "item.thaumcraft.thaumium_nugget": "Thaumium Nugget",
+  "item.thaumcraft.void_ingot": "Void Metal Ingot",
+  "item.thaumcraft.thaumium_ingot": "Thaumium Ingot",
+  "block.thaumcraft.thaumium_block": "Block of Thaumium"
 }

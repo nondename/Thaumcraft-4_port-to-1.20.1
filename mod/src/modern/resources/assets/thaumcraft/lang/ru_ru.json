@@ -859,5 +859,10 @@
   "item.Wand.void.cap": "Пустотой окутанный",
   "item.capacity.text": "Ёмкость",
   "tc.vis.cost": "затраты Вис",
-  "tc.vis.costavg": "средние затраты Вис"
+  "tc.vis.costavg": "средние затраты Вис",
+  "item.thaumcraft.void_nugget": "Самородок пустотного металла",
+  "item.thaumcraft.thaumium_nugget": "Самородок таумия",
+  "item.thaumcraft.void_ingot": "Слиток пустотного металла",
+  "item.thaumcraft.thaumium_ingot": "Слиток таумия",
+  "block.thaumcraft.thaumium_block": "Блок таумия"
 }

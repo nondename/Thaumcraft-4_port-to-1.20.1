@@ -1,0 +1,34 @@
+{
+  "rewards": {
+    "recipes": [
+      "thaumcraft:thaumium_ingot_from_nuggets"
+    ]
+  },
+  "criteria": {
+    "has_recipe": {
+      "conditions": {
+        "recipe": "thaumcraft:thaumium_ingot_from_nuggets"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "material": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "thaumcraft:thaumium_nugget"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "parent": "minecraft:recipes/root",
+  "requirements": [
+    [
+      "material",
+      "has_recipe"
+    ]
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "key": {
+    "I": {
+      "tag": "forge:ingots/thaumium"
+    }
+  },
+  "result": {
+    "item": "thaumcraft:thaumium_block"
+  },
+  "pattern": [
+    "III",
+    "III",
+    "III"
+  ],
+  "type": "minecraft:crafting_shaped"
+}

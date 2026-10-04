@@ -1,0 +1,34 @@
+{
+  "rewards": {
+    "recipes": [
+      "thaumcraft:thaumium_block"
+    ]
+  },
+  "criteria": {
+    "has_recipe": {
+      "conditions": {
+        "recipe": "thaumcraft:thaumium_block"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "material": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "thaumcraft:thaumium_ingot"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "parent": "minecraft:recipes/root",
+  "requirements": [
+    [
+      "material",
+      "has_recipe"
+    ]
+  ]
+}

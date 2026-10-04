@@ -29,6 +29,7 @@ public final class Thaumcraft {
 
     public Thaumcraft() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        thaumcraft.common.items.ModMetals.init();
         ModItems.register(modEventBus);
         // Wand part items + WandCap/WandRod registry data (ConfigItems wand section).
         thaumcraft.common.items.wands.ModWandParts.register(modEventBus);

@@ -67,6 +67,11 @@ public final class ModOres {
                 .displayItems((parameters, output) -> {
                     thaumcraft.common.items.tools.ItemWand.addCreativeWands(output::accept);
                     output.accept(ModItems.THAUMONOMICON.get());
+                    output.accept(thaumcraft.common.items.ModMetals.THAUMIUM_INGOT.get());
+                    output.accept(thaumcraft.common.items.ModMetals.THAUMIUM_NUGGET.get());
+                    output.accept(thaumcraft.common.items.ModMetals.THAUMIUM_BLOCK_ITEM.get());
+                    output.accept(thaumcraft.common.items.ModMetals.VOID_INGOT.get());
+                    output.accept(thaumcraft.common.items.ModMetals.VOID_NUGGET.get());
                     // TC4 ConfigItems: caps (itemWandCap damage 0-8), then rods (itemWandRod
                     // damage 0-7) and staff cores (50-57, 100) — original id/meta order.
                     output.accept(thaumcraft.common.items.wands.ModWandParts.CAP_IRON.get());

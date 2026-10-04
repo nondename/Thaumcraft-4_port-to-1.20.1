@@ -1,0 +1,16 @@
+{
+  "key": {
+    "N": {
+      "tag": "forge:nuggets/void"
+    }
+  },
+  "result": {
+    "item": "thaumcraft:void_ingot"
+  },
+  "pattern": [
+    "NNN",
+    "NNN",
+    "NNN"
+  ],
+  "type": "minecraft:crafting_shaped"
+}
