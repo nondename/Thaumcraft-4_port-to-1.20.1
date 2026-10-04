@@ -90,6 +90,30 @@ public final class ItemWand extends Item {
         super(properties);
     }
 
+    @Override
+    public void initializeClient(java.util.function.Consumer<net.minecraftforge.client.extensions.common.IClientItemExtensions> consumer) {
+        consumer.accept(new thaumcraft.client.WandChargeAnimation());
+    }
+
+    /** Vis and the node target change NBT while using the wand; keep the action continuous. */
+    @Override
+    public boolean canContinueUsing(ItemStack oldStack, ItemStack newStack) {
+        return sameWand(oldStack, newStack);
+    }
+
+    @Override
+    public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
+        return slotChanged || !sameWand(oldStack, newStack);
+    }
+
+    private static boolean sameWand(ItemStack oldStack, ItemStack newStack) {
+        return oldStack.getItem() == newStack.getItem()
+                && oldStack.getItem() instanceof ItemWand
+                && getRod(oldStack) == getRod(newStack)
+                && getCap(oldStack) == getCap(newStack)
+                && isSceptre(oldStack) == isSceptre(newStack);
+    }
+
     // ---------------------------------------------------------------- vis storage
     // getAllVis / getAspectsWithRoom / storeAllVis / getVis / storeVis — original lines 208-252.
 

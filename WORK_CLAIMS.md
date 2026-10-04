@@ -17,7 +17,7 @@
 
 ## Активные заявки
 
-- **Анимация зарядки — Codex (2026-10-04): `mod/src/modern/java/thaumcraft/client/WandChargeAnimation.java` (новый), `common/items/tools/ItemWand.java` (client extension и продолжение использования).** Пользователь поручил восстановить движение жезла при удержании ПКМ; модели/PNG деталей жезлов не меняются.
+- ~~**Анимация зарядки — Codex (2026-10-04): `mod/src/modern/java/thaumcraft/client/WandChargeAnimation.java` (новый), `common/items/tools/ItemWand.java` (client extension и продолжение использования).**~~ Готово: first-person WAVE из legacy `ItemWandRenderer`, плавное поднятие и зеркалирование для левой руки; изменения vis/координат узла не перезапускают использование и переоснащение. `build` и 10 GameTest прошли. Визуально проверить обе руки, удержание более 10 секунд, отпускание ПКМ и отведение взгляда. Луч узел→жезл по-прежнему отложен; модели/PNG деталей жезлов не менялись.
 
 - **`mod/src/modernTest/**`, `mod/build.gradle` (секция `dependencies` с тестовыми
   зависимостями), `.github/workflows/port-1.20.1.yml` — MiMo (2026-10-03).**
