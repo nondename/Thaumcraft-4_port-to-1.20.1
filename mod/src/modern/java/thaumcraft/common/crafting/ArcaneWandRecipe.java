@@ -35,7 +35,7 @@ import thaumcraft.common.items.tools.ItemWand;
  *   <li>the wood-rod + iron-cap exclusion lives in {@code assemble} exactly where the
  *       original had it (getCraftingResult line 54) — {@code matches} still succeeds for
  *       that grid, so in the arcane workbench the plain {@code wand.json} recipe previews
- *       first (vanilla-first rule) and taking it attempts the wood x iron payment, which
+ *       first (vanilla-first rule) and taking it requires no vis payment, which
  *       is the original behaviour;</li>
  *   <li>item comparison is registry-item equality (modern caps/rods carry no damage/NBT).</li>
  * </ul>

@@ -1,308 +1,329 @@
 {
-  "parent": "minecraft:block/block",
-  "textures": {
-    "rod": "thaumcraft:item/wand_rod_wood",
-    "cap": "thaumcraft:item/wand_cap_iron",
-    "particle": "thaumcraft:item/wand_rod_wood"
-  },
-  "elements": [
+  "parent": "thaumcraft:item/wand_base",
+  "overrides": [
     {
-      "from": [
-        7,
-        -3,
-        7
-      ],
-      "to": [
-        9,
-        -1,
-        9
-      ],
-      "faces": {
-        "down": {
-          "uv": [
-            1.0,
-            0.0,
-            2.0,
-            1.0
-          ],
-          "texture": "#cap"
-        },
-        "up": {
-          "uv": [
-            2.0,
-            0.0,
-            3.0,
-            1.0
-          ],
-          "texture": "#cap"
-        },
-        "west": {
-          "uv": [
-            0.0,
-            1.0,
-            1.0,
-            2.0
-          ],
-          "texture": "#cap"
-        },
-        "north": {
-          "uv": [
-            1.0,
-            1.0,
-            2.0,
-            2.0
-          ],
-          "texture": "#cap"
-        },
-        "east": {
-          "uv": [
-            2.0,
-            1.0,
-            3.0,
-            2.0
-          ],
-          "texture": "#cap"
-        },
-        "south": {
-          "uv": [
-            3.0,
-            1.0,
-            4.0,
-            2.0
-          ],
-          "texture": "#cap"
-        }
-      }
+      "predicate": {
+        "thaumcraft:parts": 0.0
+      },
+      "model": "thaumcraft:item/wand_variants/wood_iron"
     },
     {
-      "from": [
-        7,
-        -1,
-        7
-      ],
-      "to": [
-        9,
-        17,
-        9
-      ],
-      "faces": {
-        "down": {
-          "uv": [
-            1.0,
-            4.0,
-            2.0,
-            5.0
-          ],
-          "texture": "#rod"
-        },
-        "up": {
-          "uv": [
-            2.0,
-            4.0,
-            3.0,
-            5.0
-          ],
-          "texture": "#rod"
-        },
-        "west": {
-          "uv": [
-            0.0,
-            5.0,
-            1.0,
-            14.0
-          ],
-          "texture": "#rod"
-        },
-        "north": {
-          "uv": [
-            1.0,
-            5.0,
-            2.0,
-            14.0
-          ],
-          "texture": "#rod"
-        },
-        "east": {
-          "uv": [
-            2.0,
-            5.0,
-            3.0,
-            14.0
-          ],
-          "texture": "#rod"
-        },
-        "south": {
-          "uv": [
-            3.0,
-            5.0,
-            4.0,
-            14.0
-          ],
-          "texture": "#rod"
-        }
-      }
+      "predicate": {
+        "thaumcraft:parts": 0.015625
+      },
+      "model": "thaumcraft:item/wand_variants/wood_gold"
     },
     {
-      "from": [
-        7,
-        17,
-        7
-      ],
-      "to": [
-        9,
-        19,
-        9
-      ],
-      "faces": {
-        "down": {
-          "uv": [
-            1.0,
-            0.0,
-            2.0,
-            1.0
-          ],
-          "texture": "#cap"
-        },
-        "up": {
-          "uv": [
-            2.0,
-            0.0,
-            3.0,
-            1.0
-          ],
-          "texture": "#cap"
-        },
-        "west": {
-          "uv": [
-            0.0,
-            1.0,
-            1.0,
-            2.0
-          ],
-          "texture": "#cap"
-        },
-        "north": {
-          "uv": [
-            1.0,
-            1.0,
-            2.0,
-            2.0
-          ],
-          "texture": "#cap"
-        },
-        "east": {
-          "uv": [
-            2.0,
-            1.0,
-            3.0,
-            2.0
-          ],
-          "texture": "#cap"
-        },
-        "south": {
-          "uv": [
-            3.0,
-            1.0,
-            4.0,
-            2.0
-          ],
-          "texture": "#cap"
-        }
-      }
+      "predicate": {
+        "thaumcraft:parts": 0.03125
+      },
+      "model": "thaumcraft:item/wand_variants/wood_thaumium"
+    },
+    {
+      "predicate": {
+        "thaumcraft:parts": 0.046875
+      },
+      "model": "thaumcraft:item/wand_variants/wood_void"
+    },
+    {
+      "predicate": {
+        "thaumcraft:parts": 0.0625
+      },
+      "model": "thaumcraft:item/wand_variants/wood_copper"
+    },
+    {
+      "predicate": {
+        "thaumcraft:parts": 0.078125
+      },
+      "model": "thaumcraft:item/wand_variants/wood_silver"
+    },
+    {
+      "predicate": {
+        "thaumcraft:parts": 0.09375
+      },
+      "model": "thaumcraft:item/wand_variants/greatwood_iron"
+    },
+    {
+      "predicate": {
+        "thaumcraft:parts": 0.109375
+      },
+      "model": "thaumcraft:item/wand_variants/greatwood_gold"
+    },
+    {
+      "predicate": {
+        "thaumcraft:parts": 0.125
+      },
+      "model": "thaumcraft:item/wand_variants/greatwood_thaumium"
+    },
+    {
+      "predicate": {
+        "thaumcraft:parts": 0.140625
+      },
+      "model": "thaumcraft:item/wand_variants/greatwood_void"
+    },
+    {
+      "predicate": {
+        "thaumcraft:parts": 0.15625
+      },
+      "model": "thaumcraft:item/wand_variants/greatwood_copper"
+    },
+    {
+      "predicate": {
+        "thaumcraft:parts": 0.171875
+      },
+      "model": "thaumcraft:item/wand_variants/greatwood_silver"
+    },
+    {
+      "predicate": {
+        "thaumcraft:parts": 0.1875
+      },
+      "model": "thaumcraft:item/wand_variants/obsidian_iron"
+    },
+    {
+      "predicate": {
+        "thaumcraft:parts": 0.203125
+      },
+      "model": "thaumcraft:item/wand_variants/obsidian_gold"
+    },
+    {
+      "predicate": {
+        "thaumcraft:parts": 0.21875
+      },
+      "model": "thaumcraft:item/wand_variants/obsidian_thaumium"
+    },
+    {
+      "predicate": {
+        "thaumcraft:parts": 0.234375
+      },
+      "model": "thaumcraft:item/wand_variants/obsidian_void"
+    },
+    {
+      "predicate": {
+        "thaumcraft:parts": 0.25
+      },
+      "model": "thaumcraft:item/wand_variants/obsidian_copper"
+    },
+    {
+      "predicate": {
+        "thaumcraft:parts": 0.265625
+      },
+      "model": "thaumcraft:item/wand_variants/obsidian_silver"
+    },
+    {
+      "predicate": {
+        "thaumcraft:parts": 0.28125
+      },
+      "model": "thaumcraft:item/wand_variants/blaze_iron"
+    },
+    {
+      "predicate": {
+        "thaumcraft:parts": 0.296875
+      },
+      "model": "thaumcraft:item/wand_variants/blaze_gold"
+    },
+    {
+      "predicate": {
+        "thaumcraft:parts": 0.3125
+      },
+      "model": "thaumcraft:item/wand_variants/blaze_thaumium"
+    },
+    {
+      "predicate": {
+        "thaumcraft:parts": 0.328125
+      },
+      "model": "thaumcraft:item/wand_variants/blaze_void"
+    },
+    {
+      "predicate": {
+        "thaumcraft:parts": 0.34375
+      },
+      "model": "thaumcraft:item/wand_variants/blaze_copper"
+    },
+    {
+      "predicate": {
+        "thaumcraft:parts": 0.359375
+      },
+      "model": "thaumcraft:item/wand_variants/blaze_silver"
+    },
+    {
+      "predicate": {
+        "thaumcraft:parts": 0.375
+      },
+      "model": "thaumcraft:item/wand_variants/ice_iron"
+    },
+    {
+      "predicate": {
+        "thaumcraft:parts": 0.390625
+      },
+      "model": "thaumcraft:item/wand_variants/ice_gold"
+    },
+    {
+      "predicate": {
+        "thaumcraft:parts": 0.40625
+      },
+      "model": "thaumcraft:item/wand_variants/ice_thaumium"
+    },
+    {
+      "predicate": {
+        "thaumcraft:parts": 0.421875
+      },
+      "model": "thaumcraft:item/wand_variants/ice_void"
+    },
+    {
+      "predicate": {
+        "thaumcraft:parts": 0.4375
+      },
+      "model": "thaumcraft:item/wand_variants/ice_copper"
+    },
+    {
+      "predicate": {
+        "thaumcraft:parts": 0.453125
+      },
+      "model": "thaumcraft:item/wand_variants/ice_silver"
+    },
+    {
+      "predicate": {
+        "thaumcraft:parts": 0.46875
+      },
+      "model": "thaumcraft:item/wand_variants/quartz_iron"
+    },
+    {
+      "predicate": {
+        "thaumcraft:parts": 0.484375
+      },
+      "model": "thaumcraft:item/wand_variants/quartz_gold"
+    },
+    {
+      "predicate": {
+        "thaumcraft:parts": 0.5
+      },
+      "model": "thaumcraft:item/wand_variants/quartz_thaumium"
+    },
+    {
+      "predicate": {
+        "thaumcraft:parts": 0.515625
+      },
+      "model": "thaumcraft:item/wand_variants/quartz_void"
+    },
+    {
+      "predicate": {
+        "thaumcraft:parts": 0.53125
+      },
+      "model": "thaumcraft:item/wand_variants/quartz_copper"
+    },
+    {
+      "predicate": {
+        "thaumcraft:parts": 0.546875
+      },
+      "model": "thaumcraft:item/wand_variants/quartz_silver"
+    },
+    {
+      "predicate": {
+        "thaumcraft:parts": 0.5625
+      },
+      "model": "thaumcraft:item/wand_variants/bone_iron"
+    },
+    {
+      "predicate": {
+        "thaumcraft:parts": 0.578125
+      },
+      "model": "thaumcraft:item/wand_variants/bone_gold"
+    },
+    {
+      "predicate": {
+        "thaumcraft:parts": 0.59375
+      },
+      "model": "thaumcraft:item/wand_variants/bone_thaumium"
+    },
+    {
+      "predicate": {
+        "thaumcraft:parts": 0.609375
+      },
+      "model": "thaumcraft:item/wand_variants/bone_void"
+    },
+    {
+      "predicate": {
+        "thaumcraft:parts": 0.625
+      },
+      "model": "thaumcraft:item/wand_variants/bone_copper"
+    },
+    {
+      "predicate": {
+        "thaumcraft:parts": 0.640625
+      },
+      "model": "thaumcraft:item/wand_variants/bone_silver"
+    },
+    {
+      "predicate": {
+        "thaumcraft:parts": 0.65625
+      },
+      "model": "thaumcraft:item/wand_variants/reed_iron"
+    },
+    {
+      "predicate": {
+        "thaumcraft:parts": 0.671875
+      },
+      "model": "thaumcraft:item/wand_variants/reed_gold"
+    },
+    {
+      "predicate": {
+        "thaumcraft:parts": 0.6875
+      },
+      "model": "thaumcraft:item/wand_variants/reed_thaumium"
+    },
+    {
+      "predicate": {
+        "thaumcraft:parts": 0.703125
+      },
+      "model": "thaumcraft:item/wand_variants/reed_void"
+    },
+    {
+      "predicate": {
+        "thaumcraft:parts": 0.71875
+      },
+      "model": "thaumcraft:item/wand_variants/reed_copper"
+    },
+    {
+      "predicate": {
+        "thaumcraft:parts": 0.734375
+      },
+      "model": "thaumcraft:item/wand_variants/reed_silver"
+    },
+    {
+      "predicate": {
+        "thaumcraft:parts": 0.75
+      },
+      "model": "thaumcraft:item/wand_variants/silverwood_iron"
+    },
+    {
+      "predicate": {
+        "thaumcraft:parts": 0.765625
+      },
+      "model": "thaumcraft:item/wand_variants/silverwood_gold"
+    },
+    {
+      "predicate": {
+        "thaumcraft:parts": 0.78125
+      },
+      "model": "thaumcraft:item/wand_variants/silverwood_thaumium"
+    },
+    {
+      "predicate": {
+        "thaumcraft:parts": 0.796875
+      },
+      "model": "thaumcraft:item/wand_variants/silverwood_void"
+    },
+    {
+      "predicate": {
+        "thaumcraft:parts": 0.8125
+      },
+      "model": "thaumcraft:item/wand_variants/silverwood_copper"
+    },
+    {
+      "predicate": {
+        "thaumcraft:parts": 0.828125
+      },
+      "model": "thaumcraft:item/wand_variants/silverwood_silver"
     }
-  ],
-  "display": {
-    "gui": {
-      "rotation": [
-        0,
-        0,
-        -45
-      ],
-      "scale": [
-        0.7,
-        0.7,
-        0.7
-      ]
-    },
-    "firstperson_righthand": {
-      "rotation": [
-        0,
-        -90,
-        25
-      ],
-      "translation": [
-        1,
-        2,
-        1
-      ],
-      "scale": [
-        0.7,
-        0.7,
-        0.7
-      ]
-    },
-    "firstperson_lefthand": {
-      "rotation": [
-        0,
-        90,
-        -25
-      ],
-      "translation": [
-        1,
-        2,
-        1
-      ],
-      "scale": [
-        0.7,
-        0.7,
-        0.7
-      ]
-    },
-    "thirdperson_righthand": {
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "translation": [
-        0,
-        1,
-        0
-      ],
-      "scale": [
-        0.65,
-        0.65,
-        0.65
-      ]
-    },
-    "thirdperson_lefthand": {
-      "rotation": [
-        0,
-        0,
-        0
-      ],
-      "translation": [
-        0,
-        1,
-        0
-      ],
-      "scale": [
-        0.65,
-        0.65,
-        0.65
-      ]
-    },
-    "ground": {
-      "translation": [
-        0,
-        3,
-        0
-      ],
-      "scale": [
-        0.4,
-        0.4,
-        0.4
-      ]
-    }
-  }
+  ]
 }
