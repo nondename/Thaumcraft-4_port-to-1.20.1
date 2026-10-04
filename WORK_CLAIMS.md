@@ -17,6 +17,9 @@
 
 ## Активные заявки
 
+- **Металлы TC4 — Codex (2026-10-04): новый common/items/ModMetals.java, Thaumcraft.java (регистрация), ModOres.java (Creative), новые recipes/*thaumium*, recipes/*void*, assets/{models,textures,blockstates} металлов, lang/en_us.json и ru_ru.json (только новые ключи), forge/minecraft tags, новый MetalsTests.java, docs/METALS_SLICE.md.** Слитки/самородки таумия и пустотного металла, таумиевый блок, оригинальные текстуры, преобразование 9:1. Тигель отдельный будущий этап; чужие capability не меняю.
+
+
 - ~~**Creative и стол исследований — Codex (2026-10-04): ModOres.java (наконечники/иконка), client/WandModelVariants.java, models/item/wand*.json и wand_variants/*_sceptre.json, ResearchTableEntity.java, models/item/wand_base.json, common/research/ResearchTableBlock.java и ResearchMenu.java, client/ResearchScreen.java, blockstates/table.json, новые models/block/research_table_*.json, textures/block/research_table.png и textures/gui/guiresearchtable2.png, новый GameTest и docs/WAND_AUDIT.md.**~~ По скринам пользователя: 6 базовых наконечников, наклон жезла, оригинальный двухблочный стол и GUI; общие knowledge-файлы другого агента не трогаю. Готово: 6 базовых caps, GUI наклон +45°, отдельный скипетр, двухблочная модель, оригинальный GUI, инструменты/инвентарь и ориентация. build и 21 GameTest прошли; неперенесённая головоломка записана в docs/WAND_AUDIT.md.
 
 
