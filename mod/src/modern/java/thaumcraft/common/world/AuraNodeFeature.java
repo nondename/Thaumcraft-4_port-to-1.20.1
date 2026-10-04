@@ -2,6 +2,8 @@ package thaumcraft.common.world;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
@@ -19,6 +21,7 @@ public final class AuraNodeFeature extends Feature<NoneFeatureConfiguration> {
 
     static {
         FEATURES.register("aura_node", AuraNodeFeature::new);
+        FEATURES.register("structure_aura_node", StructureAuraNodeFeature::new);
     }
 
     public AuraNodeFeature() {
@@ -33,6 +36,13 @@ public final class AuraNodeFeature extends Feature<NoneFeatureConfiguration> {
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
         var level = context.level();
         var random = context.random();
+        ChunkPos chunkPos = new ChunkPos(context.origin());
+
+        // TC4 checks scattered structures before the normal node-rarity roll. A structure node
+        // therefore consumes the chunk's aura-node slot and the wild pass must not add a second one.
+        if (StructureAuraNodeFeature.hasScatteredStructureStart(level, chunkPos)) {
+            return false;
+        }
 
         int x = context.origin().getX() + random.nextInt(16);
         int z = context.origin().getZ() + random.nextInt(16);
@@ -61,14 +71,19 @@ public final class AuraNodeFeature extends Feature<NoneFeatureConfiguration> {
             return false;
         }
 
-        BlockPos pos = new BlockPos(x, q, z);
-        // createNodeAt in TC4 only installed BlockAiry when the final position was actually air.
-        // Preserve that behaviour rather than silently eating grass, flowers, snow layers, etc.
-        if (!level.isEmptyBlock(pos)) {
+        return placeRandomNode(level, new BlockPos(x, q, z), random, false, false, false);
+    }
+
+    /** Shared modern equivalent of TC4 createRandomNodeAt + createNodeAt for worldgen callers. */
+    static boolean placeRandomNode(WorldGenLevel level, BlockPos pos, RandomSource random,
+                                   boolean silverwood, boolean eerie, boolean small) {
+        // TC4 createNodeAt accepted both air and replaceable blocks. This matters for wild nodes
+        // landing on vegetation/snow and also keeps future structure/tree node callers faithful.
+        if (!level.isEmptyBlock(pos) && !level.getBlockState(pos).canBeReplaced()) {
             return false;
         }
 
-        var generated = AuraNodeGenerator.generate(level, pos, random);
+        var generated = AuraNodeGenerator.generate(level, pos, random, silverwood, eerie, small);
         if (!level.setBlock(pos, ModNodes.AURA_NODE.get().defaultBlockState(), 2)) {
             return false;
         }

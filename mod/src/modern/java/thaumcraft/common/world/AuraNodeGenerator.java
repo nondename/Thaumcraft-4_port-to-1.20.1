@@ -152,6 +152,7 @@ public final class AuraNodeGenerator {
         };
     }
 
+    @SuppressWarnings("deprecation")
     private static void addEnvironmentAspects(WorldGenLevel level, BlockPos center, AspectList aspects) {
         int water = 0;
         int lava = 0;
@@ -163,6 +164,14 @@ public final class AuraNodeGenerator {
             for (int dy = -5; dy <= 5; dy++) {
                 for (int dz = -5; dz <= 5; dz++) {
                     cursor.set(center.getX() + dx, center.getY() + dy, center.getZ() + dz);
+
+                    // TC4 explicitly skipped positions whose chunk was not already loaded. Keep
+                    // that contract in worldgen: getBlockState alone may otherwise request a
+                    // neighbouring chunk while the current chunk is being decorated.
+                    if (!level.hasChunk(cursor.getX() >> 4, cursor.getZ() >> 4)) {
+                        continue;
+                    }
+
                     var state = level.getBlockState(cursor);
                     if (state.getFluidState().is(FluidTags.WATER)) water++;
                     else if (state.getFluidState().is(FluidTags.LAVA)) lava++;
