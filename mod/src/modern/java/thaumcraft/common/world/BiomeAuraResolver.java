@@ -53,7 +53,6 @@ public final class BiomeAuraResolver {
         boolean water = biome.is(Tags.Biomes.IS_WATER);
         boolean wet = biome.is(Tags.Biomes.IS_WET);
         boolean hot = biome.is(Tags.Biomes.IS_HOT);
-        boolean desert = biome.is(Tags.Biomes.IS_DESERT);
         boolean dense = biome.is(Tags.Biomes.IS_DENSE);
         boolean snowy = biome.is(Tags.Biomes.IS_SNOWY);
         boolean cold = biome.is(Tags.Biomes.IS_COLD);
@@ -76,7 +75,9 @@ public final class BiomeAuraResolver {
         if (wet) add(rules, 80, Aspect.WATER);            // WET
 
         if (hot) add(rules, 100, Aspect.FIRE);            // HOT
-        if (desert) add(rules, 100, Aspect.FIRE);         // DESERT
+        // TC4 registers SANDY twice; BiomeHandler stores one HashMap entry per type, so the later
+        // 80/Terra registration overwrites the earlier 100/Ignis registration. Do not invent a
+        // DESERT/Ignis rule here or deserts get fire counted twice versus the effective TC4 table.
         if (nether) add(rules, 120, Aspect.FIRE);         // NETHER
         if (badlands) add(rules, 80, Aspect.FIRE);        // MESA
 
@@ -92,7 +93,7 @@ public final class BiomeAuraResolver {
 
         if (coniferous) add(rules, 100, Aspect.EARTH);    // CONIFEROUS
         if (forest) add(rules, 120, Aspect.EARTH);        // FOREST
-        if (sandy) add(rules, 80, Aspect.EARTH);          // SANDY
+        if (sandy) add(rules, 80, Aspect.EARTH);          // SANDY (effective TC4 registration)
         if (beach) add(rules, 80, Aspect.EARTH);          // BEACH
 
         if (savanna) add(rules, 80, Aspect.AIR);          // SAVANNA
@@ -153,7 +154,7 @@ public final class BiomeAuraResolver {
             return tainted;
         }
 
-        /** Mirrors BiomeHandler.getRandomBiomeTag: choose one matched biome type, null included. */
+        /** Mirrors BiomeHandler.getRandomBiomeTag across the translated, recognized TC4 types. */
         public Aspect randomAspect(RandomSource random) {
             if (rules.isEmpty()) {
                 return null;
