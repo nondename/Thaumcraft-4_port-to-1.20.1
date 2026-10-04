@@ -15,14 +15,14 @@ public final class ItemWispEssence extends Item {
         ItemStack stack = new ItemStack(ModItems.WISP_ESSENCE.get());
         AspectList aspects = new AspectList();
         aspects.add(aspect, amount);
-        aspects.writeToTag(stack.getOrCreateTag(), "Aspects");
+        aspects.writeToNBT(stack.getOrCreateTag(), "Aspects");
         return stack;
     }
 
     public static AspectList getAspects(ItemStack stack) {
         AspectList aspects = new AspectList();
         if (stack.hasTag()) {
-            aspects.readFromTag(stack.getTag(), "Aspects");
+            aspects.readFromNBT(stack.getTag(), "Aspects");
         }
         return aspects;
     }
