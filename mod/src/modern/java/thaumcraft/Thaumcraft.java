@@ -33,8 +33,9 @@ public final class Thaumcraft {
         ModItems.register(modEventBus);
         // Wand part items + WandCap/WandRod registry data (ConfigItems wand section).
         thaumcraft.common.items.wands.ModWandParts.register(modEventBus);
-        // Load node block entries before the shared block DeferredRegister is attached to the bus.
+        // Load node and magical-tree block entries before the shared block DeferredRegister is attached.
         ModNodes.register(modEventBus);
+        thaumcraft.common.blocks.ModMagicalTrees.init();
         thaumcraft.common.blocks.ModOres.register(modEventBus);
         thaumcraft.common.research.ModResearch.register(modEventBus);
         // Arcane worktable: block entity + menu type + the two arcane recipe types.
@@ -43,6 +44,7 @@ public final class Thaumcraft {
         thaumcraft.common.crafting.ModRecipes.register(modEventBus);
         thaumcraft.common.world.InfusedOreFeature.register(modEventBus);
         thaumcraft.common.world.AuraNodeFeature.register(modEventBus);
+        thaumcraft.common.world.MagicalTreeFeature.register(modEventBus);
         modEventBus.addListener(this::commonSetup);
         ModSounds.register(modEventBus);
         modEventBus.addListener(ThaumometerKnowledgeEvents::registerCapabilities);
@@ -56,7 +58,11 @@ public final class Thaumcraft {
     }
 
     private void commonSetup(net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent event) {
-        event.enqueueWork(thaumcraft.common.blocks.ModOres::registerAspects);
+        event.enqueueWork(() -> {
+            thaumcraft.common.blocks.ModOres.registerAspects();
+            thaumcraft.common.blocks.ModMagicalTrees.registerAspects();
+            thaumcraft.common.world.MagicalForest.registerOverworldBiome();
+        });
         // Modded items only exist after the registry events (ConfigAspects#initModItems).
         event.enqueueWork(thaumcraft.common.config.ConfigAspects::initModItems);
     }
