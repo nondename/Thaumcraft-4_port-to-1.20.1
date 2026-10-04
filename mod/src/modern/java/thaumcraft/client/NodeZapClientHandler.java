@@ -3,7 +3,9 @@ package thaumcraft.client;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.phys.Vec3;
@@ -14,16 +16,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-/**
- * Client-side TC4-style node discharge bolt.
- *
- * <p>TC4 PacketFXBlockZap creates a 10-tick FXLightningBolt, calls defaultFractal(),
- * renders it as type 0 purple additive lightning and plays thaumcraft:zap. Modern
- * rendering is deliberately attached to the AuraNode block-entity renderer instead of
- * a detached world render stage so it uses the same proven camera/buffer pipeline as the node.</p>
- */
+/** Client-side port of TC4's type-0 FXLightningBolt used for aura-node discharges. */
 public final class NodeZapClientHandler {
-    private static final int LIFETIME_TICKS = 10;
+    private static final int DURATION = 10;
+    private static final int SPEED = 5;
+    private static final int MAIN_SEGMENTS = 128; // defaultFractal(): seven 2-way subdivision passes.
+    private static final float BASE_WIDTH = 0.03F;
+    private static final float MULTIPLIER = 4.0F;
     private static final List<ActiveZap> ACTIVE = new ArrayList<>();
 
     private NodeZapClientHandler() {
@@ -37,7 +36,7 @@ public final class NodeZapClientHandler {
         }
 
         long now = level.getGameTime();
-        ACTIVE.removeIf(zap -> now - zap.createdTick >= LIFETIME_TICKS);
+        ACTIVE.removeIf(zap -> zap.isExpired(now));
         ACTIVE.add(new ActiveZap(from.immutable(), to.immutable(), now, level.random.nextLong()));
 
         // Exact TC4 PacketFXBlockZap sound: thaumcraft:zap, volume 0.1, pitch 1.0..1.2.
@@ -61,7 +60,7 @@ public final class NodeZapClientHandler {
         }
 
         long now = node.getLevel().getGameTime();
-        ACTIVE.removeIf(zap -> now - zap.createdTick >= LIFETIME_TICKS);
+        ACTIVE.removeIf(zap -> zap.isExpired(now));
         if (ACTIVE.isEmpty()) {
             return;
         }
@@ -69,35 +68,43 @@ public final class NodeZapClientHandler {
         BlockPos target = node.getBlockPos();
         Vec3 targetOrigin = Vec3.atLowerCornerOf(target);
         Vec3 cameraLocal = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition().subtract(targetOrigin);
-
-        // RenderType.lightning() did not reproduce TC4's GL_SRC_ALPHA,GL_ONE path reliably in
-        // this block-entity buffer, which is why the packet/sound worked while the bolt vanished.
-        // Our dedicated type is additive, no-cull, colour-only and does not write depth.
-        VertexConsumer vertices = bufferSource.getBuffer(ThaumcraftRenderTypes.nodeLightning());
         PoseStack.Pose pose = poseStack.last();
+
+        // TC4 renders type-0 lightning twice using the original p_large/p_small textures.
+        VertexConsumer outerVertices = bufferSource.getBuffer(ThaumcraftRenderTypes.nodeLightning(false));
+        VertexConsumer innerVertices = bufferSource.getBuffer(ThaumcraftRenderTypes.nodeLightning(true));
 
         for (ActiveZap zap : ACTIVE) {
             if (!zap.to.equals(target)) {
                 continue;
             }
 
-            float age = Math.max(0.0F, Math.min(1.0F,
-                    ((float) (now - zap.createdTick) + partialTick) / (float) LIFETIME_TICKS));
+            int particleAge = zap.ageAt(now);
+            float boltAge = particleAge >= 0
+                    ? Math.min(1.0F, (float) particleAge / (float) zap.maxAge)
+                    : 0.0F;
+            float outerAlpha = (1.0F - boltAge) * 0.40F;
+            float innerAlpha = 1.0F - boltAge * 0.50F;
 
-            // TC4 lightning type 0: dark purple outer pass + bright pink-white inner pass.
-            float outerAlpha = (1.0F - age) * 0.40F;
-            float innerAlpha = 1.0F - age * 0.50F;
+            int growLength = Math.max(1, (int) (zap.length * 3.0D));
+            float progressiveAge = particleAge + partialTick + growLength;
+            int renderLength = (int) (progressiveAge / (float) growLength * MAIN_SEGMENTS);
+            renderLength = Math.max(0, Math.min(MAIN_SEGMENTS, renderLength));
 
-            drawPath(vertices, pose, cameraLocal, zap.mainPath, 0.050F,
-                    153, 77, 153, alpha(outerAlpha));
-            drawPath(vertices, pose, cameraLocal, zap.mainPath, 0.020F,
-                    255, 153, 255, alpha(innerAlpha));
+            for (BoltSegment segment : zap.segments) {
+                if (segment.segmentNo > renderLength) {
+                    continue;
+                }
 
-            for (List<Vec3> branch : zap.branches) {
-                drawPath(vertices, pose, cameraLocal, branch, 0.030F,
-                        153, 77, 153, alpha(outerAlpha * 0.75F));
-                drawPath(vertices, pose, cameraLocal, branch, 0.011F,
-                        255, 153, 255, alpha(innerAlpha * 0.80F));
+                double viewerDistance = cameraLocal.distanceTo(segment.start);
+                float width = BASE_WIDTH
+                        * ((float) viewerDistance / 5.0F + 1.0F)
+                        * (1.0F + segment.light) * 0.5F;
+
+                drawSegment(outerVertices, pose, cameraLocal, segment, width,
+                        153, 77, 153, alpha(outerAlpha * segment.light));
+                drawSegment(innerVertices, pose, cameraLocal, segment, width,
+                        255, 153, 255, alpha(innerAlpha * segment.light));
             }
         }
     }
@@ -106,121 +113,148 @@ public final class NodeZapClientHandler {
         return Math.max(0, Math.min(255, Math.round(value * 255.0F)));
     }
 
-    /** Render one jagged polyline as a camera-facing ribbon instead of isolated particles. */
-    private static void drawPath(VertexConsumer vertices, PoseStack.Pose pose, Vec3 camera,
-                                 List<Vec3> points, float width,
-                                 int red, int green, int blue, int alpha) {
-        if (points.size() < 2 || alpha <= 0) {
+    /** Render one bolt segment as the same camera-facing textured ribbon used by TC4. */
+    private static void drawSegment(VertexConsumer vertices, PoseStack.Pose pose, Vec3 camera,
+                                    BoltSegment segment, float width,
+                                    int red, int green, int blue, int alpha) {
+        if (alpha <= 0) {
             return;
         }
 
-        for (int i = 0; i < points.size() - 1; i++) {
-            Vec3 start = points.get(i);
-            Vec3 end = points.get(i + 1);
-            Vec3 direction = end.subtract(start);
-            if (direction.lengthSqr() < 1.0E-8D) {
-                continue;
-            }
-
-            Vec3 midpoint = start.add(end).scale(0.5D);
-            Vec3 toCamera = camera.subtract(midpoint);
-            Vec3 side = direction.cross(toCamera);
-            if (side.lengthSqr() < 1.0E-8D) {
-                side = direction.cross(new Vec3(0.0D, 1.0D, 0.0D));
-                if (side.lengthSqr() < 1.0E-8D) {
-                    side = direction.cross(new Vec3(1.0D, 0.0D, 0.0D));
-                }
-            }
-            side = side.normalize().scale(width);
-
-            vertex(vertices, pose, start.subtract(side), red, green, blue, alpha);
-            vertex(vertices, pose, end.subtract(side), red, green, blue, alpha);
-            vertex(vertices, pose, end.add(side), red, green, blue, alpha);
-            vertex(vertices, pose, start.add(side), red, green, blue, alpha);
+        Vec3 direction = segment.end.subtract(segment.start);
+        if (direction.lengthSqr() < 1.0E-8D) {
+            return;
         }
+
+        Vec3 midpoint = segment.start.add(segment.end).scale(0.5D);
+        Vec3 toCamera = camera.subtract(midpoint);
+        Vec3 side = direction.cross(toCamera);
+        if (side.lengthSqr() < 1.0E-8D) {
+            side = direction.cross(new Vec3(0.0D, 1.0D, 0.0D));
+            if (side.lengthSqr() < 1.0E-8D) {
+                side = direction.cross(new Vec3(1.0D, 0.0D, 0.0D));
+            }
+        }
+        side = side.normalize().scale(width);
+
+        // The original bolt samples the middle column of p_large/p_small and lets the texture's
+        // vertical falloff form the soft lightning ribbon.
+        vertex(vertices, pose, segment.end.subtract(side), 0.5F, 0.0F, red, green, blue, alpha);
+        vertex(vertices, pose, segment.start.subtract(side), 0.5F, 0.0F, red, green, blue, alpha);
+        vertex(vertices, pose, segment.start.add(side), 0.5F, 1.0F, red, green, blue, alpha);
+        vertex(vertices, pose, segment.end.add(side), 0.5F, 1.0F, red, green, blue, alpha);
     }
 
     private static void vertex(VertexConsumer vertices, PoseStack.Pose pose, Vec3 point,
-                               int red, int green, int blue, int alpha) {
+                               float u, float v, int red, int green, int blue, int alpha) {
         vertices.vertex(pose.pose(), (float) point.x, (float) point.y, (float) point.z)
                 .color(red, green, blue, alpha)
+                .uv(u, v)
+                .overlayCoords(OverlayTexture.NO_OVERLAY)
+                .uv2(LightTexture.FULL_BRIGHT)
+                .normal(pose.normal(), 0.0F, 0.0F, 1.0F)
                 .endVertex();
     }
 
-    private static List<Vec3> buildFractalPath(Vec3 start, Vec3 end, Random random,
-                                               int iterations, double initialAmplitude) {
-        List<Vec3> points = new ArrayList<>();
-        points.add(start);
-        points.add(end);
+    /**
+     * Port of FXLightningBoltCommon.defaultFractal(). TC4 subdivides the bolt seven times and
+     * creates short forked copies during the first four passes. This replaces the old port's two
+     * or three manually-added 15-33% side tentacles.
+     */
+    private static List<BoltSegment> buildDefaultFractal(Vec3 start, Vec3 end, Random random, double length) {
+        List<BoltSegment> segments = new ArrayList<>();
+        segments.add(new BoltSegment(start, end, 1.0F, 0, 0));
 
-        Vec3 axis = end.subtract(start).normalize();
-        Vec3 basisA = axis.cross(new Vec3(0.0D, 1.0D, 0.0D));
-        if (basisA.lengthSqr() < 1.0E-8D) {
-            basisA = axis.cross(new Vec3(1.0D, 0.0D, 0.0D));
-        }
-        basisA = basisA.normalize();
-        Vec3 basisB = axis.cross(basisA).normalize();
+        double[] divisors = {8.0D, 12.0D, 17.0D, 23.0D, 30.0D, 34.0D, 40.0D};
+        float[] splitChances = {0.7F, 0.5F, 0.5F, 0.5F, 0.0F, 0.0F, 0.0F};
+        float[] splitAngles = {45.0F, 50.0F, 55.0F, 60.0F, 0.0F, 0.0F, 0.0F};
+        int nextSplit = 0;
 
-        double amplitude = initialAmplitude;
-        for (int pass = 0; pass < iterations; pass++) {
-            List<Vec3> refined = new ArrayList<>(points.size() * 2 - 1);
-            for (int i = 0; i < points.size() - 1; i++) {
-                Vec3 a = points.get(i);
-                Vec3 b = points.get(i + 1);
-                refined.add(a);
+        for (int pass = 0; pass < divisors.length; pass++) {
+            List<BoltSegment> old = segments;
+            segments = new ArrayList<>(old.size() * 3);
+            double amount = length * MULTIPLIER / divisors[pass];
 
-                Vec3 midpoint = a.add(b).scale(0.5D);
-                double offA = (random.nextDouble() * 2.0D - 1.0D) * amplitude;
-                double offB = (random.nextDouble() * 2.0D - 1.0D) * amplitude;
-                midpoint = midpoint.add(basisA.scale(offA)).add(basisB.scale(offB));
-                refined.add(midpoint);
+            for (BoltSegment segment : old) {
+                Vec3 difference = segment.end.subtract(segment.start);
+                Vec3 midpointBase = segment.start.add(difference.scale(0.5D));
+                Vec3 offset = randomPerpendicular(difference, random)
+                        .scale((random.nextFloat() - 0.5F) * amount);
+                Vec3 midpoint = midpointBase.add(offset);
+
+                int firstNo = segment.segmentNo * 2;
+                int secondNo = firstNo + 1;
+                segments.add(new BoltSegment(segment.start, midpoint, segment.light, firstNo, segment.splitNo));
+
+                if (splitChances[pass] > 0.0F && random.nextFloat() < splitChances[pass]) {
+                    Vec3 nextDifference = segment.end.subtract(midpoint);
+                    Vec3 splitAxis = randomPerpendicular(nextDifference, random);
+                    double splitAngle = Math.toRadians(
+                            (random.nextFloat() * 0.66F + 0.33F) * splitAngles[pass]);
+                    Vec3 splitOffset = rotateAroundAxis(nextDifference, splitAxis, splitAngle).scale(0.1D);
+                    nextSplit++;
+                    segments.add(new BoltSegment(
+                            midpoint,
+                            segment.end.add(splitOffset),
+                            segment.light * 0.5F,
+                            secondNo,
+                            nextSplit
+                    ));
+                }
+
+                segments.add(new BoltSegment(midpoint, segment.end, segment.light, secondNo, segment.splitNo));
             }
-            refined.add(points.get(points.size() - 1));
-            points = refined;
-            amplitude *= 0.52D;
         }
-        return points;
+
+        return segments;
     }
 
-    private static List<List<Vec3>> buildBranches(List<Vec3> main, Vec3 start, Vec3 end, Random random) {
-        List<List<Vec3>> branches = new ArrayList<>();
-        if (main.size() < 8) {
-            return branches;
+    private static Vec3 randomPerpendicular(Vec3 vector, Random random) {
+        if (vector.lengthSqr() < 1.0E-12D) {
+            return new Vec3(1.0D, 0.0D, 0.0D);
         }
 
-        Vec3 forward = end.subtract(start).normalize();
-        double length = start.distanceTo(end);
-        int wanted = length > 2.5D ? 3 : 2;
-        for (int n = 0; n < wanted; n++) {
-            int index = 2 + random.nextInt(Math.max(1, main.size() - 4));
-            Vec3 origin = main.get(index);
-
-            Vec3 randomVec = new Vec3(
-                    random.nextDouble() * 2.0D - 1.0D,
-                    random.nextDouble() * 2.0D - 1.0D,
-                    random.nextDouble() * 2.0D - 1.0D
-            );
-            Vec3 lateral = randomVec.subtract(forward.scale(randomVec.dot(forward)));
-            if (lateral.lengthSqr() < 1.0E-8D) {
-                continue;
-            }
-            lateral = lateral.normalize();
-
-            double branchLength = length * (0.15D + random.nextDouble() * 0.18D);
-            Vec3 branchEnd = origin
-                    .add(forward.scale(branchLength * 0.35D))
-                    .add(lateral.scale(branchLength));
-            branches.add(buildFractalPath(origin, branchEnd, random, 2,
-                    Math.max(0.04D, branchLength * 0.12D)));
+        Vec3 axis = vector.normalize();
+        Vec3 perpendicular = axis.cross(new Vec3(1.0D, 0.0D, 0.0D));
+        if (perpendicular.lengthSqr() < 1.0E-8D) {
+            perpendicular = axis.cross(new Vec3(0.0D, 1.0D, 0.0D));
         }
-        return branches;
+        perpendicular = perpendicular.normalize();
+        return rotateAroundAxis(perpendicular, axis, random.nextFloat() * Math.PI * 2.0D);
+    }
+
+    private static Vec3 rotateAroundAxis(Vec3 vector, Vec3 axis, double angle) {
+        Vec3 unitAxis = axis.normalize();
+        double cos = Math.cos(angle);
+        double sin = Math.sin(angle);
+        return vector.scale(cos)
+                .add(unitAxis.cross(vector).scale(sin))
+                .add(unitAxis.scale(unitAxis.dot(vector) * (1.0D - cos)));
+    }
+
+    private static final class BoltSegment {
+        private final Vec3 start;
+        private final Vec3 end;
+        private final float light;
+        private final int segmentNo;
+        private final int splitNo;
+
+        private BoltSegment(Vec3 start, Vec3 end, float light, int segmentNo, int splitNo) {
+            this.start = start;
+            this.end = end;
+            this.light = light;
+            this.segmentNo = segmentNo;
+            this.splitNo = splitNo;
+        }
     }
 
     private static final class ActiveZap {
         private final BlockPos to;
         private final long createdTick;
-        private final List<Vec3> mainPath;
-        private final List<List<Vec3>> branches;
+        private final int initialAge;
+        private final int maxAge;
+        private final double length;
+        private final List<BoltSegment> segments;
 
         private ActiveZap(BlockPos from, BlockPos to, long createdTick, long seed) {
             this.to = to;
@@ -232,12 +266,23 @@ public final class NodeZapClientHandler {
                     from.getZ() - to.getZ() + 0.5D
             );
             Vec3 end = new Vec3(0.5D, 0.5D, 0.5D);
+            this.length = start.distanceTo(end);
+            this.initialAge = -(int) (length * 3.0D);
 
+            // Match FXLightningBoltCommon's random consumption: the base constructor first rolls
+            // its default age, then the duration constructor replaces it with duration +/- 50%.
             Random random = new Random(seed);
-            double length = start.distanceTo(end);
-            this.mainPath = buildFractalPath(start, end, random, 4,
-                    Math.max(0.06D, Math.min(0.45D, length * 0.18D)));
-            this.branches = buildBranches(mainPath, start, end, random);
+            random.nextInt(3);
+            this.maxAge = DURATION + random.nextInt(DURATION) - DURATION / 2;
+            this.segments = buildDefaultFractal(start, end, random, length);
+        }
+
+        private int ageAt(long gameTime) {
+            return initialAge + (int) Math.max(0L, gameTime - createdTick) * SPEED;
+        }
+
+        private boolean isExpired(long gameTime) {
+            return ageAt(gameTime) >= maxAge;
         }
     }
 }
