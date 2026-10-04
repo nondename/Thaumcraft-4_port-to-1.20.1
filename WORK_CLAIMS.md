@@ -17,6 +17,8 @@
 
 ## Активные заявки
 
+- **Арканный верстак — Codex (2026-10-04): `common/blocks/ArcaneWorkbench*.java`, `client/ArcaneWorkbenchScreen.java`, новый `modernTest/java/thaumcraft/gametest/WorkbenchSafetyTests.java`, корректировка проверок результата в `WandWorkbenchTests.java`.** Проверка списания, Shift-клика, сохранения, дропа и двух пользователей. Дополнение к области MiMo; таумометр, эссенция, capability и ресурсы не затрагиваются.
+
 - ~~**Анимация зарядки — Codex (2026-10-04): `mod/src/modern/java/thaumcraft/client/WandChargeAnimation.java` (новый), `common/items/tools/ItemWand.java` (client extension и продолжение использования).**~~ Готово: first-person WAVE из legacy `ItemWandRenderer`, плавное поднятие и зеркалирование для левой руки; изменения vis/координат узла не перезапускают использование и переоснащение. `build` и 10 GameTest прошли. Визуально проверить обе руки, удержание более 10 секунд, отпускание ПКМ и отведение взгляда. Луч узел→жезл по-прежнему отложен; модели/PNG деталей жезлов не менялись.
 
 - **`mod/src/modernTest/**`, `mod/build.gradle` (секция `dependencies` с тестовыми
