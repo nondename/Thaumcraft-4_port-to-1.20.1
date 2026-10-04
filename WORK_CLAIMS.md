@@ -17,6 +17,8 @@
 
 ## Активные заявки
 
+- **Анимация зарядки — Codex (2026-10-04): `mod/src/modern/java/thaumcraft/client/WandChargeAnimation.java` (новый), `common/items/tools/ItemWand.java` (client extension и продолжение использования).** Пользователь поручил восстановить движение жезла при удержании ПКМ; модели/PNG деталей жезлов не меняются.
+
 - **`mod/src/modernTest/**`, `mod/build.gradle` (секция `dependencies` с тестовыми
   зависимостями), `.github/workflows/port-1.20.1.yml` — MiMo (2026-10-03).**
   Этап 0: настоящие unit-тесты в `modernTest` (сейчас `gradlew test` прогоняет
