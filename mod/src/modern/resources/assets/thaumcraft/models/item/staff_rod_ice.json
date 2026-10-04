@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "thaumcraft:items/staff_rod_ice"
+    "layer0": "thaumcraft:item/staff_rod_ice"
   }
 }

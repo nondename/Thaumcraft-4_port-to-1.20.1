@@ -77,7 +77,75 @@ dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 }
 
+def wandPartAssetIds = [
+        'wand_cap_iron',
+        'wand_cap_gold',
+        'wand_cap_thaumium',
+        'wand_cap_copper',
+        'wand_cap_silver',
+        'wand_cap_silver_inert',
+        'wand_cap_thaumium_inert',
+        'wand_cap_void',
+        'wand_cap_void_inert',
+        'wand_rod_greatwood',
+        'wand_rod_obsidian',
+        'wand_rod_silverwood',
+        'wand_rod_ice',
+        'wand_rod_quartz',
+        'wand_rod_reed',
+        'wand_rod_blaze',
+        'wand_rod_bone',
+        'staff_rod_greatwood',
+        'staff_rod_obsidian',
+        'staff_rod_silverwood',
+        'staff_rod_ice',
+        'staff_rod_quartz',
+        'staff_rod_reed',
+        'staff_rod_blaze',
+        'staff_rod_bone',
+        'staff_rod_primal'
+]
+
+tasks.register('validateWandPartAssets') {
+    group = 'verification'
+    description = 'Validates item models and textures for every registered wand part.'
+
+    doLast {
+        def parser = new groovy.json.JsonSlurper()
+        wandPartAssetIds.each { id ->
+            def modelFile = file("src/modern/resources/assets/thaumcraft/models/item/${id}.json")
+            def textureFile = file("src/modern/resources/assets/thaumcraft/textures/item/${id}.png")
+            def legacyTextureFile = file("src/modern/resources/assets/thaumcraft/textures/items/${id}.png")
+
+            if (!modelFile.isFile()) {
+                throw new GradleException("Missing wand-part model: ${modelFile}")
+            }
+            if (!textureFile.isFile()) {
+                throw new GradleException("Missing wand-part texture: ${textureFile}")
+            }
+            if (legacyTextureFile.exists()) {
+                throw new GradleException("Legacy wand-part texture path still exists: ${legacyTextureFile}")
+            }
+
+            def model = parser.parse(modelFile)
+            def expectedTexture = "thaumcraft:item/${id}"
+            if (model?.textures?.layer0 != expectedTexture) {
+                throw new GradleException("Broken wand-part model ${modelFile}: layer0 must be ${expectedTexture}")
+            }
+        }
+
+        ['wand_cap_silver', 'wand_cap_thaumium', 'wand_cap_void'].each { id ->
+            def animationFile = file("src/modern/resources/assets/thaumcraft/textures/item/${id}.png.mcmeta")
+            if (!animationFile.isFile()) {
+                throw new GradleException("Missing animated wand-cap metadata: ${animationFile}")
+            }
+        }
+    }
+}
+
 tasks.named('processResources', ProcessResources).configure {
+    dependsOn tasks.named('validateWandPartAssets')
+
     def replaceProperties = [
             minecraft_version      : minecraft_version,
             minecraft_version_range: minecraft_version_range,

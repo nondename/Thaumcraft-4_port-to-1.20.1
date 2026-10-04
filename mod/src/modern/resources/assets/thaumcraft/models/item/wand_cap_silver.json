@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "thaumcraft:items/wand_cap_silver"
+    "layer0": "thaumcraft:item/wand_cap_silver"
   }
 }
