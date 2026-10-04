@@ -46,6 +46,15 @@ minecraft {
 
         client {
             property 'forge.enabledGameTestNamespaces', mod_id
+            // Temurin 17.0.15 on Windows crashed in C2 while compiling FluidState.tick
+            // (hs_err_pid17428.log). Keep the dev client on C1 until that runtime is
+            // replaced/verified; this does not change the packaged mod or server JVM.
+            def safeClientJit = providers.gradleProperty('safeClientJit')
+                    .map { it.toBoolean() }
+                    .getOrElse(System.getProperty('os.name').startsWith('Windows'))
+            if (safeClientJit) {
+                jvmArgs '-XX:TieredStopAtLevel=1'
+            }
         }
 
         server {
