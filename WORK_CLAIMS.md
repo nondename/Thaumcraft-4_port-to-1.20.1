@@ -17,6 +17,8 @@
 
 ## Активные заявки
 
+- **Падение C2 в runClient — Codex (2026-10-04): mod/build.gradle, docs/CLIENT_RUNTIME.md.** По hs_err_pid17428.log: Temurin 17.0.15 падает в C2 CompilerThread2 при компиляции FluidState.tick. Обход только для клиентского dev-запуска Windows; игровой код и файлы других агентов не меняю.
+
 - ~~**Тигель — Codex (2026-10-04): новые common/alchemy/**, регистрация Thaumcraft.java, ItemWand.java (котёл), ModOres.java (Creative), новые ресурсы тигля/рецептов, client/CrucibleClient.java, CrucibleTests.java, docs/{CRUCIBLE_SLICE,METALS_SLICE}.md.**~~ Нагрев/вода/предметы/аспекты, получение таумия по оригиналу, сохранение и серверная авторитетность. Capability и сканер другого агента не меняются. Готово: тигель, вода/нагрев/аспекты, три JSON-рецепта, семя пустоты, NBT, очистка, HUD и компаратор. build + 26 GameTest прошли. World flux, мехи/нитор, трубы и research gates остаются ограничениями первого этапа, см. docs/CRUCIBLE_SLICE.md.
 
 
