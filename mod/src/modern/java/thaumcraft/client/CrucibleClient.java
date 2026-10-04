@@ -6,6 +6,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -16,6 +17,9 @@ import thaumcraft.common.items.ModItems;
 
 @Mod.EventBusSubscriber(modid=Thaumcraft.MODID, bus=Mod.EventBusSubscriber.Bus.MOD, value=Dist.CLIENT)
 public final class CrucibleClient {
+    @SubscribeEvent public static void renderers(EntityRenderersEvent.RegisterRenderers event) {
+        event.registerBlockEntityRenderer(ModAlchemy.ENTITY.get(), CrucibleRenderer::new);
+    }
     @SubscribeEvent public static void colors(RegisterColorHandlersEvent.Block event) {
         event.register((state, world, pos, index) -> world == null || pos == null ? 0x3F76E4
                 : BiomeColors.getAverageWaterColor(world, pos), ModAlchemy.CRUCIBLE.get());

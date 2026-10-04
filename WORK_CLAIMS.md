@@ -17,7 +17,7 @@
 
 ## Активные заявки
 
-- **Внешний вид тигля — Codex (2026-10-04): models/block/crucible*.json, client/CrucibleClient.java, новый client/CrucibleRenderer.java, docs/CRUCIBLE_SLICE.md.** Исправляю назначение оригинальных PNG, закрытое дно/внутренние стенки, отдельный рендер воды по точному объёму. Таумономикон следующим этапом.
+- ~~**Внешний вид тигля — Codex (2026-10-04): models/block/crucible*.json, client/CrucibleClient.java, новый client/CrucibleRenderer.java, docs/CRUCIBLE_SLICE.md.**~~ Готово: оригинальные PNG по назначению, закрытое дно/внутренние стенки, cutout-корпус отдельно от прозрачной воды, точный уровень/окраска воды. build прошла; визуальная проверка пользователем. Таумономикон следующим этапом.
 
 - ~~**Падение C2 в runClient — Codex (2026-10-04): mod/build.gradle, docs/CLIENT_RUNTIME.md.**~~ По hs_err_pid17428.log: Temurin 17.0.15 падает в C2 CompilerThread2 при компиляции FluidState.tick. Готово: C1 для клиентского dev-запуска Windows, переключатель safeClientJit; build + 26 GameTest прошли, параметр проверен в Forge client run config. Вход в клиентский мир после обхода ещё требует проверки пользователем.
 
