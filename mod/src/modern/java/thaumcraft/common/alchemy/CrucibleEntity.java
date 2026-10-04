@@ -31,7 +31,20 @@ public final class CrucibleEntity extends BlockEntity {
     public boolean isBoiling() { return heat > 150 && water > 0; }
     public double getFluidHeight() { double base = .3 + .5 * water / 1000.0; return Math.min(.9999, base + aspects.visSize() / 100.0 * (1 - base)); }
     public void fillWater() { water = 1000; changed(); }
-    public void empty() { pollution += aspects.visSize(); water = 0; aspects = new AspectList(); changed(); }
+    public void empty() {
+        if (level != null && level.isClientSide) return;
+        int remnants = aspects.visSize();
+        if (level instanceof ServerLevel server) {
+            // Saved TC4 spillRemnants: one spill attempt per two remaining units.
+            for (int i = 0; i < remnants / 2; i++) FluxSpill.attempt(server, worldPosition);
+            if (water > 0 || remnants > 0) {
+                server.sendParticles(ParticleTypes.WITCH, worldPosition.getX()+.5, worldPosition.getY()+.9,
+                        worldPosition.getZ()+.5, 8, .2, .1, .2, .02);
+                level.playSound(null, worldPosition, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, .5F, 1F);
+            }
+        }
+        pollution += remnants; water = 0; aspects = new AspectList(); changed();
+    }
     private void changed() {
         setChanged();
         if (level == null || level.isClientSide) return;
@@ -62,7 +75,7 @@ public final class CrucibleEntity extends BlockEntity {
                     Aspect aspect = all[level.random.nextInt(all.length)];
                     c.aspects.remove(aspect, 1); c.water = Math.max(0, c.water - 2);
                     if (!aspect.isPrimal()) c.aspects.add(aspect.getComponents()[level.random.nextInt(2)], 1);
-                    else ++c.pollution;
+                    else { ++c.pollution; FluxSpill.attempt((ServerLevel) level, pos); }
                     c.changed();
                 }
             }
@@ -70,6 +83,7 @@ public final class CrucibleEntity extends BlockEntity {
         if (c.aspects.visSize() > 100 && c.counter % 5 == 0) {
             Aspect[] all = c.aspects.getAspects();
             c.aspects.remove(all[level.random.nextInt(all.length)], 1); ++c.pollution; c.changed();
+            FluxSpill.attempt((ServerLevel) level, pos);
             ((ServerLevel) level).sendParticles(ParticleTypes.WITCH, pos.getX() + .5, pos.getY() + 1, pos.getZ() + .5, 2, .2, .1, .2, 0);
         }
     }

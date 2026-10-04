@@ -868,5 +868,7 @@
   "block.thaumcraft.crucible": "Тигель",
   "item.thaumcraft.void_seed": "Семя пустоты",
   "tc.crucible.boiling": "Кипит",
-  "tc.crucible.cold": "Не кипит"
+  "tc.crucible.cold": "Не кипит",
+  "block.thaumcraft.flux_gas": "Газообразный флюкс",
+  "block.thaumcraft.flux_goo": "Жидкий флюкс"
 }

@@ -17,7 +17,7 @@
 
 ## Активные заявки
 
-- **Флюкс тигля — Codex (2026-10-05): common/alchemy/{ModAlchemy,CrucibleEntity,FluxBlock,FluxSpill}.java, новые ресурсы flux_gas/flux_goo, lang (только флюкс), новый FluxTests.java, docs/CRUCIBLE_SLICE.md.** Выброс газа/жидкого флюкса при очистке, разрушении и переполнении; конечные объёмы без бесконечных источников. Полный taint/мобы отдельный этап.
+- ~~**Флюкс тигля — Codex (2026-10-05): common/alchemy/{ModAlchemy,CrucibleEntity,FluxBlock,FluxSpill}.java, новые ресурсы flux_gas/flux_goo, lang (только флюкс), новый FluxTests.java, docs/CRUCIBLE_SLICE.md.**~~ Готово: выброс газа/жидкого флюкса при очистке, разрушении и переполнении; конечные объёмы, движение и оригинальные PNG. build + 28 GameTest прошли. Полный taint/мобы/Vis Exhaustion отдельный этап; ограничения в CRUCIBLE_SLICE.md.
 
 - ~~**Внешний вид тигля — Codex (2026-10-04): models/block/crucible*.json, client/CrucibleClient.java, новый client/CrucibleRenderer.java, docs/CRUCIBLE_SLICE.md.**~~ Готово: оригинальные PNG по назначению, закрытое дно/внутренние стенки, cutout-корпус отдельно от прозрачной воды, точный уровень/окраска воды. build прошла; визуальная проверка пользователем. Таумономикон следующим этапом.
 

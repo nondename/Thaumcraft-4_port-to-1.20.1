@@ -13,6 +13,10 @@ import thaumcraft.common.blocks.ModOres;
 import thaumcraft.common.items.ModItems;
 
 public final class ModAlchemy {
+    public static final RegistryObject<Block> FLUX_GAS = ModOres.BLOCKS.register("flux_gas", () ->
+            new FluxBlock(true, BlockBehaviour.Properties.copy(Blocks.COBWEB).noCollission().noOcclusion().noLootTable().strength(0).randomTicks()));
+    public static final RegistryObject<Block> FLUX_GOO = ModOres.BLOCKS.register("flux_goo", () ->
+            new FluxBlock(false, BlockBehaviour.Properties.copy(Blocks.COBWEB).noCollission().noOcclusion().noLootTable().strength(0).randomTicks()));
     public static final RegistryObject<Block> CRUCIBLE = ModOres.BLOCKS.register("crucible", () ->
             new CrucibleBlock(BlockBehaviour.Properties.copy(Blocks.CAULDRON).noOcclusion()));
     public static final RegistryObject<Item> CRUCIBLE_ITEM = ModItems.ITEMS.register("crucible", () ->
