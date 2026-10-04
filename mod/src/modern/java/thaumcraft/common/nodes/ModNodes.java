@@ -26,6 +26,12 @@ public final class ModNodes {
                     .strength(2.0F, 200.0F)
                     .lightLevel(state -> 8)));
 
+    /** TC4 BlockMagicalLog metadata 2: a visible silverwood knot that contains a real PURE node. */
+    public static final RegistryObject<Block> SILVERWOOD_NODE_LOG = ModOres.BLOCKS.register("silverwood_node_log", () ->
+            new SilverwoodNodeLogBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LOG)
+                    .strength(2.5F)
+                    .lightLevel(state -> 7)));
+
     /**
      * TC4 exposes exactly one metadata-0 BlockAiry item in its creative tab. Placing it creates
      * a randomly generated node; node type/modifier variants are not separate creative items.
@@ -35,7 +41,7 @@ public final class ModNodes {
 
     public static final RegistryObject<BlockEntityType<AuraNodeBlockEntity>> AURA_NODE_ENTITY =
             BLOCK_ENTITIES.register("aura_node", () ->
-                    BlockEntityType.Builder.of(AuraNodeBlockEntity::new, AURA_NODE.get()).build(null));
+                    BlockEntityType.Builder.of(AuraNodeBlockEntity::new, AURA_NODE.get(), SILVERWOOD_NODE_LOG.get()).build(null));
 
     public static void register(IEventBus bus) {
         BLOCK_ENTITIES.register(bus);
