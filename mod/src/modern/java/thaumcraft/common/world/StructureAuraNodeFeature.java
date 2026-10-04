@@ -20,18 +20,16 @@ import java.util.List;
 /**
  * TC4's structure-linked aura-node pass adapted to modern structure starts.
  *
- * <p>The legacy generator queried {@code MapGenScatteredFeature} before rolling the normal 1/36
- * wild-node chance. In 1.20.1 the direct equivalents are desert pyramids, jungle pyramids,
- * swamp huts and igloos. A valid start in the current chunk receives one normal random node at
- * the chunk locator anchor, three blocks above the world surface, and suppresses the wild node
- * pass for that chunk.</p>
+ * <p>Thaumcraft 4.2.3.5 targeted Minecraft 1.7.10, where MapGenScatteredFeature covered desert
+ * pyramids, jungle pyramids and swamp huts. A valid start in the current chunk receives one normal
+ * random node at the chunk locator anchor, three blocks above the world surface, and suppresses the
+ * wild node pass for that chunk.</p>
  */
 public final class StructureAuraNodeFeature extends Feature<NoneFeatureConfiguration> {
     private static final List<ResourceKey<Structure>> SCATTERED_STRUCTURES = List.of(
             BuiltinStructures.DESERT_PYRAMID,
             BuiltinStructures.JUNGLE_TEMPLE,
-            BuiltinStructures.SWAMP_HUT,
-            BuiltinStructures.IGLOO
+            BuiltinStructures.SWAMP_HUT
     );
 
     public StructureAuraNodeFeature() {
