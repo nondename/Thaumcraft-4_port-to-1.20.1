@@ -31,7 +31,9 @@ public final class ResearchEntryScreen extends Screen {
         pages.clear();
         for (String key : node.pages()) {
             if (!I18n.exists(key)) continue;
-            String text = I18n.get(key).replace("<LINE>", "\n\n").replace("<BR>", "\n")
+            // Legacy image tags contain asset paths, not readable book text.
+            String text = I18n.get(key).replaceAll("(?s)<IMG>.*?</IMG>", "")
+                    .replace("<LINE>", "\n\n").replace("<BR>", "\n")
                     .replace("<PAGE>", "\n\n").replaceAll("<[^>]*>", "");
             var lines = font.split(Component.literal(text), 140);
             for (int i = 0; i < lines.size(); i += 17) pages.add(new ArrayList<>(lines.subList(i, Math.min(lines.size(), i + 17))));

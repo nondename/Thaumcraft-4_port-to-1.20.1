@@ -142,11 +142,12 @@ def main():
     target = OUTPUT / 'research/tree.json'
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(json.dumps(entries, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+    page_keys = {page for entry in entries for page in entry['pages']}
     for lang in ['en_us', 'ru_ru']:
         path = OUTPUT / 'lang' / (lang + '.json')
         translations = json.loads(path.read_text(encoding='utf-8'))
         for line in (LEGACY / 'lang' / (lang + '.lang')).read_text(encoding='utf-8').splitlines():
-            if line.startswith(('tc.research_name.', 'tc.research_text.', 'tc.research_page.', 'tc.research_category.')) and '=' in line:
+            if '=' in line and (line.startswith(('tc.research_name.', 'tc.research_text.', 'tc.research_page.', 'tc.research_category.')) or line.split('=', 1)[0] in page_keys):
                 key, value = line.split('=', 1)
                 translations[key] = value
         path.write_text(json.dumps(translations, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
