@@ -8,5 +8,6 @@
   "type": "thaumcraft:crucible",
   "catalyst": {
     "item": "thaumcraft:void_seed"
-  }
+  },
+  "research": "VOIDMETAL"
 }

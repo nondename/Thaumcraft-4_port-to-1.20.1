@@ -34,6 +34,7 @@ public final class WorkbenchSafetyTests {
         helper.getLevel().setBlock(pos, ArcaneWorkbenchBlock.ARCANE_WORKBENCH.get().defaultBlockState(), 3);
         var table = (ArcaneWorkbenchBlockEntity) helper.getLevel().getBlockEntity(pos);
         var player = helper.makeMockPlayer();
+        thaumcraft.common.research.ResearchProgression.knowledge(player).grantResearch("CAP_gold");
         player.setPos(Vec3.atCenterOf(pos));
         return new Fixture(table, player, new ArcaneWorkbenchMenu(1, player.getInventory(), table));
     }
@@ -142,6 +143,7 @@ public final class WorkbenchSafetyTests {
         Fixture f = fixture(helper);
         goldCaps(f, 2, 290);
         var second = helper.makeMockPlayer();
+        thaumcraft.common.research.ResearchProgression.knowledge(second).grantResearch("CAP_gold");
         second.setPos(f.player.position());
         second.setItemSlot(EquipmentSlot.HEAD, new ItemStack(ModItems.GOGGLES.get()));
         var secondMenu = new ArcaneWorkbenchMenu(2, second.getInventory(), f.table);

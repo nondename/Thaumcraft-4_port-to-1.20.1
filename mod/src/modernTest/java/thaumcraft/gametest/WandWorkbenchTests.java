@@ -118,6 +118,7 @@ public final class WandWorkbenchTests {
     public static void arcaneRecipesLoadAndMatch(GameTestHelper helper) {
         var level = helper.getLevel();
         var player = helper.makeMockPlayer();
+        for(String key:new String[]{"CAP_gold","ROD_greatwood","GOGGLES"})thaumcraft.common.research.ResearchProgression.knowledge(player).grantResearch(key);
         // Recipe grids run through the menu's read-through view over a local container.
         var menu = new ArcaneWorkbenchMenu(990, player.getInventory(),
                 new SimpleContainer(ArcaneWorkbenchBlockEntity.SIZE));
@@ -131,8 +132,8 @@ public final class WandWorkbenchTests {
                         && gcost.getAmount(Aspect.WATER) == 5 && gcost.getAmount(Aspect.EARTH) == 5
                         && gcost.getAmount(Aspect.ENTROPY) == 3 && gcost.getAmount(Aspect.ORDER) == 3,
                 "Goggles vis cost must be 5/5/5/5/3/3");
-        helper.assertTrue(((ArcaneRecipe) goggles).getResearch().isEmpty(),
-                "Research gates ship disabled: research must parse as empty");
+        helper.assertTrue(((ArcaneRecipe) goggles).getResearch().equals("GOGGLES"),
+                "Goggles must retain their original research gate");
         helper.assertTrue(goggles.getIngredients().get(0).test(new ItemStack(Items.LEATHER))
                         && goggles.getIngredients().get(1).test(new ItemStack(Items.GOLD_INGOT))
                         && goggles.getIngredients().get(6).test(new ItemStack(ModItems.THAUMOMETER.get())),
@@ -201,6 +202,7 @@ public final class WandWorkbenchTests {
         BlockPos plain = helper.absolutePos(new BlockPos(1, 1, 1));
         level.setBlock(plain, ModResearch.TABLE.get().defaultBlockState(), 3);
         var player = helper.makeMockPlayer();
+        for(String key:new String[]{"CAP_gold","ROD_greatwood","GOGGLES"})thaumcraft.common.research.ResearchProgression.knowledge(player).grantResearch(key);
 
         // A normal wand converts the table and is parked in slot 10, hand cleared.
         var wand = new ItemStack(ModItems.WAND.get());
@@ -258,6 +260,7 @@ public final class WandWorkbenchTests {
         level.setBlock(pos, ArcaneWorkbenchBlock.ARCANE_WORKBENCH.get().defaultBlockState(), 3);
         var be = (ArcaneWorkbenchBlockEntity) level.getBlockEntity(pos);
         var player = helper.makeMockPlayer();
+        for(String key:new String[]{"CAP_gold","ROD_greatwood","GOGGLES"})thaumcraft.common.research.ResearchProgression.knowledge(player).grantResearch(key);
         var menu = new ArcaneWorkbenchMenu(991, player.getInventory(), be);
 
         // Without a wand the arcane result never appears.
@@ -329,6 +332,7 @@ public final class WandWorkbenchTests {
         source.add(Aspect.EARTH, 10);
         node.initialize(NodeType.NORMAL, NodeModifier.BRIGHT, source);
         var player = helper.makeMockPlayer();
+        for(String key:new String[]{"CAP_gold","ROD_greatwood","GOGGLES"})thaumcraft.common.research.ResearchProgression.knowledge(player).grantResearch(key);
 
         // count must be a multiple of 5 (original onUsingTick gating); base tap rate is 1
         // without the NODETAPPER research (command-driven in this port).

@@ -58,7 +58,7 @@ public final class CrucibleEntity extends BlockEntity {
     public static void tick(Level level, BlockPos pos, BlockState state, CrucibleEntity c) {
         ++c.counter;
         BlockState below = level.getBlockState(pos.below());
-        boolean hot = below.is(BlockTags.FIRE) || below.is(Blocks.LAVA)
+        boolean hot = below.is(BlockTags.FIRE) || below.is(Blocks.LAVA) || below.is(ModAlchemy.NITOR.get())
                 || below.getBlock() instanceof CampfireBlock && below.getValue(CampfireBlock.LIT);
         int previous = c.heat;
         c.heat = c.water > 0 && hot ? Math.min(200, c.heat + 1) : Math.max(0, c.heat - 1);
@@ -88,13 +88,20 @@ public final class CrucibleEntity extends BlockEntity {
         }
     }
     public void process(ItemEntity entity) {
+        var tag=entity.getPersistentData();
+        var player=level!=null && tag.hasUUID("ThaumcraftThrower") ? level.getPlayerByUUID(tag.getUUID("ThaumcraftThrower")) : null;
+        process(entity,player);
+    }
+    public void process(ItemEntity entity, net.minecraft.world.entity.player.Player player) {
         if (level == null || level.isClientSide || !isBoiling() || !entity.isAlive()
                 || entity.getPersistentData().getBoolean("CrucibleOutput")
                 || entity.getPersistentData().getLong("CrucibleRetry") > level.getGameTime()) return;
         ItemStack stack = entity.getItem();
         while (!stack.isEmpty() && water > 0) {
             CrucibleRecipe recipe = level.getRecipeManager().getAllRecipesFor(CrucibleRecipe.TYPE.get()).stream()
-                    .filter(r -> r.canCraft(stack, aspects)).sorted(java.util.Comparator.comparing(r -> r.getId().toString())).findFirst().orElse(null);
+                    .filter(r -> r.canCraft(stack, aspects) && (r.research().isEmpty() || player!=null && player.level()==level
+                            && thaumcraft.common.research.ResearchProgression.has(player,r.research())))
+                    .sorted(java.util.Comparator.comparing(r -> r.getId().toString())).findFirst().orElse(null);
             if (recipe != null) {
                 for (Aspect aspect : recipe.cost().getAspects()) aspects.remove(aspect, recipe.cost().getAmount(aspect));
                 water = Math.max(0, water - 50); stack.shrink(1); counter = -250;

@@ -1,6 +1,1 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "thaumcraft:item/phial"
-  }
-}
+{"parent":"minecraft:item/generated","textures":{"layer0":"thaumcraft:item/phial"},"overrides":[{"predicate":{"thaumcraft:filled":1},"model":"thaumcraft:item/phial_filled"}]}

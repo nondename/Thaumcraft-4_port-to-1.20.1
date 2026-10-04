@@ -1,0 +1,10 @@
+{
+  "loader": "forge:obj",
+  "model": "thaumcraft:models/block/alembic.obj",
+  "flip_v": true,
+  "textures": {
+    "texture0": "thaumcraft:block/alembic",
+    "particle": "thaumcraft:block/alembic"
+  },
+  "parent": "minecraft:block/block"
+}

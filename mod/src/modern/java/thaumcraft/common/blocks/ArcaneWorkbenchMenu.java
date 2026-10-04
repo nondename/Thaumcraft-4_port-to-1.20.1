@@ -153,7 +153,7 @@ public final class ArcaneWorkbenchMenu extends AbstractContainerMenu {
                 if (ItemWand.consumeAllVisCrafting(wand, playerInventory.player, aspects, false)) {
                     selectedRecipe = ModRecipes.arcaneMatch(level, grid).map(ModRecipes.RecipeWithType::recipe).orElse(null);
                     selectedCost = aspects;
-                    if (selectedRecipe != null) {
+                    if (selectedRecipe != null && ModRecipes.isKnown(playerInventory.player,selectedRecipe,grid)) {
                         preview = selectedRecipe.assemble(grid, level.registryAccess());
                     }
                 }

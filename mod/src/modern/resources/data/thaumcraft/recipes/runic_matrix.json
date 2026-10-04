@@ -1,0 +1,27 @@
+{
+  "type": "thaumcraft:arcane",
+  "research": "INFUSION",
+  "pattern": [
+    "SBS",
+    "BEB",
+    "SBS"
+  ],
+  "key": {
+    "S": {
+      "item": "thaumcraft:arcane_stone"
+    },
+    "B": {
+      "tag": "thaumcraft:shards"
+    },
+    "E": {
+      "item": "minecraft:ender_pearl"
+    }
+  },
+  "cost": {
+    "ordo": 40
+  },
+  "result": {
+    "item": "thaumcraft:runic_matrix",
+    "count": 1
+  }
+}

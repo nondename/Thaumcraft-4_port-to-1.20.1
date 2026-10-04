@@ -25,16 +25,11 @@ import thaumcraft.api.aspects.AspectList;
  * <p>The pattern half is delegated to the vanilla {@link ShapedRecipe} parsed from the same
  * JSON (unknown fields like {@code cost}/{@code research} are ignored by the vanilla parser).
  *
- * <p>Documented deviation: original recipes are gated on research — {@code getResearch()}
- * returned the key passed to {@code addArcaneCraftingRecipe} ("CAP_gold", "CAP_copper",
- * "GOGGLES"), checked inside {@code matches(...)} against ResearchManager via the player.
- * The 1.20.1 {@code Recipe.matches} signature carries no player, and research completion
- * in this port is command-only, so the gate ships disabled (constant below) and every JSON
- * carries {@code "research": ""}; the original keys are recorded here and in the report.
+ * <p>Player research is enforced by the server workbench menu, where the player is available.
  */
 public final class ArcaneRecipe implements Recipe<CraftingContainer> {
-    /** See class javadoc: research gates are parsed and stored but not enforced yet. */
-    public static final boolean RESEARCH_GATES = false;
+    /** See class javadoc: Research is enforced by ModRecipes.isKnown in the server menu. */
+    public static final boolean RESEARCH_GATES = true;
 
     private final ResourceLocation id;
     private final ShapedRecipe shape;
@@ -53,10 +48,12 @@ public final class ArcaneRecipe implements Recipe<CraftingContainer> {
         return cost;
     }
 
-    /** Original getResearch() — stored for the future research gate. */
+    /** Original getResearch() — checked by the server menu. */
     public String getResearch() {
         return research;
     }
+    public int width() {return shape.getWidth();}
+    public int height() {return shape.getHeight();}
 
     @Override
     public boolean matches(CraftingContainer grid, Level level) {

@@ -95,7 +95,9 @@ public final class ResearchTableBlock extends BaseEntityBlock {
         if (!replacement.is(this) && !level.isClientSide && state.getValue(PART) != 0) {
             Direction facing = state.getValue(FACING);
             BlockPos primary = state.getValue(PART) == 1 ? pos : pos.relative(facing.getOpposite());
-            if (level.getBlockEntity(primary) instanceof ResearchTableEntity table) popResource(level, pos, table.takeTools());
+            if (level.getBlockEntity(primary) instanceof ResearchTableEntity table) {
+                popResource(level, pos, table.takeTools()); popResource(level,pos,table.removeItem(1,1));
+            }
             BlockPos partner = state.getValue(PART) == 1 ? pos.relative(facing) : primary;
             var other = level.getBlockState(partner);
             if (other.is(this) && other.getValue(FACING) == facing && other.getValue(PART) == (state.getValue(PART) == 1 ? 2 : 1)) {

@@ -47,12 +47,12 @@ public final class ResearchTableParityTests {
             helper.assertTrue(table.getItem(0).getDamageValue() == 17 && table.getItem(0).getCount() == 1,
                     "Tools must retain ink usage and count across reload");
             var menu = new ResearchMenu(1500, player.getInventory(), ContainerLevelAccess.create(level, pos));
-            helper.assertTrue(menu.slots.size() == 37 && menu.stillValid(player), "Table must expose tools and 36 inventory slots");
+            helper.assertTrue(menu.slots.size() == 38 && menu.stillValid(player), "Table must expose tools, notes and 36 inventory slots");
             helper.assertTrue(!menu.getSlot(0).mayPlace(new ItemStack(Items.STONE)), "Ink slot must reject other items");
             ItemStack original = menu.quickMoveStack(player, 0);
             helper.assertTrue(original.is(ModResearch.SCRIBING_TOOLS.get()) && table.isEmpty()
                     && menu.stillValid(player), "Tools must shift out without invalidating the assembled table");
-            helper.assertTrue(menu.quickMoveStack(player, 36).is(ModResearch.SCRIBING_TOOLS.get())
+            helper.assertTrue(menu.quickMoveStack(player, 37).is(ModResearch.SCRIBING_TOOLS.get())
                     && table.hasTools(), "Tools must shift back into the table");
             level.setBlockAndUpdate(partner, Blocks.AIR.defaultBlockState());
             helper.assertTrue(!menu.stillValid(player) && table.isEmpty()

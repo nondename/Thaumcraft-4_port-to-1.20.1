@@ -32,6 +32,7 @@ public final class Thaumcraft {
         thaumcraft.common.items.ModMetals.init();
         thaumcraft.common.alchemy.ModAlchemy.register(modEventBus);
         thaumcraft.common.alchemy.CrucibleRecipe.init();
+        thaumcraft.common.infusion.ModInfusion.register(modEventBus);
         ModItems.register(modEventBus);
         // Wand part items + WandCap/WandRod registry data (ConfigItems wand section).
         thaumcraft.common.items.wands.ModWandParts.register(modEventBus);

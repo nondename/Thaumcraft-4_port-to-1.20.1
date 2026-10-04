@@ -26,6 +26,10 @@ public interface IThaumometerKnowledge {
     int getAspectPool(Aspect aspect);
 
     int awardAspect(Aspect aspect, int amount);
+    boolean spendAspects(AspectList cost);
+    int getWarp();
+    void addWarp(int permanent,int normal,int temporary);
+    void decayTemporaryWarp();
 
     Aspect combine(Aspect first, Aspect second);
 

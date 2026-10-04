@@ -1,0 +1,1 @@
+{"parent":"minecraft:block/cube","textures":{"up":"thaumcraft:block/al_furnace_top","down":"thaumcraft:block/al_furnace_side","north":"thaumcraft:block/al_furnace_front_off","south":"thaumcraft:block/al_furnace_side","east":"thaumcraft:block/al_furnace_side","west":"thaumcraft:block/al_furnace_side","particle":"thaumcraft:block/al_furnace_side"}}

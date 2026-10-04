@@ -10,5 +10,6 @@
   "type": "thaumcraft:crucible",
   "catalyst": {
     "item": "minecraft:ender_pearl"
-  }
+  },
+  "research": "VOIDMETAL"
 }

@@ -300,6 +300,15 @@ public final class ConfigAspects {
      * FMLCommonSetup like ModOres#registerAspects — not from {@link #init()}.
      */
     public static void initModItems() {
+        register(thaumcraft.common.research.ModResearch.PHIAL.get(),new AspectList().add(Aspect.VOID,1));
+        register(thaumcraft.common.research.EldritchProgression.BRAIN.get(),new AspectList().add(Aspect.FLESH,2).add(Aspect.MIND,4).add(Aspect.UNDEAD,2));
+        register(thaumcraft.common.alchemy.ModAlchemy.CRUCIBLE.get(),new AspectList().add(Aspect.METAL,4).add(Aspect.CRAFT,4).add(Aspect.MAGIC,4));
+        var balanced=new AspectList().add(Aspect.CRYSTAL,1);
+        for(var primal:Aspect.getPrimalAspects())balanced.add(primal,2);
+        register(thaumcraft.common.alchemy.ModAlchemy.BALANCED_SHARD.get(),balanced);
+        var dust=new AspectList().add(Aspect.MAGIC,2);
+        for(var primal:Aspect.getPrimalAspects())dust.add(primal,2);
+        register(thaumcraft.common.alchemy.ModAlchemy.SALIS_MUNDUS.get(),dust);
         // TC4 ConfigAspects#677: the goggles themselves read as SENSES 4.
         register(thaumcraft.common.items.ModItems.GOGGLES.get(),
                 new AspectList().add(Aspect.SENSES, 4));

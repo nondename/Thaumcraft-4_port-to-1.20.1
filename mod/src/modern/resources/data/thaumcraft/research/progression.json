@@ -1,0 +1,2371 @@
+{
+  "PHIAL": {
+    "parents": [],
+    "aspects": {},
+    "auto": true,
+    "secondary": false
+  },
+  "CRUCIBLE": {
+    "parents": [],
+    "aspects": {},
+    "auto": true,
+    "secondary": false
+  },
+  "NITOR": {
+    "parents": [
+      "CRUCIBLE"
+    ],
+    "aspects": {
+      "lux": 3,
+      "ignis": 1
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "ALUMENTUM": {
+    "parents": [
+      "CRUCIBLE"
+    ],
+    "aspects": {
+      "potentia": 3,
+      "ignis": 1
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "DISTILESSENTIA": {
+    "parents": [
+      "NITOR",
+      "ALUMENTUM"
+    ],
+    "aspects": {
+      "praecantatio": 3,
+      "aqua": 3,
+      "limus": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "THAUMIUM": {
+    "parents": [
+      "CRUCIBLE"
+    ],
+    "aspects": {
+      "metallum": 3,
+      "praecantatio": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "TUBES": {
+    "parents": [
+      "DISTILESSENTIA"
+    ],
+    "aspects": {
+      "aqua": 3,
+      "praecantatio": 3,
+      "permutatio": 3
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "TUBEFILTER": {
+    "parents": [
+      "TUBES"
+    ],
+    "aspects": {
+      "aqua": 3,
+      "praecantatio": 3,
+      "permutatio": 3,
+      "ordo": 3
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "ESSENTIACRYSTAL": {
+    "parents": [
+      "TUBES"
+    ],
+    "aspects": {
+      "aqua": 5,
+      "vitreus": 5,
+      "permutatio": 3,
+      "praecantatio": 5
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "CENTRIFUGE": {
+    "parents": [
+      "TUBEFILTER"
+    ],
+    "aspects": {
+      "perditio": 3,
+      "praecantatio": 3,
+      "permutatio": 3,
+      "fabrico": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "THAUMATORIUM": {
+    "parents": [
+      "CENTRIFUGE"
+    ],
+    "aspects": {
+      "aqua": 3,
+      "praecantatio": 6,
+      "permutatio": 3,
+      "fabrico": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "TALLOW": {
+    "parents": [
+      "CRUCIBLE"
+    ],
+    "aspects": {
+      "corpus": 3,
+      "praecantatio": 1
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "ALCHEMICALDUPLICATION": {
+    "parents": [
+      "TALLOW"
+    ],
+    "aspects": {
+      "praecantatio": 3,
+      "lucrum": 3,
+      "fabrico": 3
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "ALCHEMICALMANUFACTURE": {
+    "parents": [
+      "ALCHEMICALDUPLICATION"
+    ],
+    "aspects": {
+      "praecantatio": 3,
+      "permutatio": 3,
+      "fabrico": 3
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "ENTROPICPROCESSING": {
+    "parents": [
+      "ALCHEMICALDUPLICATION"
+    ],
+    "aspects": {
+      "praecantatio": 1,
+      "perditio": 3,
+      "fabrico": 1
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "LIQUIDDEATH": {
+    "parents": [
+      "ENTROPICPROCESSING"
+    ],
+    "aspects": {
+      "mortuus": 3,
+      "venenum": 3,
+      "perditio": 1,
+      "aqua": 1
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "BOTTLETAINT": {
+    "parents": [
+      "ENTROPICPROCESSING"
+    ],
+    "aspects": {
+      "vitium": 5,
+      "praecantatio": 3,
+      "perditio": 1,
+      "aqua": 1
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "PUREIRON": {
+    "parents": [
+      "THAUMIUM"
+    ],
+    "aspects": {
+      "metallum": 3,
+      "ordo": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "PUREGOLD": {
+    "parents": [
+      "PUREIRON"
+    ],
+    "aspects": {
+      "metallum": 3,
+      "ordo": 2,
+      "lucrum": 1
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "PURECOPPER": {
+    "parents": [
+      "PUREIRON"
+    ],
+    "aspects": {
+      "metallum": 3,
+      "ordo": 2,
+      "permutatio": 1
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "PURETIN": {
+    "parents": [
+      "PUREIRON"
+    ],
+    "aspects": {
+      "metallum": 3,
+      "ordo": 2,
+      "vitreus": 1
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "PURESILVER": {
+    "parents": [
+      "PUREIRON"
+    ],
+    "aspects": {
+      "metallum": 3,
+      "ordo": 2,
+      "lucrum": 1
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "PURELEAD": {
+    "parents": [
+      "PUREIRON"
+    ],
+    "aspects": {
+      "metallum": 3,
+      "ordo": 3
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "TRANSIRON": {
+    "parents": [
+      "THAUMIUM"
+    ],
+    "aspects": {
+      "metallum": 3,
+      "permutatio": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "TRANSGOLD": {
+    "parents": [
+      "TRANSIRON"
+    ],
+    "aspects": {
+      "metallum": 3,
+      "permutatio": 3
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "TRANSCOPPER": {
+    "parents": [
+      "TRANSIRON"
+    ],
+    "aspects": {
+      "metallum": 3,
+      "permutatio": 3
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "TRANSTIN": {
+    "parents": [
+      "TRANSIRON"
+    ],
+    "aspects": {
+      "metallum": 3,
+      "permutatio": 2,
+      "vitreus": 1
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "TRANSSILVER": {
+    "parents": [
+      "TRANSIRON"
+    ],
+    "aspects": {
+      "metallum": 3,
+      "permutatio": 2,
+      "lucrum": 1
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "TRANSLEAD": {
+    "parents": [
+      "TRANSIRON"
+    ],
+    "aspects": {
+      "metallum": 3,
+      "permutatio": 2,
+      "ordo": 1
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "ETHEREALBLOOM": {
+    "parents": [
+      "CRUCIBLE"
+    ],
+    "aspects": {
+      "praecantatio": 1,
+      "herba": 6,
+      "sano": 3,
+      "vitium": 6
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "BATHSALTS": {
+    "parents": [],
+    "aspects": {
+      "cognitio": 3,
+      "auram": 3,
+      "ordo": 3,
+      "sano": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "SANESOAP": {
+    "parents": [
+      "BATHSALTS"
+    ],
+    "aspects": {
+      "cognitio": 5,
+      "ordo": 5,
+      "sano": 5,
+      "alienis": 5
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "ARCANESPA": {
+    "parents": [
+      "BATHSALTS"
+    ],
+    "aspects": {
+      "aqua": 3,
+      "machina": 3,
+      "ordo": 3
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "JARLABEL": {
+    "parents": [
+      "DISTILESSENTIA"
+    ],
+    "aspects": {},
+    "auto": false,
+    "secondary": false
+  },
+  "JARVOID": {
+    "parents": [
+      "JARLABEL"
+    ],
+    "aspects": {
+      "aqua": 3,
+      "perditio": 3,
+      "vacuos": 6
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "ARCANESTONE": {
+    "parents": [],
+    "aspects": {},
+    "auto": true,
+    "secondary": false
+  },
+  "GRATE": {
+    "parents": [],
+    "aspects": {},
+    "auto": true,
+    "secondary": false
+  },
+  "TABLE": {
+    "parents": [],
+    "aspects": {},
+    "auto": true,
+    "secondary": false
+  },
+  "ARCTABLE": {
+    "parents": [
+      "TABLE"
+    ],
+    "aspects": {},
+    "auto": true,
+    "secondary": false
+  },
+  "RESTABLE": {
+    "parents": [
+      "TABLE"
+    ],
+    "aspects": {},
+    "auto": true,
+    "secondary": false
+  },
+  "THAUMOMETER": {
+    "parents": [],
+    "aspects": {},
+    "auto": true,
+    "secondary": false
+  },
+  "PAVETRAVEL": {
+    "parents": [
+      "ARCANESTONE"
+    ],
+    "aspects": {
+      "iter": 3,
+      "terra": 3,
+      "volatus": 3
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "PAVEWARD": {
+    "parents": [
+      "ARCANESTONE"
+    ],
+    "aspects": {
+      "motus": 3,
+      "vinculum": 3,
+      "bestia": 3
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "GOGGLES": {
+    "parents": [
+      "THAUMOMETER"
+    ],
+    "aspects": {
+      "sensus": 3,
+      "auram": 3,
+      "praecantatio": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "ARCANEEAR": {
+    "parents": [
+      "GOGGLES"
+    ],
+    "aspects": {
+      "sensus": 3,
+      "potentia": 3,
+      "aer": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "SINSTONE": {
+    "parents": [
+      "GOGGLES"
+    ],
+    "aspects": {
+      "sensus": 3,
+      "tenebrae": 3,
+      "alienis": 3,
+      "auram": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "LEVITATOR": {
+    "parents": [
+      "NITOR"
+    ],
+    "aspects": {
+      "motus": 3,
+      "volatus": 3,
+      "aer": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "INFERNALFURNACE": {
+    "parents": [
+      "NITOR",
+      "ALUMENTUM"
+    ],
+    "aspects": {
+      "ignis": 6,
+      "metallum": 3,
+      "fabrico": 3,
+      "auram": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "BELLOWS": {
+    "parents": [
+      "INFERNALFURNACE"
+    ],
+    "aspects": {
+      "aer": 6,
+      "machina": 3,
+      "motus": 3
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "ARCANEBORE": {
+    "parents": [
+      "FOCUSEXCAVATION",
+      "INFUSION"
+    ],
+    "aspects": {
+      "perfodio": 6,
+      "motus": 3,
+      "machina": 3,
+      "instrumentum": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "ARCANELAMP": {
+    "parents": [
+      "NITOR"
+    ],
+    "aspects": {
+      "lux": 3,
+      "sensus": 3,
+      "tenebrae": 3
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "ENCHFABRIC": {
+    "parents": [],
+    "aspects": {
+      "pannus": 3,
+      "praecantatio": 3
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "RUNICARMOR": {
+    "parents": [
+      "ENCHFABRIC"
+    ],
+    "aspects": {
+      "tutamen": 6,
+      "aer": 3,
+      "praecantatio": 3,
+      "potentia": 3,
+      "cognitio": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "RUNICCHARGED": {
+    "parents": [
+      "RUNICARMOR"
+    ],
+    "aspects": {
+      "praecantatio": 3,
+      "tutamen": 3,
+      "potentia": 6
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "RUNICHEALING": {
+    "parents": [
+      "RUNICARMOR"
+    ],
+    "aspects": {
+      "praecantatio": 3,
+      "tutamen": 3,
+      "sano": 4,
+      "aqua": 4
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "RUNICKINETIC": {
+    "parents": [
+      "RUNICARMOR"
+    ],
+    "aspects": {
+      "praecantatio": 3,
+      "tutamen": 3,
+      "aer": 6
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "RUNICEMERGENCY": {
+    "parents": [
+      "RUNICARMOR"
+    ],
+    "aspects": {
+      "praecantatio": 3,
+      "tutamen": 3,
+      "terra": 4,
+      "vacuos": 4
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "RUNICAUGMENTATION": {
+    "parents": [
+      "RUNICARMOR"
+    ],
+    "aspects": {
+      "praecantatio": 3,
+      "tutamen": 3,
+      "permutatio": 4,
+      "lucrum": 4
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "BANNERS": {
+    "parents": [],
+    "aspects": {
+      "sensus": 3,
+      "pannus": 3,
+      "praecantatio": 1
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "ELEMENTALAXE": {
+    "parents": [
+      "THAUMIUM",
+      "INFUSION"
+    ],
+    "aspects": {
+      "instrumentum": 3,
+      "aqua": 3,
+      "motus": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "ELEMENTALPICK": {
+    "parents": [
+      "THAUMIUM",
+      "INFUSION"
+    ],
+    "aspects": {
+      "instrumentum": 3,
+      "ignis": 3,
+      "sensus": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "ELEMENTALSWORD": {
+    "parents": [
+      "THAUMIUM",
+      "INFUSION"
+    ],
+    "aspects": {
+      "telum": 3,
+      "aer": 3,
+      "potentia": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "ELEMENTALSHOVEL": {
+    "parents": [
+      "THAUMIUM",
+      "INFUSION"
+    ],
+    "aspects": {
+      "instrumentum": 3,
+      "terra": 3,
+      "fabrico": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "ELEMENTALHOE": {
+    "parents": [
+      "THAUMIUM",
+      "INFUSION"
+    ],
+    "aspects": {
+      "instrumentum": 3,
+      "victus": 3,
+      "messis": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "WARDEDARCANA": {
+    "parents": [
+      "THAUMIUM"
+    ],
+    "aspects": {
+      "instrumentum": 6,
+      "cognitio": 3,
+      "machina": 3,
+      "tutamen": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "BONEBOW": {
+    "parents": [],
+    "aspects": {
+      "telum": 3,
+      "aer": 3,
+      "motus": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "PRIMALARROW": {
+    "parents": [
+      "BONEBOW"
+    ],
+    "aspects": {
+      "telum": 3,
+      "aer": 3,
+      "ignis": 3,
+      "aqua": 3,
+      "terra": 3,
+      "ordo": 3,
+      "perditio": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "INFUSION": {
+    "parents": [
+      "DISTILESSENTIA"
+    ],
+    "aspects": {
+      "praecantatio": 6,
+      "machina": 3,
+      "fabrico": 6
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "LAMPGROWTH": {
+    "parents": [
+      "ARCANELAMP",
+      "INFUSION"
+    ],
+    "aspects": {
+      "lux": 3,
+      "herba": 6,
+      "victus": 3,
+      "messis": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "LAMPFERTILITY": {
+    "parents": [
+      "ARCANELAMP",
+      "INFUSION"
+    ],
+    "aspects": {
+      "bestia": 6,
+      "victus": 6,
+      "lux": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "MIRROR": {
+    "parents": [
+      "INFUSION"
+    ],
+    "aspects": {
+      "iter": 6,
+      "alienis": 3,
+      "tenebrae": 3,
+      "vitreus": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "MIRRORHAND": {
+    "parents": [
+      "MIRROR"
+    ],
+    "aspects": {
+      "instrumentum": 6,
+      "alienis": 3,
+      "vitreus": 3,
+      "iter": 3
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "MIRRORESSENTIA": {
+    "parents": [
+      "MIRROR"
+    ],
+    "aspects": {
+      "iter": 6,
+      "alienis": 3,
+      "aqua": 3,
+      "praecantatio": 3
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "JARBRAIN": {
+    "parents": [
+      "INFUSION"
+    ],
+    "aspects": {
+      "fames": 3,
+      "cognitio": 3,
+      "exanimis": 3,
+      "lucrum": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "INFUSIONENCHANTMENT": {
+    "parents": [
+      "JARBRAIN"
+    ],
+    "aspects": {
+      "praecantatio": 6,
+      "cognitio": 3,
+      "telum": 3,
+      "tutamen": 3,
+      "instrumentum": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "ARMORFORTRESS": {
+    "parents": [
+      "THAUMIUM",
+      "INFUSIONENCHANTMENT"
+    ],
+    "aspects": {
+      "metallum": 3,
+      "tutamen": 5,
+      "fabrico": 5
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "HELMGOGGLES": {
+    "parents": [
+      "ARMORFORTRESS"
+    ],
+    "aspects": {
+      "sensus": 5,
+      "auram": 3,
+      "tutamen": 3
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "MASKGRINNINGDEVIL": {
+    "parents": [
+      "ARMORFORTRESS"
+    ],
+    "aspects": {
+      "sano": 5,
+      "cognitio": 5,
+      "tutamen": 3
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "MASKANGRYGHOST": {
+    "parents": [
+      "ARMORFORTRESS"
+    ],
+    "aspects": {
+      "perditio": 5,
+      "mortuus": 5,
+      "tutamen": 3
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "MASKSIPPINGFIEND": {
+    "parents": [
+      "ARMORFORTRESS"
+    ],
+    "aspects": {
+      "exanimis": 5,
+      "victus": 5,
+      "tutamen": 3
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "BOOTSTRAVELLER": {
+    "parents": [
+      "ENCHFABRIC",
+      "INFUSION"
+    ],
+    "aspects": {
+      "iter": 3,
+      "terra": 3,
+      "volatus": 3,
+      "aqua": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "HOVERHARNESS": {
+    "parents": [
+      "BOOTSTRAVELLER"
+    ],
+    "aspects": {
+      "volatus": 6,
+      "iter": 6,
+      "aer": 6,
+      "machina": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "HOVERGIRDLE": {
+    "parents": [
+      "HOVERHARNESS"
+    ],
+    "aspects": {
+      "volatus": 6,
+      "iter": 3,
+      "aer": 3,
+      "motus": 6
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "BASICARTIFACE": {
+    "parents": [],
+    "aspects": {},
+    "auto": true,
+    "secondary": false
+  },
+  "FLUXSCRUB": {
+    "parents": [
+      "VISPOWER",
+      "BELLOWS",
+      "TUBES"
+    ],
+    "aspects": {
+      "praecantatio": 3,
+      "vinculum": 3,
+      "aer": 3,
+      "aqua": 3
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "ASPECTS": {
+    "parents": [],
+    "aspects": {},
+    "auto": true,
+    "secondary": false
+  },
+  "PECH": {
+    "parents": [],
+    "aspects": {},
+    "auto": true,
+    "secondary": false
+  },
+  "NODES": {
+    "parents": [],
+    "aspects": {},
+    "auto": true,
+    "secondary": false
+  },
+  "WARP": {
+    "parents": [],
+    "aspects": {},
+    "auto": true,
+    "secondary": false
+  },
+  "RESEARCH": {
+    "parents": [],
+    "aspects": {},
+    "auto": true,
+    "secondary": false
+  },
+  "KNOWFRAG": {
+    "parents": [
+      "RESEARCH"
+    ],
+    "aspects": {},
+    "auto": true,
+    "secondary": false
+  },
+  "THAUMONOMICON": {
+    "parents": [
+      "RESEARCH"
+    ],
+    "aspects": {},
+    "auto": true,
+    "secondary": false
+  },
+  "ORE": {
+    "parents": [],
+    "aspects": {},
+    "auto": true,
+    "secondary": false
+  },
+  "PLANTS": {
+    "parents": [],
+    "aspects": {},
+    "auto": true,
+    "secondary": false
+  },
+  "RESEARCHER1": {
+    "parents": [
+      "RESEARCH"
+    ],
+    "aspects": {
+      "cognitio": 3,
+      "sensus": 3,
+      "ordo": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "DECONSTRUCTOR": {
+    "parents": [
+      "RESEARCHER1"
+    ],
+    "aspects": {
+      "cognitio": 3,
+      "fabrico": 3,
+      "perditio": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "RESEARCHER2": {
+    "parents": [
+      "RESEARCHER1"
+    ],
+    "aspects": {
+      "cognitio": 6,
+      "ordo": 3,
+      "sensus": 3,
+      "praecantatio": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "RESEARCHDUPE": {
+    "parents": [
+      "RESEARCHER2"
+    ],
+    "aspects": {
+      "cognitio": 6,
+      "permutatio": 3,
+      "sensus": 3,
+      "lucrum": 3,
+      "fabrico": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "ENCHANT": {
+    "parents": [],
+    "aspects": {},
+    "auto": true,
+    "secondary": false
+  },
+  "NODETAPPER1": {
+    "parents": [
+      "NODES"
+    ],
+    "aspects": {
+      "auram": 3,
+      "praecantatio": 3,
+      "motus": 3,
+      "permutatio": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "NODEPRESERVE": {
+    "parents": [
+      "NODETAPPER1"
+    ],
+    "aspects": {
+      "auram": 3,
+      "lucrum": 3,
+      "sensus": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "NODETAPPER2": {
+    "parents": [
+      "NODETAPPER1"
+    ],
+    "aspects": {
+      "auram": 6,
+      "praecantatio": 3,
+      "motus": 3,
+      "permutatio": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "NODEJAR": {
+    "parents": [
+      "NODEPRESERVE"
+    ],
+    "aspects": {
+      "auram": 6,
+      "lucrum": 3,
+      "permutatio": 3,
+      "motus": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "CRIMSON": {
+    "parents": [],
+    "aspects": {},
+    "auto": false,
+    "secondary": false
+  },
+  "ELDRITCHMINOR": {
+    "parents": [],
+    "aspects": {},
+    "auto": false,
+    "secondary": false
+  },
+  "OCULUS": {
+    "parents": [
+      "CRIMSON",
+      "ELDRITCHMAJOR"
+    ],
+    "aspects": {
+      "cognitio": 3,
+      "tenebrae": 3,
+      "permutatio": 3,
+      "iter": 6,
+      "alienis": 6
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "ENTEROUTER": {
+    "parents": [
+      "OCULUS"
+    ],
+    "aspects": {},
+    "auto": false,
+    "secondary": false
+  },
+  "OUTERREV": {
+    "parents": [
+      "ENTEROUTER"
+    ],
+    "aspects": {
+      "alienis": 4,
+      "cognitio": 4
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "PRIMPEARL": {
+    "parents": [
+      "ELDRITCHMINOR"
+    ],
+    "aspects": {
+      "aer": 8,
+      "terra": 8,
+      "ignis": 8,
+      "aqua": 8,
+      "ordo": 8,
+      "perditio": 8
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "PRIMNODE": {
+    "parents": [
+      "PRIMPEARL"
+    ],
+    "aspects": {
+      "auram": 1,
+      "praecantatio": 1,
+      "ordo": 1,
+      "perditio": 1
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "ADVALCHEMYFURNACE": {
+    "parents": [
+      "PRIMPEARL",
+      "DISTILESSENTIA",
+      "VISPOWER"
+    ],
+    "aspects": {
+      "auram": 1,
+      "praecantatio": 1,
+      "ordo": 1,
+      "perditio": 1
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "PRIMALCRUSHER": {
+    "parents": [
+      "PRIMPEARL"
+    ],
+    "aspects": {
+      "perfodio": 6,
+      "instrumentum": 6,
+      "perditio": 6,
+      "vacuos": 6,
+      "telum": 6,
+      "alienis": 6,
+      "lucrum": 6
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "VOIDMETAL": {
+    "parents": [
+      "THAUMIUM",
+      "ELDRITCHMINOR"
+    ],
+    "aspects": {
+      "metallum": 3,
+      "alienis": 3,
+      "tenebrae": 3,
+      "vacuos": 5
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "ESSENTIARESERVOIR": {
+    "parents": [
+      "VOIDMETAL",
+      "CENTRIFUGE",
+      "INFUSION"
+    ],
+    "aspects": {
+      "aqua": 5,
+      "vacuos": 5,
+      "permutatio": 3,
+      "praecantatio": 5
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "CAP_VOID": {
+    "parents": [
+      "CAP_THAUMIUM",
+      "VOIDMETAL"
+    ],
+    "aspects": {
+      "vacuos": 5,
+      "alienis": 5,
+      "instrumentum": 3,
+      "praecantatio": 3,
+      "auram": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "ARMORVOIDFORTRESS": {
+    "parents": [
+      "VOIDMETAL",
+      "ENCHFABRIC",
+      "ELDRITCHMAJOR"
+    ],
+    "aspects": {
+      "tutamen": 5,
+      "alienis": 3,
+      "pannus": 3,
+      "tenebrae": 3,
+      "vacuos": 5
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "FOCUSPRIMAL": {
+    "parents": [
+      "ELDRITCHMINOR"
+    ],
+    "aspects": {
+      "aer": 6,
+      "aqua": 6,
+      "ignis": 6,
+      "terra": 6,
+      "ordo": 6,
+      "perditio": 6,
+      "praecantatio": 6
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "SANITYCHECK": {
+    "parents": [
+      "ELDRITCHMINOR"
+    ],
+    "aspects": {
+      "cognitio": 5,
+      "alienis": 3,
+      "sensus": 5
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "ROD_PRIMAL_STAFF": {
+    "parents": [
+      "FOCUSPRIMAL"
+    ],
+    "aspects": {
+      "aer": 9,
+      "terra": 9,
+      "ignis": 9,
+      "aqua": 9,
+      "ordo": 9,
+      "perditio": 9,
+      "instrumentum": 9,
+      "praecantatio": 12
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "ELDRITCHMAJOR": {
+    "parents": [],
+    "aspects": {},
+    "auto": false,
+    "secondary": false
+  },
+  "HUNGRYCHEST": {
+    "parents": [],
+    "aspects": {
+      "fames": 3,
+      "vacuos": 3
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "TINYHAT": {
+    "parents": [],
+    "aspects": {
+      "pannus": 2,
+      "victus": 1,
+      "lucrum": 1
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "TINYGLASSES": {
+    "parents": [],
+    "aspects": {
+      "pannus": 2,
+      "sensus": 1,
+      "lucrum": 1
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "TINYBOWTIE": {
+    "parents": [],
+    "aspects": {
+      "pannus": 2,
+      "iter": 1,
+      "lucrum": 1
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "TINYFEZ": {
+    "parents": [],
+    "aspects": {
+      "pannus": 2,
+      "potentia": 1,
+      "lucrum": 1
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "TINYDART": {
+    "parents": [],
+    "aspects": {
+      "volatus": 1,
+      "telum": 2,
+      "lucrum": 1
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "TINYVISOR": {
+    "parents": [],
+    "aspects": {
+      "sensus": 1,
+      "tutamen": 2,
+      "lucrum": 1
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "TINYARMOR": {
+    "parents": [],
+    "aspects": {
+      "metallum": 1,
+      "tutamen": 2,
+      "lucrum": 1
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "TINYHAMMER": {
+    "parents": [],
+    "aspects": {
+      "metallum": 1,
+      "telum": 2,
+      "lucrum": 1
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "GOLEMSTRAW": {
+    "parents": [
+      "HUNGRYCHEST"
+    ],
+    "aspects": {
+      "spiritus": 3,
+      "motus": 3,
+      "messis": 3,
+      "permutatio": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "GOLEMBELL": {
+    "parents": [
+      "GOLEMSTRAW"
+    ],
+    "aspects": {},
+    "auto": false,
+    "secondary": false
+  },
+  "GOLEMWOOD": {
+    "parents": [
+      "GOLEMSTRAW"
+    ],
+    "aspects": {
+      "spiritus": 4,
+      "motus": 4,
+      "arbor": 3,
+      "permutatio": 3
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "GOLEMCLAY": {
+    "parents": [
+      "GOLEMWOOD"
+    ],
+    "aspects": {
+      "spiritus": 6,
+      "motus": 6,
+      "terra": 3,
+      "permutatio": 3
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "GOLEMSTONE": {
+    "parents": [
+      "GOLEMCLAY"
+    ],
+    "aspects": {
+      "spiritus": 6,
+      "motus": 6,
+      "terra": 3,
+      "permutatio": 3
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "GOLEMIRON": {
+    "parents": [
+      "GOLEMSTONE"
+    ],
+    "aspects": {
+      "spiritus": 9,
+      "motus": 9,
+      "metallum": 3,
+      "permutatio": 3
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "GOLEMTHAUMIUM": {
+    "parents": [
+      "GOLEMIRON",
+      "THAUMIUM"
+    ],
+    "aspects": {
+      "spiritus": 10,
+      "motus": 10,
+      "metallum": 3,
+      "praecantatio": 3,
+      "permutatio": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "GOLEMFLESH": {
+    "parents": [
+      "GOLEMWOOD"
+    ],
+    "aspects": {
+      "spiritus": 7,
+      "motus": 7,
+      "corpus": 6,
+      "permutatio": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "GOLEMTALLOW": {
+    "parents": [
+      "GOLEMCLAY",
+      "TALLOW"
+    ],
+    "aspects": {
+      "spiritus": 3,
+      "motus": 3,
+      "corpus": 3,
+      "praecantatio": 3,
+      "permutatio": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "GOLEMFETTER": {
+    "parents": [
+      "GOLEMSTONE"
+    ],
+    "aspects": {
+      "vinculum": 3,
+      "machina": 3
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "UPGRADEAIR": {
+    "parents": [
+      "GOLEMBELL"
+    ],
+    "aspects": {
+      "aer": 6,
+      "motus": 3
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "UPGRADEEARTH": {
+    "parents": [
+      "GOLEMBELL"
+    ],
+    "aspects": {
+      "terra": 6,
+      "victus": 3
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "UPGRADEFIRE": {
+    "parents": [
+      "GOLEMBELL"
+    ],
+    "aspects": {
+      "ignis": 6,
+      "potentia": 3
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "UPGRADEWATER": {
+    "parents": [
+      "GOLEMBELL"
+    ],
+    "aspects": {
+      "aqua": 6,
+      "sensus": 3
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "UPGRADEORDER": {
+    "parents": [
+      "GOLEMBELL"
+    ],
+    "aspects": {
+      "ordo": 6,
+      "cognitio": 3
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "UPGRADEENTROPY": {
+    "parents": [
+      "GOLEMBELL"
+    ],
+    "aspects": {
+      "perditio": 6,
+      "cognitio": 3
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "TRAVELTRUNK": {
+    "parents": [
+      "INFUSION",
+      "GOLEMWOOD"
+    ],
+    "aspects": {
+      "spiritus": 3,
+      "iter": 3,
+      "arbor": 3,
+      "vacuos": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "COREGATHER": {
+    "parents": [
+      "GOLEMSTRAW"
+    ],
+    "aspects": {},
+    "auto": false,
+    "secondary": false
+  },
+  "COREFILL": {
+    "parents": [
+      "COREGATHER"
+    ],
+    "aspects": {
+      "fames": 3,
+      "permutatio": 3,
+      "vacuos": 3
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "COREEMPTY": {
+    "parents": [
+      "COREGATHER"
+    ],
+    "aspects": {
+      "vacuos": 3,
+      "permutatio": 3,
+      "lucrum": 3
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "CORESORTING": {
+    "parents": [
+      "COREEMPTY",
+      "COREFILL",
+      "INFUSION"
+    ],
+    "aspects": {
+      "vacuos": 3,
+      "permutatio": 3,
+      "lucrum": 3,
+      "fames": 3
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "COREUSE": {
+    "parents": [
+      "COREEMPTY",
+      "INFUSION"
+    ],
+    "aspects": {
+      "instrumentum": 3,
+      "permutatio": 3,
+      "machina": 3,
+      "humanus": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "COREHARVEST": {
+    "parents": [
+      "COREGATHER"
+    ],
+    "aspects": {
+      "meto": 6,
+      "messis": 3,
+      "iter": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "COREFISHING": {
+    "parents": [
+      "COREHARVEST",
+      "INFUSION"
+    ],
+    "aspects": {
+      "aqua": 3,
+      "meto": 3,
+      "bestia": 3,
+      "fames": 3
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "CORELUMBER": {
+    "parents": [
+      "COREHARVEST",
+      "ELEMENTALAXE"
+    ],
+    "aspects": {
+      "arbor": 6,
+      "meto": 3,
+      "instrumentum": 3,
+      "potentia": 3
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "COREGUARD": {
+    "parents": [
+      "COREGATHER"
+    ],
+    "aspects": {
+      "telum": 3,
+      "vinculum": 3,
+      "sensus": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "COREBUTCHER": {
+    "parents": [
+      "COREGUARD",
+      "COREHARVEST"
+    ],
+    "aspects": {
+      "telum": 3,
+      "bestia": 3,
+      "sensus": 3,
+      "meto": 3
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "CORELIQUID": {
+    "parents": [
+      "COREFILL"
+    ],
+    "aspects": {
+      "aqua": 3,
+      "permutatio": 3,
+      "iter": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "COREALCHEMY": {
+    "parents": [
+      "CORELIQUID",
+      "INFUSION"
+    ],
+    "aspects": {
+      "aqua": 3,
+      "iter": 3,
+      "praecantatio": 3,
+      "potentia": 3
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "ADVANCEDGOLEM": {
+    "parents": [
+      "INFUSION",
+      "UPGRADEAIR",
+      "UPGRADEEARTH",
+      "UPGRADEFIRE",
+      "UPGRADEWATER",
+      "UPGRADEORDER",
+      "UPGRADEENTROPY"
+    ],
+    "aspects": {
+      "victus": 3,
+      "potentia": 3,
+      "cognitio": 6,
+      "sensus": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "BASICTHAUMATURGY": {
+    "parents": [],
+    "aspects": {},
+    "auto": true,
+    "secondary": false
+  },
+  "FOCUSFIRE": {
+    "parents": [
+      "BASICTHAUMATURGY"
+    ],
+    "aspects": {
+      "ignis": 3,
+      "praecantatio": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "FOCUSFROST": {
+    "parents": [
+      "FOCUSFIRE"
+    ],
+    "aspects": {
+      "aqua": 3,
+      "praecantatio": 3,
+      "gelum": 6
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "FOCUSHELLBAT": {
+    "parents": [],
+    "aspects": {
+      "iter": 3,
+      "bestia": 6,
+      "ignis": 3,
+      "praecantatio": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "FOCUSEXCAVATION": {
+    "parents": [
+      "FOCUSFIRE"
+    ],
+    "aspects": {
+      "terra": 3,
+      "perditio": 3,
+      "praecantatio": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "FOCUSWARDING": {
+    "parents": [
+      "FOCUSEXCAVATION",
+      "INFUSION"
+    ],
+    "aspects": {
+      "terra": 6,
+      "tutamen": 3,
+      "ordo": 3,
+      "cognitio": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "FOCUSSHOCK": {
+    "parents": [
+      "FOCUSFIRE"
+    ],
+    "aspects": {
+      "aer": 3,
+      "potentia": 6,
+      "praecantatio": 3
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "FOCUSTRADE": {
+    "parents": [
+      "FOCUSFIRE"
+    ],
+    "aspects": {
+      "terra": 3,
+      "permutatio": 6,
+      "praecantatio": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "FOCUSPORTABLEHOLE": {
+    "parents": [
+      "FOCUSTRADE",
+      "INFUSION"
+    ],
+    "aspects": {
+      "iter": 3,
+      "perditio": 3,
+      "alienis": 6,
+      "aer": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "FOCUSPOUCH": {
+    "parents": [
+      "FOCUSFIRE"
+    ],
+    "aspects": {
+      "vacuos": 6,
+      "praecantatio": 3,
+      "instrumentum": 3
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "CAP_GOLD": {
+    "parents": [
+      "BASICTHAUMATURGY"
+    ],
+    "aspects": {
+      "metallum": 3,
+      "lucrum": 3,
+      "instrumentum": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "CAP_COPPER": {
+    "parents": [
+      "BASICTHAUMATURGY"
+    ],
+    "aspects": {
+      "metallum": 3,
+      "permutatio": 3,
+      "instrumentum": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "CAP_THAUMIUM": {
+    "parents": [
+      "CAP_GOLD",
+      "THAUMIUM",
+      "INFUSION"
+    ],
+    "aspects": {
+      "metallum": 6,
+      "praecantatio": 6,
+      "instrumentum": 3,
+      "auram": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "CAP_SILVER": {
+    "parents": [
+      "CAP_GOLD",
+      "INFUSION"
+    ],
+    "aspects": {
+      "metallum": 3,
+      "lucrum": 3,
+      "instrumentum": 3,
+      "auram": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "ROD_GREATWOOD": {
+    "parents": [
+      "BASICTHAUMATURGY"
+    ],
+    "aspects": {
+      "instrumentum": 3,
+      "arbor": 6,
+      "praecantatio": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "ROD_REED": {
+    "parents": [
+      "ROD_GREATWOOD",
+      "INFUSION"
+    ],
+    "aspects": {
+      "instrumentum": 3,
+      "aer": 6,
+      "herba": 3,
+      "praecantatio": 3
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "ROD_BLAZE": {
+    "parents": [
+      "ROD_GREATWOOD",
+      "INFUSION"
+    ],
+    "aspects": {
+      "instrumentum": 3,
+      "ignis": 6,
+      "potentia": 3,
+      "praecantatio": 3
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "ROD_OBSIDIAN": {
+    "parents": [
+      "ROD_GREATWOOD",
+      "INFUSION"
+    ],
+    "aspects": {
+      "instrumentum": 3,
+      "terra": 6,
+      "ignis": 3,
+      "praecantatio": 3
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "ROD_ICE": {
+    "parents": [
+      "ROD_GREATWOOD",
+      "INFUSION"
+    ],
+    "aspects": {
+      "instrumentum": 3,
+      "gelum": 6,
+      "aqua": 3,
+      "praecantatio": 3
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "ROD_QUARTZ": {
+    "parents": [
+      "ROD_GREATWOOD",
+      "INFUSION"
+    ],
+    "aspects": {
+      "instrumentum": 3,
+      "ordo": 6,
+      "vitreus": 3,
+      "praecantatio": 3
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "ROD_BONE": {
+    "parents": [
+      "ROD_GREATWOOD",
+      "INFUSION"
+    ],
+    "aspects": {
+      "instrumentum": 3,
+      "perditio": 6,
+      "exanimis": 3,
+      "praecantatio": 3
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "ROD_SILVERWOOD": {
+    "parents": [
+      "ROD_GREATWOOD",
+      "INFUSION"
+    ],
+    "aspects": {
+      "instrumentum": 6,
+      "arbor": 6,
+      "praecantatio": 9
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "SCEPTRE": {
+    "parents": [
+      "ROD_SILVERWOOD"
+    ],
+    "aspects": {
+      "instrumentum": 6,
+      "fabrico": 6,
+      "arbor": 6,
+      "praecantatio": 9
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "ROD_GREATWOOD_STAFF": {
+    "parents": [
+      "ROD_SILVERWOOD"
+    ],
+    "aspects": {
+      "instrumentum": 3,
+      "arbor": 6,
+      "praecantatio": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "ROD_REED_STAFF": {
+    "parents": [
+      "ROD_REED"
+    ],
+    "aspects": {
+      "instrumentum": 3,
+      "aer": 6,
+      "herba": 3,
+      "praecantatio": 3
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "ROD_BLAZE_STAFF": {
+    "parents": [
+      "ROD_BLAZE"
+    ],
+    "aspects": {
+      "instrumentum": 3,
+      "ignis": 6,
+      "potentia": 3,
+      "praecantatio": 3
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "ROD_OBSIDIAN_STAFF": {
+    "parents": [
+      "ROD_OBSIDIAN"
+    ],
+    "aspects": {
+      "instrumentum": 3,
+      "terra": 6,
+      "ignis": 3,
+      "praecantatio": 3
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "ROD_ICE_STAFF": {
+    "parents": [
+      "ROD_ICE"
+    ],
+    "aspects": {
+      "instrumentum": 3,
+      "gelum": 6,
+      "aqua": 3,
+      "praecantatio": 3
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "ROD_QUARTZ_STAFF": {
+    "parents": [
+      "ROD_QUARTZ"
+    ],
+    "aspects": {
+      "instrumentum": 3,
+      "ordo": 6,
+      "vitreus": 3,
+      "praecantatio": 3
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "ROD_BONE_STAFF": {
+    "parents": [
+      "ROD_BONE"
+    ],
+    "aspects": {
+      "instrumentum": 3,
+      "perditio": 6,
+      "exanimis": 3,
+      "praecantatio": 3
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "ROD_SILVERWOOD_STAFF": {
+    "parents": [
+      "ROD_SILVERWOOD"
+    ],
+    "aspects": {
+      "instrumentum": 6,
+      "arbor": 6,
+      "praecantatio": 9
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "NODESTABILIZER": {
+    "parents": [
+      "NODEPRESERVE"
+    ],
+    "aspects": {
+      "auram": 4,
+      "ordo": 4,
+      "potentia": 4
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "NODESTABILIZERADV": {
+    "parents": [
+      "NODESTABILIZER"
+    ],
+    "aspects": {
+      "auram": 9,
+      "praecantatio": 6,
+      "ordo": 6,
+      "potentia": 6
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "VISPOWER": {
+    "parents": [
+      "NODESTABILIZER"
+    ],
+    "aspects": {
+      "auram": 3,
+      "machina": 3,
+      "potentia": 6
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "FOCALMANIPULATION": {
+    "parents": [
+      "VISPOWER"
+    ],
+    "aspects": {
+      "praecantatio": 8,
+      "instrumentum": 8,
+      "fabrico": 5,
+      "vitreus": 5,
+      "potentia": 5
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "VAMPBAT": {
+    "parents": [
+      "FOCUSHELLBAT"
+    ],
+    "aspects": {
+      "fames": 5,
+      "victus": 5,
+      "praecantatio": 5
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "WANDPED": {
+    "parents": [
+      "INFUSION",
+      "NODEPRESERVE",
+      "NODESTABILIZER"
+    ],
+    "aspects": {
+      "auram": 6,
+      "praecantatio": 3,
+      "permutatio": 3,
+      "potentia": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "VISAMULET": {
+    "parents": [
+      "WANDPED"
+    ],
+    "aspects": {
+      "auram": 3,
+      "praecantatio": 6,
+      "potentia": 3,
+      "vacuos": 3
+    },
+    "auto": false,
+    "secondary": false
+  },
+  "WANDPEDFOC": {
+    "parents": [
+      "WANDPED"
+    ],
+    "aspects": {
+      "auram": 6,
+      "praecantatio": 6,
+      "permutatio": 6,
+      "potentia": 3,
+      "instrumentum": 3
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "VISCHARGERELAY": {
+    "parents": [
+      "VISPOWER",
+      "WANDPED"
+    ],
+    "aspects": {
+      "praecantatio": 3,
+      "auram": 3,
+      "machina": 3,
+      "potentia": 6
+    },
+    "auto": false,
+    "secondary": true
+  },
+  "CAP_IRON": {
+    "parents": [],
+    "aspects": {},
+    "auto": true,
+    "secondary": false
+  },
+  "ROD_WOOD": {
+    "parents": [],
+    "aspects": {},
+    "auto": true,
+    "secondary": false
+  }
+}

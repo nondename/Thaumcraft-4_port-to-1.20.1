@@ -1,0 +1,17 @@
+{
+  "type": "thaumcraft:crucible",
+  "research": "CRUCIBLE",
+  "catalyst": {
+    "item": "thaumcraft:fire_shard"
+  },
+  "aspects": {
+    "aer": 2,
+    "aqua": 2,
+    "terra": 2,
+    "ordo": 2,
+    "perditio": 2
+  },
+  "result": {
+    "item": "thaumcraft:balanced_shard"
+  }
+}

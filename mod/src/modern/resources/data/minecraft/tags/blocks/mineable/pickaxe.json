@@ -10,6 +10,12 @@
     "thaumcraft:entropy_infused_stone",
     "thaumcraft:amber_ore",
     "thaumcraft:thaumium_block",
-    "thaumcraft:crucible"
+    "thaumcraft:crucible",
+    "thaumcraft:arcane_stone",
+    "thaumcraft:arcane_pedestal",
+    "thaumcraft:runic_matrix",
+    "thaumcraft:alchemy_furnace",
+    "thaumcraft:alembic",
+    "thaumcraft:warded_jar"
   ]
 }

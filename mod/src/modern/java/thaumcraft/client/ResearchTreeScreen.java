@@ -198,6 +198,7 @@ public final class ResearchTreeScreen extends Screen {
             }
             if (!isUnlocked(hovered)) {
                 lines.add(Component.translatable("tc.tree.locked").withStyle(net.minecraft.ChatFormatting.GRAY));
+                if(parentsUnlocked(hovered))lines.add(Component.translatable("tc.progress.start_hint"));
             }
             g.renderComponentTooltip(font, lines, mouseX, mouseY);
         } else {
@@ -271,6 +272,9 @@ public final class ResearchTreeScreen extends Screen {
     public boolean mouseReleased(double x, double y, int button) {
         if (dragging && button == 0) {
             dragging = false;
+            if (dragDistance < 4 && hovered != null && !isUnlocked(hovered) && parentsUnlocked(hovered)) {
+                thaumcraft.common.lib.network.ModNetwork.requestResearch(hovered.key());
+            }
             if (dragDistance < 4 && hovered != null && isUnlocked(hovered)) {
                 int chapter = switch (hovered.key()) {
                     case "BASICTHAUMATURGY", "THAUMONOMICON" -> 0;

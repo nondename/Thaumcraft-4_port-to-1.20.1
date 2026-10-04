@@ -1,0 +1,22 @@
+{
+  "type": "thaumcraft:arcane",
+  "research": "CAP_silver",
+  "pattern": [
+    "NNN",
+    "N N"
+  ],
+  "key": {
+    "N": {
+      "tag": "forge:nuggets/silver"
+    }
+  },
+  "cost": {
+    "ordo": 4,
+    "ignis": 4,
+    "aer": 4
+  },
+  "result": {
+    "item": "thaumcraft:wand_cap_silver_inert",
+    "count": 1
+  }
+}

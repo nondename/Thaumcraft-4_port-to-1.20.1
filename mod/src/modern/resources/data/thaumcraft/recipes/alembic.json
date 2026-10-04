@@ -1,0 +1,31 @@
+{
+  "type": "thaumcraft:arcane",
+  "research": "DISTILESSENTIA",
+  "pattern": [
+    "FIG",
+    "IBI",
+    "I I"
+  ],
+  "key": {
+    "F": {
+      "item": "thaumcraft:essentia_filter"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "B": {
+      "item": "minecraft:bucket"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    }
+  },
+  "cost": {
+    "aer": 5,
+    "aqua": 5
+  },
+  "result": {
+    "item": "thaumcraft:alembic",
+    "count": 1
+  }
+}

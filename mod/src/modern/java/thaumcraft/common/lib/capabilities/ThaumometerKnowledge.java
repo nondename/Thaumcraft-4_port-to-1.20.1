@@ -23,6 +23,14 @@ public final class ThaumometerKnowledge implements IThaumometerKnowledge {
     private final Set<String> scannedItems = new HashSet<>();
     private final Set<String> researchKeys = new HashSet<>();
     private final AspectList discoveredAspects = new AspectList();
+    private int permanentWarp,normalWarp,temporaryWarp;
+    @Override public int getWarp() {return permanentWarp+normalWarp;}
+    @Override public void addWarp(int permanent,int normal,int temporary) {
+        permanentWarp=Math.min(10000,permanentWarp+Math.max(0,permanent));
+        normalWarp=Math.min(10000,normalWarp+Math.max(0,normal));
+        temporaryWarp=Math.min(10000,temporaryWarp+Math.max(0,temporary));
+    }
+    @Override public void decayTemporaryWarp() {temporaryWarp=Math.max(0,temporaryWarp-1);}
 
     public ThaumometerKnowledge() {
         for (Aspect aspect : Aspect.getPrimalAspects()) {
@@ -119,6 +127,14 @@ public final class ThaumometerKnowledge implements IThaumometerKnowledge {
         return discoveredAspects.copy();
     }
 
+    @Override public boolean spendAspects(AspectList cost) {
+        for (Aspect aspect : cost.getAspects())
+            if (cost.getAmount(aspect) < 0 || getAspectPool(aspect) < cost.getAmount(aspect)) return false;
+        for (Aspect aspect : cost.getAspects())
+            discoveredAspects.aspects.put(aspect, getAspectPool(aspect) - cost.getAmount(aspect));
+        return true;
+    }
+
     /** Same pool costs and discovery bonus as PacketAspectCombinationToServer in the reference. */
     @Override
     public Aspect combine(Aspect first, Aspect second) {
@@ -171,6 +187,7 @@ public final class ThaumometerKnowledge implements IThaumometerKnowledge {
     @Override
     public CompoundTag serializeNBT() {
         CompoundTag tag = new CompoundTag();
+        tag.putInt("permanentWarp",permanentWarp);tag.putInt("normalWarp",normalWarp);tag.putInt("temporaryWarp",temporaryWarp);
         discoveredAspects.writeToNBT(tag, TAG_DISCOVERED_ASPECTS);
 
         ListTag items = new ListTag();
@@ -191,6 +208,7 @@ public final class ThaumometerKnowledge implements IThaumometerKnowledge {
 
     @Override
     public void deserializeNBT(CompoundTag tag) {
+        permanentWarp=Math.max(0,Math.min(10000,tag.getInt("permanentWarp")));normalWarp=Math.max(0,Math.min(10000,tag.getInt("normalWarp")));temporaryWarp=Math.max(0,Math.min(10000,tag.getInt("temporaryWarp")));
         scannedItems.clear();
         scannedEntities.clear();
         researchKeys.clear();

@@ -68,6 +68,15 @@ public final class ModOres {
                     thaumcraft.common.items.tools.ItemWand.addCreativeWands(output::accept);
                     output.accept(ModItems.THAUMONOMICON.get());
                     output.accept(thaumcraft.common.alchemy.ModAlchemy.CRUCIBLE_ITEM.get());
+                    output.accept(thaumcraft.common.alchemy.ModAlchemy.ALUMENTUM.get());
+                    output.accept(thaumcraft.common.alchemy.ModAlchemy.NITOR_ITEM.get());
+                    output.accept(thaumcraft.common.alchemy.ModAlchemy.BALANCED_SHARD.get());
+                    output.accept(thaumcraft.common.alchemy.ModAlchemy.SALIS_MUNDUS.get());
+                    output.accept(thaumcraft.common.research.EldritchProgression.BRAIN.get());
+                    for(var device:java.util.List.of(thaumcraft.common.infusion.ModInfusion.ARCANE_STONE_ITEM,thaumcraft.common.infusion.ModInfusion.PEDESTAL_ITEM,
+                            thaumcraft.common.infusion.ModInfusion.MATRIX_ITEM,thaumcraft.common.infusion.ModInfusion.FURNACE_ITEM,thaumcraft.common.infusion.ModInfusion.ALEMBIC_ITEM,
+                            thaumcraft.common.infusion.ModInfusion.JAR_ITEM,thaumcraft.common.infusion.ModInfusion.FILTER,thaumcraft.common.infusion.ModInfusion.GREATWOOD_PLANKS_ITEM,
+                            thaumcraft.common.infusion.ModInfusion.SILVERWOOD_PLANKS_ITEM))output.accept(device.get());
                     output.accept(thaumcraft.common.alchemy.ModAlchemy.VOID_SEED.get());
                     output.accept(thaumcraft.common.items.ModMetals.THAUMIUM_INGOT.get());
                     output.accept(thaumcraft.common.items.ModMetals.THAUMIUM_NUGGET.get());

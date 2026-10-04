@@ -12,7 +12,7 @@ import net.minecraftforge.registries.RegistryObject;
 import thaumcraft.api.aspects.*;
 import thaumcraft.common.crafting.ModRecipes;
 
-public record CrucibleRecipe(ResourceLocation id, Ingredient catalyst, AspectList cost, ItemStack result) implements Recipe<SimpleContainer> {
+public record CrucibleRecipe(ResourceLocation id, Ingredient catalyst, AspectList cost, ItemStack result, String research) implements Recipe<SimpleContainer> {
     public static final RegistryObject<RecipeType<CrucibleRecipe>> TYPE = ModRecipes.RECIPE_TYPES.register("crucible", () -> RecipeType.simple(ResourceLocation.fromNamespaceAndPath("thaumcraft", "crucible")));
     public static final RegistryObject<RecipeSerializer<CrucibleRecipe>> SERIALIZER = ModRecipes.SERIALIZERS.register("crucible", Serializer::new);
     public static void init() {}
@@ -38,14 +38,14 @@ public record CrucibleRecipe(ResourceLocation id, Ingredient catalyst, AspectLis
                 cost.add(aspect, amount);
             });
             if (cost.size() == 0) throw new IllegalArgumentException("Empty crucible cost");
-            return new CrucibleRecipe(id, Ingredient.fromJson(json.get("catalyst")), cost, ShapedRecipe.itemStackFromJson(json.getAsJsonObject("result")));
+            return new CrucibleRecipe(id, Ingredient.fromJson(json.get("catalyst")), cost, ShapedRecipe.itemStackFromJson(json.getAsJsonObject("result")), net.minecraft.util.GsonHelper.getAsString(json,"research",""));
         }
         @Override public CrucibleRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buffer) {
             Ingredient ingredient = Ingredient.fromNetwork(buffer); AspectList cost = new AspectList(); cost.readFromNBT(buffer.readNbt());
-            return new CrucibleRecipe(id, ingredient, cost, buffer.readItem());
+            return new CrucibleRecipe(id, ingredient, cost, buffer.readItem(),buffer.readUtf(128));
         }
         @Override public void toNetwork(FriendlyByteBuf buffer, CrucibleRecipe recipe) {
-            recipe.catalyst.toNetwork(buffer); var tag = new net.minecraft.nbt.CompoundTag(); recipe.cost.writeToNBT(tag); buffer.writeNbt(tag); buffer.writeItem(recipe.result);
+            recipe.catalyst.toNetwork(buffer); var tag = new net.minecraft.nbt.CompoundTag(); recipe.cost.writeToNBT(tag); buffer.writeNbt(tag); buffer.writeItem(recipe.result); buffer.writeUtf(recipe.research,128);
         }
     }
 }

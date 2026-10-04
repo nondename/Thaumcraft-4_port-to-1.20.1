@@ -1,0 +1,23 @@
+{
+  "type": "thaumcraft:arcane",
+  "research": "DISTILESSENTIA",
+  "pattern": [
+    "GWG"
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "W": {
+      "item": "thaumcraft:silverwood_planks"
+    }
+  },
+  "cost": {
+    "ordo": 5,
+    "aqua": 5
+  },
+  "result": {
+    "item": "thaumcraft:essentia_filter",
+    "count": 2
+  }
+}

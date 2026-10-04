@@ -28,10 +28,7 @@ import thaumcraft.common.items.tools.ItemWand;
  *
  * <p>Documented deviations:
  * <ul>
- *   <li>the original {@code matches} also required ResearchManager completion per part
- *       ({@code CAP_*}/{@code ROD_*} keys, lines 132-151); the 1.20.1
- *       {@code Recipe.matches} has no player and research completion in this port is
- *       command-only, so the gate ships disabled (see {@link #RESEARCH_GATES});</li>
+ *   <li>CAP_* and ROD_* research is enforced by the server workbench menu via ModRecipes.isKnown.</li>
  *   <li>the wood-rod + iron-cap exclusion lives in {@code assemble} exactly where the
  *       original had it (getCraftingResult line 54) — {@code matches} still succeeds for
  *       that grid, so in the arcane workbench the plain {@code wand.json} recipe previews
@@ -41,8 +38,8 @@ import thaumcraft.common.items.tools.ItemWand;
  * </ul>
  */
 public final class ArcaneWandRecipe implements Recipe<CraftingContainer> {
-    /** See class javadoc: per-part research gate parsed nowhere (recipe has no json fields). */
-    public static final boolean RESEARCH_GATES = false;
+    /** Per-part research is checked in the server menu. */
+    public static final boolean RESEARCH_GATES = true;
 
     private final ResourceLocation id;
 

@@ -41,6 +41,21 @@ public final class ModRecipes {
         SERIALIZERS.register(bus);
     }
 
+    public static boolean isKnown(net.minecraft.world.entity.player.Player player,
+                                 net.minecraft.world.item.crafting.Recipe<?> recipe, CraftingContainer grid) {
+        if (recipe instanceof ArcaneRecipe arcane)
+            return thaumcraft.common.research.ResearchProgression.has(player,arcane.getResearch());
+        if (recipe instanceof ArcaneWandRecipe wandRecipe) {
+            var wand=wandRecipe.assemble(grid,player.level().registryAccess());
+            if(wand.isEmpty())return false;
+            var cap=thaumcraft.common.items.tools.ItemWand.getCap(wand);
+            var rod=thaumcraft.common.items.tools.ItemWand.getRod(wand);
+            return (cap.getTag().equals("iron") || thaumcraft.common.research.ResearchProgression.has(player,"CAP_"+cap.getTag()))
+                    && (rod.getTag().equals("wood") || thaumcraft.common.research.ResearchProgression.has(player,"ROD_"+rod.getTag()));
+        }
+        return true;
+    }
+
     /**
      * Vanilla-first result — original ContainerArcaneWorkbench#onCraftMatrixChanged line 52
      * (a vanilla recipe always wins the preview over an arcane one).

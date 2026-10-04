@@ -17,10 +17,11 @@ import thaumcraft.common.blocks.ModOres;
 import thaumcraft.common.items.ModItems;
 
 public final class ModResearch {
+    public static final RegistryObject<Item> NOTES = ModItems.ITEMS.register("research_notes", () -> new ResearchNotes(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Block> TABLE = ModOres.BLOCKS.register("table", () ->
             new ResearchTableBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).strength(2).noOcclusion()));
     public static final RegistryObject<Item> TABLE_ITEM = ModItems.ITEMS.register("table", () -> new BlockItem(TABLE.get(), new Item.Properties()));
-    public static final RegistryObject<Item> PHIAL = ModItems.ITEMS.register("phial", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> PHIAL = ModItems.ITEMS.register("phial", () -> new EssentiaPhial(new Item.Properties()));
     public static final RegistryObject<Item> SCRIBING_TOOLS = ModItems.ITEMS.register("scribing_tools", () -> new Item(new Item.Properties().durability(100)));
     private static final DeferredRegister<BlockEntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, Thaumcraft.MODID);
     private static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(ForgeRegistries.MENU_TYPES, Thaumcraft.MODID);
@@ -29,6 +30,6 @@ public final class ModResearch {
     public static final RegistryObject<MenuType<ResearchMenu>> MENU = MENUS.register("research", () ->
             new MenuType<>(ResearchMenu::new, FeatureFlags.DEFAULT_FLAGS));
 
-    public static void register(IEventBus bus) { ENTITIES.register(bus); MENUS.register(bus); }
+    public static void register(IEventBus bus) { EldritchProgression.init();ENTITIES.register(bus); MENUS.register(bus); }
     private ModResearch() {}
 }

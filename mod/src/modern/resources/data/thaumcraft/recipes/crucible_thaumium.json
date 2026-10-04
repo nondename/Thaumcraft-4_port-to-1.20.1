@@ -8,5 +8,6 @@
   "type": "thaumcraft:crucible",
   "catalyst": {
     "item": "minecraft:iron_ingot"
-  }
+  },
+  "research": "THAUMIUM"
 }
