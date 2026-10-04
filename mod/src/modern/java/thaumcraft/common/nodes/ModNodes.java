@@ -23,7 +23,8 @@ public final class ModNodes {
             new AuraNodeBlock(BlockBehaviour.Properties.copy(Blocks.GLASS)
                     .noCollission()
                     .noOcclusion()
-                    .strength(-1.0F, 3600000.0F)));
+                    .strength(2.0F, 200.0F)
+                    .lightLevel(state -> 8)));
 
     /**
      * TC4 exposes exactly one metadata-0 BlockAiry item in its creative tab. Placing it creates

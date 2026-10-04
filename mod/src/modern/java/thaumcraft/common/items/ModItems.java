@@ -20,6 +20,11 @@ public final class ModItems {
             () -> new ItemThaumometer(new Item.Properties().stacksTo(1))
     );
 
+    public static final RegistryObject<Item> WISP_ESSENCE = ITEMS.register(
+            "wisp_essence",
+            () -> new ItemWispEssence(new Item.Properties())
+    );
+
     // TC4 wand caps live under their original texture ids (see ModWandParts); the iron cap
     // was renamed from "iron_wand_cap" to "wand_cap_iron" together with its family.
     public static final RegistryObject<Item> WAND = ITEMS.register("wand",

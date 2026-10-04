@@ -30,5 +30,11 @@
       "thaumcraft:zap1",
       "thaumcraft:zap2"
     ]
+  },
+  "craftfail": {
+    "category": "master",
+    "sounds": [
+      "thaumcraft:wand1"
+    ]
   }
 }

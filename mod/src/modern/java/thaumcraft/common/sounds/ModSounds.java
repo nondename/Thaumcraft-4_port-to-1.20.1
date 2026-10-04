@@ -17,6 +17,7 @@ public final class ModSounds {
     public static final RegistryObject<SoundEvent> CAMERA_TICKS = register("cameraticks");
     public static final RegistryObject<SoundEvent> CAMERA_CLACK = register("cameraclack");
     public static final RegistryObject<SoundEvent> ZAP = register("zap");
+    public static final RegistryObject<SoundEvent> CRAFT_FAIL = register("craftfail");
 
     private ModSounds() {
     }
