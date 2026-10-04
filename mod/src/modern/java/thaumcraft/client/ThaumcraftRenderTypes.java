@@ -17,12 +17,17 @@ import thaumcraft.Thaumcraft;
 public final class ThaumcraftRenderTypes extends RenderType {
     private static final ResourceLocation NODE_TEXTURE =
             ResourceLocation.fromNamespaceAndPath(Thaumcraft.MODID, "textures/misc/nodes.png");
+    private static final ResourceLocation NODE_LIGHTNING_LARGE_TEXTURE =
+            ResourceLocation.fromNamespaceAndPath(Thaumcraft.MODID, "textures/misc/p_large.png");
+    private static final ResourceLocation NODE_LIGHTNING_SMALL_TEXTURE =
+            ResourceLocation.fromNamespaceAndPath(Thaumcraft.MODID, "textures/misc/p_small.png");
 
     private static final RenderType NODE_ADDITIVE = nodeType("node_additive", true, false);
     private static final RenderType NODE_ADDITIVE_SEE_THROUGH = nodeType("node_additive_see_through", true, true);
     private static final RenderType NODE_TRANSLUCENT = nodeType("node_translucent", false, false);
     private static final RenderType NODE_TRANSLUCENT_SEE_THROUGH = nodeType("node_translucent_see_through", false, true);
 
+    // Kept for compatibility with any older call sites that still submit POSITION_COLOR vertices.
     private static final RenderType NODE_LIGHTNING = create(
             Thaumcraft.MODID + ":node_lightning",
             DefaultVertexFormat.POSITION_COLOR,
@@ -39,6 +44,12 @@ public final class ThaumcraftRenderTypes extends RenderType {
                     .setOutputState(TRANSLUCENT_TARGET)
                     .createCompositeState(false)
     );
+
+    // TC4 renders every bolt twice: p_large.png in dark purple and p_small.png in pink-white.
+    private static final RenderType NODE_LIGHTNING_LARGE =
+            nodeLightningType("node_lightning_large", NODE_LIGHTNING_LARGE_TEXTURE);
+    private static final RenderType NODE_LIGHTNING_SMALL =
+            nodeLightningType("node_lightning_small", NODE_LIGHTNING_SMALL_TEXTURE);
 
     private ThaumcraftRenderTypes(String name, VertexFormat format, VertexFormat.Mode mode, int bufferSize,
                                   boolean affectsCrumbling, boolean sortOnUpload,
@@ -68,6 +79,28 @@ public final class ThaumcraftRenderTypes extends RenderType {
         );
     }
 
+    private static RenderType nodeLightningType(String name, ResourceLocation texture) {
+        return create(
+                Thaumcraft.MODID + ":" + name,
+                DefaultVertexFormat.NEW_ENTITY,
+                VertexFormat.Mode.QUADS,
+                512,
+                false,
+                true,
+                CompositeState.builder()
+                        .setShaderState(RENDERTYPE_ENTITY_TRANSLUCENT_SHADER)
+                        .setTextureState(new TextureStateShard(texture, false, false))
+                        .setTransparencyState(ADDITIVE_TRANSPARENCY)
+                        .setDepthTestState(LEQUAL_DEPTH_TEST)
+                        .setCullState(NO_CULL)
+                        .setLightmapState(LIGHTMAP)
+                        .setOverlayState(OVERLAY)
+                        .setWriteMaskState(COLOR_WRITE)
+                        .setOutputState(TRANSLUCENT_TARGET)
+                        .createCompositeState(false)
+        );
+    }
+
     public static RenderType node(boolean additive, boolean seeThrough) {
         if (additive) {
             return seeThrough ? NODE_ADDITIVE_SEE_THROUGH : NODE_ADDITIVE;
@@ -77,5 +110,9 @@ public final class ThaumcraftRenderTypes extends RenderType {
 
     public static RenderType nodeLightning() {
         return NODE_LIGHTNING;
+    }
+
+    public static RenderType nodeLightning(boolean innerPass) {
+        return innerPass ? NODE_LIGHTNING_SMALL : NODE_LIGHTNING_LARGE;
     }
 }
