@@ -16,6 +16,8 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import thaumcraft.Thaumcraft;
 import thaumcraft.common.blocks.ModMagicalTrees;
+import thaumcraft.common.nodes.AuraNodeBlockEntity;
+import thaumcraft.common.nodes.ModNodes;
 
 /**
  * Procedural ports of TC4 WorldGenGreatwoodTrees and WorldGenSilverwoodTrees.
@@ -135,9 +137,29 @@ public final class MagicalTreeFeature extends Feature<NoneFeatureConfiguration> 
             }
         }
 
-        // Cross-shaped TC4 trunk.
+        // Cross-shaped TC4 trunk. The centre occasionally becomes metadata-2 silverwood-knot,
+        // which contains a real PURE aura node. The original chance starts at height*1.5 and gets
+        // less likely after each knot, while never placing knots in adjacent Y levels.
+        int nodeChance = Math.max(1, (int) (height * 1.5F));
+        boolean lastWasNode = false;
         for (int y = 0; y < height; y++) {
-            setLog(level, origin.offset(0, y, 0), log, Direction.Axis.Y);
+            BlockPos center = origin.offset(0, y, 0);
+            boolean makeNode = y > 0 && !lastWasNode && random.nextInt(nodeChance) == 0;
+            if (makeNode) {
+                BlockState knot = ModNodes.SILVERWOOD_NODE_LOG.get().defaultBlockState()
+                        .setValue(RotatedPillarBlock.AXIS, Direction.Axis.Y);
+                level.setBlock(center, knot, 2);
+                if (level.getBlockEntity(center) instanceof AuraNodeBlockEntity node) {
+                    var generated = AuraNodeGenerator.generate(level, center, random, true, false, false);
+                    node.initialize(generated.type(), generated.modifier(), generated.aspects());
+                }
+                nodeChance += height;
+                lastWasNode = true;
+            } else {
+                setLog(level, center, log, Direction.Axis.Y);
+                lastWasNode = false;
+            }
+
             setLog(level, origin.offset(-1, y, 0), log, Direction.Axis.Y);
             setLog(level, origin.offset(1, y, 0), log, Direction.Axis.Y);
             setLog(level, origin.offset(0, y, -1), log, Direction.Axis.Y);
@@ -170,10 +192,6 @@ public final class MagicalTreeFeature extends Feature<NoneFeatureConfiguration> 
         setLog(level, origin.offset(2, height - 4, 0), log, Direction.Axis.X);
         setLog(level, origin.offset(0, height - 4, -2), log, Direction.Axis.Z);
         setLog(level, origin.offset(0, height - 4, 2), log, Direction.Axis.Z);
-
-        // The original sometimes embeds a PURE aura node inside a special silverwood-knot log.
-        // The modern port deliberately leaves that for SilverwoodNodeLog, so we do not replace a
-        // visible trunk block with the current invisible airy-node carrier.
         return true;
     }
 
