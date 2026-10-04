@@ -519,6 +519,8 @@ public final class ItemWand extends Item {
         if (player == null) {
             return InteractionResult.PASS;
         }
+        InteractionResult crucible = thaumcraft.common.alchemy.CrucibleBlock.tryConvert(context);
+        if (crucible != InteractionResult.PASS) return crucible;
         // 1) Plain-table -> arcane worktable conversion. Original: onItemUseFirst checks
         //    block IWandable first (BlockTable#onWandRightClick, md<=1); the modern mapping
         //    of the plain table is the research table in its lone PART==0 state.

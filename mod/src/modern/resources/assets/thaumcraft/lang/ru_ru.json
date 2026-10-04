@@ -864,5 +864,9 @@
   "item.thaumcraft.thaumium_nugget": "Самородок таумия",
   "item.thaumcraft.void_ingot": "Слиток пустотного металла",
   "item.thaumcraft.thaumium_ingot": "Слиток таумия",
-  "block.thaumcraft.thaumium_block": "Блок таумия"
+  "block.thaumcraft.thaumium_block": "Блок таумия",
+  "block.thaumcraft.crucible": "Тигель",
+  "item.thaumcraft.void_seed": "Семя пустоты",
+  "tc.crucible.boiling": "Кипит",
+  "tc.crucible.cold": "Не кипит"
 }

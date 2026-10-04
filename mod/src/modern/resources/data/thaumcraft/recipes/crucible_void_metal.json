@@ -1,0 +1,12 @@
+{
+  "aspects": {
+    "metallum": 8
+  },
+  "result": {
+    "item": "thaumcraft:void_ingot"
+  },
+  "type": "thaumcraft:crucible",
+  "catalyst": {
+    "item": "thaumcraft:void_seed"
+  }
+}

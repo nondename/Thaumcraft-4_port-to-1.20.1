@@ -67,6 +67,8 @@ public final class ModOres {
                 .displayItems((parameters, output) -> {
                     thaumcraft.common.items.tools.ItemWand.addCreativeWands(output::accept);
                     output.accept(ModItems.THAUMONOMICON.get());
+                    output.accept(thaumcraft.common.alchemy.ModAlchemy.CRUCIBLE_ITEM.get());
+                    output.accept(thaumcraft.common.alchemy.ModAlchemy.VOID_SEED.get());
                     output.accept(thaumcraft.common.items.ModMetals.THAUMIUM_INGOT.get());
                     output.accept(thaumcraft.common.items.ModMetals.THAUMIUM_NUGGET.get());
                     output.accept(thaumcraft.common.items.ModMetals.THAUMIUM_BLOCK_ITEM.get());

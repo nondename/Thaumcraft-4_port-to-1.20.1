@@ -1,0 +1,14 @@
+{
+  "aspects": {
+    "vacuos": 8,
+    "tenebrae": 8,
+    "alienis": 2
+  },
+  "result": {
+    "item": "thaumcraft:void_seed"
+  },
+  "type": "thaumcraft:crucible",
+  "catalyst": {
+    "item": "minecraft:ender_pearl"
+  }
+}
