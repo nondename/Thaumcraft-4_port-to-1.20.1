@@ -17,6 +17,8 @@
 
 ## Активные заявки
 
+- **Survival 1–4 — Codex (2026-10-05), пользователь включил инфузию:** common/research/** (заметки/серверное завершение), capabilities IThaumometerKnowledge/ThaumometerKnowledge (расход очков), ModNetwork (новый C2S), client ResearchTreeScreen/ResearchScreen/ResearchEntryScreen; common/alchemy/** (исследовательские условия, нитор/алюментум), common/crafting/** и ArcaneWorkbenchMenu.java (условия/рецепты деталей), новый common/infusion/**; регистрация Thaumcraft.java/ModOres.java; ConfigAspects.initModItems, новые ресурсы/рецепты и только свои lang ключи, новые GameTest и docs/SURVIVAL_PROGRESSION.md. Пересечение со старыми claims знаний — явное поручение пользователя; сканер/генерацию мира не меняю. Пункты 5/6 отложены.
+
 - ~~**Флюкс тигля — Codex (2026-10-05): common/alchemy/{ModAlchemy,CrucibleEntity,FluxBlock,FluxSpill}.java, новые ресурсы flux_gas/flux_goo, lang (только флюкс), новый FluxTests.java, docs/CRUCIBLE_SLICE.md.**~~ Готово: выброс газа/жидкого флюкса при очистке, разрушении и переполнении; конечные объёмы, движение и оригинальные PNG. build + 28 GameTest прошли. Полный taint/мобы/Vis Exhaustion отдельный этап; ограничения в CRUCIBLE_SLICE.md.
 
 - ~~**Внешний вид тигля — Codex (2026-10-04): models/block/crucible*.json, client/CrucibleClient.java, новый client/CrucibleRenderer.java, docs/CRUCIBLE_SLICE.md.**~~ Готово: оригинальные PNG по назначению, закрытое дно/внутренние стенки, cutout-корпус отдельно от прозрачной воды, точный уровень/окраска воды. build прошла; визуальная проверка пользователем. Таумономикон следующим этапом.
