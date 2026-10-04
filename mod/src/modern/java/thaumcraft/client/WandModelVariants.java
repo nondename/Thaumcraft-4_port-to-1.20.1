@@ -27,6 +27,9 @@ public final class WandModelVariants {
                     int cap = CAPS.indexOf(ItemWand.getCap(stack).getTag());
                     return rod < 0 || cap < 0 ? 0 : (rod * CAPS.size() + cap) / 64.0F;
                 }));
+        event.enqueueWork(() -> ItemProperties.register(ModItems.WAND.get(),
+                ResourceLocation.fromNamespaceAndPath(Thaumcraft.MODID, "sceptre"),
+                (stack, level, entity, seed) -> ItemWand.isSceptre(stack) ? 1 : 0));
     }
 
     private WandModelVariants() {}

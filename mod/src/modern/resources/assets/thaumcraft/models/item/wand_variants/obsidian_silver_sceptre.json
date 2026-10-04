@@ -1,0 +1,8 @@
+{
+  "parent": "thaumcraft:item/wand_sceptre_base",
+  "textures": {
+    "particle": "thaumcraft:models/wand_rod_obsidian",
+    "rod": "thaumcraft:models/wand_rod_obsidian",
+    "cap": "thaumcraft:models/wand_cap_silver"
+  }
+}

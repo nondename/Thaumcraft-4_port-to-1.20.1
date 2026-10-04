@@ -22,11 +22,34 @@ public final class ResearchMenu extends AbstractContainerMenu {
         this.access = access;
         first.set(-1); second.set(-1); result.set(-1);
         addDataSlot(first); addDataSlot(second); addDataSlot(result);
+        net.minecraft.world.Container tools = access.evaluate((level, pos) ->
+                level.getBlockEntity(pos) instanceof ResearchTableEntity table
+                        ? (net.minecraft.world.Container) table : new net.minecraft.world.SimpleContainer(1),
+                new net.minecraft.world.SimpleContainer(1));
+        addSlot(new net.minecraft.world.inventory.Slot(tools, 0, 14, 10) {
+            @Override public boolean mayPlace(ItemStack stack) { return stack.is(ModResearch.SCRIBING_TOOLS.get()); }
+            @Override public int getMaxStackSize() { return 1; }
+        });
+        for (int row = 0; row < 3; row++) for (int col = 0; col < 9; col++)
+            addSlot(new net.minecraft.world.inventory.Slot(inventory, col + row * 9 + 9, 48 + col * 18, 175 + row * 18));
+        for (int col = 0; col < 9; col++)
+            addSlot(new net.minecraft.world.inventory.Slot(inventory, col, 48 + col * 18, 233));
     }
     public int first() { return first.get(); }
     public int second() { return second.get(); }
     public int result() { return result.get(); }
-    @Override public ItemStack quickMoveStack(Player player, int slot) { return ItemStack.EMPTY; }
+    @Override public ItemStack quickMoveStack(Player player, int index) {
+        if (index < 0 || index >= slots.size()) return ItemStack.EMPTY;
+        var slot = slots.get(index);
+        if (!slot.hasItem()) return ItemStack.EMPTY;
+        ItemStack stack = slot.getItem(), copy = stack.copy();
+        boolean moved = index == 0 ? moveItemStackTo(stack, 1, 37, true)
+                : stack.is(ModResearch.SCRIBING_TOOLS.get()) && moveItemStackTo(stack, 0, 1, false);
+        if (!moved) return ItemStack.EMPTY;
+        if (stack.isEmpty()) slot.set(ItemStack.EMPTY); else slot.setChanged();
+        slot.onTake(player, stack);
+        return copy;
+    }
     @Override public boolean stillValid(Player player) {
         return access.evaluate((level, pos) -> ResearchTableBlock.isComplete(level, pos)
                 && player.distanceToSqr(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5) <= 64, true);

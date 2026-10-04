@@ -37,7 +37,24 @@ public final class ResearchTableBlock extends BaseEntityBlock {
     @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) { builder.add(FACING, PART); }
     @Override public BlockEntity newBlockEntity(BlockPos pos, BlockState state) { return new ResearchTableEntity(pos, state); }
     @Override public RenderShape getRenderShape(BlockState state) { return RenderShape.MODEL; }
-    @Override public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) { return SHAPE; }
+    @Override public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        int part = state.getValue(PART);
+        VoxelShape shape = part == 0 ? SHAPE : Shapes.or(box(0, 12, 0, 16, 16, 16),
+                part == 1 ? box(4, 2, 6, 16, 6, 10) : box(0, 2, 6, 12, 6, 10),
+                part == 1 ? box(2, 0, 2, 6, 12, 6) : box(10, 0, 2, 14, 12, 6),
+                part == 1 ? box(2, 0, 10, 6, 12, 14) : box(10, 0, 10, 14, 12, 14));
+        int turns = switch (state.getValue(FACING)) { case SOUTH -> 1; case WEST -> 2; case NORTH -> 3; default -> 0; };
+        for (int i = 0; i < turns; i++) {
+            VoxelShape[] rotated = {Shapes.empty()};
+            shape.forAllBoxes((x1, y1, z1, x2, y2, z2) -> rotated[0] = Shapes.or(rotated[0],
+                    Shapes.box(1 - z2, y1, x1, 1 - z1, y2, x2)));
+            shape = rotated[0];
+        }
+        return shape;
+    }
+    @Override public BlockState getStateForPlacement(net.minecraft.world.item.context.BlockPlaceContext context) {
+        return defaultBlockState().setValue(FACING, context.getHorizontalDirection());
+    }
 
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
@@ -70,7 +87,7 @@ public final class ResearchTableBlock extends BaseEntityBlock {
         if (!state.is(ModResearch.TABLE.get()) || state.getValue(PART) != 1) return false;
         var other = level.getBlockState(primary.relative(state.getValue(FACING)));
         return other.is(ModResearch.TABLE.get()) && other.getValue(PART) == 2 && other.getValue(FACING) == state.getValue(FACING)
-                && level.getBlockEntity(primary) instanceof ResearchTableEntity table && table.hasTools();
+                && level.getBlockEntity(primary) instanceof ResearchTableEntity;
     }
 
     @Override

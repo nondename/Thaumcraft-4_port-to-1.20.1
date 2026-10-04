@@ -1,17 +1,52 @@
 {
-  "multipart": [
-    {
-      "apply": {
-        "model": "thaumcraft:block/table"
-      }
+  "variants": {
+    "facing=east,part=0": {
+      "y": 0,
+      "model": "thaumcraft:block/table"
     },
-    {
-      "when": {
-        "part": "1"
-      },
-      "apply": {
-        "model": "thaumcraft:block/table_quill"
-      }
+    "facing=west,part=0": {
+      "y": 180,
+      "model": "thaumcraft:block/table"
+    },
+    "facing=west,part=1": {
+      "y": 180,
+      "model": "thaumcraft:block/research_table_primary"
+    },
+    "facing=south,part=0": {
+      "y": 90,
+      "model": "thaumcraft:block/table"
+    },
+    "facing=north,part=1": {
+      "y": 270,
+      "model": "thaumcraft:block/research_table_primary"
+    },
+    "facing=east,part=2": {
+      "y": 0,
+      "model": "thaumcraft:block/research_table_secondary"
+    },
+    "facing=south,part=2": {
+      "y": 90,
+      "model": "thaumcraft:block/research_table_secondary"
+    },
+    "facing=west,part=2": {
+      "y": 180,
+      "model": "thaumcraft:block/research_table_secondary"
+    },
+    "facing=south,part=1": {
+      "y": 90,
+      "model": "thaumcraft:block/research_table_primary"
+    },
+    "facing=north,part=2": {
+      "y": 270,
+      "model": "thaumcraft:block/research_table_secondary"
+    },
+    "facing=east,part=1": {
+      "y": 0,
+      "model": "thaumcraft:block/research_table_primary"
+    },
+    "facing=north,part=0": {
+      "y": 270,
+      "model": "thaumcraft:block/table"
     }
-  ]
+  }
 }

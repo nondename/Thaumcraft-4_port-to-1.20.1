@@ -1,0 +1,7 @@
+{
+  "elements": [],
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "thaumcraft:block/research_table"
+  }
+}

@@ -17,7 +17,7 @@
 
 ## Активные заявки
 
-- **Creative и стол исследований — Codex (2026-10-04): ModOres.java (наконечники/иконка), models/item/wand_base.json, common/research/ResearchTableBlock.java и ResearchMenu.java, client/ResearchScreen.java, blockstates/table.json, новые models/block/research_table_*.json, textures/block/research_table.png и textures/gui/guiresearchtable2.png, новый GameTest и docs/WAND_AUDIT.md.** По скринам пользователя: 6 базовых наконечников, наклон жезла, оригинальный двухблочный стол и GUI; общие knowledge-файлы другого агента не трогаю.
+- ~~**Creative и стол исследований — Codex (2026-10-04): ModOres.java (наконечники/иконка), client/WandModelVariants.java, models/item/wand*.json и wand_variants/*_sceptre.json, ResearchTableEntity.java, models/item/wand_base.json, common/research/ResearchTableBlock.java и ResearchMenu.java, client/ResearchScreen.java, blockstates/table.json, новые models/block/research_table_*.json, textures/block/research_table.png и textures/gui/guiresearchtable2.png, новый GameTest и docs/WAND_AUDIT.md.**~~ По скринам пользователя: 6 базовых наконечников, наклон жезла, оригинальный двухблочный стол и GUI; общие knowledge-файлы другого агента не трогаю. Готово: 6 базовых caps, GUI наклон +45°, отдельный скипетр, двухблочная модель, оригинальный GUI, инструменты/инвентарь и ориентация. build и 21 GameTest прошли; неперенесённая головоломка записана в docs/WAND_AUDIT.md.
 
 
 - ~~**Iron Cap — Codex (2026-10-04): textures/item/wand_cap_iron.png, docs/WAND_AUDIT.md.**~~ Восстановление оригинальной предметной иконки; старая иконка стартового слайса отличается от TC4.

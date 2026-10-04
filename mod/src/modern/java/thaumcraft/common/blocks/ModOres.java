@@ -63,7 +63,7 @@ public final class ModOres {
         }
         TABS.register("thaumcraft", () -> CreativeModeTab.builder()
                 .title(Component.translatable("itemGroup.thaumcraft"))
-                .icon(() -> new ItemStack(ModItems.THAUMOMETER.get()))
+                .icon(() -> new ItemStack(ModItems.WAND.get()))
                 .displayItems((parameters, output) -> {
                     thaumcraft.common.items.tools.ItemWand.addCreativeWands(output::accept);
                     output.accept(ModItems.THAUMONOMICON.get());
@@ -72,9 +72,6 @@ public final class ModOres {
                     output.accept(thaumcraft.common.items.wands.ModWandParts.CAP_IRON.get());
                     output.accept(thaumcraft.common.items.wands.ModWandParts.CAP_GOLD.get());
                     output.accept(thaumcraft.common.items.wands.ModWandParts.CAP_THAUMIUM.get());
-                    output.accept(thaumcraft.common.items.wands.ModWandParts.CAP_COPPER.get());
-                    output.accept(thaumcraft.common.items.wands.ModWandParts.CAP_SILVER.get());
-                    output.accept(thaumcraft.common.items.wands.ModWandParts.CAP_SILVER_INERT.get());
                     output.accept(thaumcraft.common.items.wands.ModWandParts.CAP_THAUMIUM_INERT.get());
                     output.accept(thaumcraft.common.items.wands.ModWandParts.CAP_VOID.get());
                     output.accept(thaumcraft.common.items.wands.ModWandParts.CAP_VOID_INERT.get());

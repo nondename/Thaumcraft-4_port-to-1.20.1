@@ -8,10 +8,24 @@
       "model": "thaumcraft:item/wand_variants/wood_iron"
     },
     {
+      "model": "thaumcraft:item/wand_variants/wood_iron_sceptre",
+      "predicate": {
+        "thaumcraft:sceptre": 1,
+        "thaumcraft:parts": 0.0
+      }
+    },
+    {
       "predicate": {
         "thaumcraft:parts": 0.015625
       },
       "model": "thaumcraft:item/wand_variants/wood_gold"
+    },
+    {
+      "model": "thaumcraft:item/wand_variants/wood_gold_sceptre",
+      "predicate": {
+        "thaumcraft:sceptre": 1,
+        "thaumcraft:parts": 0.015625
+      }
     },
     {
       "predicate": {
@@ -20,10 +34,24 @@
       "model": "thaumcraft:item/wand_variants/wood_thaumium"
     },
     {
+      "model": "thaumcraft:item/wand_variants/wood_thaumium_sceptre",
+      "predicate": {
+        "thaumcraft:sceptre": 1,
+        "thaumcraft:parts": 0.03125
+      }
+    },
+    {
       "predicate": {
         "thaumcraft:parts": 0.046875
       },
       "model": "thaumcraft:item/wand_variants/wood_void"
+    },
+    {
+      "model": "thaumcraft:item/wand_variants/wood_void_sceptre",
+      "predicate": {
+        "thaumcraft:sceptre": 1,
+        "thaumcraft:parts": 0.046875
+      }
     },
     {
       "predicate": {
@@ -32,10 +60,24 @@
       "model": "thaumcraft:item/wand_variants/wood_copper"
     },
     {
+      "model": "thaumcraft:item/wand_variants/wood_copper_sceptre",
+      "predicate": {
+        "thaumcraft:sceptre": 1,
+        "thaumcraft:parts": 0.0625
+      }
+    },
+    {
       "predicate": {
         "thaumcraft:parts": 0.078125
       },
       "model": "thaumcraft:item/wand_variants/wood_silver"
+    },
+    {
+      "model": "thaumcraft:item/wand_variants/wood_silver_sceptre",
+      "predicate": {
+        "thaumcraft:sceptre": 1,
+        "thaumcraft:parts": 0.078125
+      }
     },
     {
       "predicate": {
@@ -44,10 +86,24 @@
       "model": "thaumcraft:item/wand_variants/greatwood_iron"
     },
     {
+      "model": "thaumcraft:item/wand_variants/greatwood_iron_sceptre",
+      "predicate": {
+        "thaumcraft:sceptre": 1,
+        "thaumcraft:parts": 0.09375
+      }
+    },
+    {
       "predicate": {
         "thaumcraft:parts": 0.109375
       },
       "model": "thaumcraft:item/wand_variants/greatwood_gold"
+    },
+    {
+      "model": "thaumcraft:item/wand_variants/greatwood_gold_sceptre",
+      "predicate": {
+        "thaumcraft:sceptre": 1,
+        "thaumcraft:parts": 0.109375
+      }
     },
     {
       "predicate": {
@@ -56,10 +112,24 @@
       "model": "thaumcraft:item/wand_variants/greatwood_thaumium"
     },
     {
+      "model": "thaumcraft:item/wand_variants/greatwood_thaumium_sceptre",
+      "predicate": {
+        "thaumcraft:sceptre": 1,
+        "thaumcraft:parts": 0.125
+      }
+    },
+    {
       "predicate": {
         "thaumcraft:parts": 0.140625
       },
       "model": "thaumcraft:item/wand_variants/greatwood_void"
+    },
+    {
+      "model": "thaumcraft:item/wand_variants/greatwood_void_sceptre",
+      "predicate": {
+        "thaumcraft:sceptre": 1,
+        "thaumcraft:parts": 0.140625
+      }
     },
     {
       "predicate": {
@@ -68,10 +138,24 @@
       "model": "thaumcraft:item/wand_variants/greatwood_copper"
     },
     {
+      "model": "thaumcraft:item/wand_variants/greatwood_copper_sceptre",
+      "predicate": {
+        "thaumcraft:sceptre": 1,
+        "thaumcraft:parts": 0.15625
+      }
+    },
+    {
       "predicate": {
         "thaumcraft:parts": 0.171875
       },
       "model": "thaumcraft:item/wand_variants/greatwood_silver"
+    },
+    {
+      "model": "thaumcraft:item/wand_variants/greatwood_silver_sceptre",
+      "predicate": {
+        "thaumcraft:sceptre": 1,
+        "thaumcraft:parts": 0.171875
+      }
     },
     {
       "predicate": {
@@ -80,10 +164,24 @@
       "model": "thaumcraft:item/wand_variants/obsidian_iron"
     },
     {
+      "model": "thaumcraft:item/wand_variants/obsidian_iron_sceptre",
+      "predicate": {
+        "thaumcraft:sceptre": 1,
+        "thaumcraft:parts": 0.1875
+      }
+    },
+    {
       "predicate": {
         "thaumcraft:parts": 0.203125
       },
       "model": "thaumcraft:item/wand_variants/obsidian_gold"
+    },
+    {
+      "model": "thaumcraft:item/wand_variants/obsidian_gold_sceptre",
+      "predicate": {
+        "thaumcraft:sceptre": 1,
+        "thaumcraft:parts": 0.203125
+      }
     },
     {
       "predicate": {
@@ -92,10 +190,24 @@
       "model": "thaumcraft:item/wand_variants/obsidian_thaumium"
     },
     {
+      "model": "thaumcraft:item/wand_variants/obsidian_thaumium_sceptre",
+      "predicate": {
+        "thaumcraft:sceptre": 1,
+        "thaumcraft:parts": 0.21875
+      }
+    },
+    {
       "predicate": {
         "thaumcraft:parts": 0.234375
       },
       "model": "thaumcraft:item/wand_variants/obsidian_void"
+    },
+    {
+      "model": "thaumcraft:item/wand_variants/obsidian_void_sceptre",
+      "predicate": {
+        "thaumcraft:sceptre": 1,
+        "thaumcraft:parts": 0.234375
+      }
     },
     {
       "predicate": {
@@ -104,10 +216,24 @@
       "model": "thaumcraft:item/wand_variants/obsidian_copper"
     },
     {
+      "model": "thaumcraft:item/wand_variants/obsidian_copper_sceptre",
+      "predicate": {
+        "thaumcraft:sceptre": 1,
+        "thaumcraft:parts": 0.25
+      }
+    },
+    {
       "predicate": {
         "thaumcraft:parts": 0.265625
       },
       "model": "thaumcraft:item/wand_variants/obsidian_silver"
+    },
+    {
+      "model": "thaumcraft:item/wand_variants/obsidian_silver_sceptre",
+      "predicate": {
+        "thaumcraft:sceptre": 1,
+        "thaumcraft:parts": 0.265625
+      }
     },
     {
       "predicate": {
@@ -116,10 +242,24 @@
       "model": "thaumcraft:item/wand_variants/blaze_iron"
     },
     {
+      "model": "thaumcraft:item/wand_variants/blaze_iron_sceptre",
+      "predicate": {
+        "thaumcraft:sceptre": 1,
+        "thaumcraft:parts": 0.28125
+      }
+    },
+    {
       "predicate": {
         "thaumcraft:parts": 0.296875
       },
       "model": "thaumcraft:item/wand_variants/blaze_gold"
+    },
+    {
+      "model": "thaumcraft:item/wand_variants/blaze_gold_sceptre",
+      "predicate": {
+        "thaumcraft:sceptre": 1,
+        "thaumcraft:parts": 0.296875
+      }
     },
     {
       "predicate": {
@@ -128,10 +268,24 @@
       "model": "thaumcraft:item/wand_variants/blaze_thaumium"
     },
     {
+      "model": "thaumcraft:item/wand_variants/blaze_thaumium_sceptre",
+      "predicate": {
+        "thaumcraft:sceptre": 1,
+        "thaumcraft:parts": 0.3125
+      }
+    },
+    {
       "predicate": {
         "thaumcraft:parts": 0.328125
       },
       "model": "thaumcraft:item/wand_variants/blaze_void"
+    },
+    {
+      "model": "thaumcraft:item/wand_variants/blaze_void_sceptre",
+      "predicate": {
+        "thaumcraft:sceptre": 1,
+        "thaumcraft:parts": 0.328125
+      }
     },
     {
       "predicate": {
@@ -140,10 +294,24 @@
       "model": "thaumcraft:item/wand_variants/blaze_copper"
     },
     {
+      "model": "thaumcraft:item/wand_variants/blaze_copper_sceptre",
+      "predicate": {
+        "thaumcraft:sceptre": 1,
+        "thaumcraft:parts": 0.34375
+      }
+    },
+    {
       "predicate": {
         "thaumcraft:parts": 0.359375
       },
       "model": "thaumcraft:item/wand_variants/blaze_silver"
+    },
+    {
+      "model": "thaumcraft:item/wand_variants/blaze_silver_sceptre",
+      "predicate": {
+        "thaumcraft:sceptre": 1,
+        "thaumcraft:parts": 0.359375
+      }
     },
     {
       "predicate": {
@@ -152,10 +320,24 @@
       "model": "thaumcraft:item/wand_variants/ice_iron"
     },
     {
+      "model": "thaumcraft:item/wand_variants/ice_iron_sceptre",
+      "predicate": {
+        "thaumcraft:sceptre": 1,
+        "thaumcraft:parts": 0.375
+      }
+    },
+    {
       "predicate": {
         "thaumcraft:parts": 0.390625
       },
       "model": "thaumcraft:item/wand_variants/ice_gold"
+    },
+    {
+      "model": "thaumcraft:item/wand_variants/ice_gold_sceptre",
+      "predicate": {
+        "thaumcraft:sceptre": 1,
+        "thaumcraft:parts": 0.390625
+      }
     },
     {
       "predicate": {
@@ -164,10 +346,24 @@
       "model": "thaumcraft:item/wand_variants/ice_thaumium"
     },
     {
+      "model": "thaumcraft:item/wand_variants/ice_thaumium_sceptre",
+      "predicate": {
+        "thaumcraft:sceptre": 1,
+        "thaumcraft:parts": 0.40625
+      }
+    },
+    {
       "predicate": {
         "thaumcraft:parts": 0.421875
       },
       "model": "thaumcraft:item/wand_variants/ice_void"
+    },
+    {
+      "model": "thaumcraft:item/wand_variants/ice_void_sceptre",
+      "predicate": {
+        "thaumcraft:sceptre": 1,
+        "thaumcraft:parts": 0.421875
+      }
     },
     {
       "predicate": {
@@ -176,10 +372,24 @@
       "model": "thaumcraft:item/wand_variants/ice_copper"
     },
     {
+      "model": "thaumcraft:item/wand_variants/ice_copper_sceptre",
+      "predicate": {
+        "thaumcraft:sceptre": 1,
+        "thaumcraft:parts": 0.4375
+      }
+    },
+    {
       "predicate": {
         "thaumcraft:parts": 0.453125
       },
       "model": "thaumcraft:item/wand_variants/ice_silver"
+    },
+    {
+      "model": "thaumcraft:item/wand_variants/ice_silver_sceptre",
+      "predicate": {
+        "thaumcraft:sceptre": 1,
+        "thaumcraft:parts": 0.453125
+      }
     },
     {
       "predicate": {
@@ -188,10 +398,24 @@
       "model": "thaumcraft:item/wand_variants/quartz_iron"
     },
     {
+      "model": "thaumcraft:item/wand_variants/quartz_iron_sceptre",
+      "predicate": {
+        "thaumcraft:sceptre": 1,
+        "thaumcraft:parts": 0.46875
+      }
+    },
+    {
       "predicate": {
         "thaumcraft:parts": 0.484375
       },
       "model": "thaumcraft:item/wand_variants/quartz_gold"
+    },
+    {
+      "model": "thaumcraft:item/wand_variants/quartz_gold_sceptre",
+      "predicate": {
+        "thaumcraft:sceptre": 1,
+        "thaumcraft:parts": 0.484375
+      }
     },
     {
       "predicate": {
@@ -200,10 +424,24 @@
       "model": "thaumcraft:item/wand_variants/quartz_thaumium"
     },
     {
+      "model": "thaumcraft:item/wand_variants/quartz_thaumium_sceptre",
+      "predicate": {
+        "thaumcraft:sceptre": 1,
+        "thaumcraft:parts": 0.5
+      }
+    },
+    {
       "predicate": {
         "thaumcraft:parts": 0.515625
       },
       "model": "thaumcraft:item/wand_variants/quartz_void"
+    },
+    {
+      "model": "thaumcraft:item/wand_variants/quartz_void_sceptre",
+      "predicate": {
+        "thaumcraft:sceptre": 1,
+        "thaumcraft:parts": 0.515625
+      }
     },
     {
       "predicate": {
@@ -212,10 +450,24 @@
       "model": "thaumcraft:item/wand_variants/quartz_copper"
     },
     {
+      "model": "thaumcraft:item/wand_variants/quartz_copper_sceptre",
+      "predicate": {
+        "thaumcraft:sceptre": 1,
+        "thaumcraft:parts": 0.53125
+      }
+    },
+    {
       "predicate": {
         "thaumcraft:parts": 0.546875
       },
       "model": "thaumcraft:item/wand_variants/quartz_silver"
+    },
+    {
+      "model": "thaumcraft:item/wand_variants/quartz_silver_sceptre",
+      "predicate": {
+        "thaumcraft:sceptre": 1,
+        "thaumcraft:parts": 0.546875
+      }
     },
     {
       "predicate": {
@@ -224,10 +476,24 @@
       "model": "thaumcraft:item/wand_variants/bone_iron"
     },
     {
+      "model": "thaumcraft:item/wand_variants/bone_iron_sceptre",
+      "predicate": {
+        "thaumcraft:sceptre": 1,
+        "thaumcraft:parts": 0.5625
+      }
+    },
+    {
       "predicate": {
         "thaumcraft:parts": 0.578125
       },
       "model": "thaumcraft:item/wand_variants/bone_gold"
+    },
+    {
+      "model": "thaumcraft:item/wand_variants/bone_gold_sceptre",
+      "predicate": {
+        "thaumcraft:sceptre": 1,
+        "thaumcraft:parts": 0.578125
+      }
     },
     {
       "predicate": {
@@ -236,10 +502,24 @@
       "model": "thaumcraft:item/wand_variants/bone_thaumium"
     },
     {
+      "model": "thaumcraft:item/wand_variants/bone_thaumium_sceptre",
+      "predicate": {
+        "thaumcraft:sceptre": 1,
+        "thaumcraft:parts": 0.59375
+      }
+    },
+    {
       "predicate": {
         "thaumcraft:parts": 0.609375
       },
       "model": "thaumcraft:item/wand_variants/bone_void"
+    },
+    {
+      "model": "thaumcraft:item/wand_variants/bone_void_sceptre",
+      "predicate": {
+        "thaumcraft:sceptre": 1,
+        "thaumcraft:parts": 0.609375
+      }
     },
     {
       "predicate": {
@@ -248,10 +528,24 @@
       "model": "thaumcraft:item/wand_variants/bone_copper"
     },
     {
+      "model": "thaumcraft:item/wand_variants/bone_copper_sceptre",
+      "predicate": {
+        "thaumcraft:sceptre": 1,
+        "thaumcraft:parts": 0.625
+      }
+    },
+    {
       "predicate": {
         "thaumcraft:parts": 0.640625
       },
       "model": "thaumcraft:item/wand_variants/bone_silver"
+    },
+    {
+      "model": "thaumcraft:item/wand_variants/bone_silver_sceptre",
+      "predicate": {
+        "thaumcraft:sceptre": 1,
+        "thaumcraft:parts": 0.640625
+      }
     },
     {
       "predicate": {
@@ -260,10 +554,24 @@
       "model": "thaumcraft:item/wand_variants/reed_iron"
     },
     {
+      "model": "thaumcraft:item/wand_variants/reed_iron_sceptre",
+      "predicate": {
+        "thaumcraft:sceptre": 1,
+        "thaumcraft:parts": 0.65625
+      }
+    },
+    {
       "predicate": {
         "thaumcraft:parts": 0.671875
       },
       "model": "thaumcraft:item/wand_variants/reed_gold"
+    },
+    {
+      "model": "thaumcraft:item/wand_variants/reed_gold_sceptre",
+      "predicate": {
+        "thaumcraft:sceptre": 1,
+        "thaumcraft:parts": 0.671875
+      }
     },
     {
       "predicate": {
@@ -272,10 +580,24 @@
       "model": "thaumcraft:item/wand_variants/reed_thaumium"
     },
     {
+      "model": "thaumcraft:item/wand_variants/reed_thaumium_sceptre",
+      "predicate": {
+        "thaumcraft:sceptre": 1,
+        "thaumcraft:parts": 0.6875
+      }
+    },
+    {
       "predicate": {
         "thaumcraft:parts": 0.703125
       },
       "model": "thaumcraft:item/wand_variants/reed_void"
+    },
+    {
+      "model": "thaumcraft:item/wand_variants/reed_void_sceptre",
+      "predicate": {
+        "thaumcraft:sceptre": 1,
+        "thaumcraft:parts": 0.703125
+      }
     },
     {
       "predicate": {
@@ -284,10 +606,24 @@
       "model": "thaumcraft:item/wand_variants/reed_copper"
     },
     {
+      "model": "thaumcraft:item/wand_variants/reed_copper_sceptre",
+      "predicate": {
+        "thaumcraft:sceptre": 1,
+        "thaumcraft:parts": 0.71875
+      }
+    },
+    {
       "predicate": {
         "thaumcraft:parts": 0.734375
       },
       "model": "thaumcraft:item/wand_variants/reed_silver"
+    },
+    {
+      "model": "thaumcraft:item/wand_variants/reed_silver_sceptre",
+      "predicate": {
+        "thaumcraft:sceptre": 1,
+        "thaumcraft:parts": 0.734375
+      }
     },
     {
       "predicate": {
@@ -296,10 +632,24 @@
       "model": "thaumcraft:item/wand_variants/silverwood_iron"
     },
     {
+      "model": "thaumcraft:item/wand_variants/silverwood_iron_sceptre",
+      "predicate": {
+        "thaumcraft:sceptre": 1,
+        "thaumcraft:parts": 0.75
+      }
+    },
+    {
       "predicate": {
         "thaumcraft:parts": 0.765625
       },
       "model": "thaumcraft:item/wand_variants/silverwood_gold"
+    },
+    {
+      "model": "thaumcraft:item/wand_variants/silverwood_gold_sceptre",
+      "predicate": {
+        "thaumcraft:sceptre": 1,
+        "thaumcraft:parts": 0.765625
+      }
     },
     {
       "predicate": {
@@ -308,10 +658,24 @@
       "model": "thaumcraft:item/wand_variants/silverwood_thaumium"
     },
     {
+      "model": "thaumcraft:item/wand_variants/silverwood_thaumium_sceptre",
+      "predicate": {
+        "thaumcraft:sceptre": 1,
+        "thaumcraft:parts": 0.78125
+      }
+    },
+    {
       "predicate": {
         "thaumcraft:parts": 0.796875
       },
       "model": "thaumcraft:item/wand_variants/silverwood_void"
+    },
+    {
+      "model": "thaumcraft:item/wand_variants/silverwood_void_sceptre",
+      "predicate": {
+        "thaumcraft:sceptre": 1,
+        "thaumcraft:parts": 0.796875
+      }
     },
     {
       "predicate": {
@@ -320,10 +684,24 @@
       "model": "thaumcraft:item/wand_variants/silverwood_copper"
     },
     {
+      "model": "thaumcraft:item/wand_variants/silverwood_copper_sceptre",
+      "predicate": {
+        "thaumcraft:sceptre": 1,
+        "thaumcraft:parts": 0.8125
+      }
+    },
+    {
       "predicate": {
         "thaumcraft:parts": 0.828125
       },
       "model": "thaumcraft:item/wand_variants/silverwood_silver"
+    },
+    {
+      "model": "thaumcraft:item/wand_variants/silverwood_silver_sceptre",
+      "predicate": {
+        "thaumcraft:sceptre": 1,
+        "thaumcraft:parts": 0.828125
+      }
     }
   ]
 }
