@@ -5,7 +5,6 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
@@ -24,6 +23,8 @@ import thaumcraft.common.nodes.AuraNodeBlockEntity;
 public final class AuraNodeRenderer implements BlockEntityRenderer<AuraNodeBlockEntity> {
     private static final int FRAMES = 32;
     private static final int ATLAS_ROWS = 32;
+    // TC4 UtilsFX.renderFacingStrip writes 220 directly to the lightmap for aura-node layers.
+    private static final int LEGACY_NODE_LIGHT = 220;
     private static final double THAUMOMETER_VIEW_DISTANCE = 48.0D;
     private static final double FAINT_VIEW_DISTANCE = 64.0D;
 
@@ -212,15 +213,15 @@ public final class AuraNodeRenderer implements BlockEntityRenderer<AuraNodeBlock
         int blue = color & 255;
         int a = Mth.clamp((int) (alpha * 255.0F), 0, 255);
 
-        // Keep TC4's blend mode even when depth testing is disabled. textSeeThrough() used here
-        // previously forced ordinary translucency and was the reason revealed nodes became hard,
-        // flat coloured discs in the gameplay capture.
+        // TC4 renderFacingStrip treats scale as the billboard half-extent (vertices are +/-scale).
+        // The previous port scaled a +/-0.5 quad and therefore rendered every aura layer at half
+        // the original diameter.
         VertexConsumer vertices = bufferSource.getBuffer(ThaumcraftRenderTypes.node(additive, throughWalls));
         PoseStack.Pose pose = poseStack.last();
-        vertex(vertices, pose, -0.5F, 0.5F, u0, v0, red, green, blue, a);
-        vertex(vertices, pose, 0.5F, 0.5F, u1, v0, red, green, blue, a);
-        vertex(vertices, pose, 0.5F, -0.5F, u1, v1, red, green, blue, a);
-        vertex(vertices, pose, -0.5F, -0.5F, u0, v1, red, green, blue, a);
+        vertex(vertices, pose, -1.0F, 1.0F, u0, v0, red, green, blue, a);
+        vertex(vertices, pose, 1.0F, 1.0F, u1, v0, red, green, blue, a);
+        vertex(vertices, pose, 1.0F, -1.0F, u1, v1, red, green, blue, a);
+        vertex(vertices, pose, -1.0F, -1.0F, u0, v1, red, green, blue, a);
         poseStack.popPose();
     }
 
@@ -231,7 +232,7 @@ public final class AuraNodeRenderer implements BlockEntityRenderer<AuraNodeBlock
                 .color(red, green, blue, alpha)
                 .uv(u, v)
                 .overlayCoords(OverlayTexture.NO_OVERLAY)
-                .uv2(LightTexture.FULL_BRIGHT)
+                .uv2(LEGACY_NODE_LIGHT)
                 .normal(pose.normal(), 0.0F, 0.0F, 1.0F)
                 .endVertex();
     }
