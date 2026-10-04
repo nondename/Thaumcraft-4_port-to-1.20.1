@@ -206,10 +206,11 @@ public final class ThaumometerHands {
         poseStack.mulPose(Axis.ZP.rotationDegrees(59.0F * handedness));
         poseStack.mulPose(Axis.YP.rotationDegrees(-65.0F * direction * handedness));
 
-        // 1.20.1 left/right ModelPart pivots differ by ten model pixels. Normalize the left arm
-        // to the old TC4 first-person origin before the x5 legacy arm scale is applied.
+        // 1.20.1 left/right ModelPart pivots differ by ten model pixels. TC4 rendered the same
+        // first-person arm basis twice, so move the modern left-arm +5px pivot back onto the
+        // legacy/right-arm -5px origin: (-5 - +5) / 16 = -0.625 model units.
         if (renderedArm == HumanoidArm.LEFT) {
-            poseStack.translate(0.625D, 0.0D, 0.0D);
+            poseStack.translate(-0.625D, 0.0D, 0.0D);
         }
 
         if (renderedArm == HumanoidArm.RIGHT) {
