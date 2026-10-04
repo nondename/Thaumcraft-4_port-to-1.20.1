@@ -7,6 +7,66 @@
     {
       "type": "minecraft:single",
       "resource": "thaumcraft:items/gogglesrevealing"
+    },
+    {
+      "resource": "thaumcraft:models/wand_cap_copper",
+      "type": "minecraft:single"
+    },
+    {
+      "resource": "thaumcraft:models/wand_cap_gold",
+      "type": "minecraft:single"
+    },
+    {
+      "resource": "thaumcraft:models/wand_cap_iron",
+      "type": "minecraft:single"
+    },
+    {
+      "resource": "thaumcraft:models/wand_cap_silver",
+      "type": "minecraft:single"
+    },
+    {
+      "resource": "thaumcraft:models/wand_cap_thaumium",
+      "type": "minecraft:single"
+    },
+    {
+      "resource": "thaumcraft:models/wand_cap_void",
+      "type": "minecraft:single"
+    },
+    {
+      "resource": "thaumcraft:models/wand_rod_blaze",
+      "type": "minecraft:single"
+    },
+    {
+      "resource": "thaumcraft:models/wand_rod_bone",
+      "type": "minecraft:single"
+    },
+    {
+      "resource": "thaumcraft:models/wand_rod_greatwood",
+      "type": "minecraft:single"
+    },
+    {
+      "resource": "thaumcraft:models/wand_rod_ice",
+      "type": "minecraft:single"
+    },
+    {
+      "resource": "thaumcraft:models/wand_rod_obsidian",
+      "type": "minecraft:single"
+    },
+    {
+      "resource": "thaumcraft:models/wand_rod_quartz",
+      "type": "minecraft:single"
+    },
+    {
+      "resource": "thaumcraft:models/wand_rod_reed",
+      "type": "minecraft:single"
+    },
+    {
+      "resource": "thaumcraft:models/wand_rod_silverwood",
+      "type": "minecraft:single"
+    },
+    {
+      "resource": "thaumcraft:models/wand_rod_wood",
+      "type": "minecraft:single"
     }
   ]
 }

@@ -17,7 +17,7 @@
 
 ## Активные заявки
 
-- **Атлас моделей жезлов — Codex (2026-10-04): assets/minecraft/atlases/blocks.json, docs/WAND_AUDIT.md.** Исправление пропущенной регистрации 15 модельных PNG в атласе; проверка запуска из основной игровой копии.
+- ~~**Атлас моделей жезлов — Codex (2026-10-04): assets/minecraft/atlases/blocks.json, docs/WAND_AUDIT.md.**~~ Исправление пропущенной регистрации 15 модельных PNG в атласе; проверка запуска из основной игровой копии.
 
 
 - ~~**Проверка всех жезлов и наконечников — Codex (2026-10-04): новый client/WandModelVariants.java, models/item/wand*.json и models/item/wand_variants/**, textures/models/wand_{rod,cap}_*.png, новый modernTest/java/thaumcraft/gametest/WandVariantsTests.java, комментарий ArcaneWandRecipe.java.**~~ Назначено пользователем: модели всех 54 сочетаний обычных стержней/активных наконечников, исходные модельные текстуры TC4, проверка рецептов/ёмкости/расхода и инертных деталей; область пересекается с заявкой MiMo. Таумометр и эссенция не меняются. Готово: 54 NBT-модели обычных жезлов, 15 исходных модельных PNG, cap scale 1.2; 26 предметных моделей/PNG/локализаций проверены. build и 20 GameTest прошли; ограничения и сценарий клиента в docs/WAND_AUDIT.md.
