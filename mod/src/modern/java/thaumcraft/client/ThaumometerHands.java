@@ -85,8 +85,8 @@ public final class ThaumometerHands {
         poseStack.mulPose(Axis.YP.rotationDegrees(yawCorrection));
         applyVanilla1710HeldItemBasis(player, poseStack, event);
 
-        // TC4 4.2.3.5 ItemThaumometerRenderer foundation.
-        poseStack.translate(1.0D, 0.75D, -1.0D);
+        // TC4 4.2.3.5 ItemThaumometerRenderer foundation. Two-handed: center on screen. One-handed: already offset by line 74.
+        poseStack.translate(-0.5D * screenSide, 0.75D, -1.0D);
         poseStack.mulPose(Axis.YP.rotationDegrees(-135.0F));
         poseStack.mulPose(Axis.XP.rotationDegrees(pitchCorrection));
         poseStack.mulPose(Axis.YP.rotationDegrees(yawCorrection));
