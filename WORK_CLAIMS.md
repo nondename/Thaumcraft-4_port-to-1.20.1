@@ -17,6 +17,9 @@
 
 ## Активные заявки
 
+- **Тигель — Codex (2026-10-04): новые common/alchemy/**, регистрация Thaumcraft.java, ItemWand.java (котёл), ModOres.java (Creative), новые ресурсы тигля/рецептов, клиентская регистрация рендера/эффектов, CrucibleTests.java, docs/CRUCIBLE_SLICE.md.** Нагрев/вода/предметы/аспекты, получение таумия по оригиналу, сохранение и серверная авторитетность. Capability и сканер другого агента не меняются.
+
+
 - ~~**Металлы TC4 — Codex (2026-10-04): новый common/items/ModMetals.java, Thaumcraft.java (регистрация), ModOres.java (Creative), новые recipes/*thaumium*, recipes/*void*, assets/{models,textures,blockstates} металлов, lang/en_us.json и ru_ru.json (только новые ключи), forge/minecraft tags, новый MetalsTests.java, docs/METALS_SLICE.md.**~~ Слитки/самородки таумия и пустотного металла, таумиевый блок, оригинальные текстуры, преобразование 9:1. Тигель отдельный будущий этап; чужие capability не меняю. Готово: 5 объектов, 6 рецептов и открытия в книге, оригинальные PNG, EN/RU и Forge tags. build + 22 GameTest прошли; первичное получение слитков/сканирование отложено до тигля и аспектов, см. docs/METALS_SLICE.md.
 
 
