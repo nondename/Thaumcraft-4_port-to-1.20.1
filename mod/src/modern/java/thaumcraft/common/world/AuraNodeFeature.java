@@ -62,9 +62,10 @@ public final class AuraNodeFeature extends Feature<NoneFeatureConfiguration> {
         }
 
         BlockPos pos = new BlockPos(x, q, z);
-        // createNodeAt in TC4 only installed BlockAiry when the final position was actually air.
-        // Preserve that behaviour rather than silently eating grass, flowers, snow layers, etc.
-        if (!level.isEmptyBlock(pos)) {
+        // TC4 createNodeAt accepted both air and replaceable blocks. Keeping the second condition
+        // matters: the candidate step above deliberately allows replaceable vegetation/snow, and
+        // rejecting it here would silently make wild nodes rarer than Config.nodeRarity intends.
+        if (!level.isEmptyBlock(pos) && !level.getBlockState(pos).canBeReplaced()) {
             return false;
         }
 
