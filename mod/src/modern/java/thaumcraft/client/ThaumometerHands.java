@@ -17,9 +17,20 @@ import net.minecraftforge.fml.common.Mod;
 import thaumcraft.Thaumcraft;
 import thaumcraft.common.items.ModItems;
 
-/** First-person TC4 thaumometer pose, with a modern one-handed fallback when the other hand is occupied. */
+/**
+ * First-person TC4 thaumometer pose adapted to the 1.20.1 hand pipeline.
+ *
+ * <p>RenderHandEvent already receives the camera-space pitch/yaw smoothing applied by
+ * ItemInHandRenderer. This class therefore owns only the per-hand/item transform. Re-applying
+ * xBob/yBob here would move the scanner lens away from the actual camera ray.</p>
+ */
 @Mod.EventBusSubscriber(modid = Thaumcraft.MODID, value = Dist.CLIENT)
 public final class ThaumometerHands {
+    /** Neutral TC4 pose offset measured from the scanner lens centre. */
+    private static final float FIRST_PERSON_CENTER_OFFSET_X = 0.272F;
+    private static final float FIRST_PERSON_CENTER_OFFSET_Y = 0.148F;
+    private static final float LEGACY_HELD_SCALE = 0.8F;
+
     private ThaumometerHands() {
     }
 
@@ -31,79 +42,84 @@ public final class ThaumometerHands {
             return;
         }
 
-        InteractionHand thaumometerHand = getThaumometerHand(player);
-        if (thaumometerHand == null) {
+        ItemStack mainStack = player.getMainHandItem();
+        ItemStack offStack = player.getOffhandItem();
+        boolean mainThaumometer = mainStack.is(ModItems.THAUMOMETER.get());
+        boolean offThaumometer = offStack.is(ModItems.THAUMOMETER.get());
+
+        // No scanner, or the deliberately unsupported edge case of one scanner in each hand:
+        // leave the complete modern pipeline alone rather than rendering two centred viewports.
+        if (mainThaumometer == offThaumometer) {
             return;
         }
 
+        InteractionHand thaumometerHand = mainThaumometer
+                ? InteractionHand.MAIN_HAND
+                : InteractionHand.OFF_HAND;
         InteractionHand supportHand = opposite(thaumometerHand);
-        boolean supportHandFree = player.getItemInHand(supportHand).isEmpty();
+        boolean twoHanded = player.getItemInHand(supportHand).isEmpty();
 
-        if (supportHandFree) {
-            // TC4 predates the offhand. With a free support hand the scanner owns both first-person
-            // hand passes and reproduces the original two-handed pose.
-            event.setCanceled(true);
-            if (event.getHand() != thaumometerHand) {
+        if (event.getHand() == thaumometerHand) {
+            if (!event.getItemStack().is(ModItems.THAUMOMETER.get())) {
                 return;
             }
-            renderThaumometer(minecraft, player, event, thaumometerHand, true);
+            event.setCanceled(true);
+            renderThaumometer(minecraft, player, event, thaumometerHand, twoHanded);
             return;
         }
 
-        // If the other hand is occupied, vanilla keeps that hand/item and the thaumometer becomes
-        // intentionally awkward to use one-handed.
-        if (event.getHand() != thaumometerHand) {
-            return;
+        if (twoHanded) {
+            // TC4 had no offhand. When the support hand is empty the scanner owns both modern
+            // first-person passes and draws both arms itself, so suppress the redundant vanilla arm.
+            event.setCanceled(true);
         }
-        event.setCanceled(true);
-        renderThaumometer(minecraft, player, event, thaumometerHand, false);
     }
 
     private static void renderThaumometer(Minecraft minecraft, LocalPlayer player, RenderHandEvent event,
                                            InteractionHand thaumometerHand, boolean twoHanded) {
-        ItemStack stack = player.getItemInHand(thaumometerHand);
+        ItemStack stack = event.getItemStack();
+        HumanoidArm holdingArm = physicalArm(player, thaumometerHand);
+        float handedness = holdingArm == HumanoidArm.RIGHT ? 1.0F : -1.0F;
+
         PoseStack poseStack = event.getPoseStack();
         poseStack.pushPose();
 
-        HumanoidArm holdingArm = physicalArm(player, thaumometerHand);
-        int screenSide = holdingArm == HumanoidArm.RIGHT ? 1 : -1;
+        /*
+         * The scan target is resolved from eyePosition + lookAngle, i.e. the centre camera ray.
+         * Correct the neutral TC4 mesh offset in view space before applying swing/equip animation,
+         * so the lens and its readout share that exact axis in either physical hand.
+         */
+        poseStack.translate(
+                -FIRST_PERSON_CENTER_OFFSET_X * handedness,
+                -FIRST_PERSON_CENTER_OFFSET_Y,
+                0.0D
+        );
 
-        // One-handed mode sits toward the actual holding arm and a little farther away, leaving the
-        // occupied opposite hand to vanilla. This is deliberately less comfortable than the proper grip.
-        if (!twoHanded) {
-            poseStack.translate(0.24D * screenSide, 0.04D, -0.12D);
-            poseStack.scale(0.88F, 0.88F, 0.88F);
-        }
+        applyLegacyHeldItemBasis(poseStack, event, handedness);
 
-        float partialTick = event.getPartialTick();
-        float armPitch = Mth.lerp(partialTick, player.xBobO, player.xBob);
-        float armYaw = Mth.lerp(partialTick, player.yBobO, player.yBob);
-        float pitchCorrection = (player.getXRot() - armPitch) * 0.1F;
-        float yawCorrection = (player.getYRot() - armYaw) * 0.1F;
-
-        poseStack.mulPose(Axis.XP.rotationDegrees(pitchCorrection));
-        poseStack.mulPose(Axis.YP.rotationDegrees(yawCorrection));
-        applyVanilla1710HeldItemBasis(player, poseStack, event);
-
-        // TC4 4.2.3.5 ItemThaumometerRenderer foundation. Two-handed: center on screen. One-handed: already offset by line 74.
-        poseStack.translate(-0.5D * screenSide, 0.75D, -1.0D);
-        poseStack.mulPose(Axis.YP.rotationDegrees(-135.0F));
-        poseStack.mulPose(Axis.XP.rotationDegrees(pitchCorrection));
-        poseStack.mulPose(Axis.YP.rotationDegrees(yawCorrection));
-
-        poseStack.translate(-0.56D, 0.52D + event.getEquipProgress() * 1.5D, 0.72D);
-        poseStack.mulPose(Axis.YP.rotationDegrees(90.0F));
-        poseStack.translate(0.0D, 0.0D, -0.72D);
-        poseStack.mulPose(Axis.YP.rotationDegrees(90.0F));
+        /*
+         * TC4 ItemThaumometerRenderer first-person basis. Unlike the previous implementation every
+         * horizontal transform is mirrored from the physical arm, not from MAIN_HAND/OFF_HAND.
+         */
+        poseStack.translate(handedness, 0.75D, -1.0D);
+        poseStack.mulPose(Axis.YP.rotationDegrees(-135.0F * handedness));
+        poseStack.translate(
+                -0.7D * LEGACY_HELD_SCALE * handedness,
+                0.65D * LEGACY_HELD_SCALE + event.getEquipProgress() * 1.5D,
+                0.9D * LEGACY_HELD_SCALE
+        );
+        poseStack.mulPose(Axis.YP.rotationDegrees(90.0F * handedness));
+        poseStack.translate(0.0D, 0.0D, -0.9D * LEGACY_HELD_SCALE);
+        poseStack.mulPose(Axis.YP.rotationDegrees(90.0F * handedness));
 
         if (twoHanded) {
-            renderTc4Arms(minecraft, player, poseStack, event);
+            renderTc4Arms(minecraft, player, poseStack, event, holdingArm, handedness);
         } else {
-            renderOneHandedArm(minecraft, player, poseStack, event, holdingArm);
+            renderOneHandedArm(minecraft, player, poseStack, event, holdingArm, handedness);
         }
 
-        poseStack.mulPose(Axis.ZP.rotationDegrees(90.0F));
-        poseStack.translate(0.4D, -0.4D, 0.0D);
+        poseStack.mulPose(Axis.ZP.rotationDegrees(90.0F * handedness));
+        poseStack.translate(0.4D * handedness, -0.4D, 0.0D);
         poseStack.scale(2.0F, 2.0F, 2.0F);
         ThaumometerItemRenderer.renderTc4FirstPerson(
                 stack, poseStack, event.getMultiBufferSource(), event.getPackedLight());
@@ -111,37 +127,35 @@ public final class ThaumometerHands {
         poseStack.popPose();
     }
 
-    /** Reproduces the vanilla 1.7.10 matrix around Forge's EQUIPPED_FIRST_PERSON renderer. */
-    private static void applyVanilla1710HeldItemBasis(LocalPlayer player, PoseStack poseStack,
-                                                       RenderHandEvent event) {
-        float swing = player.getAttackAnim(event.getPartialTick());
-        float sinSwing = Mth.sin(swing * Mth.PI);
-        float sinSqrtSwing = Mth.sin(Mth.sqrt(swing) * Mth.PI);
-
-        if (!player.isUsingItem()) {
-            poseStack.translate(
-                    -sinSqrtSwing * 0.4F,
-                    Mth.sin(Mth.sqrt(swing) * Mth.PI * 2.0F) * 0.2F,
-                    -sinSwing * 0.2F
-            );
-        }
+    /**
+     * Replays only the per-item part of the old 1.7.10 EQUIPPED_FIRST_PERSON transform.
+     * Camera pitch/yaw smoothing is intentionally absent: 1.20.1 applied it before RenderHandEvent.
+     */
+    private static void applyLegacyHeldItemBasis(PoseStack poseStack, RenderHandEvent event, float handedness) {
+        float swing = event.getSwingProgress();
+        float swingRoot = Mth.sin(Mth.sqrt(swing) * Mth.PI);
+        float swingLinear = Mth.sin(swing * Mth.PI);
+        float swingSquared = Mth.sin(swing * swing * Mth.PI);
 
         poseStack.translate(
-                0.56D,
-                -0.52D - event.getEquipProgress() * 0.6D,
-                -0.72D
+                -swingRoot * 0.4F * handedness,
+                Mth.sin(Mth.sqrt(swing) * Mth.PI * 2.0F) * 0.2F,
+                -swingLinear * 0.2F
         );
-        poseStack.mulPose(Axis.YP.rotationDegrees(45.0F));
-
-        float sinSwingSquared = Mth.sin(swing * swing * Mth.PI);
-        poseStack.mulPose(Axis.YP.rotationDegrees(-sinSwingSquared * 20.0F));
-        poseStack.mulPose(Axis.ZP.rotationDegrees(-sinSqrtSwing * 20.0F));
-        poseStack.mulPose(Axis.XP.rotationDegrees(-sinSqrtSwing * 80.0F));
+        poseStack.translate(
+                0.7D * LEGACY_HELD_SCALE * handedness,
+                -0.65D * LEGACY_HELD_SCALE - event.getEquipProgress() * 0.6D,
+                -0.9D * LEGACY_HELD_SCALE
+        );
+        poseStack.mulPose(Axis.YP.rotationDegrees(45.0F * handedness));
+        poseStack.mulPose(Axis.YP.rotationDegrees(-swingSquared * 20.0F * handedness));
+        poseStack.mulPose(Axis.ZP.rotationDegrees(-swingRoot * 20.0F * handedness));
+        poseStack.mulPose(Axis.XP.rotationDegrees(-swingRoot * 80.0F));
         poseStack.scale(0.4F, 0.4F, 0.4F);
     }
 
     private static void renderTc4Arms(Minecraft minecraft, LocalPlayer player, PoseStack poseStack,
-                                      RenderHandEvent event) {
+                                      RenderHandEvent event, HumanoidArm holdingArm, float handedness) {
         if (player.isInvisible()) {
             return;
         }
@@ -151,54 +165,50 @@ public final class ThaumometerHands {
             return;
         }
 
+        HumanoidArm supportArm = holdingArm.getOpposite();
+        int holdingDirection = holdingArm == HumanoidArm.RIGHT ? 1 : -1;
+
         poseStack.pushPose();
         poseStack.scale(5.0F, 5.0F, 5.0F);
-
-        /*
-         * TC4 1.7.10 called RenderPlayer.renderFirstPersonArm(player) twice. That method always
-         * rendered the same first-person arm model; TC4 mirrored it solely with its matrix stack.
-         * Using modern renderRightHand + renderLeftHand directly is NOT equivalent because their
-         * model pivots differ. With the original x5 scale that pivot difference launched the left
-         * arm far off-screen. Render the same normalized arm twice, exactly like TC4 did.
-         */
-        renderTc4ArmPose(playerRenderer, player, poseStack, event, -1, HumanoidArm.RIGHT, false);
-        renderTc4ArmPose(playerRenderer, player, poseStack, event, 1, HumanoidArm.RIGHT, false);
+        renderTc4ArmPose(playerRenderer, player, poseStack, event,
+                -holdingDirection, supportArm, handedness);
+        renderTc4ArmPose(playerRenderer, player, poseStack, event,
+                holdingDirection, holdingArm, handedness);
         poseStack.popPose();
     }
 
     private static void renderOneHandedArm(Minecraft minecraft, LocalPlayer player, PoseStack poseStack,
-                                           RenderHandEvent event, HumanoidArm arm) {
+                                           RenderHandEvent event, HumanoidArm holdingArm, float handedness) {
         if (player.isInvisible()) {
             return;
         }
+
         EntityRenderer<?> entityRenderer = minecraft.getEntityRenderDispatcher().getRenderer(player);
         if (!(entityRenderer instanceof PlayerRenderer playerRenderer)) {
             return;
         }
 
+        int holdingDirection = holdingArm == HumanoidArm.RIGHT ? 1 : -1;
         poseStack.pushPose();
         poseStack.scale(5.0F, 5.0F, 5.0F);
-
-        // In modern first person the physical right arm belongs on the right side of the scanner.
-        // The previous TC4 sign mapping put it on the opposite side, which is why the grip looked wrong.
-        int side = arm == HumanoidArm.RIGHT ? 1 : -1;
-        renderTc4ArmPose(playerRenderer, player, poseStack, event, side, arm, true);
+        renderTc4ArmPose(playerRenderer, player, poseStack, event,
+                holdingDirection, holdingArm, handedness);
         poseStack.popPose();
     }
 
     private static void renderTc4ArmPose(PlayerRenderer playerRenderer, LocalPlayer player, PoseStack poseStack,
-                                         RenderHandEvent event, int side, HumanoidArm renderedArm,
-                                         boolean normalizeModernPivot) {
+                                         RenderHandEvent event, int direction, HumanoidArm renderedArm,
+                                         float handedness) {
         poseStack.pushPose();
-        poseStack.translate(0.0D, -0.6D, 1.1D * side);
-        poseStack.mulPose(Axis.XP.rotationDegrees(-45.0F * side));
-        poseStack.mulPose(Axis.ZP.rotationDegrees(-90.0F));
-        poseStack.mulPose(Axis.ZP.rotationDegrees(59.0F));
-        poseStack.mulPose(Axis.YP.rotationDegrees(-65.0F * side));
+        poseStack.translate(0.0D, -0.6D, 1.1D * direction);
+        poseStack.mulPose(Axis.XP.rotationDegrees(-45.0F * direction));
+        poseStack.mulPose(Axis.ZP.rotationDegrees(-90.0F * handedness));
+        poseStack.mulPose(Axis.ZP.rotationDegrees(59.0F * handedness));
+        poseStack.mulPose(Axis.YP.rotationDegrees(-65.0F * direction * handedness));
 
-        // Modern left/right ModelPart pivots differ by 10 model pixels. In the one-handed fallback
-        // normalize the left pivot to the same origin expected by the old TC4 matrix before rendering it.
-        if (normalizeModernPivot && renderedArm == HumanoidArm.LEFT) {
+        // 1.20.1 left/right ModelPart pivots differ by ten model pixels. Normalize the left arm
+        // to the old TC4 first-person origin before the x5 legacy arm scale is applied.
+        if (renderedArm == HumanoidArm.LEFT) {
             poseStack.translate(0.625D, 0.0D, 0.0D);
         }
 
@@ -218,16 +228,6 @@ public final class ThaumometerHands {
 
     private static InteractionHand opposite(InteractionHand hand) {
         return hand == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND;
-    }
-
-    private static InteractionHand getThaumometerHand(LocalPlayer player) {
-        if (player.getMainHandItem().is(ModItems.THAUMOMETER.get())) {
-            return InteractionHand.MAIN_HAND;
-        }
-        if (player.getOffhandItem().is(ModItems.THAUMOMETER.get())) {
-            return InteractionHand.OFF_HAND;
-        }
-        return null;
     }
 
     @SubscribeEvent
