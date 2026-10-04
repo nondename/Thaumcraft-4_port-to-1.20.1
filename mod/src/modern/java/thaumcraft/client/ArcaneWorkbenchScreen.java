@@ -52,6 +52,16 @@ public final class ArcaneWorkbenchScreen extends AbstractContainerScreen<ArcaneW
 
     @Override
     protected void renderBg(GuiGraphics g, float partialTick, int mouseX, int mouseY) {
+        g.pose().pushPose();
+        try {
+            g.pose().translate(leftPos, topPos, 0);
+            renderWorkbenchBackground(g);
+        } finally {
+            g.pose().popPose();
+        }
+    }
+
+    private void renderWorkbenchBackground(GuiGraphics g) {
         g.blit(TEXTURE, 0, 0, 0, 0, imageWidth, imageHeight);
         if (this.minecraft == null || this.minecraft.level == null || this.minecraft.player == null) {
             return;

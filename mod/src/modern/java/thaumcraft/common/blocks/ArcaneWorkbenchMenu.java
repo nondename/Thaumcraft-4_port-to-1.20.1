@@ -2,7 +2,6 @@ package thaumcraft.common.blocks;
 
 import java.util.List;
 import javax.annotation.Nullable;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
@@ -16,6 +15,8 @@ import net.minecraft.world.inventory.ResultSlot;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -39,7 +40,8 @@ import thaumcraft.common.items.tools.ItemWand;
  *   <li>the client menu wraps a local {@link SimpleContainer} filled by the vanilla slot
  *       sync instead of the client block entity (1.7.10 shared one tile entity instance
  *       across logical sides); the preview recompute runs server-side only — the original
- *       recomputed on both sides, which yields the identical slot 9 value;</li>
+ *       recomputed on both sides. Each modern viewer has an independent, unpaid result
+ *       container so armor discounts cannot affect another viewer's eligibility;</li>
  *   <li>the original {@code slotClick} quirks (buttons forced to 0 on slots 0/1,
  *       creative clone fixup) and {@code func_94530_a} (no drag-painting into table
  *       slots) live behind 1.20.1-private {@code doClick}/{@code canItemQuickReplace},
@@ -71,6 +73,10 @@ public final class ArcaneWorkbenchMenu extends AbstractContainerMenu {
     private final ArcaneWorkbenchBlockEntity be; // server only
     private final ContainerLevelAccess access;
     private final GridContainer grid = new GridContainer();
+    private final SimpleContainer result = new SimpleContainer(1);
+    @Nullable
+    private Recipe<CraftingContainer> selectedRecipe;
+    private AspectList selectedCost = new AspectList();
 
     /** Server side, opened through NetworkHooks.openScreen with the block pos. */
     public ArcaneWorkbenchMenu(int id, Inventory inventory, ArcaneWorkbenchBlockEntity be) {
@@ -80,7 +86,7 @@ public final class ArcaneWorkbenchMenu extends AbstractContainerMenu {
         this.be = be;
         this.access = ContainerLevelAccess.create(be.getLevel(), be.getBlockPos());
         buildSlots(inventory);
-        be.setMenu(this);   // original line 21: tileEntity.eventHandler = this
+        be.addMenu(this);
         onCraftMatrixChanged(); // original line 42
     }
 
@@ -95,7 +101,7 @@ public final class ArcaneWorkbenchMenu extends AbstractContainerMenu {
     }
 
     private void buildSlots(Inventory inventory) {
-        addSlot(new ArcaneResultSlot());                                        // menu 0  -> table 9
+        addSlot(new ArcaneResultSlot());                                        // menu 0 -> local result
         addSlot(new WandSlot());                                                // menu 1  -> table 10
         for (int row = 0; row < 3; row++) {                                     // menu 2-10 -> table 0-8
             for (int col = 0; col < 3; col++) {
@@ -131,26 +137,45 @@ public final class ArcaneWorkbenchMenu extends AbstractContainerMenu {
             return; // client: slot sync from the server is authoritative (see class javadoc)
         }
         Level level = playerInventory.player.level();
-        ItemStack vanilla = ModRecipes.vanillaResult(level, grid);
-        be.setItemSoftly(ArcaneWorkbenchBlockEntity.SLOT_RESULT, vanilla);
-        if (vanilla.isEmpty()) {
+        selectedRecipe = null;
+        selectedCost = new AspectList();
+        ItemStack preview = ItemStack.EMPTY;
+        var vanilla = level.getRecipeManager().getRecipeFor(RecipeType.CRAFTING, grid, level);
+        if (vanilla.isPresent()) {
+            selectedRecipe = vanilla.get();
+            preview = selectedRecipe.assemble(grid, level.registryAccess());
+        }
+        if (preview.isEmpty()) {
+            selectedRecipe = null;
             ItemStack wand = table.getItem(ArcaneWorkbenchBlockEntity.SLOT_WAND);
             if (wand.getItem() instanceof ItemWand) {
                 AspectList aspects = ModRecipes.arcaneAspects(level, grid);
                 if (ItemWand.consumeAllVisCrafting(wand, playerInventory.player, aspects, false)) {
-                    be.setItemSoftly(ArcaneWorkbenchBlockEntity.SLOT_RESULT,
-                            ModRecipes.arcaneResult(level, grid));
+                    selectedRecipe = ModRecipes.arcaneMatch(level, grid).map(ModRecipes.RecipeWithType::recipe).orElse(null);
+                    selectedCost = aspects;
+                    if (selectedRecipe != null) {
+                        preview = selectedRecipe.assemble(grid, level.registryAccess());
+                    }
                 }
             }
         }
+        result.setItem(0, preview);
+    }
+
+    @Override
+    public void broadcastChanges() {
+        // Vis NBT and worn discount gear can change without a grid slot write.
+        onCraftMatrixChanged();
+        super.broadcastChanges();
     }
 
     /** Original onContainerClosed lines 68-73: only unhooks the event handler. */
     @Override
     public void removed(Player player) {
         if (be != null) {
-            be.setMenu(null);
+            be.removeMenu(this);
         }
+        super.removed(player);
     }
 
     /** Original canInteractWith lines 75-81: same block entity within 64.0 (squared). */
@@ -165,10 +190,15 @@ public final class ArcaneWorkbenchMenu extends AbstractContainerMenu {
     public ItemStack quickMoveStack(Player player, int index) {
         ItemStack out = ItemStack.EMPTY;
         Slot slot = slots.get(index);
-        if (slot != null && slot.hasItem()) {
+        if (slot != null && slot.mayPickup(player) && slot.hasItem()) {
             ItemStack in = slot.getItem();
             out = in.copy();
             if (index == 0) {
+                // Never transfer only part of a multi-item recipe result: that would
+                // leave unpaid preview items behind or discard the remainder.
+                if (!canFitResult(in)) {
+                    return ItemStack.EMPTY;
+                }
                 if (!moveItemStackTo(in, 11, 47, true)) {
                     return ItemStack.EMPTY;
                 }
@@ -202,55 +232,65 @@ public final class ArcaneWorkbenchMenu extends AbstractContainerMenu {
             if (in.getCount() == out.getCount()) {
                 return ItemStack.EMPTY;
             }
-            slot.onTake(player, in);
+            slot.onTake(player, index == 0 ? out : in);
         }
         return out;
+    }
+
+    private boolean canFitResult(ItemStack output) {
+        int remaining = output.getCount();
+        for (int i = 11; i < 47; i++) {
+            Slot slot = slots.get(i);
+            ItemStack existing = slot.getItem();
+            if (slot.mayPlace(output) && (existing.isEmpty() || ItemStack.isSameItemSameTags(existing, output))) {
+                remaining -= Math.max(0, Math.min(slot.getMaxStackSize(output), output.getMaxStackSize()) - existing.getCount());
+                if (remaining <= 0) return true;
+            }
+        }
+        return false;
     }
 
     /** Result slot: the arcane payment of SlotCraftingArcaneWorkbench#onPickupFromSlot. */
     private final class ArcaneResultSlot extends ResultSlot {
         ArcaneResultSlot() {
-            super(playerInventory.player, grid, table, ArcaneWorkbenchBlockEntity.SLOT_RESULT, 160, 64);
+            super(playerInventory.player, grid, result, 0, 160, 64);
+        }
+
+        @Override
+        public boolean mayPickup(Player player) {
+            onCraftMatrixChanged();
+            return hasItem() && (be == null || stillValid(player));
         }
 
         @Override
         public void onTake(Player player, ItemStack stack) {
-            // Original SlotCraftingArcaneWorkbench#onPickupFromSlot order: capture the
-            // aspects + parked wand while the grid is intact, consume one of each
-            // ingredient, then pay (the original paid via the container after onPickup).
-            Level level = player.level();
-            AspectList aspects = ModRecipes.arcaneAspects(level, grid);
+            if (be == null || selectedRecipe == null) return;
+            var remainders = selectedRecipe.getRemainingItems(grid);
             ItemStack wand = table.getItem(ArcaneWorkbenchBlockEntity.SLOT_WAND);
-
-            // Consume the grid BEFORE super: RecipeManager.getRemainingItemsFor falls back
-            // to returning the grid's own stacks whenever no minecraft:crafting_shaped
-            // recipe matches, and arcane recipes never are one — vanilla ResultSlot would
-            // remove each ingredient and then refill every slot straight from that
-            // fallback (infinite free crafts). With an emptied grid both branches of the
-            // vanilla loop see nothing to remove or restore. Container-item remainders
-            // are applied here for the same reason; none of the current recipes have any.
-            for (int i = 0; i < grid.getContainerSize(); i++) {
-                ItemStack ingredient = grid.getItem(i);
-                if (ingredient.isEmpty()) {
-                    continue;
+            be.beginCraft();
+            try {
+                // Charge exactly the selected arcane recipe; vanilla-first crafts are free.
+                if (selectedCost.size() > 0
+                        && !ItemWand.consumeAllVisCrafting(wand, player, selectedCost, true)) {
+                    throw new IllegalStateException("Workbench result taken without sufficient vis");
                 }
-                ItemStack remainder = ingredient.getItem().hasCraftingRemainingItem()
-                        ? new ItemStack(ingredient.getItem().getCraftingRemainingItem())
-                        : ItemStack.EMPTY;
-                grid.removeItem(i, 1);
-                if (!remainder.isEmpty() && grid.getItem(i).isEmpty()) {
-                    grid.setItem(i, remainder);
+                checkTakeAchievements(stack);
+                for (int i = 0; i < grid.getContainerSize(); i++) {
+                    if (!grid.getItem(i).isEmpty()) grid.removeItem(i, 1);
+                    ItemStack remainder = remainders.get(i);
+                    if (remainder.isEmpty()) continue;
+                    ItemStack left = grid.getItem(i);
+                    if (left.isEmpty()) {
+                        grid.setItem(i, remainder);
+                    } else if (ItemStack.isSameItemSameTags(left, remainder)) {
+                        remainder.grow(left.getCount());
+                        grid.setItem(i, remainder);
+                    } else if (!player.getInventory().add(remainder)) {
+                        player.drop(remainder, false);
+                    }
                 }
-            }
-
-            // Super still fires the craft event/stats (both gated on removeCount from
-            // onQuickCraft) and the Slot.setChanged bookkeeping; its decrement loop is
-            // now a no-op. Each grid write above re-triggered the preview through
-            // decrStackSize parity (original grid behaviour).
-            super.onTake(player, stack);
-            if (aspects.size() > 0 && wand.getItem() instanceof ItemWand) {
-                // The actual drain is guarded to the server inside consumeAllVis.
-                ItemWand.consumeAllVisCrafting(wand, player, aspects, true);
+            } finally {
+                be.endCraft();
             }
         }
     }

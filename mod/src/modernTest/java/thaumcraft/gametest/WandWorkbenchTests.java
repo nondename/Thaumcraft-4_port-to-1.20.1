@@ -270,7 +270,7 @@ public final class WandWorkbenchTests {
         for (int i : new int[] {6, 8}) {
             be.setItem(i, new ItemStack(ModItems.THAUMOMETER.get()));
         }
-        helper.assertTrue(be.getItem(ArcaneWorkbenchBlockEntity.SLOT_RESULT).isEmpty(),
+        helper.assertTrue(menu.getSlot(0).getItem().isEmpty(),
                 "No wand in slot 10: the arcane preview must stay empty");
 
         // A wand without enough vis: the dry-run gate keeps the preview empty.
@@ -280,7 +280,7 @@ public final class WandWorkbenchTests {
             ItemWand.storeVis(wand, primal, 100);
         }
         be.setItem(ArcaneWorkbenchBlockEntity.SLOT_WAND, wand);
-        helper.assertTrue(be.getItem(ArcaneWorkbenchBlockEntity.SLOT_RESULT).isEmpty(),
+        helper.assertTrue(menu.getSlot(0).getItem().isEmpty(),
                 "An underfunded wand must not preview (dry-run gate)");
 
         // Charged wand: goggles appear.
@@ -288,7 +288,7 @@ public final class WandWorkbenchTests {
             ItemWand.storeVis(wand, primal, 1000);
         }
         menu.onCraftMatrixChanged();
-        helper.assertTrue(be.getItem(ArcaneWorkbenchBlockEntity.SLOT_RESULT).is(ModItems.GOGGLES.get()),
+        helper.assertTrue(menu.getSlot(0).getItem().is(ModItems.GOGGLES.get()),
                 "A charged wand must preview the goggles");
         helper.assertTrue(menu.getSlot(1).mayPlace(wand), "The wand slot must accept a wand");
 
@@ -298,7 +298,7 @@ public final class WandWorkbenchTests {
         helper.assertTrue(!menu.getSlot(1).mayPlace(staff), "The wand slot must reject staffs");
 
         // Taking the result pays the exact cost (gold cap modifier 1.0) and empties the grid.
-        menu.getSlot(0).onTake(player, be.getItem(ArcaneWorkbenchBlockEntity.SLOT_RESULT).copy());
+        menu.getSlot(0).onTake(player, menu.getSlot(0).remove(1));
         helper.assertTrue(ItemWand.getVis(wand, Aspect.AIR) == 500 && ItemWand.getVis(wand, Aspect.FIRE) == 500
                         && ItemWand.getVis(wand, Aspect.WATER) == 500 && ItemWand.getVis(wand, Aspect.EARTH) == 500
                         && ItemWand.getVis(wand, Aspect.ENTROPY) == 700 && ItemWand.getVis(wand, Aspect.ORDER) == 700,
@@ -312,7 +312,7 @@ public final class WandWorkbenchTests {
         be.setItem(6, new ItemStack(ModWandParts.CAP_IRON.get()));
         be.setItem(4, new ItemStack(Items.STICK));
         menu.onCraftMatrixChanged();
-        helper.assertTrue(be.getItem(ArcaneWorkbenchBlockEntity.SLOT_RESULT).is(ModItems.WAND.get()),
+        helper.assertTrue(menu.getSlot(0).getItem().is(ModItems.WAND.get()),
                 "Vanilla-first: wand.json must win the wood+iron grid in the preview");
         helper.succeed();
     }

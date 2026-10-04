@@ -111,7 +111,7 @@ public final class ArcaneWorkbenchBlock extends BaseEntityBlock {
                 && level.getBlockEntity(pos) instanceof ArcaneWorkbenchBlockEntity be) {
             NetworkHooks.openScreen(serverPlayer, new SimpleMenuProvider((id, inventory, ignored) ->
                     new ArcaneWorkbenchMenu(id, inventory, be),
-                    Component.translatable("container.thaumcraft.arcane_workbench")));
+                    Component.translatable("container.thaumcraft.arcane_workbench")), pos);
         }
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
@@ -123,7 +123,7 @@ public final class ArcaneWorkbenchBlock extends BaseEntityBlock {
                 && level.getBlockEntity(pos) instanceof ArcaneWorkbenchBlockEntity be) {
             for (int i = 0; i < ArcaneWorkbenchBlockEntity.SIZE; i++) {
                 ItemStack stack = be.removeItemNoUpdate(i);
-                if (!stack.isEmpty()) {
+                if (i != ArcaneWorkbenchBlockEntity.SLOT_RESULT && !stack.isEmpty()) {
                     popResource(level, pos, stack);
                 }
             }
@@ -166,7 +166,7 @@ public final class ArcaneWorkbenchBlock extends BaseEntityBlock {
                     && level.getBlockEntity(pos) instanceof ArcaneWorkbenchBlockEntity be) {
                 NetworkHooks.openScreen(serverPlayer, new SimpleMenuProvider((id, inventory, ignored) ->
                         new ArcaneWorkbenchMenu(id, inventory, be),
-                        Component.translatable("container.thaumcraft.arcane_workbench")));
+                        Component.translatable("container.thaumcraft.arcane_workbench")), pos);
             }
         }
         return InteractionResult.sidedSuccess(level.isClientSide);
