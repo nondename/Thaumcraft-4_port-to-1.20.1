@@ -31,11 +31,13 @@ public class ItemThaumometer extends Item {
     private static final int SCAN_DURATION_TICKS = 25;
 
     /**
-     * TC4 kept the active ScanResult as transient item logic state, not in the ItemStack NBT.
-     * Keeping it per player preserves that behaviour and, importantly, avoids forcing the modern
-     * first-person item renderer to re-equip the thaumometer when scanning starts/finishes.
+     * Active scans are transient, per-player state just like TC4's ScanResult, but the logical
+     * client and server must never share the same entry. In singleplayer both sides live in the
+     * same JVM and use the same player UUID, so one shared static map lets the client clear the
+     * server's scan (or vice versa) before completion.
      */
-    private static final Map<UUID, String> ACTIVE_SCAN_TARGETS = new ConcurrentHashMap<>();
+    private static final Map<UUID, String> CLIENT_ACTIVE_SCAN_TARGETS = new ConcurrentHashMap<>();
+    private static final Map<UUID, String> SERVER_ACTIVE_SCAN_TARGETS = new ConcurrentHashMap<>();
 
     public ItemThaumometer(Properties properties) {
         super(properties);
@@ -78,7 +80,7 @@ public class ItemThaumometer extends Item {
             return InteractionResultHolder.fail(stack);
         }
 
-        ACTIVE_SCAN_TARGETS.put(player.getUUID(), target);
+        activeScanTargets(level).put(player.getUUID(), target);
         player.startUsingItem(hand);
 
         // SUCCESS makes modern Minecraft play a hand swing/equip reaction. TC4 simply entered the
@@ -92,11 +94,11 @@ public class ItemThaumometer extends Item {
             return;
         }
 
-        String startedTarget = ACTIVE_SCAN_TARGETS.getOrDefault(player.getUUID(), "");
+        String startedTarget = activeScanTargets(level).getOrDefault(player.getUUID(), "");
         var scan = ThaumometerTargets.find(player);
         String currentTarget = scan == null ? null : scan.identity();
         if (startedTarget.isEmpty() || !startedTarget.equals(currentTarget)) {
-            clearScan(player);
+            clearScan(level, player);
             player.stopUsingItem();
             return;
         }
@@ -117,7 +119,7 @@ public class ItemThaumometer extends Item {
             if (!level.isClientSide) {
                 finishScan(level, player, scan);
             }
-            clearScan(player);
+            clearScan(level, player);
             player.stopUsingItem();
         }
     }
@@ -130,12 +132,16 @@ public class ItemThaumometer extends Item {
     @Override
     public void releaseUsing(ItemStack stack, Level level, LivingEntity entity, int timeLeft) {
         if (entity instanceof Player player) {
-            clearScan(player);
+            clearScan(level, player);
         }
     }
 
-    private static void clearScan(Player player) {
-        ACTIVE_SCAN_TARGETS.remove(player.getUUID());
+    private static Map<UUID, String> activeScanTargets(Level level) {
+        return level.isClientSide ? CLIENT_ACTIVE_SCAN_TARGETS : SERVER_ACTIVE_SCAN_TARGETS;
+    }
+
+    private static void clearScan(Level level, Player player) {
+        activeScanTargets(level).remove(player.getUUID());
     }
 
     private static Component rejection(ThaumometerTargets.Target target, IThaumometerKnowledge knowledge, Level level) {
@@ -161,6 +167,7 @@ public class ItemThaumometer extends Item {
         // TC4 awards ScanManager#generateNodeAspects for nodes (normalized + type bonus),
         // while every other target pays out the same list the lens displays.
         var aspects = target.awardAspects(level);
+        // Mark first so a duplicate completion tick cannot award the same target twice.
         target.markScanned(knowledge);
         if (aspects != null) {
             for (Aspect aspect : aspects.getAspectsSorted()) {
