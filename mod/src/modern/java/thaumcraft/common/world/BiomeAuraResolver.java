@@ -3,6 +3,7 @@ package thaumcraft.common.world;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.biome.Biome;
@@ -25,32 +26,30 @@ import java.util.List;
  * naturally when Forge tags them as lush, wet, sparse, spooky, and so on.</p>
  */
 public final class BiomeAuraResolver {
-    private static final TagKey<Biome> IS_OCEAN = biomeTag("minecraft", "is_ocean");
-    private static final TagKey<Biome> IS_RIVER = biomeTag("minecraft", "is_river");
-    private static final TagKey<Biome> IS_FOREST = biomeTag("minecraft", "is_forest");
-    private static final TagKey<Biome> IS_JUNGLE = biomeTag("minecraft", "is_jungle");
-    private static final TagKey<Biome> IS_BADLANDS = biomeTag("minecraft", "is_badlands");
-    private static final TagKey<Biome> IS_BEACH = biomeTag("minecraft", "is_beach");
-    private static final TagKey<Biome> IS_NETHER = biomeTag("minecraft", "is_nether");
-    private static final TagKey<Biome> IS_END = biomeTag("minecraft", "is_end");
-
     // Optional compatibility tags. They are harmless when no datapack defines them.
-    private static final TagKey<Biome> IS_SAVANNA = biomeTag("forge", "is_savanna");
     private static final TagKey<Biome> IS_FROZEN = biomeTag("forge", "is_frozen");
     private static final TagKey<Biome> IS_TAINTED = biomeTag("thaumcraft", "is_tainted");
 
     public static Profile resolve(Holder<Biome> biome) {
         List<Rule> rules = new ArrayList<>();
 
-        boolean ocean = biome.is(IS_OCEAN);
-        boolean river = biome.is(IS_RIVER);
-        boolean forest = biome.is(IS_FOREST);
-        boolean jungle = biome.is(IS_JUNGLE);
-        boolean badlands = biome.is(IS_BADLANDS);
-        boolean beach = biome.is(IS_BEACH);
-        boolean nether = biome.is(IS_NETHER);
-        boolean end = biome.is(IS_END);
+        // Prefer Minecraft's canonical biome tags whenever 1.20.1 has a direct equivalent of the
+        // old BiomeDictionary type. Besides being exact for vanilla, this also lets datapacks and
+        // modded biomes participate through the normal tag-extension mechanism.
+        boolean ocean = biome.is(BiomeTags.IS_OCEAN);
+        boolean river = biome.is(BiomeTags.IS_RIVER);
+        boolean forest = biome.is(BiomeTags.IS_FOREST);
+        boolean jungle = biome.is(BiomeTags.IS_JUNGLE);
+        boolean badlands = biome.is(BiomeTags.IS_BADLANDS);
+        boolean beach = biome.is(BiomeTags.IS_BEACH);
+        boolean savanna = biome.is(BiomeTags.IS_SAVANNA);
+        boolean mountain = biome.is(BiomeTags.IS_MOUNTAIN);
+        boolean hills = biome.is(BiomeTags.IS_HILL);
+        boolean nether = biome.is(BiomeTags.IS_NETHER);
+        boolean end = biome.is(BiomeTags.IS_END);
 
+        // These legacy BiomeDictionary categories have no better vanilla 1.20.1 equivalent, so
+        // Forge's compatibility tags remain the correct source for them.
         boolean water = biome.is(Tags.Biomes.IS_WATER);
         boolean wet = biome.is(Tags.Biomes.IS_WET);
         boolean hot = biome.is(Tags.Biomes.IS_HOT);
@@ -96,14 +95,10 @@ public final class BiomeAuraResolver {
         if (sandy) add(rules, 80, Aspect.EARTH);          // SANDY
         if (beach) add(rules, 80, Aspect.EARTH);          // BEACH
 
-        // Forge 1.20.1 has no built-in SAVANNA tag. Vanilla savannas are consistently hot+sparse,
-        // unlike deserts/badlands, so retain the TC4 category without hard-coding biome ids.
-        boolean savanna = biome.is(IS_SAVANNA)
-                || (hot && sparse && !desert && !sandy && !nether);
-        if (savanna) add(rules, 80, Aspect.AIR);           // SAVANNA
-        if (biome.is(Tags.Biomes.IS_PEAK)) add(rules, 100, Aspect.AIR);   // MOUNTAIN
-        if (biome.is(Tags.Biomes.IS_SLOPE)) add(rules, 120, Aspect.AIR); // HILLS
-        if (plains) add(rules, 80, Aspect.AIR);            // PLAINS
+        if (savanna) add(rules, 80, Aspect.AIR);          // SAVANNA
+        if (mountain) add(rules, 100, Aspect.AIR);        // MOUNTAIN
+        if (hills) add(rules, 120, Aspect.AIR);           // HILLS
+        if (plains) add(rules, 80, Aspect.AIR);           // PLAINS
 
         if (dry) add(rules, 80, Aspect.ENTROPY);          // DRY
         if (sparse) add(rules, 80, Aspect.ENTROPY);       // SPARSE
