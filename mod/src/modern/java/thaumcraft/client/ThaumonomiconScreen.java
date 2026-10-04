@@ -52,8 +52,8 @@ public final class ThaumonomiconScreen extends Screen {
             paragraph(g, Component.translatable("tc.book.recipe." + page), left + 196, top + 20, 140);
             if (page == 0) {
                 grid(g, new ItemStack[]{stack(Items.IRON_NUGGET),stack(Items.IRON_NUGGET),stack(Items.IRON_NUGGET),stack(Items.IRON_NUGGET),ItemStack.EMPTY,stack(Items.IRON_NUGGET)}, top + 90);
-                g.renderItem(new ItemStack(ModItems.IRON_WAND_CAP.get()), left + 295, top + 112);
-                grid(g, new ItemStack[]{ItemStack.EMPTY,ItemStack.EMPTY,new ItemStack(ModItems.IRON_WAND_CAP.get()),ItemStack.EMPTY,stack(Items.STICK),ItemStack.EMPTY,new ItemStack(ModItems.IRON_WAND_CAP.get())}, top + 151);
+                g.renderItem(new ItemStack(thaumcraft.common.items.wands.ModWandParts.CAP_IRON.get()), left + 295, top + 112);
+                grid(g, new ItemStack[]{ItemStack.EMPTY,ItemStack.EMPTY,new ItemStack(thaumcraft.common.items.wands.ModWandParts.CAP_IRON.get()),ItemStack.EMPTY,stack(Items.STICK),ItemStack.EMPTY,new ItemStack(thaumcraft.common.items.wands.ModWandParts.CAP_IRON.get())}, top + 151);
                 g.renderItem(new ItemStack(ModItems.WAND.get()), left + 295, top + 173);
             } else if (page == 1) {
                 grid(g, new ItemStack[]{ItemStack.EMPTY,new ItemStack(ModOres.SHARDS.get("air").get()),ItemStack.EMPTY,stack(Items.IRON_INGOT),stack(Items.GLASS),stack(Items.IRON_INGOT),ItemStack.EMPTY,new ItemStack(ModOres.SHARDS.get("water").get())}, top + 132);

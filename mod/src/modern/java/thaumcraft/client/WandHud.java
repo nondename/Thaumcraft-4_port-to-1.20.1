@@ -32,7 +32,7 @@ public final class WandHud {
             var primals = Aspect.getPrimalAspects();
             for (int i = 0; i < primals.size(); i++) {
                 Aspect a = primals.get(i);
-                int amount = ItemWand.getVis(stack, a), fill = 30 * amount / ItemWand.CAPACITY;
+                int amount = ItemWand.getVis(stack, a), fill = 30 * amount / ItemWand.getMaxVis(stack);
                 g.pose().pushPose();
                 g.pose().mulPose(Axis.ZP.rotationDegrees(75 + i * 24));
                 g.pose().translate(0, -32, 0);

@@ -65,13 +65,42 @@ public final class ModOres {
                 .title(Component.translatable("itemGroup.thaumcraft"))
                 .icon(() -> new ItemStack(ModItems.THAUMOMETER.get()))
                 .displayItems((parameters, output) -> {
-                    output.accept(ModItems.WAND.get());
+                    thaumcraft.common.items.tools.ItemWand.addCreativeWands(output::accept);
                     output.accept(ModItems.THAUMONOMICON.get());
-                    output.accept(ModItems.IRON_WAND_CAP.get());
+                    // TC4 ConfigItems: caps (itemWandCap damage 0-8), then rods (itemWandRod
+                    // damage 0-7) and staff cores (50-57, 100) — original id/meta order.
+                    output.accept(thaumcraft.common.items.wands.ModWandParts.CAP_IRON.get());
+                    output.accept(thaumcraft.common.items.wands.ModWandParts.CAP_GOLD.get());
+                    output.accept(thaumcraft.common.items.wands.ModWandParts.CAP_THAUMIUM.get());
+                    output.accept(thaumcraft.common.items.wands.ModWandParts.CAP_COPPER.get());
+                    output.accept(thaumcraft.common.items.wands.ModWandParts.CAP_SILVER.get());
+                    output.accept(thaumcraft.common.items.wands.ModWandParts.CAP_SILVER_INERT.get());
+                    output.accept(thaumcraft.common.items.wands.ModWandParts.CAP_THAUMIUM_INERT.get());
+                    output.accept(thaumcraft.common.items.wands.ModWandParts.CAP_VOID.get());
+                    output.accept(thaumcraft.common.items.wands.ModWandParts.CAP_VOID_INERT.get());
+                    output.accept(thaumcraft.common.items.wands.ModWandParts.ROD_GREATWOOD.get());
+                    output.accept(thaumcraft.common.items.wands.ModWandParts.ROD_OBSIDIAN.get());
+                    output.accept(thaumcraft.common.items.wands.ModWandParts.ROD_SILVERWOOD.get());
+                    output.accept(thaumcraft.common.items.wands.ModWandParts.ROD_ICE.get());
+                    output.accept(thaumcraft.common.items.wands.ModWandParts.ROD_QUARTZ.get());
+                    output.accept(thaumcraft.common.items.wands.ModWandParts.ROD_REED.get());
+                    output.accept(thaumcraft.common.items.wands.ModWandParts.ROD_BLAZE.get());
+                    output.accept(thaumcraft.common.items.wands.ModWandParts.ROD_BONE.get());
+                    output.accept(thaumcraft.common.items.wands.ModWandParts.STAFF_GREATWOOD.get());
+                    output.accept(thaumcraft.common.items.wands.ModWandParts.STAFF_OBSIDIAN.get());
+                    output.accept(thaumcraft.common.items.wands.ModWandParts.STAFF_SILVERWOOD.get());
+                    output.accept(thaumcraft.common.items.wands.ModWandParts.STAFF_ICE.get());
+                    output.accept(thaumcraft.common.items.wands.ModWandParts.STAFF_QUARTZ.get());
+                    output.accept(thaumcraft.common.items.wands.ModWandParts.STAFF_REED.get());
+                    output.accept(thaumcraft.common.items.wands.ModWandParts.STAFF_BLAZE.get());
+                    output.accept(thaumcraft.common.items.wands.ModWandParts.STAFF_BONE.get());
+                    output.accept(thaumcraft.common.items.wands.ModWandParts.STAFF_PRIMAL.get());
                     output.accept(ModItems.THAUMOMETER.get());
                     // TC4 ConfigItems#371-373: the goggles register right after the thaumometer.
                     output.accept(ModItems.GOGGLES.get());
                     output.accept(thaumcraft.common.research.ModResearch.TABLE_ITEM.get());
+                    // Original blockTable getSubBlocks: table, (deconstruction), arcane worktable.
+                    output.accept(thaumcraft.common.blocks.ArcaneWorkbenchBlock.ITEM.get());
                     output.accept(thaumcraft.common.research.ModResearch.SCRIBING_TOOLS.get());
                     output.accept(thaumcraft.common.research.ModResearch.PHIAL.get());
                     // TC4 BlockCustomOre creative order: cinnabar, six infused stones, amber.
@@ -92,7 +121,7 @@ public final class ModOres {
     }
 
     public static void registerAspects() {
-        ThaumcraftApi.registerObjectTag(ModItems.IRON_WAND_CAP.get(), new AspectList().add(Aspect.METAL, 3));
+        ThaumcraftApi.registerObjectTag(thaumcraft.common.items.wands.ModWandParts.CAP_IRON.get(), new AspectList().add(Aspect.METAL, 3));
         ThaumcraftApi.registerObjectTag(ModItems.WAND.get(), new AspectList().add(Aspect.METAL, 4));
         ThaumcraftApi.registerObjectTag(ModItems.THAUMONOMICON.get(), new AspectList().add(Aspect.TREE, 2).add(Aspect.MIND, 4).add(Aspect.MAGIC, 2));
 

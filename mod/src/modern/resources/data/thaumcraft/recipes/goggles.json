@@ -1,5 +1,5 @@
 {
-  "type": "minecraft:crafting_shaped",
+  "type": "thaumcraft:arcane",
   "category": "equipment",
   "pattern": [
     "LGL",
@@ -19,5 +19,14 @@
   },
   "result": {
     "item": "thaumcraft:gogglesrevealing"
-  }
+  },
+  "cost": {
+    "aer": 5,
+    "ignis": 5,
+    "aqua": 5,
+    "terra": 5,
+    "perditio": 3,
+    "ordo": 3
+  },
+  "research": ""
 }

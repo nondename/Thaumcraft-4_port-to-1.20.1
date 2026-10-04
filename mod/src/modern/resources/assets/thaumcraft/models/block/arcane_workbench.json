@@ -1,0 +1,7 @@
+{
+  "parent": "thaumcraft:block/table",
+  "textures": {
+    "table": "thaumcraft:block/woodplain",
+    "particle": "thaumcraft:block/woodplain"
+  }
+}

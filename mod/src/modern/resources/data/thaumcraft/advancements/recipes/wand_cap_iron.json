@@ -16,7 +16,7 @@
     "has_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "thaumcraft:iron_wand_cap"
+        "recipe": "thaumcraft:wand_cap_iron"
       }
     }
   },
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "thaumcraft:iron_wand_cap"
+      "thaumcraft:wand_cap_iron"
     ]
   }
 }

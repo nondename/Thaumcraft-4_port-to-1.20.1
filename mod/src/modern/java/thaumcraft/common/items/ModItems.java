@@ -20,8 +20,11 @@ public final class ModItems {
             () -> new ItemThaumometer(new Item.Properties().stacksTo(1))
     );
 
-    public static final RegistryObject<Item> IRON_WAND_CAP = ITEMS.register("iron_wand_cap", () -> new Item(new Item.Properties()));
-    public static final RegistryObject<Item> WAND = ITEMS.register("wand", () -> new thaumcraft.common.items.tools.ItemWand(new Item.Properties().stacksTo(1)));
+    // TC4 wand caps live under their original texture ids (see ModWandParts); the iron cap
+    // was renamed from "iron_wand_cap" to "wand_cap_iron" together with its family.
+    public static final RegistryObject<Item> WAND = ITEMS.register("wand",
+            () -> new thaumcraft.common.items.tools.ItemWand(
+                    thaumcraft.common.items.tools.ItemWand.wandProperties().stacksTo(1)));
     public static final RegistryObject<Item> THAUMONOMICON = ITEMS.register("thaumonomicon", () -> new thaumcraft.common.items.tools.ItemThaumonomicon(new Item.Properties().stacksTo(1)));
 
     // TC4 ItemGoggles: durability 350 (Item.Properties#durability wins over the material default).

@@ -30,10 +30,16 @@ public final class Thaumcraft {
     public Thaumcraft() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         ModItems.register(modEventBus);
+        // Wand part items + WandCap/WandRod registry data (ConfigItems wand section).
+        thaumcraft.common.items.wands.ModWandParts.register(modEventBus);
         // Load node block entries before the shared block DeferredRegister is attached to the bus.
         ModNodes.register(modEventBus);
         thaumcraft.common.blocks.ModOres.register(modEventBus);
         thaumcraft.common.research.ModResearch.register(modEventBus);
+        // Arcane worktable: block entity + menu type + the two arcane recipe types.
+        thaumcraft.common.blocks.ArcaneWorkbenchBlock.register(modEventBus);
+        thaumcraft.common.blocks.ArcaneWorkbenchMenu.register(modEventBus);
+        thaumcraft.common.crafting.ModRecipes.register(modEventBus);
         thaumcraft.common.world.InfusedOreFeature.register(modEventBus);
         thaumcraft.common.world.AuraNodeFeature.register(modEventBus);
         modEventBus.addListener(this::commonSetup);

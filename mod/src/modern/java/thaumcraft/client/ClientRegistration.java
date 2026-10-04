@@ -19,6 +19,8 @@ public final class ClientRegistration {
         event.enqueueWork(() -> {
             net.minecraft.client.gui.screens.MenuScreens.register(
                     thaumcraft.common.research.ModResearch.MENU.get(), ResearchScreen::new);
+            net.minecraft.client.gui.screens.MenuScreens.register(
+                    thaumcraft.common.blocks.ArcaneWorkbenchMenu.MENU_TYPE.get(), ArcaneWorkbenchScreen::new);
             BlockEntityRenderers.register(ModNodes.AURA_NODE_ENTITY.get(), AuraNodeRenderer::new);
             for (String name : ModOres.NAMES) {
                 ItemBlockRenderTypes.setRenderLayer(ModOres.ORES.get(name).get(), RenderType.cutout());

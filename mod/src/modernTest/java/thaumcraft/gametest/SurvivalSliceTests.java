@@ -148,8 +148,9 @@ public final class SurvivalSliceTests {
                 "TC4 ConfigAspects#677 registers the goggles as SENSES 4");
         // TC4 ConfigRecipesArcaneSlice#477: "LGL","L L","TGT" from leather, gold, thaumometer.
         var recipe = level.getRecipeManager().byKey(ResourceLocation.fromNamespaceAndPath("thaumcraft", "goggles")).orElseThrow();
-        helper.assertTrue(recipe instanceof ShapedRecipe && recipe.getResultItem(level.registryAccess()).is(goggles),
-                "Goggles recipe must load");
+        helper.assertTrue(recipe instanceof thaumcraft.common.crafting.ArcaneRecipe
+                        && recipe.getResultItem(level.registryAccess()).is(goggles),
+                "Goggles recipe must load as a thaumcraft:arcane recipe");
         helper.assertTrue(recipe.getIngredients().get(0).test(new ItemStack(Items.LEATHER))
                         && recipe.getIngredients().get(1).test(new ItemStack(Items.GOLD_INGOT))
                         && recipe.getIngredients().get(6).test(new ItemStack(ModItems.THAUMOMETER.get())),

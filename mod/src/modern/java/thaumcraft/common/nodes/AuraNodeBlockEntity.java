@@ -6,6 +6,7 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -17,7 +18,10 @@ import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.nodes.INode;
 import thaumcraft.api.nodes.NodeModifier;
 import thaumcraft.api.nodes.NodeType;
+import thaumcraft.api.wands.IWandable;
 import thaumcraft.common.config.EntityAspects;
+import thaumcraft.common.items.tools.ItemWand;
+import thaumcraft.common.lib.capabilities.ThaumometerKnowledgeProvider;
 import thaumcraft.common.lib.network.ModNetwork;
 
 import java.util.ArrayList;
@@ -32,7 +36,7 @@ import java.util.List;
  * a node after its chunk has been unloaded. Node stabilizer locks are added when the stabilizer
  * block itself is ported.</p>
  */
-public final class AuraNodeBlockEntity extends BlockEntity implements INode {
+public final class AuraNodeBlockEntity extends BlockEntity implements INode, IWandable {
     /** TC4 Config.hardNode defaults to true. Kept as parity until the modern config screen exists. */
     private static final boolean HARD_NODE_BEHAVIOUR = true;
 
@@ -462,6 +466,82 @@ public final class AuraNodeBlockEntity extends BlockEntity implements INode {
     @Override
     public AspectList getBaseAspects() {
         return baseAspects;
+    }
+
+    // ---------------- wand charging: port of TileNode#onUsingWandTick (1.7.10, lines 374-453) --------
+
+    /**
+     * ItemWand has already stored IIUX/Y/Z and started the use animation (original
+     * TileNode#onWandRightClick lines 152-158); the aiming re-check of original lines
+     * 377-387 lives in ItemWand#onUseTick, which calls this only while the player still
+     * looks at this node. The original also drove drainColor/drainEntity visuals from
+     * here — deferred until the charge FX are ported (documented deviation).
+     */
+    @Override
+    public void onUsingWandTick(ItemStack wandstack, Player player, int count) {
+        if (level == null || level.isClientSide || count % 5 != 0) {
+            return;
+        }
+        int tap = 1;
+        if (hasResearch(player, "NODETAPPER1")) {
+            tap++;
+        }
+        if (hasResearch(player, "NODETAPPER2")) {
+            tap++;
+        }
+        boolean preserve = !player.isShiftKeyDown()
+                && hasResearch(player, "NODEPRESERVE")
+                && !"wood".equals(ItemWand.getRod(wandstack).getTag())
+                && !"iron".equals(ItemWand.getCap(wandstack).getTag());
+        Aspect aspect = chooseRandomFilteredFromSource(ItemWand.getAspectsWithRoom(wandstack), preserve);
+        if (aspect == null) {
+            return;
+        }
+        int amt = aspects.getAmount(aspect);
+        if (tap > amt) {
+            tap = amt;
+        }
+        if (preserve && tap == amt) {
+            tap--;
+        }
+        if (tap <= 0) {
+            return;
+        }
+        int rem = ItemWand.addVis(wandstack, aspect, tap, true);
+        if (rem < tap) {
+            aspects.reduce(aspect, tap - rem);
+            setChangedAndSync();
+        }
+    }
+
+    /** Port of TileNode#chooseRandomFilteredFromSource (lines 195-211). */
+    private Aspect chooseRandomFilteredFromSource(AspectList filter, boolean preserve) {
+        if (level == null) {
+            return null;
+        }
+        int min = preserve ? 1 : 0;
+        java.util.ArrayList<Aspect> valid = new java.util.ArrayList<>();
+        for (Aspect prim : aspects.getAspects()) {
+            if (filter.getAmount(prim) > 0 && aspects.getAmount(prim) > min) {
+                valid.add(prim);
+            }
+        }
+        if (valid.isEmpty()) {
+            return null;
+        }
+        Aspect asp = valid.get(level.random.nextInt(valid.size()));
+        return asp != null && aspects.getAmount(asp) > min ? asp : null;
+    }
+
+    /**
+     * ResearchManager.isResearchComplete analog through ChatGPT's knowledge capability
+     * (read-only): keys NODETAPPER1/2/NODEPRESERVE exist in tree.json but completion is
+     * currently command-driven, so both taps start at the base rate of 1.
+     */
+    private static boolean hasResearch(Player player, String key) {
+        return player.getCapability(ThaumometerKnowledgeProvider.CAPABILITY)
+                .map(knowledge -> knowledge.hasResearch(key))
+                .orElse(false);
     }
 
     @Override
