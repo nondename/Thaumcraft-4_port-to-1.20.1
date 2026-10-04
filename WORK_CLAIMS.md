@@ -17,6 +17,8 @@
 
 ## Активные заявки
 
+- **Флюкс тигля — Codex (2026-10-05): common/alchemy/{ModAlchemy,CrucibleEntity,FluxBlock,FluxSpill}.java, новые ресурсы flux_gas/flux_goo, lang (только флюкс), новый FluxTests.java, docs/CRUCIBLE_SLICE.md.** Выброс газа/жидкого флюкса при очистке, разрушении и переполнении; конечные объёмы без бесконечных источников. Полный taint/мобы отдельный этап.
+
 - ~~**Внешний вид тигля — Codex (2026-10-04): models/block/crucible*.json, client/CrucibleClient.java, новый client/CrucibleRenderer.java, docs/CRUCIBLE_SLICE.md.**~~ Готово: оригинальные PNG по назначению, закрытое дно/внутренние стенки, cutout-корпус отдельно от прозрачной воды, точный уровень/окраска воды. build прошла; визуальная проверка пользователем. Таумономикон следующим этапом.
 
 - ~~**Падение C2 в runClient — Codex (2026-10-04): mod/build.gradle, docs/CLIENT_RUNTIME.md.**~~ По hs_err_pid17428.log: Temurin 17.0.15 падает в C2 CompilerThread2 при компиляции FluidState.tick. Готово: C1 для клиентского dev-запуска Windows, переключатель safeClientJit; build + 26 GameTest прошли, параметр проверен в Forge client run config. Вход в клиентский мир после обхода ещё требует проверки пользователем.
