@@ -1,0 +1,8 @@
+{
+  "feature": "thaumcraft:structure_aura_node",
+  "placement": [
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}
