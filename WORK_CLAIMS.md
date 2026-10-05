@@ -17,7 +17,7 @@
 
 ## Активные заявки
 
-- **Пьедестал по игровым скринам — Codex (2026-10-05): models/block и item/arcane_pedestal.json, textures/block/pedestal*, при необходимости ClientRegistration/InfusionDeviceBlock, scripts/verify-survival-resources.ps1 и docs/INFUSION_ASSET_FIXES.md.** Исправить UV прозрачного атласа, миниатюру и частицы разрушения. Прежний claim закрыт; механики алтаря не меняю.
+- ~~**Пьедестал по игровым скринам — Codex (2026-10-05): models/block и item/arcane_pedestal.json, textures/block/pedestal*, при необходимости ClientRegistration/InfusionDeviceBlock, scripts/verify-survival-resources.ps1 и docs/INFUSION_ASSET_FIXES.md.** Исправить UV прозрачного атласа, миниатюру и частицы разрушения. Прежний claim закрыт; механики алтаря не меняю.~~ Готово: закрытые UV 18 граней, общая модель блока/миниатюры, совпадающая коллизия; opaque particle и явные atlas sprites. build + 48 GameTest и проверка пикселей/PNG прошли. Клиент визуально не запускался; docs/INFUSION_ASSET_FIXES.md.
 
 - ~~**Дополнение к аудиту исследований: ModNetwork.java, новый ResearchActionMessage, client/ResearchScreen.java, scripts/export_modern_research.py.** Стандартный пакет кнопки хранит byte и обрезает действия 1000/2000; нужен отдельный серверный пакет с проверкой открытого меню. Экспорт должен сохранять скрытые условия дерева.~~ Готово: новый проверяемый C2S пакет, протокол 3, экспорт метаданных дерева.
 
@@ -193,4 +193,3 @@ TC4) закрыты позже; порядок и дерево — в `KNOWN_ISS
 - **Клиентский рендер TC4** (`client/renderers/**`, `client/fx/**`) — отдельное
   направление. (Пять guard-тестов оттуда, которые тут числились падающими, на
   2026-07-28 зелёные — пункт в `KNOWN_ISSUES` снят.)
-

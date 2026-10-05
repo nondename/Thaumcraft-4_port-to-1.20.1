@@ -47,4 +47,5 @@ foreach ($id in @('alumentum','nitor','brain','filter')) {
 }
 $null = Get-Content (Join-Path $resourceRoot 'data/thaumcraft/research/progression.json') -Raw | ConvertFrom-Json
 foreach ($lang in @('en_us','ru_ru')) { $null = Get-Content (Join-Path $resourceRoot "assets/thaumcraft/lang/$lang.json") -Raw | ConvertFrom-Json }
+& (Join-Path $PSScriptRoot 'verify-pedestal-resources.ps1') -Repository $Repository
 Write-Output "Validated $($checked.Count) survival models, texture paths, OBJ material, blockstates, loot, language and original PNG hashes."

@@ -1,214 +1,216 @@
 {
+  "parent": "minecraft:block/block",
+  "render_type": "minecraft:solid",
+  "ambientocclusion": false,
   "textures": {
     "side": "thaumcraft:block/pedestal_side",
     "top": "thaumcraft:block/pedestal_top",
-    "particle": "thaumcraft:block/pedestal_side"
+    "particle": "thaumcraft:block/pedestal_top"
   },
   "elements": [
     {
       "from": [
-        2,
         0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        4,
+        16
+      ],
+      "faces": {
+        "up": {
+          "texture": "#top",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "down": {
+          "texture": "#top",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "north": {
+          "texture": "#side",
+          "uv": [
+            0,
+            12,
+            16,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#side",
+          "uv": [
+            0,
+            12,
+            16,
+            16
+          ]
+        },
+        "east": {
+          "texture": "#side",
+          "uv": [
+            0,
+            12,
+            16,
+            16
+          ]
+        },
+        "west": {
+          "texture": "#side",
+          "uv": [
+            0,
+            12,
+            16,
+            16
+          ]
+        }
+      }
+    },
+    {
+      "from": [
+        4,
+        4,
+        4
+      ],
+      "to": [
+        12,
+        12,
+        12
+      ],
+      "faces": {
+        "up": {
+          "texture": "#top",
+          "uv": [
+            4,
+            4,
+            12,
+            12
+          ]
+        },
+        "down": {
+          "texture": "#top",
+          "uv": [
+            4,
+            4,
+            12,
+            12
+          ]
+        },
+        "north": {
+          "texture": "#side",
+          "uv": [
+            4,
+            4,
+            12,
+            12
+          ]
+        },
+        "south": {
+          "texture": "#side",
+          "uv": [
+            4,
+            4,
+            12,
+            12
+          ]
+        },
+        "east": {
+          "texture": "#side",
+          "uv": [
+            4,
+            4,
+            12,
+            12
+          ]
+        },
+        "west": {
+          "texture": "#side",
+          "uv": [
+            4,
+            4,
+            12,
+            12
+          ]
+        }
+      }
+    },
+    {
+      "from": [
+        2,
+        12,
         2
       ],
       "to": [
         14,
-        3,
+        16,
         14
       ],
       "faces": {
         "up": {
           "texture": "#top",
           "uv": [
-            0,
-            0,
-            16,
-            16
+            2,
+            2,
+            14,
+            14
           ]
         },
         "down": {
-          "texture": "#side",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        },
-        "north": {
-          "texture": "#side",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        },
-        "south": {
-          "texture": "#side",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        },
-        "east": {
-          "texture": "#side",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        },
-        "west": {
-          "texture": "#side",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        }
-      }
-    },
-    {
-      "from": [
-        5,
-        3,
-        5
-      ],
-      "to": [
-        11,
-        12,
-        11
-      ],
-      "faces": {
-        "up": {
           "texture": "#top",
           "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        },
-        "down": {
-          "texture": "#side",
-          "uv": [
-            0,
-            0,
-            16,
-            16
+            2,
+            2,
+            14,
+            14
           ]
         },
         "north": {
           "texture": "#side",
           "uv": [
+            2,
             0,
-            0,
-            16,
-            16
+            14,
+            4
           ]
         },
         "south": {
           "texture": "#side",
           "uv": [
+            2,
             0,
-            0,
-            16,
-            16
+            14,
+            4
           ]
         },
         "east": {
           "texture": "#side",
           "uv": [
+            2,
             0,
-            0,
-            16,
-            16
+            14,
+            4
           ]
         },
         "west": {
           "texture": "#side",
           "uv": [
+            2,
             0,
-            0,
-            16,
-            16
-          ]
-        }
-      }
-    },
-    {
-      "from": [
-        1,
-        12,
-        1
-      ],
-      "to": [
-        15,
-        16,
-        15
-      ],
-      "faces": {
-        "up": {
-          "texture": "#top",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        },
-        "down": {
-          "texture": "#side",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        },
-        "north": {
-          "texture": "#side",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        },
-        "south": {
-          "texture": "#side",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        },
-        "east": {
-          "texture": "#side",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        },
-        "west": {
-          "texture": "#side",
-          "uv": [
-            0,
-            0,
-            16,
-            16
+            14,
+            4
           ]
         }
       }
     }
-  ],
-  "parent": "minecraft:block/block"
+  ]
 }

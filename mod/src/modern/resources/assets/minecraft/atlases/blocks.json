@@ -67,6 +67,14 @@
     {
       "resource": "thaumcraft:models/wand_rod_wood",
       "type": "minecraft:single"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "thaumcraft:block/pedestal_top"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "thaumcraft:block/pedestal_side"
     }
   ]
 }

@@ -26,7 +26,7 @@ public final class InfusionDeviceBlock extends BaseEntityBlock {
     @Override public RenderShape getRenderShape(BlockState state) {return kind.equals("matrix") && state.getValue(ACTIVE)?RenderShape.ENTITYBLOCK_ANIMATED:RenderShape.MODEL;}
     @Override public VoxelShape getShape(BlockState state,BlockGetter level,BlockPos pos,CollisionContext context) {
         return switch(kind) {case "jar" -> box(3,0,3,13,14,13);case "alembic" -> box(2,0,2,14,12,14);
-            case "matrix" -> box(2,2,2,14,14,14);case "pedestal" -> Shapes.or(box(2,0,2,14,3,14),box(5,3,5,11,12,11),box(1,12,1,15,16,15));default -> Shapes.block();};
+            case "matrix" -> box(2,2,2,14,14,14);case "pedestal" -> Shapes.or(box(0,0,0,16,4,16),box(4,4,4,12,12,12),box(2,12,2,14,16,14));default -> Shapes.block();};
     }
     @Override public BlockEntity newBlockEntity(BlockPos pos,BlockState state) {
         return switch(kind) {case "jar","alembic" -> new EssentiaStoreEntity(pos,state);case "pedestal" -> new PedestalEntity(pos,state);
