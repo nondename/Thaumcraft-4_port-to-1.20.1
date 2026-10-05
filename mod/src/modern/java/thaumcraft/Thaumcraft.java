@@ -16,12 +16,7 @@ import thaumcraft.common.lib.network.ModNetwork;
 import thaumcraft.common.nodes.ModNodes;
 import thaumcraft.common.sounds.ModSounds;
 
-/**
- * Forge 1.20.1 entry point for the Thaumcraft 4 port.
- *
- * The legacy 1.12.2 implementation remains under src/main and is used as the
- * behavioural reference while systems are migrated into src/modern.
- */
+/** Forge 1.20.1 entry point for the Thaumcraft 4 port. */
 @Mod(Thaumcraft.MODID)
 public final class Thaumcraft {
     public static final String MODID = "thaumcraft";
@@ -34,15 +29,15 @@ public final class Thaumcraft {
         thaumcraft.common.alchemy.ModAlchemyEntities.register(modEventBus);
         thaumcraft.common.alchemy.CrucibleRecipe.init();
         thaumcraft.common.infusion.ModInfusion.register(modEventBus);
+        // Magical Forest item/block definitions must exist before the shared DeferredRegisters attach.
+        thaumcraft.common.blocks.ModMagicalForestContent.init();
         ModItems.register(modEventBus);
-        // Wand part items + WandCap/WandRod registry data (ConfigItems wand section).
         thaumcraft.common.items.wands.ModWandParts.register(modEventBus);
-        // Load node and magical-tree block entries before the shared block DeferredRegister is attached.
         ModNodes.register(modEventBus);
         thaumcraft.common.blocks.ModMagicalTrees.init();
         thaumcraft.common.blocks.ModOres.register(modEventBus);
+        thaumcraft.common.blocks.ModMagicalForestContent.registerBlockEntities(modEventBus);
         thaumcraft.common.research.ModResearch.register(modEventBus);
-        // Arcane worktable: block entity + menu type + the two arcane recipe types.
         thaumcraft.common.blocks.ArcaneWorkbenchBlock.register(modEventBus);
         thaumcraft.common.blocks.ArcaneWorkbenchMenu.register(modEventBus);
         thaumcraft.common.crafting.ModRecipes.register(modEventBus);
@@ -67,7 +62,6 @@ public final class Thaumcraft {
             thaumcraft.common.blocks.ModMagicalTrees.registerAspects();
             thaumcraft.common.world.MagicalForest.registerOverworldBiome();
         });
-        // Modded items only exist after the registry events (ConfigAspects#initModItems).
         event.enqueueWork(thaumcraft.common.config.ConfigAspects::initModItems);
     }
 
@@ -75,13 +69,10 @@ public final class Thaumcraft {
         int total = Aspect.aspects.size();
         int primals = Aspect.getPrimalAspects().size();
         int compounds = Aspect.getCompoundAspects().size();
-
         if (total != 48 || primals != 6 || compounds != 42) {
             throw new IllegalStateException("TC4 aspect registry parity failure: "
                     + total + " total / " + primals + " primal / " + compounds + " compound");
         }
-
-        LOGGER.info("TC4 aspect registry initialized: {} total ({} primal, {} compound)",
-                total, primals, compounds);
+        LOGGER.info("TC4 aspect registry initialized: {} total ({} primal, {} compound)", total, primals, compounds);
     }
 }
