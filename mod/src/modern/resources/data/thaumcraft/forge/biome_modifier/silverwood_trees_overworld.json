@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#thaumcraft:silverwood_natural",
+  "features": "thaumcraft:silverwood_trees_overworld",
+  "step": "vegetal_decoration"
+}
