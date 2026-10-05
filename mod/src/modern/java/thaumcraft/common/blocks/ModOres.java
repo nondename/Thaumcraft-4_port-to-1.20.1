@@ -127,6 +127,14 @@ public final class ModOres {
                     output.accept(thaumcraft.common.blocks.ArcaneWorkbenchBlock.ITEM.get());
                     output.accept(thaumcraft.common.research.ModResearch.SCRIBING_TOOLS.get());
                     output.accept(thaumcraft.common.research.ModResearch.PHIAL.get());
+                    // TC4 magical wood family: both woods, their leaves/saplings and Shimmerleaf.
+                    output.accept(ModMagicalTrees.GREATWOOD_LOG_ITEM.get());
+                    output.accept(ModMagicalTrees.GREATWOOD_LEAVES_ITEM.get());
+                    output.accept(ModMagicalTrees.GREATWOOD_SAPLING_ITEM.get());
+                    output.accept(ModMagicalTrees.SILVERWOOD_LOG_ITEM.get());
+                    output.accept(ModMagicalTrees.SILVERWOOD_LEAVES_ITEM.get());
+                    output.accept(ModMagicalTrees.SILVERWOOD_SAPLING_ITEM.get());
+                    output.accept(ModMagicalTrees.SHIMMERLEAF_ITEM.get());
                     // TC4 BlockCustomOre creative order: cinnabar, six infused stones, amber.
                     output.accept(CINNABAR_ORE.get());
                     SHARDS.values().forEach(item -> output.accept(item.get()));
