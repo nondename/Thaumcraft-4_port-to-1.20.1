@@ -29,7 +29,6 @@ public final class Thaumcraft {
         thaumcraft.common.alchemy.ModAlchemyEntities.register(modEventBus);
         thaumcraft.common.alchemy.CrucibleRecipe.init();
         thaumcraft.common.infusion.ModInfusion.register(modEventBus);
-        // Magical Forest item/block definitions must exist before the shared DeferredRegisters attach.
         thaumcraft.common.blocks.ModMagicalForestContent.init();
         ModItems.register(modEventBus);
         thaumcraft.common.items.wands.ModWandParts.register(modEventBus);
@@ -44,6 +43,7 @@ public final class Thaumcraft {
         thaumcraft.common.world.InfusedOreFeature.register(modEventBus);
         thaumcraft.common.world.AuraNodeFeature.register(modEventBus);
         thaumcraft.common.world.MagicalTreeFeature.register(modEventBus);
+        thaumcraft.common.world.MagicalForestDecoratorFeature.register(modEventBus);
         modEventBus.addListener(this::commonSetup);
         ModSounds.register(modEventBus);
         modEventBus.addListener(ThaumometerKnowledgeEvents::registerCapabilities);
@@ -52,8 +52,7 @@ public final class Thaumcraft {
         validateAspectRegistry();
         ConfigAspects.init();
         MinecraftForge.EVENT_BUS.addListener(AspectCommands::onRegisterCommands);
-        LOGGER.info("Thaumcraft 4 port loaded on Minecraft 1.20.1 with {} object aspect tags",
-                ThaumcraftApi.getRegisteredObjectTagCount());
+        LOGGER.info("Thaumcraft 4 port loaded on Minecraft 1.20.1 with {} object aspect tags", ThaumcraftApi.getRegisteredObjectTagCount());
     }
 
     private void commonSetup(net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent event) {
@@ -70,8 +69,7 @@ public final class Thaumcraft {
         int primals = Aspect.getPrimalAspects().size();
         int compounds = Aspect.getCompoundAspects().size();
         if (total != 48 || primals != 6 || compounds != 42) {
-            throw new IllegalStateException("TC4 aspect registry parity failure: "
-                    + total + " total / " + primals + " primal / " + compounds + " compound");
+            throw new IllegalStateException("TC4 aspect registry parity failure: " + total + " total / " + primals + " primal / " + compounds + " compound");
         }
         LOGGER.info("TC4 aspect registry initialized: {} total ({} primal, {} compound)", total, primals, compounds);
     }
