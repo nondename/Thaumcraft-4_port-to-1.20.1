@@ -10,11 +10,13 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import thaumcraft.Thaumcraft;
@@ -191,9 +193,36 @@ public final class MagicalTreeFeature extends Feature<NoneFeatureConfiguration> 
         BlockPos spawnerPos = origin.below();
         level.setBlock(spawnerPos, Blocks.SPAWNER.defaultBlockState(), 3);
         if (level.getBlockEntity(spawnerPos) instanceof SpawnerBlockEntity spawner) {
-            spawner.setEntityId(EntityType.SPIDER, random);
+            spawner.setEntityId(EntityType.CAVE_SPIDER, random);
             spawner.setChanged();
+
+            for (int i = 0; i < 50; i++) {
+                BlockPos webPos = origin.offset(
+                        -7 + random.nextInt(14),
+                        random.nextInt(10),
+                        -7 + random.nextInt(14));
+                if (level.getBlockState(webPos).isAir() && isTouchingGreatwood(level, webPos)) {
+                    level.setBlock(webPos, Blocks.COBWEB.defaultBlockState(), 3);
+                }
+            }
+
+            BlockPos chestPos = origin.below(2);
+            level.setBlock(chestPos, Blocks.CHEST.defaultBlockState(), 3);
+            if (level.getBlockEntity(chestPos) instanceof ChestBlockEntity chest) {
+                chest.setLootTable(BuiltInLootTables.SIMPLE_DUNGEON, random.nextLong());
+                chest.setChanged();
+            }
         }
+    }
+
+    private static boolean isTouchingGreatwood(WorldGenLevel level, BlockPos pos) {
+        for (Direction direction : Direction.values()) {
+            BlockState state = level.getBlockState(pos.relative(direction));
+            if (state.is(ModMagicalTrees.GREATWOOD_LEAVES.get()) || state.is(ModMagicalTrees.GREATWOOD_LOG.get())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private static boolean generateSilverwood(WorldGenLevel level, BlockPos origin, RandomSource random,
