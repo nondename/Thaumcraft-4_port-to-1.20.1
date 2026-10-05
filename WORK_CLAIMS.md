@@ -17,6 +17,8 @@
 
 ## Активные заявки
 
+- **Доработки ревизии — Codex (2026-10-05): client/{ResearchEntryScreen,BookRecipeRenderer,BookRecipeCatalog}.java, common/research/ResearchNotes.java и ResearchMenu.java, common/items/ItemAuraNode.java и tools/ThaumometerTargets.java, common/commands/AspectCommands.java, lang EN/RU, modernTest и scripts проверки рецептов, docs аудитов.** Все существующие рецепты в книге, полные исходные аспекты записок, локализация. Руды только демонстрация существующих PNG, без правок; полный каталог исследований сохраняется. Лес/порчу не трогаю.
+
 - ~~**Ревизия порта — Codex (2026-10-05): только новый docs/PORT_AUDIT_2026-10-05.md.**~~ Завершена: код/ресурсы проверены read-only, сводка и результаты 48 GameTest записаны. Магический лес — ChatGPT, tained_porcha — OpenCode по сообщению пользователя.
 
 - ~~**Возврат оригинального таумономикона — Codex (2026-10-05): client/BookSkin.java, ResearchTreeScreen.java, ResearchEntryScreen.java, ThaumonomiconScreen.java и docs/THAUMONOMICON_UI.md.** По прямому поручению пользователя: отменить редизайн, вернуть исходные TC4 фон, рамки, закладки и стрелки; сохранить исправленные PNG, IMG и реальные рецепты.~~ Готово: исходная карта/рамки/закладки и пергамент/стрелки TC4 возвращены; экспериментальный skin убран. build, 193 PNG, 24 IMG crop и 923 EN/RU ключа проверены. Игровая оценка пользователем; docs/THAUMONOMICON_UI.md.
