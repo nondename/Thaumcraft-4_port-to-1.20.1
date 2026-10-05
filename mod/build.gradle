@@ -174,6 +174,31 @@ tasks.register('validateResearchIcons') {
                 throw new GradleException("Missing research item model ${node.key}: ${node.item}")
         }
         logger.lifecycle("Validated ${nodes.count { it.icon }} research PNGs.")
+        def illustrations = new HashSet<String>()
+        ['en_us', 'ru_ru'].each { language ->
+            def strings = new groovy.json.JsonSlurper().parse(file("src/modern/resources/assets/thaumcraft/lang/${language}.json"))
+            strings.values().each { value ->
+                (value =~ /<IMG>(.*?)<\/IMG>/).each { match -> illustrations.add(match[1]) }
+            }
+        }
+        illustrations.each { spec ->
+            def p = spec.split(':')
+            def texture = file("src/modern/resources/assets/${p[0]}/${p[1]}")
+            if (!texture.isFile()) throw new GradleException("Missing book illustration: ${spec}")
+            def image = javax.imageio.ImageIO.read(texture)
+            if (image == null) throw new GradleException("Invalid book illustration: ${spec}")
+            def u = p[2] as int; def v = p[3] as int
+            def w = p[4] as int; def h = p[5] as int
+            if (image.width < 256 && w > image.width) {
+                u = (int)(u * image.width / 256); v = (int)(v * image.height / 256)
+                w = Math.round(w * image.width / 256F); h = Math.round(h * image.height / 256F)
+            }
+            if (u < 0 || v < 0 || w <= 0 || h <= 0 || u+w > image.width || v+h > image.height)
+                throw new GradleException("Book illustration UV outside PNG: ${spec}")
+        }
+        if (!file('src/modern/resources/assets/thaumcraft/textures/gui/gui_researchbook_overlay.png').isFile())
+            throw new GradleException('Missing original recipe page overlay')
+        logger.lifecycle("Validated ${illustrations.size()} book illustration crops.")
     }
 }
 

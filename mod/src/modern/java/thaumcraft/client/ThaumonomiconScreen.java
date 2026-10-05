@@ -14,15 +14,15 @@ import thaumcraft.common.blocks.ModOres;
 import thaumcraft.common.lib.capabilities.ThaumometerKnowledgeProvider;
 import java.util.List;
 
-/** Readable starting chapters and the player's discovered aspect catalogue. */
+/** The player's discovered aspect catalogue; recipe entries use ResearchEntryScreen. */
 public final class ThaumonomiconScreen extends Screen {
-    private int page;
+    private int page = 3;
     private Screen parent;
     private int left, top;
     private float uiScale = 1;
     private Button previous, next;
     public ThaumonomiconScreen() { super(Component.translatable("item.thaumcraft.thaumonomicon")); }
-    public ThaumonomiconScreen(Screen parent, int page) { this(); this.parent = parent; this.page = page; }
+    public ThaumonomiconScreen(Screen parent, int page) { this(); this.parent = parent; this.page = Math.max(3, page); }
     @Override public void onClose() { minecraft.setScreen(parent); }
     public static void open() { Minecraft.getInstance().setScreen(new ResearchTreeScreen()); }
     private List<Aspect> known() {
@@ -43,25 +43,9 @@ public final class ThaumonomiconScreen extends Screen {
         g.pose().pushPose();
         g.pose().scale(uiScale, uiScale, 1);
         BookSkin.draw(g,left,top,360,252);
-        previous.active = page > 0;
+        previous.active = page > 3;
         next.active = page < lastPage();
-        if (page < 3) {
-            paragraph(g, Component.translatable("tc.book.chapter." + page), left + 23, top + 20, 142);
-            paragraph(g, Component.translatable("tc.book.body." + page), left + 23, top + 43, 142);
-            paragraph(g, Component.translatable("tc.book.recipe." + page), left + 196, top + 20, 140);
-            if (page == 0) {
-                grid(g, new ItemStack[]{stack(Items.IRON_NUGGET),stack(Items.IRON_NUGGET),stack(Items.IRON_NUGGET),stack(Items.IRON_NUGGET),ItemStack.EMPTY,stack(Items.IRON_NUGGET)}, top + 90);
-                g.renderItem(new ItemStack(thaumcraft.common.items.wands.ModWandParts.CAP_IRON.get()), left + 295, top + 112);
-                grid(g, new ItemStack[]{ItemStack.EMPTY,ItemStack.EMPTY,new ItemStack(thaumcraft.common.items.wands.ModWandParts.CAP_IRON.get()),ItemStack.EMPTY,stack(Items.STICK),ItemStack.EMPTY,new ItemStack(thaumcraft.common.items.wands.ModWandParts.CAP_IRON.get())}, top + 151);
-                g.renderItem(new ItemStack(ModItems.WAND.get()), left + 295, top + 173);
-            } else if (page == 1) {
-                grid(g, new ItemStack[]{ItemStack.EMPTY,new ItemStack(ModOres.SHARDS.get("air").get()),ItemStack.EMPTY,stack(Items.IRON_INGOT),stack(Items.GLASS),stack(Items.IRON_INGOT),ItemStack.EMPTY,new ItemStack(ModOres.SHARDS.get("water").get())}, top + 132);
-                g.renderItem(new ItemStack(ModItems.THAUMOMETER.get()), left + 295, top + 154);
-            } else {
-                grid(g, new ItemStack[]{stack(Items.OAK_SLAB),stack(Items.OAK_SLAB),stack(Items.OAK_SLAB),stack(Items.OAK_PLANKS),ItemStack.EMPTY,stack(Items.OAK_PLANKS)}, top + 151);
-                g.renderItem(new ItemStack(thaumcraft.common.research.ModResearch.TABLE_ITEM.get()), left + 295, top + 173);
-            }
-        } else {
+        {
             g.drawString(font, Component.translatable("tc.book.aspects"), left + 24, top + 17, 0x423024, false);
             var known = known();
             var knowledge = minecraft.player.getCapability(ThaumometerKnowledgeProvider.CAPABILITY).orElse(null);
@@ -84,7 +68,7 @@ public final class ThaumonomiconScreen extends Screen {
                 g.pose().popPose();
             }
         }
-        g.drawString(font, (page + 1) + " / " + (lastPage() + 1), left + 90, top + 232, 0x776B55,false);
+        g.drawString(font, (page - 2) + " / " + (lastPage() - 2), left + 90, top + 232, 0x776B55,false);
         super.render(g, (int)(mouseX / uiScale), (int)(mouseY / uiScale), partialTick);
         g.pose().popPose();
     }
@@ -93,20 +77,6 @@ public final class ThaumonomiconScreen extends Screen {
     }
     @Override public boolean mouseReleased(double x, double y, int button) {
         return super.mouseReleased(x / uiScale, y / uiScale, button);
-    }
-    private static ItemStack stack(net.minecraft.world.level.ItemLike item) { return new ItemStack(item); }
-    private void grid(GuiGraphics g, ItemStack[] items, int y) {
-        for (int i = 0; i < 9; i++) {
-            int x = left + 202 + (i % 3) * 20, row = y + (i / 3) * 20;
-            g.fill(x, row, x + 18, row + 18, 0x30543A22);
-            if (i < items.length) g.renderItem(items[i], x + 1, row + 1);
-        }
-    }
-    private void paragraph(GuiGraphics g, Component text, int x, int y, int maxWidth) {
-        for (var line : font.split(text, maxWidth)) {
-            g.drawString(font, line, x, y, 0x423024, false);
-            y += 10;
-        }
     }
     @Override public boolean isPauseScreen() { return false; }
 }

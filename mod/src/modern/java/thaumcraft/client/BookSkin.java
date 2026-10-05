@@ -11,22 +11,19 @@ final class BookSkin {
     private BookSkin() {}
     static void draw(GuiGraphics g,int x,int y,int width,int height) {
         g.fill(x+4,y+5,x+width+4,y+height+5,0x65000000);
-        // Vanilla's complete leather binding, stitching and paper corners on both leaves.
-        // Reverse UVs, not geometry: a negative pose scale culls the right-hand leaf.
-        g.fill(x+3,y+4,x+width-3,y+height-3,0xFF493022);
-        g.blit(VANILLA_BOOK,x,y,width/2,height,20,1,148,180,256,256);
-        g.blit(VANILLA_BOOK,x+width/2,y,width-width/2,height,168,1,-148,180,256,256);
+        // One vanilla cover around the entire spread; preserve corner pixels with nine slices.
+        int[] sourceX={20,32,156}, sourceY={1,13,169}, sourceW={12,124,12}, sourceH={12,156,12};
+        int[] destX={x,x+12,x+width-12},destY={y,y+12,y+height-12};
+        int[] destW={12,width-24,12},destH={12,height-24,12};
+        for(int row=0;row<3;row++)for(int col=0;col<3;col++)
+            g.blit(VANILLA_BOOK,destX[col],destY[row],destW[col],destH[row],sourceX[col],sourceY[row],sourceW[col],sourceH[row],256,256);
+        g.setColor(0.88F,0.83F,0.72F,1);
+        g.blit(VANILLA_BOOK,x+12,y+12,width-24,height-24,32,10,122,163,256,256);
+        g.setColor(1,1,1,1);
         int fold=x+width/2;
-        g.fill(fold-4,y+8,fold-2,y+height-10,0xFFE3D4AF);
-        g.fill(fold-2,y+8,fold,y+height-10,0xFFCDBA92);
-        g.fill(fold,y+8,fold+1,y+height-10,0xFF9A8059);
-        g.fill(fold+1,y+8,fold+3,y+height-10,0xFFE9DCBF);
-        // Small brass corners on the leather, like a well-used grimoire.
-        for(int corner : new int[]{x+3,x+width-7}) {
-            g.fill(corner,y+5,corner+4,y+6,0xFFB9904B);
-            g.fill(corner,y+5,corner+1,y+11,0xFFB9904B);
-            g.fill(corner,y+height-8,corner+4,y+height-7,0xFFB9904B);
-        }
+        g.fill(fold-3,y+12,fold-1,y+height-12,0xFFCCBB97);
+        g.fill(fold-1,y+12,fold+1,y+height-12,0xFF9B825D);
+        g.fill(fold+1,y+12,fold+3,y+height-12,0xFFD5C6A5);
     }
     static void caption(GuiGraphics g,net.minecraft.client.gui.Font font,Component text,int x,int y,int width,float size) {
         g.pose().pushPose();g.pose().translate(x,y,0);g.pose().scale(size,size,1);
@@ -37,7 +34,7 @@ final class BookSkin {
         return new Button(x,y,width,16,label,press,supplier -> supplier.get()) {
             @Override public void renderWidget(GuiGraphics g,int mx,int my,float tick) {
                 var font=net.minecraft.client.Minecraft.getInstance().font;
-                int color=isHoveredOrFocused()?0xFF8E6840:0xFF6C6150;
+                int color=isHoveredOrFocused()?0xFF713C16:0xFF392516;
                 String fitted=font.plainSubstrByWidth(getMessage().getString(),getWidth()-8);
                 int tx=getX()+(getWidth()-font.width(fitted))/2;
                 g.drawString(font,fitted,tx,getY()+4,color,false);
@@ -49,7 +46,7 @@ final class BookSkin {
         return new Button(x,y,24,18,Component.translatable(next?"tc.book.next_page":"tc.book.previous_page"),press,supplier -> supplier.get()) {
             @Override public void renderWidget(GuiGraphics g,int mouseX,int mouseY,float tick) {
                 if(!active)return;
-                int ink=isHoveredOrFocused()?0xFFAA793B:0xFF70533A;
+                int ink=isHoveredOrFocused()?0xFF965015:0xFF392516;
                 int cx=getX()+12,cy=getY()+9;
                 g.fill(getX()+5,cy-1,getX()+19,cy+2,ink);
                 for(int i=0;i<6;i++) {

@@ -1,4 +1,11 @@
 {
+  "recipe.type.workbench": "Верстак",
+  "recipe.type.workbenchshapeless": "Верстак (без формы)",
+  "recipe.type.arcane": "Магический верстак",
+  "recipe.type.crucible": "Тигель",
+  "recipe.type.infusion": "Наполнение",
+  "tc.book.instability": "Нестабильность: %s",
+
   "item.thaumcraft.thaumometer": "Таумометр",
   "tc.scan.no_aspects": "В объекте %s аспекты не найдены",
   "tc.scan.unknown_target": "Для этого блока ещё не зарегистрированы аспекты",
@@ -696,8 +703,8 @@
   "tc.research_page.ELDRITCHMINOR.1": "Вы это ясно осознали. Где другие видят хаос, Вы видите закономерность... Странную и тревожную закономерность. Что-то шевелится в самых темных уголках вселенной.<BR>Вы пытались объяснить это другим, но получаете только странные взгляды в ответ. Неважно, Вы однажды им покажете.<BR>Вы покажете им всё.",
   "tc.research_name.ELDRITCHMAJOR": "Откровение древности",
   "tc.research_text.ELDRITCHMAJOR": "Я вижу край бесконечности",
-  "tc.research_page.ELDRITCHMAJOR.1": "Завеса поднята - дверь в моей голове открыта.<BR>Когда я смотрю - я вижу удивление. Нет, не удивление. §mЧто я вижу, это§r<BR>§oЧто я вижу, это.... Я вижу... Вижу.. Я вижу... жу.. Я§r<IMG>thaumcraft:textures/misc/eldritchajor1.png:0:255:255:255:.5</IMG>",
-  "tc.research_page.ELDRITCHMAJOR.2": "<IMG>thaumcraft:textures/misc/eldritchajor2.png:0:255:255:255:.5</IMG><BR><BR>Кто это написал?",
+  "tc.research_page.ELDRITCHMAJOR.1": "Завеса поднята - дверь в моей голове открыта.<BR>Когда я смотрю - я вижу удивление. Нет, не удивление. §mЧто я вижу, это§r<BR>§oЧто я вижу, это.... Я вижу... Вижу.. Я вижу... жу.. Я§r<IMG>thaumcraft:textures/misc/eldritchajor1.png:0:0:255:255:.5</IMG>",
+  "tc.research_page.ELDRITCHMAJOR.2": "<IMG>thaumcraft:textures/misc/eldritchajor2.png:0:0:255:255:.5</IMG><BR><BR>Кто это написал?",
   "tc.research_name.VOIDMETAL": "Пустотный металл",
   "tc.research_text.VOIDMETAL": "Странно, должно быть холоднее...",
   "tc.research_page.VOIDMETAL.1": "Наполнив металл магией, Вы создали таум-металл. Стоящее открытие, но пора идти дальше.<BR>Странный, полузапомненный сон направил Вас в сторону нового открытия... Чего-то... Другого... Что, если наполнить металл чем-то более сильным, чем магия? Тем, откуда эта магия берётся - межзвёздные Тьма и Пустота.<BR>Полученный металл необычайно гладкий и тёплый на ощупь. Податливый как золото, но",

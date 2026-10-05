@@ -304,7 +304,6 @@ public final class ResearchTreeScreen extends Screen {
             }
             if (dragDistance < 4 && hovered != null && isUnlocked(hovered)) {
                 int chapter = switch (hovered.key()) {
-                    case "BASICTHAUMATURGY", "THAUMONOMICON" -> 0;
                     case "ASPECTS" -> 3;
                     default -> -1;
                 };

@@ -1,4 +1,11 @@
 {
+  "recipe.type.workbench": "Crafting",
+  "recipe.type.workbenchshapeless": "Shapeless crafting",
+  "recipe.type.arcane": "Arcane crafting",
+  "recipe.type.crucible": "Crucible",
+  "recipe.type.infusion": "Infusion",
+  "tc.book.instability": "Instability: %s",
+
   "item.thaumcraft.thaumometer": "Thaumometer",
   "tc.scan.no_aspects": "No aspects found in %s",
   "tc.scan.unknown_target": "No aspect data is registered for this block",
@@ -696,8 +703,8 @@
   "tc.research_page.ELDRITCHMINOR.1": "It has suddenly become clear to you. Where others see chaos, you occasionally catch a glimpse of a pattern... a very strange and disturbing pattern. Something stirs in the darkest corners of the universe.<BR>You have tried to explain it to others, but received only strange looks in return. No matter, you will show them someday.<BR>You will show them all.",
   "tc.research_name.ELDRITCHMAJOR": "Eldritch Revelation",
   "tc.research_text.ELDRITCHMAJOR": "I have seen beyond the bounds of infinity",
-  "tc.research_page.ELDRITCHMAJOR.1": "A veil has been lifted - a door opened in my mind.<BR> When I look through I see wonders. No, not wonders. §mWhat I see is§r<BR>§oWhat I see is I see i see I sEee i§r<IMG>thaumcraft:textures/misc/eldritchajor1.png:0:255:255:255:.5</IMG>",
-  "tc.research_page.ELDRITCHMAJOR.2": "<IMG>thaumcraft:textures/misc/eldritchajor2.png:0:255:255:255:.5</IMG><BR><BR>Who wrote this?",
+  "tc.research_page.ELDRITCHMAJOR.1": "A veil has been lifted - a door opened in my mind.<BR> When I look through I see wonders. No, not wonders. §mWhat I see is§r<BR>§oWhat I see is I see i see I sEee i§r<IMG>thaumcraft:textures/misc/eldritchajor1.png:0:0:255:255:.5</IMG>",
+  "tc.research_page.ELDRITCHMAJOR.2": "<IMG>thaumcraft:textures/misc/eldritchajor2.png:0:0:255:255:.5</IMG><BR><BR>Who wrote this?",
   "tc.research_name.VOIDMETAL": "Void metal",
   "tc.research_text.VOIDMETAL": "Strange, it should feel cold...",
   "tc.research_page.VOIDMETAL.1": "By infusing magic into metal you had managed to create Thaumium. It was a worthy discovery, but the time has come to leave thaumium to amateurs and dabblers.<BR>A strange and half-remembered dream has given you the urge to try something... different. What if you infuse metal with more than just magic, but with the very essence where magic is drawn from: Darkness and the Void that dwells between the stars.<BR>The resulting metal is disturbingly slick and warm to the touch. It is almost as soft as gold making it easy to work, but",
