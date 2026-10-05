@@ -19,13 +19,17 @@ import thaumcraft.common.blocks.ModMagicalTrees;
 import thaumcraft.common.nodes.AuraNodeBlockEntity;
 import thaumcraft.common.nodes.ModNodes;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Procedural ports of TC4 WorldGenGreatwoodTrees and WorldGenSilverwoodTrees.
- * The generators intentionally keep the old scale and silhouettes instead of mapping them onto
- * vanilla oak/birch configured trees.
+ * Keeps the legacy silhouettes instead of mapping them onto vanilla tree features.
  */
 public final class MagicalTreeFeature extends Feature<NoneFeatureConfiguration> {
     private enum Kind { GREATWOOD, SILVERWOOD }
+
+    private record GreatwoodLeafNode(BlockPos pos, int branchBaseY) {}
 
     private static final DeferredRegister<Feature<?>> FEATURES =
             DeferredRegister.create(Registries.FEATURE, Thaumcraft.MODID);
@@ -54,59 +58,129 @@ public final class MagicalTreeFeature extends Feature<NoneFeatureConfiguration> 
     }
 
     private static boolean generateGreatwood(WorldGenLevel level, BlockPos origin, RandomSource random) {
-        if (!canRoot(level, origin) || origin.getY() + 30 >= level.getMaxBuildHeight()) {
+        if (!canRoot(level, origin)) {
             return false;
         }
 
-        // TC4 chooses 11..21 for each greatwood section, with trunk height ~= 61.8% of that.
-        int firstLimit = 11 + random.nextInt(11);
-        int firstTrunk = Math.max(6, (int) (firstLimit * 0.618D));
-        int secondLimit = 11 + random.nextInt(11);
-        int secondTrunk = Math.max(6, (int) (secondLimit * 0.618D));
+        // TC4: heightLimitLimit=11 and heightLimit = 11 + random.nextInt(11).
+        int heightLimit = 11 + random.nextInt(11);
+        int trunkHeight = Math.max(1, (int) (heightLimit * 0.618D));
 
-        if (!hasVerticalRoom(level, origin, firstTrunk + secondTrunk + 8, 3)) {
+        // TC4 performs a second, wider pass starting at the top of the first trunk.
+        int maxY = origin.getY() + trunkHeight + heightLimit + 4;
+        if (maxY >= level.getMaxBuildHeight() || !hasTrunkRoom(level, origin, trunkHeight * 2 + 2)) {
             return false;
         }
 
-        growGreatwoodSection(level, origin, firstLimit, firstTrunk, random);
-        BlockPos upper = origin.above(firstTrunk);
-        growGreatwoodSection(level, upper, secondLimit, secondTrunk, random);
+        growGreatwoodPass(level, origin, heightLimit, 1.20D, random);
+        growGreatwoodPass(level, origin.above(trunkHeight), heightLimit, 1.66D, random);
         return true;
     }
 
-    private static void growGreatwoodSection(WorldGenLevel level, BlockPos base, int heightLimit, int trunkHeight,
-                                             RandomSource random) {
+    /**
+     * Faithful 1.20.1 adaptation of TC4's generateLeafNodeList/generateLeaves/
+     * generateLeafNodeBases/generateTrunk sequence.
+     */
+    private static void growGreatwoodPass(WorldGenLevel level, BlockPos base, int heightLimit,
+                                          double scaleWidth, RandomSource random) {
         BlockState log = ModMagicalTrees.GREATWOOD_LOG.get().defaultBlockState();
         BlockState leaves = ModMagicalTrees.GREATWOOD_LEAVES.get().defaultBlockState();
 
-        // The legacy generator used a 2x2 trunk and then connected multiple leaf nodes back into it.
+        final int leafDistanceLimit = 4;
+        final int trunkHeight = Math.max(1, (int) (heightLimit * 0.618D));
+        final int nodesPerLayer = Math.max(1,
+                (int) (1.382D + Math.pow(0.9D * heightLimit / 13.0D, 2.0D)));
+
+        List<GreatwoodLeafNode> nodes = new ArrayList<>();
+
+        // Original generator always seeds one central leaf node at heightLimit - 4.
+        int topNodeY = heightLimit - leafDistanceLimit;
+        nodes.add(new GreatwoodLeafNode(base.above(topNodeY), trunkHeight));
+
+        for (int relY = topNodeY - 1; relY >= 0; relY--) {
+            float layer = greatwoodLayerSize(heightLimit, relY);
+            if (layer < 0.0F) {
+                continue;
+            }
+
+            for (int i = 0; i < nodesPerLayer; i++) {
+                double radialDistance = scaleWidth * layer * (random.nextFloat() + 0.328D);
+                double angle = random.nextFloat() * Math.PI * 2.0D;
+                int dx = Mth.floor(radialDistance * Math.sin(angle) + 0.5D);
+                int dz = Mth.floor(radialDistance * Math.cos(angle) + 0.5D);
+
+                BlockPos nodePos = base.offset(dx, relY, dz);
+                BlockPos nodeTop = nodePos.above(leafDistanceLimit);
+                if (!lineClearForTree(level, nodePos, nodeTop)) {
+                    continue;
+                }
+
+                double horizontalDistance = Math.sqrt((double) dx * dx + (double) dz * dz);
+                int branchBaseY = (int) (relY - horizontalDistance * 0.38D);
+                branchBaseY = Math.min(branchBaseY, trunkHeight);
+
+                BlockPos branchBase = base.above(branchBaseY);
+                if (!lineClearForTree(level, branchBase, nodePos)) {
+                    continue;
+                }
+
+                nodes.add(new GreatwoodLeafNode(nodePos, branchBaseY));
+            }
+        }
+
+        // TC4 leaf nodes are four circular layers with radii 2,3,3,2.
+        for (GreatwoodLeafNode node : nodes) {
+            generateGreatwoodLeafNode(level, node.pos(), leaves);
+        }
+
+        // Branches only exist for nodes whose base begins above 20% of heightLimit.
+        for (GreatwoodLeafNode node : nodes) {
+            if (node.branchBaseY() >= heightLimit * 0.20D) {
+                connect(level, base.above(node.branchBaseY()), node.pos(), log);
+            }
+        }
+
+        // 2x2 trunk, exactly as TC4 trunkSize=2.
         for (int y = 0; y <= trunkHeight; y++) {
             setLog(level, base.offset(0, y, 0), log, Direction.Axis.Y);
             setLog(level, base.offset(1, y, 0), log, Direction.Axis.Y);
             setLog(level, base.offset(0, y, 1), log, Direction.Axis.Y);
             setLog(level, base.offset(1, y, 1), log, Direction.Axis.Y);
         }
+    }
 
-        int start = Math.max(4, (int) (heightLimit * 0.30F));
-        int nodeCount = Math.max(5, heightLimit / 2);
-        BlockPos trunkCenter = base.offset(0, trunkHeight, 0);
-
-        for (int i = 0; i < nodeCount; i++) {
-            int y = start + random.nextInt(Math.max(1, heightLimit - start));
-            float half = heightLimit / 2.0F;
-            float dy = half - y;
-            float layer = Math.abs(dy) >= half ? 0.0F : (float) Math.sqrt(half * half - dy * dy) * 0.5F;
-            double radius = 1.2D * layer * (random.nextFloat() + 0.328D);
-            double angle = random.nextDouble() * Math.PI * 2.0D;
-            int dx = Mth.floor(radius * Math.sin(angle) + 0.5D);
-            int dz = Mth.floor(radius * Math.cos(angle) + 0.5D);
-            BlockPos node = base.offset(dx, y, dz);
-
-            leafBlob(level, node, leaves, 3, 4, random);
-            connect(level, trunkCenter.offset(0, Math.min(0, y - trunkHeight), 0), node, log);
+    private static float greatwoodLayerSize(int heightLimit, int relY) {
+        if (relY < heightLimit * 0.30D) {
+            return -1.618F;
         }
 
-        leafBlob(level, base.above(heightLimit - 4), leaves, 3, 4, random);
+        float half = heightLimit / 2.0F;
+        float delta = half - relY;
+        float radius;
+        if (delta == 0.0F) {
+            radius = half;
+        } else if (Math.abs(delta) >= half) {
+            radius = 0.0F;
+        } else {
+            radius = (float) Math.sqrt(half * half - delta * delta);
+        }
+        return radius * 0.5F;
+    }
+
+    private static void generateGreatwoodLeafNode(WorldGenLevel level, BlockPos base, BlockState leaves) {
+        for (int dy = 0; dy < 4; dy++) {
+            float radius = (dy == 0 || dy == 3) ? 2.0F : 3.0F;
+            int extent = (int) (radius + 0.618D);
+            for (int dx = -extent; dx <= extent; dx++) {
+                for (int dz = -extent; dz <= extent; dz++) {
+                    double dist = Math.pow(Math.abs(dx) + 0.5D, 2.0D)
+                            + Math.pow(Math.abs(dz) + 0.5D, 2.0D);
+                    if (dist <= radius * radius) {
+                        setLeaf(level, base.offset(dx, dy, dz), leaves);
+                    }
+                }
+            }
+        }
     }
 
     private static boolean generateSilverwood(WorldGenLevel level, BlockPos origin, RandomSource random) {
@@ -114,8 +188,8 @@ public final class MagicalTreeFeature extends Feature<NoneFeatureConfiguration> 
             return false;
         }
 
-        // Saplings in TC4 used min=7/random=5 -> 7..11 blocks.
-        int height = 7 + random.nextInt(5);
+        // TC4 default constructor: minHeight=8, extraHeight=5 -> 8..12.
+        int height = 8 + random.nextInt(5);
         if (!hasVerticalRoom(level, origin, height + 5, 5)) {
             return false;
         }
@@ -123,6 +197,7 @@ public final class MagicalTreeFeature extends Feature<NoneFeatureConfiguration> 
         BlockState log = ModMagicalTrees.SILVERWOOD_LOG.get().defaultBlockState();
         BlockState leaves = ModMagicalTrees.SILVERWOOD_LEAVES.get().defaultBlockState();
 
+        // Exact legacy canopy volume.
         int start = height - 5;
         int end = height + 3 + random.nextInt(3);
         for (int y = start; y <= end; y++) {
@@ -137,9 +212,8 @@ public final class MagicalTreeFeature extends Feature<NoneFeatureConfiguration> 
             }
         }
 
-        // Cross-shaped TC4 trunk. The centre occasionally becomes metadata-2 silverwood-knot,
-        // which contains a real PURE aura node. The original chance starts at height*1.5 and gets
-        // less likely after each knot, while never placing knots in adjacent Y levels.
+        // Cross-shaped TC4 trunk. The centre can become the metadata-2 silverwood knot,
+        // represented here by a real AuraNodeBlockEntity.
         int nodeChance = Math.max(1, (int) (height * 1.5F));
         boolean lastWasNode = false;
         for (int y = 0; y < height; y++) {
@@ -167,7 +241,7 @@ public final class MagicalTreeFeature extends Feature<NoneFeatureConfiguration> 
         }
         setLog(level, origin.above(height), log, Direction.Axis.Y);
 
-        // Buttress roots from the legacy generator.
+        // TC4 buttress roots.
         int[][] diagonals = {{-1, -1}, {1, 1}, {-1, 1}, {1, -1}};
         for (int[] d : diagonals) {
             setLog(level, origin.offset(d[0], 0, d[1]), log, Direction.Axis.Y);
@@ -179,6 +253,7 @@ public final class MagicalTreeFeature extends Feature<NoneFeatureConfiguration> 
                 setLog(level, origin.offset(d[0], height - 5, d[1]), log, Direction.Axis.Y);
             }
         }
+
         setLog(level, origin.offset(-2, 0, 0), log, Direction.Axis.X);
         setLog(level, origin.offset(2, 0, 0), log, Direction.Axis.X);
         setLog(level, origin.offset(0, 0, -2), log, Direction.Axis.Z);
@@ -201,15 +276,12 @@ public final class MagicalTreeFeature extends Feature<NoneFeatureConfiguration> 
                 || soil.is(Blocks.PODZOL) || soil.is(Blocks.ROOTED_DIRT) || soil.is(Blocks.MOSS_BLOCK);
     }
 
-    private static boolean hasVerticalRoom(WorldGenLevel level, BlockPos origin, int height, int radius) {
-        BlockPos.MutableBlockPos cursor = new BlockPos.MutableBlockPos();
+    private static boolean hasTrunkRoom(WorldGenLevel level, BlockPos origin, int height) {
         for (int y = 0; y <= height; y++) {
-            int r = y < 2 ? 1 : radius;
-            for (int dx = -r; dx <= r; dx++) {
-                for (int dz = -r; dz <= r; dz++) {
-                    cursor.set(origin.getX() + dx, origin.getY() + y, origin.getZ() + dz);
-                    BlockState state = level.getBlockState(cursor);
-                    if (!state.isAir() && !state.canBeReplaced() && !state.is(net.minecraft.tags.BlockTags.LEAVES)) {
+            for (int dx = 0; dx <= 1; dx++) {
+                for (int dz = 0; dz <= 1; dz++) {
+                    BlockState state = level.getBlockState(origin.offset(dx, y, dz));
+                    if (!replaceableForTree(state)) {
                         return false;
                     }
                 }
@@ -218,18 +290,47 @@ public final class MagicalTreeFeature extends Feature<NoneFeatureConfiguration> 
         return true;
     }
 
-    private static void leafBlob(WorldGenLevel level, BlockPos center, BlockState leaves, int radius, int height,
-                                 RandomSource random) {
-        for (int y = 0; y < height; y++) {
-            int r = (y == 0 || y == height - 1) ? radius - 1 : radius;
+    private static boolean hasVerticalRoom(WorldGenLevel level, BlockPos origin, int height, int radius) {
+        BlockPos.MutableBlockPos cursor = new BlockPos.MutableBlockPos();
+        for (int y = 0; y <= height; y++) {
+            int r = y < 2 ? 1 : radius;
             for (int dx = -r; dx <= r; dx++) {
                 for (int dz = -r; dz <= r; dz++) {
-                    if ((dx * dx + dz * dz) <= r * r + random.nextInt(3)) {
-                        setLeaf(level, center.offset(dx, y, dz), leaves);
+                    cursor.set(origin.getX() + dx, origin.getY() + y, origin.getZ() + dz);
+                    if (!replaceableForTree(level.getBlockState(cursor))) {
+                        return false;
                     }
                 }
             }
         }
+        return true;
+    }
+
+    private static boolean lineClearForTree(WorldGenLevel level, BlockPos from, BlockPos to) {
+        int dx = to.getX() - from.getX();
+        int dy = to.getY() - from.getY();
+        int dz = to.getZ() - from.getZ();
+        int steps = Math.max(Math.abs(dx), Math.max(Math.abs(dy), Math.abs(dz)));
+        if (steps == 0) {
+            return replaceableForTree(level.getBlockState(from));
+        }
+
+        for (int i = 0; i <= steps; i++) {
+            double t = i / (double) steps;
+            BlockPos p = new BlockPos(
+                    Mth.floor(from.getX() + dx * t + 0.5D),
+                    Mth.floor(from.getY() + dy * t + 0.5D),
+                    Mth.floor(from.getZ() + dz * t + 0.5D));
+            if (!replaceableForTree(level.getBlockState(p))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static boolean replaceableForTree(BlockState state) {
+        return state.isAir() || state.canBeReplaced() || state.is(net.minecraft.tags.BlockTags.LEAVES)
+                || state.is(ModMagicalTrees.GREATWOOD_LOG.get()) || state.is(ModMagicalTrees.SILVERWOOD_LOG.get());
     }
 
     private static void connect(WorldGenLevel level, BlockPos from, BlockPos to, BlockState log) {
@@ -237,15 +338,20 @@ public final class MagicalTreeFeature extends Feature<NoneFeatureConfiguration> 
         int dy = to.getY() - from.getY();
         int dz = to.getZ() - from.getZ();
         int steps = Math.max(Math.abs(dx), Math.max(Math.abs(dy), Math.abs(dz)));
-        if (steps == 0) return;
-        Direction.Axis axis = Math.abs(dx) >= Math.abs(dz) ? Direction.Axis.X : Direction.Axis.Z;
+        if (steps == 0) {
+            return;
+        }
+
+        Direction.Axis horizontalAxis = Math.abs(dx) >= Math.abs(dz) ? Direction.Axis.X : Direction.Axis.Z;
         for (int i = 0; i <= steps; i++) {
             double t = i / (double) steps;
             BlockPos p = new BlockPos(
                     Mth.floor(from.getX() + dx * t + 0.5D),
                     Mth.floor(from.getY() + dy * t + 0.5D),
                     Mth.floor(from.getZ() + dz * t + 0.5D));
-            setLog(level, p, log, Math.abs(dy) > Math.max(Math.abs(dx), Math.abs(dz)) ? Direction.Axis.Y : axis);
+            Direction.Axis axis = Math.abs(dy) > Math.max(Math.abs(dx), Math.abs(dz))
+                    ? Direction.Axis.Y : horizontalAxis;
+            setLog(level, p, log, axis);
         }
     }
 
@@ -258,8 +364,7 @@ public final class MagicalTreeFeature extends Feature<NoneFeatureConfiguration> 
 
     private static void setLog(WorldGenLevel level, BlockPos pos, BlockState log, Direction.Axis axis) {
         BlockState old = level.getBlockState(pos);
-        if (old.isAir() || old.canBeReplaced() || old.is(net.minecraft.tags.BlockTags.LEAVES)
-                || old.is(ModMagicalTrees.GREATWOOD_LOG.get()) || old.is(ModMagicalTrees.SILVERWOOD_LOG.get())) {
+        if (replaceableForTree(old)) {
             level.setBlock(pos, log.setValue(RotatedPillarBlock.AXIS, axis), 2);
         }
     }
