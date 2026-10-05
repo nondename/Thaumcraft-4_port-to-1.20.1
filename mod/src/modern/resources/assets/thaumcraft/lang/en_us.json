@@ -898,5 +898,12 @@
   "tc.infusion.failed": "The altar needs a complete structure, ingredients, essentia and research.",
   "tc.infusion.started": "Infusion started.",
   "tc.progress.board_help": "LMB: place. RMB: erase.",
-  "focus.upgrade.vampirebats.text": "This upgrade changes the summoned bats into vampire bats. Not only will they suck the life out of their target to replenish their own, but some of the stolen life force is given to their summoner."
+  "focus.upgrade.vampirebats.text": "This upgrade changes the summoned bats into vampire bats. Not only will they suck the life out of their target to replenish their own, but some of the stolen life force is given to their summoner.",
+  "tc.command.done": "%s: executed %s",
+  "tc.command.help": "TC4 commands. Aliases: /tc and /thaum. Omit PERM/TEMP for normal warp. Port diagnostics: /thaumcraft debug.",
+  "tc.command.invalid_operation": "Valid operations: add, set",
+  "tc.command.links_error": "Unable to load research dependencies",
+  "tc.command.no_knowledge": "Player knowledge unavailable",
+  "tc.command.unknown_aspect": "Unknown aspect: %s",
+  "tc.command.unknown_research": "Unknown research: %s"
 }

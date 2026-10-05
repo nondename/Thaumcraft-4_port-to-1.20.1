@@ -24,11 +24,21 @@ public final class ThaumometerKnowledge implements IThaumometerKnowledge {
     private final Set<String> researchKeys = new HashSet<>();
     private final AspectList discoveredAspects = new AspectList();
     private int permanentWarp,normalWarp,temporaryWarp;
-    @Override public int getWarp() {return permanentWarp+normalWarp;}
+    @Override public int getWarp() {return bounded((long)permanentWarp+normalWarp);}
+    private static int bounded(long value) {return (int)Math.max(0,Math.min(Integer.MAX_VALUE,value));}
+    @Override public int getPermanentWarp() {return permanentWarp;}
+    @Override public int getNormalWarp() {return normalWarp;}
+    @Override public int getTemporaryWarp() {return temporaryWarp;}
+    @Override public void setWarp(int permanent,int normal,int temporary) {
+        permanentWarp=Math.max(0,permanent);normalWarp=Math.max(0,normal);temporaryWarp=Math.max(0,temporary);
+    }
+    @Override public void addAspectPool(Aspect aspect,int amount) {
+        if(aspect!=null)discoveredAspects.aspects.put(aspect,bounded((long)getAspectPool(aspect)+amount));
+    }
     @Override public void addWarp(int permanent,int normal,int temporary) {
-        permanentWarp=Math.min(10000,permanentWarp+Math.max(0,permanent));
-        normalWarp=Math.min(10000,normalWarp+Math.max(0,normal));
-        temporaryWarp=Math.min(10000,temporaryWarp+Math.max(0,temporary));
+        permanentWarp=bounded((long)permanentWarp+permanent);
+        normalWarp=bounded((long)normalWarp+normal);
+        temporaryWarp=bounded((long)temporaryWarp+temporary);
     }
     @Override public void decayTemporaryWarp() {temporaryWarp=Math.max(0,temporaryWarp-1);}
 
@@ -208,7 +218,7 @@ public final class ThaumometerKnowledge implements IThaumometerKnowledge {
 
     @Override
     public void deserializeNBT(CompoundTag tag) {
-        permanentWarp=Math.max(0,Math.min(10000,tag.getInt("permanentWarp")));normalWarp=Math.max(0,Math.min(10000,tag.getInt("normalWarp")));temporaryWarp=Math.max(0,Math.min(10000,tag.getInt("temporaryWarp")));
+        setWarp(tag.getInt("permanentWarp"),tag.getInt("normalWarp"),tag.getInt("temporaryWarp"));
         scannedItems.clear();
         scannedEntities.clear();
         researchKeys.clear();
