@@ -17,6 +17,8 @@
 
 ## Активные заявки
 
+- **Пьедестал по игровым скринам — Codex (2026-10-05): models/block и item/arcane_pedestal.json, textures/block/pedestal*, при необходимости ClientRegistration/InfusionDeviceBlock, scripts/verify-survival-resources.ps1 и docs/INFUSION_ASSET_FIXES.md.** Исправить UV прозрачного атласа, миниатюру и частицы разрушения. Прежний claim закрыт; механики алтаря не меняю.
+
 - ~~**Дополнение к аудиту исследований: ModNetwork.java, новый ResearchActionMessage, client/ResearchScreen.java, scripts/export_modern_research.py.** Стандартный пакет кнопки хранит byte и обрезает действия 1000/2000; нужен отдельный серверный пакет с проверкой открытого меню. Экспорт должен сохранять скрытые условия дерева.~~ Готово: новый проверяемый C2S пакет, протокол 3, экспорт метаданных дерева.
 
 - ~~**Аудит исследований — Codex (2026-10-05): common/research/**, client/ResearchTreeScreen.java, новый рецепт пополнения чернил в common/crafting и ModRecipes.java, progression/tree JSON, свои lang ключи, новые GameTest и docs/RESEARCH_AUDIT.md.** По поручению пользователя: таумономикон, стол, записки и серверные условия; скрытые родители/связанные открытия и чернила. Пересечение старых claims — только перечисленные файлы, сканирование и генерацию не меняю.~~ Готово: серверная передача действий записки, конечные/пополняемые чернила, скрытые требования и связанная этикетка, полная глава исследований и рецепты; build + 48 GameTest, 909 EN/RU ключей проверены. Остатки исходной мини-игры и клиентская проверка — docs/RESEARCH_AUDIT.md.
