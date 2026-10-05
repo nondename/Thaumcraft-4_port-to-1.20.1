@@ -17,6 +17,8 @@
 
 ## Активные заявки
 
+- **Полный аудит таумометра — Codex (2026-10-06): common/config/{ConfigAspects,RecipeAspects,EntityAspects} и новые файлы аспектов, common/items/tools/{ItemThaumometer,ThaumometerTargets}, common/lib/capabilities/ThaumometerKnowledge при подтверждённых ошибках, modernTest, scripts и docs/THAUMOMETER_AUDIT*.** Проверка рецепта, требований открытий, реестров объектов и сохранений; сверка оригинала. Генерацию и ветку tainted_porcha не трогаю.
+
 - ~~**Доработки ревизии — Codex (2026-10-05): client/{ResearchEntryScreen,BookRecipeRenderer,ArcaneWorkbenchScreen}.java, common/research/{BookRecipeCatalog,ResearchNotes,ResearchMenu}.java, ItemAuraNode/ThaumometerTargets, AspectCommands, lang EN/RU, modernTest и docs аудитов.**~~ Готово: все 54 рецепта в книге, все исходные аспекты и миграция записок, локализация. build + 52 GameTest, 944 ключа EN/RU. Руды и полный каталог исследований сохранены; лес/порчу не трогала. Подробности docs/AUDIT_FOLLOWUP_2026-10-05.md.
 
 - ~~**Ревизия порта — Codex (2026-10-05): только новый docs/PORT_AUDIT_2026-10-05.md.**~~ Завершена: код/ресурсы проверены read-only, сводка и результаты 48 GameTest записаны. Магический лес — ChatGPT, tained_porcha — OpenCode по сообщению пользователя.
