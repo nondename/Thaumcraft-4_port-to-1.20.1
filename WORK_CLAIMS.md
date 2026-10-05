@@ -17,7 +17,7 @@
 
 ## Активные заявки
 
-- **Падение Duplicate registration flux_gas — Codex (2026-10-05): common/blocks/ModOres.java, проверка регистрации в mod/build.gradle, docs/CRUCIBLE_SLICE.md.** Коммит 9551a3b повторно зарегистрировал существующие flux_gas/flux_goo. Удалить дубли, сохранить действующую механику ModAlchemy и проверить runtime загрузку. Пересечение заявки taint — только исправление подтверждённого падения.
+- ~~**Падение Duplicate registration flux_gas — Codex (2026-10-05): common/blocks/ModOres.java, проверка регистрации в mod/build.gradle, docs/CRUCIBLE_SLICE.md.** Коммит 9551a3b повторно зарегистрировал существующие flux_gas/flux_goo. Удалить дубли, сохранить действующую механику ModAlchemy и проверить runtime загрузку. Пересечение заявки taint — только исправление подтверждённого падения.~~ Готово: дубли регистрации и Creative убраны; ModAlchemy/FluxBlock сохранены. build + 48 GameTest прошли, runClient завершил загрузку реестров и текстур без ошибки. Gradle guard подтверждён на сломанном/исправленном состоянии; docs/CRUCIBLE_SLICE.md.
 
 - **Блоки порчи — Claude (2026-10-05): common/blocks/{BlockTaint,BlockTaintFibres,BlockFluxGoo,BlockFluxGas}.java, ModOres.java.** Перенос базовых блоков порчи из legacy (1.12.2) в modern (1.20.1). Только регистрация и базовые свойства, без механик распространения.
 

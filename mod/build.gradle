@@ -177,8 +177,26 @@ tasks.register('validateResearchIcons') {
     }
 }
 
+tasks.register('validateFluxRegistration') {
+    group = 'verification'
+    description = 'Rejects duplicate flux block registrations before launching Minecraft.'
+    doLast {
+        def sources = fileTree('src/modern/java') { include '**/*.java' }
+        ['flux_gas', 'flux_goo'].each { name ->
+            def owners = []
+            sources.each { source ->
+                def pattern = ~("\\b(?:ModOres\\.)?BLOCKS\\s*\\.register\\s*\\(\\s*\"${name}\"")
+                (source.getText('UTF-8') =~ pattern).each { owners.add(source.path) }
+            }
+            if (owners.size() != 1)
+                throw new GradleException("Expected one ${name} block registration, found ${owners.size()}: ${owners}")
+        }
+    }
+}
+
 tasks.named('processResources', ProcessResources).configure {
     dependsOn tasks.named('validateResearchIcons')
+    dependsOn tasks.named('validateFluxRegistration')
     dependsOn tasks.named('validateWandPartAssets')
 
     def replaceProperties = [

@@ -59,12 +59,9 @@ public final class ModOres {
     public static final RegistryObject<Block> TAINT_FIBRES = BLOCKS.register("taint_fibres", () -> new BlockTaintFibres());
     public static final RegistryObject<Item> TAINT_FIBRES_ITEM =
             ModItems.ITEMS.register("taint_fibres", () -> new BlockItem(TAINT_FIBRES.get(), new Item.Properties()));
-    public static final RegistryObject<Block> FLUX_GOO = BLOCKS.register("flux_goo", () -> new BlockFluxGoo());
-    public static final RegistryObject<Item> FLUX_GOO_ITEM =
-            ModItems.ITEMS.register("flux_goo", () -> new BlockItem(FLUX_GOO.get(), new Item.Properties()));
-    public static final RegistryObject<Block> FLUX_GAS = BLOCKS.register("flux_gas", () -> new BlockFluxGas());
-    public static final RegistryObject<Item> FLUX_GAS_ITEM =
-            ModItems.ITEMS.register("flux_gas", () -> new BlockItem(FLUX_GAS.get(), new Item.Properties()));
+    // flux_gas / flux_goo already belong to ModAlchemy and use the active FluxBlock
+    // implementation. Do not register placeholders here or alias through ModAlchemy:
+    // ModAlchemy initializes this shared block registry, so an alias would be cyclic.
 
     static {
         for (String name : NAMES) {
@@ -139,8 +136,6 @@ public final class ModOres {
                     output.accept(AMBER.get());
                     output.accept(TAINT.get());
                     output.accept(TAINT_FIBRES.get());
-                    output.accept(FLUX_GOO.get());
-                    output.accept(FLUX_GAS.get());
                     // TC4 BlockAiry contributes exactly one metadata-0 Aura Node creative item.
                     output.accept(ModNodes.AURA_NODE_ITEM.get());
                 }).build());
