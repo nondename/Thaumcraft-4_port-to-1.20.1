@@ -31,12 +31,12 @@ public final class ThaumonomiconScreen extends Screen {
     }
     private int lastPage() { return 3 + Math.max(0, (known().size() - 1) / 12); }
     @Override protected void init() {
-        uiScale = Math.min(1, Math.min(width / 380F, height / 290F));
+        uiScale = Math.min(1, Math.min(width / 440F, height / 350F));
         left = ((int)(width / uiScale) - 360) / 2;
         top = ((int)(height / uiScale) - 280) / 2;
         previous = addRenderableWidget(BookSkin.turn(left+22,top+225,false,b -> page--));
         next = addRenderableWidget(BookSkin.turn(left+314,top+225,true,b -> page++));
-        addRenderableWidget(Button.builder(Component.translatable("gui.done"), b -> onClose()).bounds(left + 144, top + 256, 72, 20).build());
+        addRenderableWidget(BookSkin.back(left+204,top+224,106,Component.translatable("tc.tree.back"),b -> onClose()));
     }
     @Override public void render(GuiGraphics g, int mouseX, int mouseY, float partialTick) {
         renderBackground(g);
@@ -84,7 +84,7 @@ public final class ThaumonomiconScreen extends Screen {
                 g.pose().popPose();
             }
         }
-        g.drawCenteredString(font, (page + 1) + " / " + (lastPage() + 1), left + 180, top + 232, 0x776B55);
+        g.drawString(font, (page + 1) + " / " + (lastPage() + 1), left + 90, top + 232, 0x776B55,false);
         super.render(g, (int)(mouseX / uiScale), (int)(mouseY / uiScale), partialTick);
         g.pose().popPose();
     }

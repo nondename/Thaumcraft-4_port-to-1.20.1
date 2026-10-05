@@ -24,7 +24,7 @@ public final class ResearchEntryScreen extends Screen {
         this.parent = parent; this.node = node;
     }
     @Override protected void init() {
-        scale = Math.min(1, Math.min(width / 380F, height / 290F));
+        scale = Math.min(1, Math.min(width / 440F, height / 350F));
         left = ((int)(width / scale) - 360) / 2;
         top = ((int)(height / scale) - 280) / 2;
         pages.clear();
@@ -54,7 +54,7 @@ public final class ResearchEntryScreen extends Screen {
         spread = Math.min(spread, (pageCount() - 1) / 2);
         back = addRenderableWidget(BookSkin.turn(left+22,top+225,false,b -> spread--));
         next = addRenderableWidget(BookSkin.turn(left+314,top+225,true,b -> spread++));
-        addRenderableWidget(Button.builder(Component.translatable("tc.tree.back"), b -> onClose()).bounds(left + 130, top + 256, 100, 20).build());
+        addRenderableWidget(BookSkin.back(left+204,top+224,106,Component.translatable("tc.tree.back"),b -> onClose()));
     }
     @Override public void render(GuiGraphics g, int mx, int my, float partialTick) {
         renderBackground(g);
@@ -63,16 +63,33 @@ public final class ResearchEntryScreen extends Screen {
         g.drawWordWrap(font, title, left + 23, top + 18, 140, 0x423024);
         for (int side = 0; side < 2; side++) {
             int index = spread * 2 + side;
-            if(index>=pages.size()) {if(index<pageCount())drawRecipe(g,recipes.get(index-pages.size()),left+(side==0?23:196),top+43,(int)(mx/scale),(int)(my/scale));continue;}
+            if(index>=pages.size()) {
+                if(index<pageCount())drawRecipe(g,recipes.get(index-pages.size()),left+(side==0?23:196),top+43,(int)(mx/scale),(int)(my/scale));
+                else endPage(g);
+                continue;
+            }
             int y = top + 43;
             for (var line : pages.get(index)) { g.drawString(font, line, left + (side == 0 ? 23 : 196), y, 0x423024, false); y += 10; }
         }
         back.active = spread > 0; next.active = spread * 2 + 2 < pageCount();
-        g.drawCenteredString(font, (spread + 1) + " / " + ((pageCount() + 1) / 2), left + 180, top + 231, 0x776B55);
+        g.drawString(font, (spread + 1) + " / " + ((pageCount() + 1) / 2), left + 90, top + 231, 0x776B55,false);
         super.render(g, (int)(mx / scale), (int)(my / scale), partialTick);
         g.pose().popPose();
     }
     @Override public boolean mouseClicked(double x, double y, int b) { return super.mouseClicked(x / scale, y / scale, b); }
+    private void endPage(GuiGraphics g) {
+        BookSkin.caption(g,font,Component.translatable("tc.research_category."+node.category()),left+200,top+20,130,0.75F);
+        g.pose().pushPose();g.pose().translate(left+246,top+80,0);g.pose().scale(3,3,1);
+        if(node.icon()!=null)g.blit(node.icon(),0,0,16,16,0,0,node.iconWidth(),Math.min(node.iconWidth(),node.iconHeight()),node.iconWidth(),node.iconHeight());
+        else if(node.item()!=null) {
+            var id=ResourceLocation.tryParse(node.item());
+            if(id!=null)g.renderItem(new net.minecraft.world.item.ItemStack(net.minecraft.core.registries.BuiltInRegistries.ITEM.get(id)),0,0);
+        }
+        g.pose().popPose();
+        g.fill(left+232,top+146,left+308,top+147,0xFFCEC4AC);
+        g.drawWordWrap(font,title,left+211,top+155,120,0x5D5547);
+        BookSkin.caption(g,font,Component.translatable("tc.book.end_entry"),left+232,top+193,95,0.75F);
+    }
     private void drawRecipe(GuiGraphics g,net.minecraft.world.item.crafting.Recipe<?> recipe,int x,int y,int mx,int my) {
         if(recipe instanceof thaumcraft.common.crafting.ScribingRefillRecipe) {
             g.drawWordWrap(font,Component.translatable("tc.progress.refill_help"),x,y,137,0x423024);

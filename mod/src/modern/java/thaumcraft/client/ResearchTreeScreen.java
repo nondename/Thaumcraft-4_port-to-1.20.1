@@ -80,7 +80,7 @@ public final class ResearchTreeScreen extends Screen {
 
     @Override
     protected void init() {
-        scale = Math.min(1, Math.min(width / 410F, height / 285F));
+        scale = Math.min(1, Math.min(width / 460F, height / 350F));
         left = ((int) (width / scale) - 360) / 2 + 10;
         top = ((int) (height / scale) - 252) / 2;
         dragging = false;
@@ -134,7 +134,9 @@ public final class ResearchTreeScreen extends Screen {
         g.pose().pushPose();
         g.pose().scale(scale, scale, 1);
         BookSkin.draw(g,left,top,360,252);
-        g.drawCenteredString(font,Component.translatable("tc.research_category."+TABS[tab]),left+180,top+18,0x514535);
+        BookSkin.caption(g,font,Component.translatable("tc.research_category."+TABS[tab]),left+26,top+20,142,0.9F);
+        var chapterNodes=nodes.stream().filter(n -> n.category().equals(TABS[tab]) && isVisible(n)).toList();
+        BookSkin.caption(g,font,Component.translatable("tc.book.chapter_progress",chapterNodes.stream().filter(this::isUnlocked).count(),chapterNodes.size()),left+200,top+20,130,0.75F);
         g.enableScissor((int) ((left + 18) * scale), (int) ((top + 36) * scale),
                 (int) ((left + 342) * scale), (int) ((top + 224) * scale));
 
@@ -166,7 +168,7 @@ public final class ResearchTreeScreen extends Screen {
 
             boolean unlocked = isUnlocked(n);
             boolean available = !unlocked && parentsUnlocked(n);
-            float brightness = unlocked ? 1.0F : available ? (over ? 0.72F : 0.58F) : (over ? 0.42F : 0.25F);
+            float brightness = unlocked ? 1.0F : available ? (over ? 1.0F : 0.86F) : (over ? 0.65F : 0.48F);
 
             g.pose().pushPose();
             g.pose().translate(x - 13 * zoom, y - 13 * zoom, 0);
@@ -187,13 +189,17 @@ public final class ResearchTreeScreen extends Screen {
 
         g.disableScissor();
         for (int i = 0; i < TABS.length; i++) {
-            int x = left - 22, y = top + 12 + i * 32;
-            g.fill(x+2,y+2,left+6,y+28,0x50000000);
-            g.fill(x,y,left+6,y+26,i==tab?0xFF65735F:0xFF92816B);
-            g.fill(x+2,y+2,left+4,y+23,i==tab?0xFF809078:0xFFAF9C7F);
+            int x = left - 18, y = top + 14 + i * 30;
+            int color=new int[]{0xFF6E8768,0xFF82779B,0xFF9B8057,0xFF79878D,0xFF997D70,0xFF77628B}[i];
+            g.fill(x+2,y+2,left+4,y+24,0x40000000);
+            g.fill(x,y+2,left+4,y+22,color);
+            g.fill(x+2,y,left+4,y+24,color);
+            g.fill(x+2,y+2,x+3,y+22,0x40FFFFFF);
+            if(i==tab)g.fill(left+4,y+8,left+8,y+16,color);
             g.blit(id("textures/" + ICONS[i] + ".png"), x + 4, y + 4, 16, 16, 0, 0, 16, 16, 16, 16);
         }
-        g.drawCenteredString(font,Component.translatable("tc.book.map_hint"),left+180,top+232,0x776B55);
+        BookSkin.caption(g,font,Component.translatable("tc.book.drag_hint"),left+26,top+232,140,0.72F);
+        BookSkin.caption(g,font,Component.translatable("tc.book.zoom_hint"),left+200,top+232,130,0.72F);
         if (loadFailed) {
             g.drawCenteredString(font, Component.translatable("tc.tree.load_failed"), left + 180, top + 110, 0x704A3A);
         }
@@ -213,7 +219,7 @@ public final class ResearchTreeScreen extends Screen {
             g.renderComponentTooltip(font, lines, mouseX, mouseY);
         } else {
             for (int i = 0; i < TABS.length; i++) {
-                if (mx >= left - 22 && mx < left + 6 && my >= top + 12 + i * 32 && my < top + 12 + i * 32 + 26) {
+                if (mx >= left - 18 && mx < left + 8 && my >= top + 14 + i * 30 && my < top + 14 + i * 30 + 24) {
                     g.renderTooltip(font, Component.translatable("tc.research_category." + TABS[i]), mouseX, mouseY);
                 }
             }
@@ -239,7 +245,7 @@ public final class ResearchTreeScreen extends Screen {
         x /= scale;
         y /= scale;
         for (int i = 0; i < TABS.length; i++) {
-            if (x >= left - 22 && x < left + 6 && y >= top + 12 + i * 32 && y < top + 12 + i * 32 + 26) {
+            if (x >= left - 18 && x < left + 8 && y >= top + 14 + i * 30 && y < top + 14 + i * 30 + 24) {
                 tab = i;
                 return true;
             }

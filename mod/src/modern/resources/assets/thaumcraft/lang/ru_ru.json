@@ -911,5 +911,9 @@
   "tc.book.map_hint": "Перетащите карту · Колёсико — масштаб",
   "tc.book.available": "Доступно для изучения",
   "tc.book.next_page": "Следующая страница",
-  "tc.book.previous_page": "Предыдущая страница"
+  "tc.book.previous_page": "Предыдущая страница",
+  "tc.book.chapter_progress": "Изучено %s из %s",
+  "tc.book.drag_hint": "Перетащите карту мышью",
+  "tc.book.zoom_hint": "Колёсико: масштаб",
+  "tc.book.end_entry": "Конец записи"
 }
