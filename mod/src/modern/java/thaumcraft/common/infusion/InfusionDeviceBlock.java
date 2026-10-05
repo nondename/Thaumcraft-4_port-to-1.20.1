@@ -66,6 +66,7 @@ public final class InfusionDeviceBlock extends BaseEntityBlock {
                     } else return InteractionResult.PASS;
                     if(!player.getAbilities().instabuild)held.shrink(1);
                     if(!player.getInventory().add(output))player.drop(output,false);
+                    level.playSound(null,pos,thaumcraft.common.sounds.ModSounds.JAR.get(),net.minecraft.sounds.SoundSource.BLOCKS,0.2F,1.0F);
                 } else player.displayClientMessage(Component.literal(store.aspect()==null?"0":store.aspect().getName()+" "+store.amount()+" / "+store.capacity()),true);
             }
             return InteractionResult.sidedSuccess(level.isClientSide);

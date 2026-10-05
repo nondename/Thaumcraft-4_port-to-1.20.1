@@ -36,7 +36,19 @@ public final class ModInfusion {
     public static final RegistryObject<MenuType<AlchemyMenu>> MENU=MENUS.register("alchemy_furnace",() -> IForgeMenuType.create((id,inventory,buffer) -> {
         buffer.readBlockPos();return new AlchemyMenu(id,inventory,new net.minecraft.world.SimpleContainer(2),net.minecraft.world.inventory.ContainerLevelAccess.NULL);
     }));
-    private static RegistryObject<Block> block(String id,String kind) {return ModOres.BLOCKS.register(id,() -> new InfusionDeviceBlock(kind,BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion()));}
+    private static RegistryObject<Block> block(String id,String kind) {
+        return ModOres.BLOCKS.register(id,() -> {
+            var properties=BlockBehaviour.Properties.copy(Blocks.STONE).noOcclusion();
+            if(kind.equals("jar")) {
+                // Use original jar samples for breaking/placement; retain glass hit/fall and stone steps.
+                properties=BlockBehaviour.Properties.copy(Blocks.GLASS).noOcclusion().sound(new net.minecraftforge.common.util.ForgeSoundType(1,1,
+                        thaumcraft.common.sounds.ModSounds.JAR,() -> net.minecraft.sounds.SoundEvents.STONE_STEP,
+                        thaumcraft.common.sounds.ModSounds.JAR,() -> net.minecraft.sounds.SoundEvents.GLASS_HIT,
+                        () -> net.minecraft.sounds.SoundEvents.GLASS_FALL));
+            }
+            return new InfusionDeviceBlock(kind,properties);
+        });
+    }
     private static RegistryObject<Item> item(String id,RegistryObject<Block> block) {return ModItems.ITEMS.register(id,() -> new BlockItem(block.get(),new Item.Properties()));}
     public static void register(IEventBus bus) {ENTITIES.register(bus);MENUS.register(bus);InfusionRecipe.init();}
     private ModInfusion() {}

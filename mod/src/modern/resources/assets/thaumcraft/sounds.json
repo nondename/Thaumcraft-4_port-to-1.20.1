@@ -31,6 +31,9 @@
       "thaumcraft:zap2"
     ]
   },
+  "jar": {
+    "sounds": ["thaumcraft:jar1", "thaumcraft:jar2", "thaumcraft:jar3", "thaumcraft:jar4"]
+  },
   "craftfail": {
     "category": "master",
     "sounds": [
