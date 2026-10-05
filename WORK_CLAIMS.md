@@ -17,6 +17,8 @@
 
 ## Активные заявки
 
+- **Падение Duplicate registration flux_gas — Codex (2026-10-05): common/blocks/ModOres.java, проверка регистрации в mod/build.gradle, docs/CRUCIBLE_SLICE.md.** Коммит 9551a3b повторно зарегистрировал существующие flux_gas/flux_goo. Удалить дубли, сохранить действующую механику ModAlchemy и проверить runtime загрузку. Пересечение заявки taint — только исправление подтверждённого падения.
+
 - **Блоки порчи — Claude (2026-10-05): common/blocks/{BlockTaint,BlockTaintFibres,BlockFluxGoo,BlockFluxGas}.java, ModOres.java.** Перенос базовых блоков порчи из legacy (1.12.2) в modern (1.20.1). Только регистрация и базовые свойства, без механик распространения.
 
 - ~~**Третий проход книги — Codex (2026-10-05): client/BookSkin.java, ResearchTreeScreen.java, ResearchEntryScreen.java, ThaumonomiconScreen.java; research/tree.json и отсутствующие textures/items деталей жезлов, scripts/export_modern_research.py, mod/build.gradle (проверка иконок при сборке) и docs/THAUMONOMICON_UI.md.** Кожаный ванильный переплёт, крупные контрастные иконки и исправление missing textures по новым скринам.~~ Готово: полный ванильный переплёт, крупные контрастные значки/текст, UV зеркалирование, 22 исправленных пути, 3 предметные иконки. build + проверка 193 PNG в JAR и локализации; docs/THAUMONOMICON_UI.md. Игровую оценку выполняет пользователь.
