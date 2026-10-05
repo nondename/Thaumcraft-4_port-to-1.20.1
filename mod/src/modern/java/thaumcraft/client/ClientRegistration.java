@@ -33,6 +33,10 @@ public final class ClientRegistration {
             BlockEntityRenderers.register(thaumcraft.common.infusion.ModInfusion.MATRIX_ENTITY.get(),MatrixRenderer::new);
             ItemBlockRenderTypes.setRenderLayer(thaumcraft.common.infusion.ModInfusion.JAR.get(),RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(thaumcraft.common.alchemy.ModAlchemy.NITOR.get(),RenderType.cutout());
+            ItemBlockRenderTypes.setRenderLayer(thaumcraft.common.blocks.ModMagicalTrees.GREATWOOD_LEAVES.get(), RenderType.cutoutMipped());
+            ItemBlockRenderTypes.setRenderLayer(thaumcraft.common.blocks.ModMagicalTrees.SILVERWOOD_LEAVES.get(), RenderType.cutoutMipped());
+            ItemBlockRenderTypes.setRenderLayer(thaumcraft.common.blocks.ModMagicalTrees.GREATWOOD_SAPLING.get(), RenderType.cutout());
+            ItemBlockRenderTypes.setRenderLayer(thaumcraft.common.blocks.ModMagicalTrees.SILVERWOOD_SAPLING.get(), RenderType.cutout());
             net.minecraft.client.renderer.item.ItemProperties.register(thaumcraft.common.research.ModResearch.PHIAL.get(),new net.minecraft.resources.ResourceLocation("thaumcraft","filled"),
                 (stack,level,entity,seed) -> {var contents=new thaumcraft.api.aspects.AspectList();if(stack.hasTag())contents.readFromNBT(stack.getTag());return contents.visSize()==8?1:0;});
             for (String name : ModOres.NAMES) {
