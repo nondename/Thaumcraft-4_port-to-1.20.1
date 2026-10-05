@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#thaumcraft:greatwood_natural_20",
+  "features": "thaumcraft:greatwood_trees_overworld_20",
+  "step": "vegetal_decoration"
+}
