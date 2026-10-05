@@ -14,6 +14,7 @@ import java.util.*;
 
 /** Original tab layout and research graph backed by synchronized player research state. */
 public final class ResearchTreeScreen extends Screen {
+    private static final ResourceLocation FRAME = id("textures/gui/gui_research.png");
     private static final String[] TABS = {"BASICS", "THAUMATURGY", "ALCHEMY", "ARTIFICE", "GOLEMANCY", "ELDRITCH"};
     private static final String[] ICONS = {"items/thaumonomiconcheat", "misc/r_thaumaturgy", "misc/r_crucible", "misc/r_artifice", "misc/r_golemancy", "misc/r_eldritch"};
 
@@ -26,12 +27,9 @@ public final class ResearchTreeScreen extends Screen {
     private final Map<String,List<String>> hiddenParents = new HashMap<>();
     private final Set<String> secondary = new HashSet<>();
     private final Map<String, Node> byKey = new HashMap<>();
-    private static final double[] panX = new double[6], panY = new double[6];
-    private static final boolean[] positioned = new boolean[6];
-    private static int tab;
-    private int left, top;
-    private float scale = 1;
-    private static float zoom = 1.15F;
+    private final double[] panX = new double[6], panY = new double[6];
+    private int tab, left, top;
+    private float scale = 1, zoom = 1;
     private boolean dragging;
     private double dragDistance;
     private Node hovered;
@@ -81,31 +79,22 @@ public final class ResearchTreeScreen extends Screen {
 
     @Override
     protected void init() {
-        scale = Math.min(1, Math.min(width / 410F, height / 310F));
-        left = ((int) (width / scale) - 360) / 2 + 10;
-        top = ((int) (height / scale) - 252) / 2;
+        scale = Math.min(1, Math.min(width / 310F, height / 255F));
+        left = ((int) (width / scale) - 256) / 2 + 10;
+        top = ((int) (height / scale) - 230) / 2;
         dragging = false;
-        centerChapter();
-    }
-
-    private void centerChapter() {
-        if(positioned[tab])return;
-        var chapter=nodes.stream().filter(n -> n.category().equals(TABS[tab]) && isVisible(n)).toList();
-        panX[tab]=(chapter.stream().mapToInt(Node::x).min().orElse(0)+chapter.stream().mapToInt(Node::x).max().orElse(0))*15;
-        panY[tab]=(chapter.stream().mapToInt(Node::y).min().orElse(0)+chapter.stream().mapToInt(Node::y).max().orElse(0))*15;
-        positioned[tab]=true;
     }
 
     private double nx(Node n) {
-        return left + 180 + (n.x() * 30 - panX[tab]) * zoom;
+        return left + 128 + (n.x() * 24 - panX[tab]) * zoom;
     }
 
     private double ny(Node n) {
-        return top + 130 + (n.y() * 30 - panY[tab]) * zoom;
+        return top + 115 + (n.y() * 24 - panY[tab]) * zoom;
     }
 
     private boolean inside(double x, double y) {
-        return x >= left + 18 && x < left + 342 && y >= top + 36 && y < top + 224;
+        return x >= left + 16 && x < left + 240 && y >= top + 17 && y < top + 213;
     }
 
     private boolean isUnlocked(Node node) {
@@ -143,12 +132,10 @@ public final class ResearchTreeScreen extends Screen {
         hovered = null;
         g.pose().pushPose();
         g.pose().scale(scale, scale, 1);
-        BookSkin.draw(g,left,top,360,252);
-        BookSkin.caption(g,font,Component.translatable("tc.research_category."+TABS[tab]),left+26,top+20,142,1.0F);
-        var chapterNodes=nodes.stream().filter(n -> n.category().equals(TABS[tab]) && isVisible(n)).toList();
-        BookSkin.caption(g,font,Component.translatable("tc.book.chapter_progress",chapterNodes.stream().filter(this::isUnlocked).count(),chapterNodes.size()),left+200,top+20,130,0.9F);
-        g.enableScissor((int) ((left + 18) * scale), (int) ((top + 36) * scale),
-                (int) ((left + 342) * scale), (int) ((top + 224) * scale));
+        g.blit(id("textures/gui/" + (tab == 5 ? "gui_researchbackeldritch" : "gui_researchback") + ".png"),
+                left + 16, top + 17, 224, 196, 0, 0, 512, 512, 512, 512);
+        g.enableScissor((int) ((left + 16) * scale), (int) ((top + 17) * scale),
+                (int) ((left + 240) * scale), (int) ((top + 213) * scale));
 
         for (Node n : nodes) {
             if (!n.category().equals(TABS[tab]) || !isVisible(n)) {
@@ -157,7 +144,7 @@ public final class ResearchTreeScreen extends Screen {
             for (String key : n.parents()) {
                 Node parent = byKey.get(key);
                 if (parent != null && parent.category().equals(n.category()) && isVisible(parent)) {
-                    int color = isUnlocked(n) ? 0xFF456049 : parentsUnlocked(n) ? 0xFF805E34 : 0xFF97846B;
+                    int color = isUnlocked(n) ? 0xFF776389 : parentsUnlocked(n) ? 0xFF51445B : 0xFF2C2630;
                     line(g, (int) nx(parent), (int) ny(parent), (int) nx(n), (int) ny(n), color);
                 }
             }
@@ -168,23 +155,22 @@ public final class ResearchTreeScreen extends Screen {
                 continue;
             }
             double x = nx(n), y = ny(n);
-            if (x < left || x > left + 360 || y < top || y > top + 252) {
+            if (x < left || x > left + 256 || y < top || y > top + 230) {
                 continue;
             }
-            boolean over = inside(mx, my) && Math.abs(mx - x) < 15 * zoom && Math.abs(my - y) < 15 * zoom;
+            boolean over = inside(mx, my) && Math.abs(mx - x) < 13 * zoom && Math.abs(my - y) < 13 * zoom;
             if (over) {
                 hovered = n;
             }
 
             boolean unlocked = isUnlocked(n);
             boolean available = !unlocked && parentsUnlocked(n);
-            float brightness = unlocked ? 1.0F : available ? 1.0F : (over ? 0.9F : 0.78F);
-
-            g.pose().pushPose();
-            g.pose().translate(x - 15 * zoom, y - 15 * zoom, 0);
-            g.pose().scale(zoom * 30F / 26F, zoom * 30F / 26F, 1);
-            BookSkin.node(g,unlocked,available,secondary.contains(n.key()),over);
+            float brightness = unlocked ? 1.0F : available ? (over ? 0.72F : 0.58F) : (over ? 0.42F : 0.25F);
             g.setColor(brightness, brightness, brightness, 1);
+            g.pose().pushPose();
+            g.pose().translate(x - 13 * zoom, y - 13 * zoom, 0);
+            g.pose().scale(zoom, zoom, 1);
+            g.blit(FRAME, 0, 0, n.round() ? 54 : 0, 230, 26, 26);
             if (n.icon() != null) {
                 g.blit(n.icon(), 5, 5, 16, 16, 0, 0, n.iconWidth(), Math.min(n.iconWidth(), n.iconHeight()), n.iconWidth(), n.iconHeight());
             } else if (n.item() != null) {
@@ -199,19 +185,13 @@ public final class ResearchTreeScreen extends Screen {
 
         g.disableScissor();
         for (int i = 0; i < TABS.length; i++) {
-            int x = left - 18, y = top + 14 + i * 30;
-            int color=new int[]{0xFF6E8768,0xFF82779B,0xFF9B8057,0xFF79878D,0xFF997D70,0xFF77628B}[i];
-            g.fill(x+2,y+2,left+4,y+24,0x40000000);
-            g.fill(x,y+2,left+4,y+22,color);
-            g.fill(x+2,y,left+4,y+24,color);
-            g.fill(x+2,y+2,x+3,y+22,0x40FFFFFF);
-            if(i==tab)g.fill(left+4,y+8,left+8,y+16,color);
+            int x = left - 24, y = top + i * 25;
+            g.blit(FRAME, x, y, i == tab ? 176 : 152, 232, 24, 24);
             g.blit(id("textures/" + ICONS[i] + ".png"), x + 4, y + 4, 16, 16, 0, 0, 16, 16, 16, 16);
         }
-        BookSkin.caption(g,font,Component.translatable("tc.book.drag_hint"),left+26,top+232,140,0.85F);
-        BookSkin.caption(g,font,Component.translatable("tc.book.zoom_hint"),left+200,top+232,130,0.85F);
+        g.blit(FRAME, left, top, 0, 0, 256, 230);
         if (loadFailed) {
-            g.drawCenteredString(font, Component.translatable("tc.tree.load_failed"), left + 180, top + 110, 0x704A3A);
+            g.drawCenteredString(font, Component.translatable("tc.tree.load_failed"), left + 128, top + 110, 0xFFFFFF);
         }
         g.pose().popPose();
 
@@ -223,13 +203,13 @@ public final class ResearchTreeScreen extends Screen {
                 lines.add(Component.translatable(description));
             }
             if (!isUnlocked(hovered)) {
-                lines.add(Component.translatable(parentsUnlocked(hovered)?"tc.book.available":"tc.tree.locked").withStyle(net.minecraft.ChatFormatting.GRAY));
+                lines.add(Component.translatable("tc.tree.locked").withStyle(net.minecraft.ChatFormatting.GRAY));
                 if(parentsUnlocked(hovered))lines.add(Component.translatable(secondary.contains(hovered.key())?"tc.progress.secondary_hint":"tc.progress.start_hint"));
             }
             g.renderComponentTooltip(font, lines, mouseX, mouseY);
         } else {
             for (int i = 0; i < TABS.length; i++) {
-                if (mx >= left - 18 && mx < left + 8 && my >= top + 14 + i * 30 && my < top + 14 + i * 30 + 24) {
+                if (mx >= left - 24 && mx < left && my >= top + i * 25 && my < top + i * 25 + 24) {
                     g.renderTooltip(font, Component.translatable("tc.research_category." + TABS[i]), mouseX, mouseY);
                 }
             }
@@ -255,9 +235,8 @@ public final class ResearchTreeScreen extends Screen {
         x /= scale;
         y /= scale;
         for (int i = 0; i < TABS.length; i++) {
-            if (x >= left - 18 && x < left + 8 && y >= top + 14 + i * 30 && y < top + 14 + i * 30 + 24) {
+            if (x >= left - 24 && x < left && y >= top + i * 25 && y < top + i * 25 + 24) {
                 tab = i;
-                centerChapter();
                 return true;
             }
         }
@@ -285,13 +264,13 @@ public final class ResearchTreeScreen extends Screen {
         var list = nodes.stream().filter(n -> n.category().equals(TABS[tab])).toList();
         panX[tab] = net.minecraft.util.Mth.clamp(
                 panX[tab],
-                list.stream().mapToInt(Node::x).min().orElse(0) * 30 - 48,
-                list.stream().mapToInt(Node::x).max().orElse(0) * 30 + 48
+                list.stream().mapToInt(Node::x).min().orElse(0) * 24 - 48,
+                list.stream().mapToInt(Node::x).max().orElse(0) * 24 + 48
         );
         panY[tab] = net.minecraft.util.Mth.clamp(
                 panY[tab],
-                list.stream().mapToInt(Node::y).min().orElse(0) * 30 - 48,
-                list.stream().mapToInt(Node::y).max().orElse(0) * 30 + 48
+                list.stream().mapToInt(Node::y).min().orElse(0) * 24 - 48,
+                list.stream().mapToInt(Node::y).max().orElse(0) * 24 + 48
         );
     }
 
@@ -304,6 +283,7 @@ public final class ResearchTreeScreen extends Screen {
             }
             if (dragDistance < 4 && hovered != null && isUnlocked(hovered)) {
                 int chapter = switch (hovered.key()) {
+
                     case "ASPECTS" -> 3;
                     default -> -1;
                 };
@@ -321,7 +301,7 @@ public final class ResearchTreeScreen extends Screen {
         if (!inside(x / scale, y / scale)) {
             return false;
         }
-        double localX = x / scale - left - 180, localY = y / scale - top - 130;
+        double localX = x / scale - left - 128, localY = y / scale - top - 115;
         float next = net.minecraft.util.Mth.clamp(zoom + (float) delta * 0.1F, 0.6F, 1.6F);
         panX[tab] += localX / zoom - localX / next;
         panY[tab] += localY / zoom - localY / next;

@@ -17,7 +17,7 @@
 
 ## Активные заявки
 
-- **Возврат оригинального таумономикона — Codex (2026-10-05): client/BookSkin.java, ResearchTreeScreen.java, ResearchEntryScreen.java, ThaumonomiconScreen.java и docs/THAUMONOMICON_UI.md.** По прямому поручению пользователя: отменить редизайн, вернуть исходные TC4 фон, рамки, закладки и стрелки; сохранить исправленные PNG, IMG и реальные рецепты.
+- ~~**Возврат оригинального таумономикона — Codex (2026-10-05): client/BookSkin.java, ResearchTreeScreen.java, ResearchEntryScreen.java, ThaumonomiconScreen.java и docs/THAUMONOMICON_UI.md.** По прямому поручению пользователя: отменить редизайн, вернуть исходные TC4 фон, рамки, закладки и стрелки; сохранить исправленные PNG, IMG и реальные рецепты.~~ Готово: исходная карта/рамки/закладки и пергамент/стрелки TC4 возвращены; экспериментальный skin убран. build, 193 PNG, 24 IMG crop и 923 EN/RU ключа проверены. Игровая оценка пользователем; docs/THAUMONOMICON_UI.md.
 
 - ~~**Страницы книги по оригиналу — Codex (2026-10-05): client/BookSkin.java, ResearchEntryScreen.java, новый BookRecipeRenderer/BookPageLayout, ThaumonomiconScreen.java и ResearchTreeScreen.java (маршрутизация начальных глав), текстуры иллюстраций research из legacy, свои lang ключи, mod/build.gradle проверки иллюстраций, docs/THAUMONOMICON_UI.md.** Ванильный разворот без двойного переплёта, тёмная бумага, исходные схемы рецептов и восстановление IMG. Серверные рецепты и дерево не меняю.~~ Готово: единый ванильный контур, отдельные схемы реальных рецептов, IMG и переносы; build, 193 значка, 24 crop, 923 EN/RU ключа и PNG внутри JAR проверены. Игровая оценка остаётся пользователю; docs/THAUMONOMICON_UI.md.
 
