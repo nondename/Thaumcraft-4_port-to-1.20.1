@@ -11,7 +11,20 @@ import java.util.*;
 
 /** A finite axial hex board; adjacent aspects connect only to their components. */
 public final class ResearchNotes extends Item {
-    public static final int[] ANCHORS={index(-3,0),index(3,0),index(0,-3),index(0,3),index(-3,3),index(3,-3)};
+    // Keep the original six positions stable for saved notes. Additional anchors use
+    // the rest of the rim, then interior cells; no required aspect is silently dropped.
+    public static final int[] ANCHORS=anchorPositions();
+    private static int[] anchorPositions() {
+        var cells=new LinkedHashSet<Integer>(List.of(index(-3,0),index(3,0),index(0,-3),index(0,3),index(-3,3),index(3,-3),index(-1,-2),index(1,2)));
+        for(int radius=3;radius>=0;radius--)for(int r=-3;r<=3;r++)for(int q=-3;q<=3;q++)
+            if(Math.max(Math.max(Math.abs(q),Math.abs(r)),Math.abs(q+r))==radius)cells.add(index(q,r));
+        return cells.stream().mapToInt(Integer::intValue).toArray();
+    }
+    private static int anchorCount(ResearchProgression.Definition def) {
+        int count=def.aspects().size()==0?0:Math.max(2,def.aspects().size());
+        if(count>ANCHORS.length)throw new IllegalArgumentException("Research requires more anchors than board cells: "+count);
+        return count;
+    }
     public ResearchNotes(Properties properties) {super(properties);}
     public static int index(int q,int r) {return (r+3)*7+q+3;}
     public static boolean valid(int index) {
@@ -20,7 +33,8 @@ public final class ResearchNotes extends Item {
     }
     public static ItemStack create(String key,ResearchProgression.Definition def) {
         var stack=new ItemStack(ModResearch.NOTES.get()); var tag=stack.getOrCreateTag(); tag.putString("Research",key);
-        int i=0; for(Aspect a:def.aspects().getAspects()) {if(i>=6) break; tag.putString("Cell"+ANCHORS[i++],a.getTag());}
+        anchorCount(def);
+        int i=0; for(Aspect a:def.aspects().getAspects()) {if(a!=null)tag.putString("Cell"+ANCHORS[i++],a.getTag());}
         if(i==1) {tag.putString("Cell"+ANCHORS[1],def.aspects().getAspects()[0].getTag());i=2;}
         tag.putIntArray("Anchors",Arrays.copyOf(ANCHORS,i));
         return stack;
@@ -29,8 +43,30 @@ public final class ResearchNotes extends Item {
         return stack.hasTag()?Aspect.getAspect(stack.getTag().getString("Cell"+index)):null;
     }
     public static boolean anchored(ResearchProgression.Definition def,int index) {
-        for(int i=0;i<Math.min(6,Math.max(2,def.aspects().size()));i++) if(ANCHORS[i]==index) return true;
+        for(int i=0;i<anchorCount(def);i++) if(ANCHORS[i]==index) return true;
         return false;
+    }
+    /** Upgrade old six-anchor notes without charging paper/ink or losing placed points. */
+    public static boolean upgrade(ItemStack stack,ResearchProgression.Definition def,Player player) {
+        int count=anchorCount(def);var tag=stack.getOrCreateTag();
+        if(count<=6 || tag.getIntArray("Anchors").length!=6)return false;
+        var knowledge=ResearchProgression.knowledge(player);if(knowledge==null)return false;
+        var required=def.aspects().getAspects();
+        for(int i=6;i<count;i++) {
+            var previous=cell(stack,ANCHORS[i]);
+            if(previous!=null)knowledge.addAspectPool(previous,1);
+            tag.putString("Cell"+ANCHORS[i],required[i].getTag());
+        }
+        tag.putIntArray("Anchors",Arrays.copyOf(ANCHORS,count));
+        tag.putBoolean("Solved",complete(stack,def));
+        ModNetwork.syncThaumometerKnowledge(player);
+        return true;
+    }
+    @Override public void inventoryTick(ItemStack stack,Level level,net.minecraft.world.entity.Entity entity,int slot,boolean selected) {
+        if(!level.isClientSide && entity instanceof Player player && stack.hasTag()) {
+            var def=ResearchProgression.definitions(level).get(stack.getTag().getString("Research"));
+            if(def!=null)upgrade(stack,def,player);
+        }
     }
     public static boolean related(Aspect a,Aspect b) {
         if(a==null || b==null || a==b) return false;
@@ -40,7 +76,7 @@ public final class ResearchNotes extends Item {
         return a.getComponents()!=null && Arrays.asList(a.getComponents()).contains(b);
     }
     public static boolean complete(ItemStack stack,ResearchProgression.Definition def) {
-        int count=Math.min(6,Math.max(2,def.aspects().size())); if(count<2) return false;
+        int count=anchorCount(def); if(count<2) return false;
         int i=0; for(Aspect a:def.aspects().getAspects()) {if(i>=count)break; if(cell(stack,ANCHORS[i++])!=a) return false;}
         if(def.aspects().size()==1 && cell(stack,ANCHORS[1])!=def.aspects().getAspects()[0])return false;
         var visited=new HashSet<Integer>(); var queue=new ArrayDeque<Integer>(); queue.add(ANCHORS[0]);

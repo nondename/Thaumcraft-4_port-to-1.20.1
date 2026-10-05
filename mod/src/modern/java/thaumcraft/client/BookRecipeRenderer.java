@@ -17,14 +17,29 @@ final class BookRecipeRenderer {
     private static final ResourceLocation OVERLAY=ResourceLocation.fromNamespaceAndPath("thaumcraft","textures/gui/gui_researchbook_overlay.png");
     private ItemStack hover=ItemStack.EMPTY;
     private Component aspectHover;
+    // A preview must not notify or recalculate the player's real inventory menu.
+    private final net.minecraft.world.inventory.TransientCraftingContainer wandGrid=new net.minecraft.world.inventory.TransientCraftingContainer(
+            new net.minecraft.world.inventory.AbstractContainerMenu(null,-1) {
+                @Override public ItemStack quickMoveStack(net.minecraft.world.entity.player.Player player,int index){return ItemStack.EMPTY;}
+                @Override public boolean stillValid(net.minecraft.world.entity.player.Player player){return false;}
+            },3,3);
     void render(GuiGraphics g,Recipe<?> recipe,int x,int y,int mx,int my){
-        String type=recipe instanceof CrucibleRecipe?"crucible":recipe instanceof InfusionRecipe?"infusion":recipe instanceof ArcaneRecipe?"arcane":recipe instanceof ShapedRecipe?"workbench":"workbenchshapeless";
+        boolean wand=recipe instanceof thaumcraft.common.crafting.ArcaneWandRecipe;
+        String type=recipe instanceof AbstractCookingRecipe?"smelting":recipe instanceof CrucibleRecipe?"crucible":recipe instanceof InfusionRecipe?"infusion":recipe instanceof ArcaneRecipe || wand?"arcane":recipe instanceof ShapedRecipe?"workbench":"workbenchshapeless";
         var label=Component.translatable("recipe.type."+type);
         BookSkin.caption(g,mc.font,label,x,y,140,0.95F);
         boolean refill=recipe instanceof thaumcraft.common.crafting.ScribingRefillRecipe;
         ItemStack result=refill?new ItemStack(thaumcraft.common.research.ModResearch.SCRIBING_TOOLS.get()):recipe.getResultItem(mc.level.registryAccess());
-        slot(g,result,x+62,y+21,mx,my);
-        if(recipe instanceof CrucibleRecipe r){
+        if(!wand)slot(g,result,x+62,y+21,mx,my);
+        if(wand){
+            renderWand(g,(thaumcraft.common.crafting.ArcaneWandRecipe)recipe,x,y,mx,my);
+        }else if(recipe instanceof AbstractCookingRecipe r){
+            ingredient(g,r.getIngredients().get(0),x+62,y+120,mx,my);
+            slot(g,new ItemStack(net.minecraft.world.item.Items.FURNACE),x+62,y+77,mx,my);
+            arrow(g,x+70,y+104,false);arrow(g,x+70,y+50,false);
+            BookSkin.caption(g,mc.font,Component.translatable("tc.book.smelting_time",r.getCookingTime()/20),x,y+148,140,0.8F);
+            BookSkin.caption(g,mc.font,Component.translatable("tc.book.smelting_xp",r.getExperience()),x,y+160,140,0.8F);
+        }else if(recipe instanceof CrucibleRecipe r){
             ingredient(g,r.catalyst(),x+31,y+61,mx,my);
             arrow(g,x+38,y+83,true);
             var crucible=new ItemStack(thaumcraft.common.alchemy.ModAlchemy.CRUCIBLE_ITEM.get());
@@ -58,6 +73,27 @@ final class BookRecipeRenderer {
             arrow(g,x+70,y+44,true);
             if(recipe instanceof ArcaneRecipe r)aspects(g,r.getAspects(),x+26,y+138,3,mx,my);
         }
+    }
+    private void renderWand(GuiGraphics g,thaumcraft.common.crafting.ArcaneWandRecipe recipe,int x,int y,int mx,int my){
+        var rods=new java.util.ArrayList<>(thaumcraft.api.wands.WandRod.rods.values());
+        var caps=new java.util.ArrayList<>(thaumcraft.api.wands.WandCap.caps.values());
+        // Use the real assembler and its cost calculation, including exclusion of iron/wood.
+        var grid=wandGrid;
+        int count=rods.size()*caps.size();if(count==0)return;
+        int choice=(int)(mc.level.getGameTime()/60%count);
+        ItemStack result=ItemStack.EMPTY;
+        for(int attempt=0;attempt<count && result.isEmpty();attempt++){
+            int index=(choice+attempt)%count;
+            grid.setItem(2,caps.get(index%caps.size()).getItem());
+            grid.setItem(4,rods.get(index/caps.size()).getItem());
+            grid.setItem(6,caps.get(index%caps.size()).getItem());
+            result=recipe.assemble(grid,mc.level.registryAccess());
+        }
+        slot(g,result,x+62,y+21,mx,my);
+        g.blit(OVERLAY,x+30,y+54,80,80,224,30,104,104,512,512);
+        for(int i=0;i<9;i++)slot(g,grid.getItem(i),x+35+(i%3)*27,y+59+(i/3)*27,mx,my);
+        arrow(g,x+70,y+44,false);
+        aspects(g,recipe.getAspects(grid),x+26,y+138,3,mx,my);
     }
     private void slot(GuiGraphics g,ItemStack stack,int x,int y,int mx,int my){
         if(stack.isEmpty())return;

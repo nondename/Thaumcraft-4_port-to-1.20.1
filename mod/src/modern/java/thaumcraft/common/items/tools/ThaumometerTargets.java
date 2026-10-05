@@ -35,7 +35,7 @@ public final class ThaumometerTargets {
         }
 
         public static Target node(AuraNodeBlockEntity node) {
-            return new Target(ItemStack.EMPTY, Component.literal("Aura Node"),
+            return new Target(ItemStack.EMPTY, Component.translatable("tc.node.name"),
                     "node:" + node.getNodeId(), null, node, null);
         }
 

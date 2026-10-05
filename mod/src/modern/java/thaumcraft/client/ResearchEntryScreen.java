@@ -35,19 +35,7 @@ public final class ResearchEntryScreen extends Screen {
         if(originalText.isEmpty())originalText.add(I18n.get("tc.research_text."+node.key()));
         pages.addAll(BookPageLayout.layout(font,minecraft.getResourceManager(),originalText));
         recipes.clear();
-        if(minecraft.level!=null)minecraft.level.getRecipeManager().getRecipes().stream().filter(recipe -> {
-            String key=recipe instanceof thaumcraft.common.crafting.ArcaneRecipe r?r.getResearch():
-                recipe instanceof thaumcraft.common.alchemy.CrucibleRecipe r?r.research():
-                recipe instanceof thaumcraft.common.infusion.InfusionRecipe r?r.research():"";
-            if(!key.isEmpty())return key.equalsIgnoreCase(node.key());
-            if(!recipe.getId().getNamespace().equals("thaumcraft"))return false;
-            return switch(node.key()) {
-                case "BASICTHAUMATURGY" -> java.util.Set.of("wand_cap_iron","wand","thaumometer").contains(recipe.getId().getPath());
-                case "RESEARCH" -> java.util.Set.of("scribing_tools","scribing_refill","phial").contains(recipe.getId().getPath());
-                case "TABLE" -> recipe.getId().getPath().equals("table");
-                default -> false;
-            };
-        }).sorted(Comparator.comparing(r -> r.getId().toString())).forEach(recipes::add);
+        if(minecraft.level!=null)minecraft.level.getRecipeManager().getRecipes().stream().filter(recipe -> thaumcraft.common.research.BookRecipeCatalog.belongsTo(recipe,node.key())).sorted(Comparator.comparing(r -> r.getId().toString())).forEach(recipes::add);
         recipePages.clear();
         var variants=new LinkedHashMap<String,List<net.minecraft.world.item.crafting.Recipe<?>>>();
         for(var recipe:recipes){

@@ -122,7 +122,7 @@ public final class ArcaneWorkbenchScreen extends AbstractContainerScreen<ArcaneW
             g.pose().pushPose();
             g.pose().translate(168, 46, 0);
             g.pose().scale(0.5F, 0.5F, 1.0F);
-            String text = "Insufficient vis";
+            Component text = Component.translatable("tc.workbench.insufficient_vis");
             g.drawString(this.font, text, -this.font.width(text) / 2, 0, INSUFFICIENT_COLOR, false);
             g.pose().popPose();
         }

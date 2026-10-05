@@ -13,6 +13,7 @@ import thaumcraft.common.lib.network.ModNetwork;
 public final class ResearchMenu extends AbstractContainerMenu {
     public static final Aspect[] ASPECTS = Aspect.aspects.values().toArray(new Aspect[0]);
     private final ContainerLevelAccess access;
+    private final Player owner;
     private final DataSlot first = DataSlot.standalone();
     private final DataSlot second = DataSlot.standalone();
     private final DataSlot result = DataSlot.standalone();
@@ -20,6 +21,7 @@ public final class ResearchMenu extends AbstractContainerMenu {
     public ResearchMenu(int id, Inventory inventory, ContainerLevelAccess access) {
         super(ModResearch.MENU.get(), id);
         this.access = access;
+        this.owner = inventory.player;
         first.set(-1); second.set(-1); result.set(-1);
         addDataSlot(first); addDataSlot(second); addDataSlot(result);
         net.minecraft.world.Container tools = access.evaluate((level, pos) ->
@@ -43,6 +45,14 @@ public final class ResearchMenu extends AbstractContainerMenu {
     public int second() { return second.get(); }
     public int result() { return result.get(); }
     public int selected() {return second.get()>=0?second.get():first.get();}
+    @Override public void broadcastChanges() {
+        var notes=slots.get(1).getItem();
+        if(!owner.level().isClientSide && notes.is(ModResearch.NOTES.get()) && notes.hasTag()) {
+            var def=ResearchProgression.definitions(owner.level()).get(notes.getTag().getString("Research"));
+            if(def!=null && ResearchNotes.upgrade(notes,def,owner))slots.get(1).setChanged();
+        }
+        super.broadcastChanges();
+    }
     @Override public ItemStack quickMoveStack(Player player, int index) {
         if (index < 0 || index >= slots.size()) return ItemStack.EMPTY;
         var slot = slots.get(index);
@@ -68,7 +78,9 @@ public final class ResearchMenu extends AbstractContainerMenu {
             int cell=id%1000; var notes=slots.get(1).getItem(); var tools=slots.get(0).getItem();
             if(!notes.is(ModResearch.NOTES.get()) || !ScribingTools.hasInk(tools) || !ResearchNotes.valid(cell))return false;
             var def=ResearchProgression.definitions(player.level()).get(notes.getOrCreateTag().getString("Research"));
-            if(def==null || !ResearchProgression.parents(player,def) || ResearchNotes.anchored(def,cell))return false;
+            if(def==null || !ResearchProgression.parents(player,def))return false;
+            if(ResearchNotes.upgrade(notes,def,player))slots.get(1).setChanged();
+            if(ResearchNotes.anchored(def,cell))return false;
             if(id<2000) {
                 if(selected()<0 || selected()>=ASPECTS.length || ResearchNotes.cell(notes,cell)!=null)return false;
                 if(!knowledge.spendAspects(new thaumcraft.api.aspects.AspectList().add(ASPECTS[selected()],1)))return false;

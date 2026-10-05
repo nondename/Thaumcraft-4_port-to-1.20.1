@@ -21,15 +21,13 @@ public final class ItemAuraNode extends BlockItem {
 
     @Override
     public Component getName(ItemStack stack) {
-        // The original key is tile.blockAiry.0.name = Aura Node. Keep a clean modern fallback
-        // until the remaining legacy lang catalogue is migrated wholesale.
-        return Component.literal("Aura Node");
+        return Component.translatable("tc.node.name");
     }
 
     @Override
     public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(Component.literal("Place a randomly generated node").withStyle(ChatFormatting.LIGHT_PURPLE));
-        tooltip.add(Component.literal("Creative Mode Only").withStyle(ChatFormatting.ITALIC));
+        tooltip.add(Component.translatable("tc.node.placer").withStyle(ChatFormatting.LIGHT_PURPLE));
+        tooltip.add(Component.translatable("tc.node.creative").withStyle(ChatFormatting.ITALIC));
         super.appendHoverText(stack, level, tooltip, flag);
     }
 

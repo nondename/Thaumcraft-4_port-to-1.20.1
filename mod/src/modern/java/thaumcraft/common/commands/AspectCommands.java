@@ -49,8 +49,7 @@ public final class AspectCommands {
         int compound = Aspect.getCompoundAspects().size();
 
         source.sendSuccess(
-                () -> Component.literal("Thaumcraft aspects: " + total
-                        + " total, " + primal + " primal, " + compound + " compound"),
+                () -> Component.translatable("tc.debug.summary", total, primal, compound),
                 false
         );
         return total;
@@ -59,27 +58,23 @@ public final class AspectCommands {
     private static int showAspect(CommandSourceStack source, String requestedTag) {
         Aspect aspect = Aspect.getAspect(requestedTag);
         if (aspect == null) {
-            source.sendFailure(Component.literal("Unknown Thaumcraft aspect: " + requestedTag));
+            source.sendFailure(Component.translatable("tc.debug.unknown", requestedTag));
             return 0;
         }
 
         Aspect[] components = aspect.getComponents();
-        String composition;
+        Component composition;
         if (aspect.isPrimal()) {
-            composition = "primal";
+            composition = Component.translatable("tc.debug.primal");
         } else {
-            composition = components[0].getTag() + " + " + components[1].getTag();
+            composition = Component.literal(components[0].getTag() + " + " + components[1].getTag());
         }
 
-        String aliasNote = requestedTag.equals(aspect.getTag())
-                ? ""
-                : " (alias -> " + aspect.getTag() + ")";
+        Component aliasNote = requestedTag.equals(aspect.getTag())
+                ? Component.empty() : Component.translatable("tc.debug.alias", aspect.getTag());
 
         source.sendSuccess(
-                () -> Component.literal(requestedTag + aliasNote
-                        + ": " + composition
-                        + ", color=#" + String.format("%06X", aspect.getColor() & 0xFFFFFF)
-                        + ", blend=" + aspect.getBlend()),
+                () -> Component.translatable("tc.debug.aspect", requestedTag, aliasNote, composition, String.format("%06X", aspect.getColor() & 0xFFFFFF), aspect.getBlend()),
                 false
         );
         return 1;
@@ -122,23 +117,17 @@ public final class AspectCommands {
 
         if (passed) {
             source.sendSuccess(
-                    () -> Component.literal("AspectList PASS: add/remove/reduce + NBT round-trip + alkimia alias + unknown-skip"),
+                    () -> Component.translatable("tc.debug.pass"),
                     false
             );
             source.sendSuccess(
-                    () -> Component.literal("restored: aer=2, metallum=1, praecantatio=9, total=12"),
+                    () -> Component.translatable("tc.debug.restored"),
                     false
             );
             return 1;
         }
 
-        source.sendFailure(Component.literal(
-                "AspectList FAIL: size=" + restored.size()
-                        + ", aer=" + restored.getAmount(Aspect.AIR)
-                        + ", metallum=" + restored.getAmount(Aspect.METAL)
-                        + ", praecantatio=" + restored.getAmount(Aspect.MAGIC)
-                        + ", total=" + restored.visSize()
-        ));
+        source.sendFailure(Component.translatable("tc.debug.fail", restored.size(), restored.getAmount(Aspect.AIR), restored.getAmount(Aspect.METAL), restored.getAmount(Aspect.MAGIC), restored.visSize()));
         return 0;
     }
 
@@ -146,8 +135,7 @@ public final class AspectCommands {
         int items = ThaumcraftApi.getRegisteredObjectTagCount();
         int blocks = ThaumcraftApi.getRegisteredBlockTagCount();
         source.sendSuccess(
-                () -> Component.literal("Thaumcraft aspect tags: " + items
-                        + " item tags, " + blocks + " block tags"),
+                () -> Component.translatable("tc.debug.tags", items, blocks),
                 false
         );
         return items + blocks;
@@ -155,13 +143,13 @@ public final class AspectCommands {
 
     private static int showHeldAspects(CommandSourceStack source) {
         if (!(source.getEntity() instanceof ServerPlayer player)) {
-            source.sendFailure(Component.literal("This command must be run by a player"));
+            source.sendFailure(Component.translatable("tc.debug.player"));
             return 0;
         }
 
         ItemStack stack = player.getMainHandItem();
         if (stack.isEmpty()) {
-            source.sendFailure(Component.literal("Hold an item in your main hand"));
+            source.sendFailure(Component.translatable("tc.debug.hold"));
             return 0;
         }
 
@@ -171,13 +159,13 @@ public final class AspectCommands {
 
     private static int showLookedAtBlockAspects(CommandSourceStack source) {
         if (!(source.getEntity() instanceof ServerPlayer player)) {
-            source.sendFailure(Component.literal("This command must be run by a player"));
+            source.sendFailure(Component.translatable("tc.debug.player"));
             return 0;
         }
 
         HitResult hit = player.pick(5.0D, 0.0F, false);
         if (!(hit instanceof BlockHitResult blockHit) || hit.getType() != HitResult.Type.BLOCK) {
-            source.sendFailure(Component.literal("Look at a block within 5 blocks"));
+            source.sendFailure(Component.translatable("tc.debug.look"));
             return 0;
         }
 
@@ -189,7 +177,7 @@ public final class AspectCommands {
 
     private static int sendAspects(CommandSourceStack source, String objectId, AspectList aspects) {
         if (aspects == null || aspects.size() == 0) {
-            source.sendFailure(Component.literal("No Thaumcraft aspects registered for " + objectId));
+            source.sendFailure(Component.translatable("tc.debug.none", objectId));
             return 0;
         }
 
@@ -199,7 +187,7 @@ public final class AspectCommands {
                 .collect(Collectors.joining(", "));
 
         source.sendSuccess(
-                () -> Component.literal(objectId + " -> " + values + " (total=" + aspects.visSize() + ")"),
+                () -> Component.translatable("tc.debug.values", objectId, values, aspects.visSize()),
                 false
         );
         return aspects.visSize();

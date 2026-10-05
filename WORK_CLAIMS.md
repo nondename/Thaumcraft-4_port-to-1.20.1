@@ -17,7 +17,7 @@
 
 ## Активные заявки
 
-- **Доработки ревизии — Codex (2026-10-05): client/{ResearchEntryScreen,BookRecipeRenderer,BookRecipeCatalog}.java, common/research/ResearchNotes.java и ResearchMenu.java, common/items/ItemAuraNode.java и tools/ThaumometerTargets.java, common/commands/AspectCommands.java, lang EN/RU, modernTest и scripts проверки рецептов, docs аудитов.** Все существующие рецепты в книге, полные исходные аспекты записок, локализация. Руды только демонстрация существующих PNG, без правок; полный каталог исследований сохраняется. Лес/порчу не трогаю.
+- ~~**Доработки ревизии — Codex (2026-10-05): client/{ResearchEntryScreen,BookRecipeRenderer,ArcaneWorkbenchScreen}.java, common/research/{BookRecipeCatalog,ResearchNotes,ResearchMenu}.java, ItemAuraNode/ThaumometerTargets, AspectCommands, lang EN/RU, modernTest и docs аудитов.**~~ Готово: все 54 рецепта в книге, все исходные аспекты и миграция записок, локализация. build + 52 GameTest, 944 ключа EN/RU. Руды и полный каталог исследований сохранены; лес/порчу не трогала. Подробности docs/AUDIT_FOLLOWUP_2026-10-05.md.
 
 - ~~**Ревизия порта — Codex (2026-10-05): только новый docs/PORT_AUDIT_2026-10-05.md.**~~ Завершена: код/ресурсы проверены read-only, сводка и результаты 48 GameTest записаны. Магический лес — ChatGPT, tained_porcha — OpenCode по сообщению пользователя.
 
