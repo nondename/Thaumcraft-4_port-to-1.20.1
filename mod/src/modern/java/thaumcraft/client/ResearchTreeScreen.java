@@ -14,7 +14,6 @@ import java.util.*;
 
 /** Original tab layout and research graph backed by synchronized player research state. */
 public final class ResearchTreeScreen extends Screen {
-    private static final ResourceLocation FRAME = id("textures/gui/gui_research.png");
     private static final String[] TABS = {"BASICS", "THAUMATURGY", "ALCHEMY", "ARTIFICE", "GOLEMANCY", "ELDRITCH"};
     private static final String[] ICONS = {"items/thaumonomiconcheat", "misc/r_thaumaturgy", "misc/r_crucible", "misc/r_artifice", "misc/r_golemancy", "misc/r_eldritch"};
 
@@ -27,9 +26,11 @@ public final class ResearchTreeScreen extends Screen {
     private final Map<String,List<String>> hiddenParents = new HashMap<>();
     private final Set<String> secondary = new HashSet<>();
     private final Map<String, Node> byKey = new HashMap<>();
-    private final double[] panX = new double[6], panY = new double[6];
-    private int tab, left, top;
-    private float scale = 1, zoom = 1;
+    private static final double[] panX = new double[6], panY = new double[6];
+    private static int tab;
+    private int left, top;
+    private float scale = 1;
+    private static float zoom = 1;
     private boolean dragging;
     private double dragDistance;
     private Node hovered;
@@ -79,22 +80,22 @@ public final class ResearchTreeScreen extends Screen {
 
     @Override
     protected void init() {
-        scale = Math.min(1, Math.min(width / 310F, height / 255F));
-        left = ((int) (width / scale) - 256) / 2 + 10;
-        top = ((int) (height / scale) - 230) / 2;
+        scale = Math.min(1, Math.min(width / 410F, height / 285F));
+        left = ((int) (width / scale) - 360) / 2 + 10;
+        top = ((int) (height / scale) - 252) / 2;
         dragging = false;
     }
 
     private double nx(Node n) {
-        return left + 128 + (n.x() * 24 - panX[tab]) * zoom;
+        return left + 180 + (n.x() * 24 - panX[tab]) * zoom;
     }
 
     private double ny(Node n) {
-        return top + 115 + (n.y() * 24 - panY[tab]) * zoom;
+        return top + 124 + (n.y() * 24 - panY[tab]) * zoom;
     }
 
     private boolean inside(double x, double y) {
-        return x >= left + 16 && x < left + 240 && y >= top + 17 && y < top + 213;
+        return x >= left + 18 && x < left + 342 && y >= top + 36 && y < top + 224;
     }
 
     private boolean isUnlocked(Node node) {
@@ -132,10 +133,10 @@ public final class ResearchTreeScreen extends Screen {
         hovered = null;
         g.pose().pushPose();
         g.pose().scale(scale, scale, 1);
-        g.blit(id("textures/gui/" + (tab == 5 ? "gui_researchbackeldritch" : "gui_researchback") + ".png"),
-                left + 16, top + 17, 224, 196, 0, 0, 512, 512, 512, 512);
-        g.enableScissor((int) ((left + 16) * scale), (int) ((top + 17) * scale),
-                (int) ((left + 240) * scale), (int) ((top + 213) * scale));
+        BookSkin.draw(g,left,top,360,252);
+        g.drawCenteredString(font,Component.translatable("tc.research_category."+TABS[tab]),left+180,top+18,0x514535);
+        g.enableScissor((int) ((left + 18) * scale), (int) ((top + 36) * scale),
+                (int) ((left + 342) * scale), (int) ((top + 224) * scale));
 
         for (Node n : nodes) {
             if (!n.category().equals(TABS[tab]) || !isVisible(n)) {
@@ -144,7 +145,7 @@ public final class ResearchTreeScreen extends Screen {
             for (String key : n.parents()) {
                 Node parent = byKey.get(key);
                 if (parent != null && parent.category().equals(n.category()) && isVisible(parent)) {
-                    int color = isUnlocked(n) ? 0xFF776389 : parentsUnlocked(n) ? 0xFF51445B : 0xFF2C2630;
+                    int color = isUnlocked(n) ? 0xFF69806A : parentsUnlocked(n) ? 0xFF9C8763 : 0xFFCEC4AE;
                     line(g, (int) nx(parent), (int) ny(parent), (int) nx(n), (int) ny(n), color);
                 }
             }
@@ -155,7 +156,7 @@ public final class ResearchTreeScreen extends Screen {
                 continue;
             }
             double x = nx(n), y = ny(n);
-            if (x < left || x > left + 256 || y < top || y > top + 230) {
+            if (x < left || x > left + 360 || y < top || y > top + 252) {
                 continue;
             }
             boolean over = inside(mx, my) && Math.abs(mx - x) < 13 * zoom && Math.abs(my - y) < 13 * zoom;
@@ -166,11 +167,12 @@ public final class ResearchTreeScreen extends Screen {
             boolean unlocked = isUnlocked(n);
             boolean available = !unlocked && parentsUnlocked(n);
             float brightness = unlocked ? 1.0F : available ? (over ? 0.72F : 0.58F) : (over ? 0.42F : 0.25F);
-            g.setColor(brightness, brightness, brightness, 1);
+
             g.pose().pushPose();
             g.pose().translate(x - 13 * zoom, y - 13 * zoom, 0);
             g.pose().scale(zoom, zoom, 1);
-            g.blit(FRAME, 0, 0, n.round() ? 54 : 0, 230, 26, 26);
+            BookSkin.node(g,unlocked,available,secondary.contains(n.key()),over);
+            g.setColor(brightness, brightness, brightness, 1);
             if (n.icon() != null) {
                 g.blit(n.icon(), 5, 5, 16, 16, 0, 0, n.iconWidth(), Math.min(n.iconWidth(), n.iconHeight()), n.iconWidth(), n.iconHeight());
             } else if (n.item() != null) {
@@ -185,13 +187,15 @@ public final class ResearchTreeScreen extends Screen {
 
         g.disableScissor();
         for (int i = 0; i < TABS.length; i++) {
-            int x = left - 24, y = top + i * 25;
-            g.blit(FRAME, x, y, i == tab ? 176 : 152, 232, 24, 24);
+            int x = left - 22, y = top + 12 + i * 32;
+            g.fill(x+2,y+2,left+6,y+28,0x50000000);
+            g.fill(x,y,left+6,y+26,i==tab?0xFF65735F:0xFF92816B);
+            g.fill(x+2,y+2,left+4,y+23,i==tab?0xFF809078:0xFFAF9C7F);
             g.blit(id("textures/" + ICONS[i] + ".png"), x + 4, y + 4, 16, 16, 0, 0, 16, 16, 16, 16);
         }
-        g.blit(FRAME, left, top, 0, 0, 256, 230);
+        g.drawCenteredString(font,Component.translatable("tc.book.map_hint"),left+180,top+232,0x776B55);
         if (loadFailed) {
-            g.drawCenteredString(font, Component.translatable("tc.tree.load_failed"), left + 128, top + 110, 0xFFFFFF);
+            g.drawCenteredString(font, Component.translatable("tc.tree.load_failed"), left + 180, top + 110, 0x704A3A);
         }
         g.pose().popPose();
 
@@ -203,13 +207,13 @@ public final class ResearchTreeScreen extends Screen {
                 lines.add(Component.translatable(description));
             }
             if (!isUnlocked(hovered)) {
-                lines.add(Component.translatable("tc.tree.locked").withStyle(net.minecraft.ChatFormatting.GRAY));
+                lines.add(Component.translatable(parentsUnlocked(hovered)?"tc.book.available":"tc.tree.locked").withStyle(net.minecraft.ChatFormatting.GRAY));
                 if(parentsUnlocked(hovered))lines.add(Component.translatable(secondary.contains(hovered.key())?"tc.progress.secondary_hint":"tc.progress.start_hint"));
             }
             g.renderComponentTooltip(font, lines, mouseX, mouseY);
         } else {
             for (int i = 0; i < TABS.length; i++) {
-                if (mx >= left - 24 && mx < left && my >= top + i * 25 && my < top + i * 25 + 24) {
+                if (mx >= left - 22 && mx < left + 6 && my >= top + 12 + i * 32 && my < top + 12 + i * 32 + 26) {
                     g.renderTooltip(font, Component.translatable("tc.research_category." + TABS[i]), mouseX, mouseY);
                 }
             }
@@ -235,7 +239,7 @@ public final class ResearchTreeScreen extends Screen {
         x /= scale;
         y /= scale;
         for (int i = 0; i < TABS.length; i++) {
-            if (x >= left - 24 && x < left && y >= top + i * 25 && y < top + i * 25 + 24) {
+            if (x >= left - 22 && x < left + 6 && y >= top + 12 + i * 32 && y < top + 12 + i * 32 + 26) {
                 tab = i;
                 return true;
             }
@@ -301,7 +305,7 @@ public final class ResearchTreeScreen extends Screen {
         if (!inside(x / scale, y / scale)) {
             return false;
         }
-        double localX = x / scale - left - 128, localY = y / scale - top - 115;
+        double localX = x / scale - left - 180, localY = y / scale - top - 124;
         float next = net.minecraft.util.Mth.clamp(zoom + (float) delta * 0.1F, 0.6F, 1.6F);
         panX[tab] += localX / zoom - localX / next;
         panY[tab] += localY / zoom - localY / next;

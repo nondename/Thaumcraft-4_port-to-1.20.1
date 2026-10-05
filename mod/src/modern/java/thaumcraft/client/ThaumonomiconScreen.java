@@ -16,7 +16,6 @@ import java.util.List;
 
 /** Readable starting chapters and the player's discovered aspect catalogue. */
 public final class ThaumonomiconScreen extends Screen {
-    private static final ResourceLocation BOOK = ResourceLocation.fromNamespaceAndPath("thaumcraft", "textures/gui/gui_researchbook.png");
     private int page;
     private Screen parent;
     private int left, top;
@@ -35,15 +34,15 @@ public final class ThaumonomiconScreen extends Screen {
         uiScale = Math.min(1, Math.min(width / 380F, height / 290F));
         left = ((int)(width / uiScale) - 360) / 2;
         top = ((int)(height / uiScale) - 280) / 2;
-        previous = addRenderableWidget(Button.builder(Component.literal("<"), b -> page--).bounds(left + 22, top + 226, 24, 20).build());
-        next = addRenderableWidget(Button.builder(Component.literal(">"), b -> page++).bounds(left + 314, top + 226, 24, 20).build());
+        previous = addRenderableWidget(BookSkin.turn(left+22,top+225,false,b -> page--));
+        next = addRenderableWidget(BookSkin.turn(left+314,top+225,true,b -> page++));
         addRenderableWidget(Button.builder(Component.translatable("gui.done"), b -> onClose()).bounds(left + 144, top + 256, 72, 20).build());
     }
     @Override public void render(GuiGraphics g, int mouseX, int mouseY, float partialTick) {
         renderBackground(g);
         g.pose().pushPose();
         g.pose().scale(uiScale, uiScale, 1);
-        g.blit(BOOK, left, top, 360, 252, 0, 0, 512, 360, 512, 512);
+        BookSkin.draw(g,left,top,360,252);
         previous.active = page > 0;
         next.active = page < lastPage();
         if (page < 3) {
@@ -85,7 +84,7 @@ public final class ThaumonomiconScreen extends Screen {
                 g.pose().popPose();
             }
         }
-        g.drawCenteredString(font, (page + 1) + " / " + (lastPage() + 1), left + 180, top + 232, 0xC3A576);
+        g.drawCenteredString(font, (page + 1) + " / " + (lastPage() + 1), left + 180, top + 232, 0x776B55);
         super.render(g, (int)(mouseX / uiScale), (int)(mouseY / uiScale), partialTick);
         g.pose().popPose();
     }

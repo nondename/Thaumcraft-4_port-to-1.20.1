@@ -907,5 +907,9 @@
   "tc.command.unknown_aspect": "Unknown aspect: %s",
   "tc.command.unknown_research": "Unknown research: %s",
   "tc.progress.secondary_hint": "Click to learn using aspect points. Paper and ink are not required.",
-  "tc.progress.refill_help": "Refill ink: combine used scribing tools and an ink sac in a crafting grid."
+  "tc.progress.refill_help": "Refill ink: combine used scribing tools and an ink sac in a crafting grid.",
+  "tc.book.map_hint": "Drag to explore · Scroll to zoom",
+  "tc.book.available": "Available to research",
+  "tc.book.next_page": "Next page",
+  "tc.book.previous_page": "Previous page"
 }

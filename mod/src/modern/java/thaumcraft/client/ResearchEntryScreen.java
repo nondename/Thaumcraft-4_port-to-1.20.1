@@ -11,7 +11,6 @@ import java.util.*;
 
 /** Original reference text with page wrapping; this screen does not unlock recipes. */
 public final class ResearchEntryScreen extends Screen {
-    private static final ResourceLocation BOOK = ResourceLocation.fromNamespaceAndPath("thaumcraft", "textures/gui/gui_researchbook.png");
     private final Screen parent;
     private final ResearchTreeScreen.Node node;
     private final List<List<FormattedCharSequence>> pages = new ArrayList<>();
@@ -53,15 +52,15 @@ public final class ResearchEntryScreen extends Screen {
             };
         }).sorted(Comparator.comparing(r -> r.getId().toString())).forEach(recipes::add);
         spread = Math.min(spread, (pageCount() - 1) / 2);
-        back = addRenderableWidget(Button.builder(Component.literal("<"), b -> spread--).bounds(left + 22, top + 226, 24, 20).build());
-        next = addRenderableWidget(Button.builder(Component.literal(">"), b -> spread++).bounds(left + 314, top + 226, 24, 20).build());
+        back = addRenderableWidget(BookSkin.turn(left+22,top+225,false,b -> spread--));
+        next = addRenderableWidget(BookSkin.turn(left+314,top+225,true,b -> spread++));
         addRenderableWidget(Button.builder(Component.translatable("tc.tree.back"), b -> onClose()).bounds(left + 130, top + 256, 100, 20).build());
     }
     @Override public void render(GuiGraphics g, int mx, int my, float partialTick) {
         renderBackground(g);
         g.pose().pushPose(); g.pose().scale(scale, scale, 1);
-        g.blit(BOOK, left, top, 360, 252, 0, 0, 512, 360, 512, 512);
-        g.drawString(font, title, left + 23, top + 18, 0x423024, false);
+        BookSkin.draw(g,left,top,360,252);
+        g.drawWordWrap(font, title, left + 23, top + 18, 140, 0x423024);
         for (int side = 0; side < 2; side++) {
             int index = spread * 2 + side;
             if(index>=pages.size()) {if(index<pageCount())drawRecipe(g,recipes.get(index-pages.size()),left+(side==0?23:196),top+43,(int)(mx/scale),(int)(my/scale));continue;}
@@ -69,7 +68,7 @@ public final class ResearchEntryScreen extends Screen {
             for (var line : pages.get(index)) { g.drawString(font, line, left + (side == 0 ? 23 : 196), y, 0x423024, false); y += 10; }
         }
         back.active = spread > 0; next.active = spread * 2 + 2 < pageCount();
-        g.drawCenteredString(font, (spread + 1) + " / " + ((pageCount() + 1) / 2), left + 180, top + 231, 0xC3A576);
+        g.drawCenteredString(font, (spread + 1) + " / " + ((pageCount() + 1) / 2), left + 180, top + 231, 0x776B55);
         super.render(g, (int)(mx / scale), (int)(my / scale), partialTick);
         g.pose().popPose();
     }

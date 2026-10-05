@@ -17,7 +17,7 @@
 
 ## Активные заявки
 
-- **Оформление таумономикона — Codex (2026-10-05): client/ResearchTreeScreen, ResearchEntryScreen, ThaumonomiconScreen, новый BookSkin.java, свои lang ключи и docs/THAUMONOMICON_UI.md.** По утверждённому варианту пользователя: бумага и обложка Minecraft вместо деревянной рамки, закладки, читаемые состояния и перелистывание. Механики исследований не меняю.
+- ~~**Оформление таумономикона — Codex (2026-10-05): client/ResearchTreeScreen, ResearchEntryScreen, ThaumonomiconScreen, новый BookSkin.java, свои lang ключи и docs/THAUMONOMICON_UI.md.** По утверждённому варианту пользователя: бумага и обложка Minecraft вместо деревянной рамки, закладки, читаемые состояния и перелистывание. Механики исследований не меняю.~~ Готово: общая бумажная BookSkin, обложка/сгиб/закладки, состояния узлов и стрелки страниц, память карты; build и 913 EN/RU ключей проверены. Игровая оценка внешнего вида — пользователем, docs/THAUMONOMICON_UI.md.
 
 - ~~**Пьедестал по игровым скринам — Codex (2026-10-05): models/block и item/arcane_pedestal.json, textures/block/pedestal*, при необходимости ClientRegistration/InfusionDeviceBlock, scripts/verify-survival-resources.ps1 и docs/INFUSION_ASSET_FIXES.md.** Исправить UV прозрачного атласа, миниатюру и частицы разрушения. Прежний claim закрыт; механики алтаря не меняю.~~ Готово: закрытые UV 18 граней, общая модель блока/миниатюры, совпадающая коллизия; opaque particle и явные atlas sprites. build + 48 GameTest и проверка пикселей/PNG прошли. Клиент визуально не запускался; docs/INFUSION_ASSET_FIXES.md.
 
