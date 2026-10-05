@@ -31,9 +31,9 @@ public final class ThaumonomiconScreen extends Screen {
     }
     private int lastPage() { return 3 + Math.max(0, (known().size() - 1) / 12); }
     @Override protected void init() {
-        uiScale = Math.min(1, Math.min(width / 440F, height / 350F));
+        uiScale = Math.min(1, Math.min(width / 410F, height / 310F));
         left = ((int)(width / uiScale) - 360) / 2;
-        top = ((int)(height / uiScale) - 280) / 2;
+        top = ((int)(height / uiScale) - 252) / 2;
         previous = addRenderableWidget(BookSkin.turn(left+22,top+225,false,b -> page--));
         next = addRenderableWidget(BookSkin.turn(left+314,top+225,true,b -> page++));
         addRenderableWidget(BookSkin.back(left+204,top+224,106,Component.translatable("tc.tree.back"),b -> onClose()));

@@ -152,7 +152,33 @@ tasks.register('validateWandPartAssets') {
     }
 }
 
+tasks.register('validateResearchIcons') {
+    group = 'verification'
+    description = 'Checks direct book texture paths and PNG dimensions before packaging.'
+    doLast {
+        def nodes = new groovy.json.JsonSlurper().parse(file('src/modern/resources/assets/thaumcraft/research/tree.json'))
+        nodes.findAll { it.icon }.each { node ->
+            def parts = node.icon.split(':', 2)
+            def texture = file("src/modern/resources/assets/${parts[0]}/${parts[1]}")
+            if (!texture.isFile()) throw new GradleException("Missing research icon ${node.key}: ${node.icon}")
+            def bytes = texture.bytes
+            if (bytes.length < 24 || bytes[0] != (byte)0x89 || bytes[1] != (byte)0x50)
+                throw new GradleException("Invalid PNG research icon: ${node.icon}")
+            def dimensions = java.nio.ByteBuffer.wrap(bytes, 16, 8)
+            if (dimensions.getInt() != node.iconWidth || dimensions.getInt() != node.iconHeight)
+                throw new GradleException("Incorrect research icon dimensions: ${node.key}")
+        }
+        nodes.findAll { it.item?.startsWith('thaumcraft:') }.each { node ->
+            def name = node.item.split(':', 2)[1]
+            if (!file("src/modern/resources/assets/thaumcraft/models/item/${name}.json").isFile())
+                throw new GradleException("Missing research item model ${node.key}: ${node.item}")
+        }
+        logger.lifecycle("Validated ${nodes.count { it.icon }} research PNGs.")
+    }
+}
+
 tasks.named('processResources', ProcessResources).configure {
+    dependsOn tasks.named('validateResearchIcons')
     dependsOn tasks.named('validateWandPartAssets')
 
     def replaceProperties = [

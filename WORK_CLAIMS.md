@@ -17,7 +17,7 @@
 
 ## Активные заявки
 
-- **Третий проход книги — Codex (2026-10-05): client/BookSkin.java, ResearchTreeScreen.java, ResearchEntryScreen.java, ThaumonomiconScreen.java; research/tree.json и отсутствующие textures/items деталей жезлов, scripts/export_modern_research.py, mod/build.gradle (проверка иконок при сборке) и docs/THAUMONOMICON_UI.md.** Кожаный ванильный переплёт, крупные контрастные иконки и исправление missing textures по новым скринам.
+- ~~**Третий проход книги — Codex (2026-10-05): client/BookSkin.java, ResearchTreeScreen.java, ResearchEntryScreen.java, ThaumonomiconScreen.java; research/tree.json и отсутствующие textures/items деталей жезлов, scripts/export_modern_research.py, mod/build.gradle (проверка иконок при сборке) и docs/THAUMONOMICON_UI.md.** Кожаный ванильный переплёт, крупные контрастные иконки и исправление missing textures по новым скринам.~~ Готово: полный ванильный переплёт, крупные контрастные значки/текст, UV зеркалирование, 22 исправленных пути, 3 предметные иконки. build + проверка 193 PNG в JAR и локализации; docs/THAUMONOMICON_UI.md. Игровую оценку выполняет пользователь.
 
 - ~~**Второй вариант книги по скринам — Codex (2026-10-05): client/BookSkin, ResearchTreeScreen, ResearchEntryScreen, ThaumonomiconScreen, свои lang ключи и docs/THAUMONOMICON_UI.md.** Компактный силуэт, облегчённые закладки, подписи без пересечения сгиба, встроенный возврат и оформление последней страницы. Серверные механики не трогаю.~~ Готово: ванильная бумага, компактный масштаб, закладки, заголовки и подписи на отдельных страницах, встроенный возврат и карточка конца записи. build и 917 EN/RU ключей проверены; оценка в игре пользователем.
 

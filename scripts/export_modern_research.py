@@ -13,6 +13,10 @@ LEGACY = ROOT / 'mod/src/main/resources/assets/thaumcraft'
 OUTPUT = ROOT / 'mod/src/modern/resources/assets/thaumcraft'
 SOURCE = ROOT / 'mod/src/main/java/thaumcraft/common/config/research'
 
+# Render real inventory models for implemented devices, not a transparent corner
+# of their legacy block atlas (which previously produced empty squares).
+ITEM_OVERRIDES = {'CRUCIBLE': 'crucible', 'DISTILESSENTIA': 'alchemy_furnace', 'INFUSION': 'runic_matrix'}
+
 ICON_OVERRIDES = {
     'PLANTS': 'blocks/shimmerleaf', 'ETHEREALBLOOM': 'blocks/purifier_seed',
     'NODEJAR': 'blocks/jar_side', 'JARLABEL': 'blocks/jar_side',
@@ -61,6 +65,13 @@ def arguments(text):
 
 def copy(resource):
     path = resource.removeprefix('thaumcraft:')
+    # Modern wand resources migrate to the singular item directory during build.
+    # Research uses direct PNGs, not atlas sprites, so it must share those final paths.
+    if path.startswith(('textures/items/wand_cap_', 'textures/items/wand_rod_', 'textures/items/staff_rod_')):
+        modern_path = path.replace('textures/items/', 'textures/item/', 1)
+        if not (OUTPUT / modern_path).is_file():
+            raise ValueError(f'Missing canonical wand texture: {modern_path}')
+        return 'thaumcraft:' + modern_path
     source = LEGACY / path
     if not source.exists():
         raise ValueError(f'Missing reference texture: {resource}')
@@ -110,7 +121,9 @@ def main():
             entry['hiddenParents'] = re.findall(r'"([^"]+)"', hidden[1]) if hidden else []
             entry['secondary'] = '.setSecondary()' in chain
             resource = re.search(r'new ResourceLocation\("thaumcraft",\s*"([^"]+)"\)', icon)
-            if resource:
+            if key in ITEM_OVERRIDES:
+                entry['item'] = 'thaumcraft:' + ITEM_OVERRIDES[key]
+            elif resource:
                 entry['icon'] = copy('thaumcraft:' + resource[1])
             else:
                 if key in ['BASICTHAUMATURGY', 'SCEPTRE']:

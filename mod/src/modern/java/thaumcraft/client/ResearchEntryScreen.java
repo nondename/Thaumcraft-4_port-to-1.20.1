@@ -24,9 +24,9 @@ public final class ResearchEntryScreen extends Screen {
         this.parent = parent; this.node = node;
     }
     @Override protected void init() {
-        scale = Math.min(1, Math.min(width / 440F, height / 350F));
+        scale = Math.min(1, Math.min(width / 410F, height / 310F));
         left = ((int)(width / scale) - 360) / 2;
-        top = ((int)(height / scale) - 280) / 2;
+        top = ((int)(height / scale) - 252) / 2;
         pages.clear();
         for (String key : node.pages()) {
             if (!I18n.exists(key)) continue;
