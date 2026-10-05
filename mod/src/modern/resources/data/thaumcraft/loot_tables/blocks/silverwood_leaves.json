@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:alternatives",
+          "children": [
+            {
+              "type": "minecraft:item",
+              "name": "thaumcraft:silverwood_leaves",
+              "conditions": [
+                {"condition": "minecraft:match_tool", "predicate": {"items": ["minecraft:shears"]}}
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "thaumcraft:silverwood_sapling",
+              "conditions": [
+                {"condition": "minecraft:block_state_property", "block": "thaumcraft:silverwood_leaves", "properties": {"persistent": "false"}},
+                {"condition": "minecraft:random_chance", "chance": 0.004}
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

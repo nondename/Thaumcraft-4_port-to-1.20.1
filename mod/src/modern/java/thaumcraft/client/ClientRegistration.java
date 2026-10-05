@@ -47,6 +47,7 @@ public final class ClientRegistration {
             ItemBlockRenderTypes.setRenderLayer(ModMagicalTrees.SILVERWOOD_LEAVES.get(), RenderType.cutoutMipped());
             ItemBlockRenderTypes.setRenderLayer(ModMagicalTrees.GREATWOOD_SAPLING.get(), RenderType.cutout());
             ItemBlockRenderTypes.setRenderLayer(ModMagicalTrees.SILVERWOOD_SAPLING.get(), RenderType.cutout());
+            ItemBlockRenderTypes.setRenderLayer(ModMagicalTrees.SHIMMERLEAF.get(), RenderType.cutout());
             net.minecraft.client.renderer.item.ItemProperties.register(
                     thaumcraft.common.research.ModResearch.PHIAL.get(),
                     new net.minecraft.resources.ResourceLocation("thaumcraft", "filled"),

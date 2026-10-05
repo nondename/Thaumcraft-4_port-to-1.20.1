@@ -30,6 +30,8 @@ public final class ModMagicalTrees {
             Registries.CONFIGURED_FEATURE, new ResourceLocation(Thaumcraft.MODID, "greatwood_tree"));
     public static final ResourceKey<ConfiguredFeature<?, ?>> SILVERWOOD_TREE_KEY = ResourceKey.create(
             Registries.CONFIGURED_FEATURE, new ResourceLocation(Thaumcraft.MODID, "silverwood_tree"));
+    public static final ResourceKey<ConfiguredFeature<?, ?>> SILVERWOOD_SAPLING_TREE_KEY = ResourceKey.create(
+            Registries.CONFIGURED_FEATURE, new ResourceLocation(Thaumcraft.MODID, "silverwood_tree_sapling"));
 
     public static final RegistryObject<Block> GREATWOOD_LOG = ModOres.BLOCKS.register("greatwood_log", () ->
             new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LOG).strength(2.5F)));
@@ -50,6 +52,7 @@ public final class ModMagicalTrees {
             new SaplingBlock(new GreatwoodGrower(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)));
     public static final RegistryObject<Block> SILVERWOOD_SAPLING = ModOres.BLOCKS.register("silverwood_sapling", () ->
             new SaplingBlock(new SilverwoodGrower(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)));
+    public static final RegistryObject<Block> SHIMMERLEAF = ModOres.BLOCKS.register("shimmerleaf", ShimmerleafBlock::new);
 
     public static final RegistryObject<Item> GREATWOOD_LOG_ITEM = blockItem("greatwood_log", GREATWOOD_LOG);
     public static final RegistryObject<Item> SILVERWOOD_LOG_ITEM = blockItem("silverwood_log", SILVERWOOD_LOG);
@@ -59,6 +62,7 @@ public final class ModMagicalTrees {
     public static final RegistryObject<Item> SILVERWOOD_LEAVES_ITEM = blockItem("silverwood_leaves", SILVERWOOD_LEAVES);
     public static final RegistryObject<Item> GREATWOOD_SAPLING_ITEM = blockItem("greatwood_sapling", GREATWOOD_SAPLING);
     public static final RegistryObject<Item> SILVERWOOD_SAPLING_ITEM = blockItem("silverwood_sapling", SILVERWOOD_SAPLING);
+    public static final RegistryObject<Item> SHIMMERLEAF_ITEM = blockItem("shimmerleaf", SHIMMERLEAF);
 
     private static RegistryObject<Item> blockItem(String name, RegistryObject<Block> block) {
         return ModItems.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties()));
@@ -77,6 +81,9 @@ public final class ModMagicalTrees {
         ThaumcraftApi.registerBlockTag(SILVERWOOD_LEAVES.get(), new AspectList().add(Aspect.PLANT, 1).add(Aspect.MAGIC, 1));
         ThaumcraftApi.registerObjectTag(GREATWOOD_SAPLING_ITEM.get(), new AspectList().add(Aspect.PLANT, 1).add(Aspect.TREE, 1));
         ThaumcraftApi.registerObjectTag(SILVERWOOD_SAPLING_ITEM.get(), new AspectList().add(Aspect.PLANT, 1).add(Aspect.TREE, 1).add(Aspect.MAGIC, 1));
+        AspectList shimmerleaf = new AspectList().add(Aspect.PLANT, 2).add(Aspect.POISON, 1).add(Aspect.MAGIC, 2);
+        ThaumcraftApi.registerBlockTag(SHIMMERLEAF.get(), shimmerleaf);
+        ThaumcraftApi.registerObjectTag(SHIMMERLEAF_ITEM.get(), shimmerleaf);
     }
 
     private static final class GreatwoodGrower extends AbstractTreeGrower {
@@ -89,7 +96,7 @@ public final class ModMagicalTrees {
     private static final class SilverwoodGrower extends AbstractTreeGrower {
         @Override
         protected @Nullable ResourceKey<ConfiguredFeature<?, ?>> getConfiguredFeature(RandomSource random, boolean hasFlowers) {
-            return SILVERWOOD_TREE_KEY;
+            return SILVERWOOD_SAPLING_TREE_KEY;
         }
     }
 
