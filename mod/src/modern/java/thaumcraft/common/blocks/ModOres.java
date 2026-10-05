@@ -52,6 +52,20 @@ public final class ModOres {
     public static final RegistryObject<Item> AMBER_ORE_ITEM =
             ModItems.ITEMS.register("amber_ore", () -> new BlockItem(AMBER_ORE.get(), new Item.Properties()));
 
+    // Taint blocks
+    public static final RegistryObject<Block> TAINT = BLOCKS.register("taint", () -> new BlockTaint());
+    public static final RegistryObject<Item> TAINT_ITEM =
+            ModItems.ITEMS.register("taint", () -> new BlockItem(TAINT.get(), new Item.Properties()));
+    public static final RegistryObject<Block> TAINT_FIBRES = BLOCKS.register("taint_fibres", () -> new BlockTaintFibres());
+    public static final RegistryObject<Item> TAINT_FIBRES_ITEM =
+            ModItems.ITEMS.register("taint_fibres", () -> new BlockItem(TAINT_FIBRES.get(), new Item.Properties()));
+    public static final RegistryObject<Block> FLUX_GOO = BLOCKS.register("flux_goo", () -> new BlockFluxGoo());
+    public static final RegistryObject<Item> FLUX_GOO_ITEM =
+            ModItems.ITEMS.register("flux_goo", () -> new BlockItem(FLUX_GOO.get(), new Item.Properties()));
+    public static final RegistryObject<Block> FLUX_GAS = BLOCKS.register("flux_gas", () -> new BlockFluxGas());
+    public static final RegistryObject<Item> FLUX_GAS_ITEM =
+            ModItems.ITEMS.register("flux_gas", () -> new BlockItem(FLUX_GAS.get(), new Item.Properties()));
+
     static {
         for (String name : NAMES) {
             SHARDS.put(name, ModItems.ITEMS.register(name + "_shard", () -> new Item(new Item.Properties())));
@@ -123,6 +137,10 @@ public final class ModOres {
                     output.accept(AMBER_ORE.get());
                     output.accept(QUICKSILVER.get());
                     output.accept(AMBER.get());
+                    output.accept(TAINT.get());
+                    output.accept(TAINT_FIBRES.get());
+                    output.accept(FLUX_GOO.get());
+                    output.accept(FLUX_GAS.get());
                     // TC4 BlockAiry contributes exactly one metadata-0 Aura Node creative item.
                     output.accept(ModNodes.AURA_NODE_ITEM.get());
                 }).build());
