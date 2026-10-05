@@ -44,7 +44,10 @@
       "limus": 3
     },
     "auto": false,
-    "secondary": false
+    "secondary": false,
+    "siblings": [
+      "JARLABEL"
+    ]
   },
   "THAUMIUM": {
     "parents": [
@@ -588,7 +591,10 @@
       "cognitio": 3
     },
     "auto": false,
-    "secondary": false
+    "secondary": false,
+    "hiddenParents": [
+      "INFUSION"
+    ]
   },
   "RUNICCHARGED": {
     "parents": [
@@ -895,7 +901,10 @@
       "tutamen": 3
     },
     "auto": false,
-    "secondary": true
+    "secondary": true,
+    "hiddenParents": [
+      "GOGGLES"
+    ]
   },
   "MASKGRINNINGDEVIL": {
     "parents": [
@@ -992,7 +1001,10 @@
       "aqua": 3
     },
     "auto": false,
-    "secondary": true
+    "secondary": true,
+    "hiddenParents": [
+      "INFUSION"
+    ]
   },
   "ASPECTS": {
     "parents": [],
@@ -1263,7 +1275,12 @@
       "lucrum": 6
     },
     "auto": false,
-    "secondary": false
+    "secondary": false,
+    "hiddenParents": [
+      "VOIDMETAL",
+      "ELEMENTALPICK",
+      "ELEMENTALSHOVEL"
+    ]
   },
   "VOIDMETAL": {
     "parents": [
@@ -1368,7 +1385,17 @@
       "praecantatio": 12
     },
     "auto": false,
-    "secondary": false
+    "secondary": false,
+    "hiddenParents": [
+      "ROD_SILVERWOOD_STAFF",
+      "ROD_BONE_STAFF",
+      "ROD_GREATWOOD_STAFF",
+      "ROD_BLAZE_STAFF",
+      "ROD_REED_STAFF",
+      "ROD_OBSIDIAN_STAFF",
+      "ROD_QUARTZ_STAFF",
+      "ROD_ICE_STAFF"
+    ]
   },
   "ELDRITCHMAJOR": {
     "parents": [],
@@ -1882,7 +1909,11 @@
       "praecantatio": 3
     },
     "auto": false,
-    "secondary": false
+    "secondary": false,
+    "hiddenParents": [
+      "FOCUSFIRE",
+      "INFUSION"
+    ]
   },
   "FOCUSEXCAVATION": {
     "parents": [
@@ -2158,7 +2189,10 @@
       "praecantatio": 3
     },
     "auto": false,
-    "secondary": true
+    "secondary": true,
+    "hiddenParents": [
+      "ROD_GREATWOOD_STAFF"
+    ]
   },
   "ROD_BLAZE_STAFF": {
     "parents": [
@@ -2171,7 +2205,10 @@
       "praecantatio": 3
     },
     "auto": false,
-    "secondary": true
+    "secondary": true,
+    "hiddenParents": [
+      "ROD_GREATWOOD_STAFF"
+    ]
   },
   "ROD_OBSIDIAN_STAFF": {
     "parents": [
@@ -2184,7 +2221,10 @@
       "praecantatio": 3
     },
     "auto": false,
-    "secondary": true
+    "secondary": true,
+    "hiddenParents": [
+      "ROD_GREATWOOD_STAFF"
+    ]
   },
   "ROD_ICE_STAFF": {
     "parents": [
@@ -2197,7 +2237,10 @@
       "praecantatio": 3
     },
     "auto": false,
-    "secondary": true
+    "secondary": true,
+    "hiddenParents": [
+      "ROD_GREATWOOD_STAFF"
+    ]
   },
   "ROD_QUARTZ_STAFF": {
     "parents": [
@@ -2210,7 +2253,10 @@
       "praecantatio": 3
     },
     "auto": false,
-    "secondary": true
+    "secondary": true,
+    "hiddenParents": [
+      "ROD_GREATWOOD_STAFF"
+    ]
   },
   "ROD_BONE_STAFF": {
     "parents": [
@@ -2223,7 +2269,10 @@
       "praecantatio": 3
     },
     "auto": false,
-    "secondary": true
+    "secondary": true,
+    "hiddenParents": [
+      "ROD_GREATWOOD_STAFF"
+    ]
   },
   "ROD_SILVERWOOD_STAFF": {
     "parents": [
@@ -2235,7 +2284,10 @@
       "praecantatio": 9
     },
     "auto": false,
-    "secondary": true
+    "secondary": true,
+    "hiddenParents": [
+      "ROD_GREATWOOD_STAFF"
+    ]
   },
   "NODESTABILIZER": {
     "parents": [
@@ -2286,7 +2338,11 @@
       "potentia": 5
     },
     "auto": false,
-    "secondary": false
+    "secondary": false,
+    "hiddenParents": [
+      "INFUSION",
+      "FOCUSFIRE"
+    ]
   },
   "VAMPBAT": {
     "parents": [
@@ -2298,7 +2354,10 @@
       "praecantatio": 5
     },
     "auto": false,
-    "secondary": true
+    "secondary": true,
+    "hiddenParents": [
+      "FOCALMANIPULATION"
+    ]
   },
   "WANDPED": {
     "parents": [
@@ -2354,18 +2413,25 @@
       "potentia": 6
     },
     "auto": false,
-    "secondary": true
+    "secondary": true,
+    "hiddenParents": [
+      "ROD_GREATWOOD"
+    ]
   },
   "CAP_IRON": {
     "parents": [],
     "aspects": {},
     "auto": true,
-    "secondary": false
+    "secondary": false,
+    "hiddenParents": [],
+    "siblings": []
   },
   "ROD_WOOD": {
     "parents": [],
     "aspects": {},
     "auto": true,
-    "secondary": false
+    "secondary": false,
+    "hiddenParents": [],
+    "siblings": []
   }
 }

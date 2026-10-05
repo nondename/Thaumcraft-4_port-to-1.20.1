@@ -14,7 +14,7 @@ import java.util.*;
 /** Server datapack definitions extracted from the saved research registration. */
 public final class ResearchProgression {
     private static final Map<net.minecraft.server.packs.resources.ResourceManager,Map<String,Definition>> CACHE=Collections.synchronizedMap(new WeakHashMap<>());
-    public record Definition(List<String> parents, AspectList aspects, boolean auto, boolean secondary) {}
+    public record Definition(List<String> parents, AspectList aspects, boolean auto, boolean secondary, List<String> hiddenParents, List<String> siblings) {}
     public static Map<String,Definition> definitions(Level level) {
         if (level.getServer()==null) return Map.of();
         var manager=level.getServer().getResourceManager();
@@ -32,7 +32,10 @@ public final class ResearchProgression {
                     cost.add(aspect,n);
                 });
                 var parents=new ArrayList<String>(); value.getAsJsonArray("parents").forEach(p -> parents.add(p.getAsString()));
-                result.put(entry.getKey(),new Definition(parents,cost,value.get("auto").getAsBoolean(),value.get("secondary").getAsBoolean()));
+                var hidden=new ArrayList<String>(); var siblings=new ArrayList<String>();
+                if(value.has("hiddenParents"))value.getAsJsonArray("hiddenParents").forEach(p -> hidden.add(p.getAsString()));
+                if(value.has("siblings"))value.getAsJsonArray("siblings").forEach(p -> siblings.add(p.getAsString()));
+                result.put(entry.getKey(),new Definition(parents,cost,value.get("auto").getAsBoolean(),value.get("secondary").getAsBoolean(),hidden,siblings));
             });
         } catch(Exception e) { throw new IllegalStateException("Cannot load research progression",e); }
         return result;
@@ -47,7 +50,7 @@ public final class ResearchProgression {
         var def=definitions(player.level()).get(key.toUpperCase(Locale.ROOT));
         return def!=null && def.auto();
     }
-    public static boolean parents(Player player,Definition def) { return def.parents().stream().allMatch(p -> has(player,p)); }
+    public static boolean parents(Player player,Definition def) { return def.parents().stream().allMatch(p -> has(player,p)) && def.hiddenParents().stream().allMatch(p -> has(player,p)); }
     public static void request(Player player,String key) {
         if(player.level().isClientSide || !player.getInventory().contains(new ItemStack(thaumcraft.common.items.ModItems.THAUMONOMICON.get()))) return;
         key=key.toUpperCase(Locale.ROOT); var def=definitions(player.level()).get(key); var data=knowledge(player);
@@ -68,7 +71,7 @@ public final class ResearchProgression {
         }
         if(paper<0 || ink<0) {player.displayClientMessage(net.minecraft.network.chat.Component.translatable("tc.progress.need_materials"),false);return;}
         ItemStack notes=ResearchNotes.create(key,def);
-        inventory.getItem(paper).shrink(1); inventory.getItem(ink).hurtAndBreak(1,player,p -> {});
+        inventory.getItem(paper).shrink(1); ScribingTools.consumeInk(inventory.getItem(ink));
         if(!inventory.add(notes)) player.drop(notes,false);
         inventory.setChanged();
     }
@@ -76,6 +79,11 @@ public final class ResearchProgression {
         var data=knowledge(player);if(data!=null && data.grantResearch(key)) {
             int amount=warp.getOrDefault(key.toUpperCase(Locale.ROOT),0);
             if(amount>0)data.addWarp((amount+1)/2,amount/2,0);
+            var def=definitions(player.level()).get(key.toUpperCase(Locale.ROOT));
+            if(def!=null)for(String sibling:def.siblings()) {
+                var related=definitions(player.level()).get(sibling);
+                if(related!=null && parents(player,related))finish(player,sibling);
+            }
         }
     }
     private static final Map<String,Integer> warp=Map.ofEntries(

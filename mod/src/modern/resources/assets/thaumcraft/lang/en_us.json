@@ -871,7 +871,7 @@
   "tc.crucible.cold": "Not boiling",
   "block.thaumcraft.flux_gas": "Gaseous Flux",
   "block.thaumcraft.flux_goo": "Flux Goo",
-"block.thaumcraft.arcane_stone": "Arcane Stone",
+  "block.thaumcraft.arcane_stone": "Arcane Stone",
   "block.thaumcraft.arcane_pedestal": "Arcane Pedestal",
   "block.thaumcraft.runic_matrix": "Runic Matrix",
   "block.thaumcraft.alchemy_furnace": "Alchemy Furnace",
@@ -905,5 +905,7 @@
   "tc.command.links_error": "Unable to load research dependencies",
   "tc.command.no_knowledge": "Player knowledge unavailable",
   "tc.command.unknown_aspect": "Unknown aspect: %s",
-  "tc.command.unknown_research": "Unknown research: %s"
+  "tc.command.unknown_research": "Unknown research: %s",
+  "tc.progress.secondary_hint": "Click to learn using aspect points. Paper and ink are not required.",
+  "tc.progress.refill_help": "Refill ink: combine used scribing tools and an ink sac in a crafting grid."
 }

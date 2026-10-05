@@ -15,7 +15,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/misc/r_aspects.png",
     "iconWidth": 32,
-    "iconHeight": 32
+    "iconHeight": 32,
+    "secondary": false
   },
   {
     "key": "PECH",
@@ -32,7 +33,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/misc/r_pech.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "NODES",
@@ -50,7 +52,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/misc/r_nodes.png",
     "iconWidth": 32,
-    "iconHeight": 32
+    "iconHeight": 32,
+    "secondary": false
   },
   {
     "key": "WARP",
@@ -68,7 +71,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/misc/r_warp.png",
     "iconWidth": 32,
-    "iconHeight": 32
+    "iconHeight": 32,
+    "secondary": false
   },
   {
     "key": "RESEARCH",
@@ -95,7 +99,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/items/inkwell.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "KNOWFRAG",
@@ -113,7 +118,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/items/knowledgefragment.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "THAUMONOMICON",
@@ -131,7 +137,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/items/thaumonomicon.png",
     "iconWidth": 32,
-    "iconHeight": 32
+    "iconHeight": 32,
+    "secondary": false
   },
   {
     "key": "ORE",
@@ -150,7 +157,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/blocks/cinnibar.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "PLANTS",
@@ -171,7 +179,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/blocks/shimmerleaf.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "RESEARCHER1",
@@ -189,7 +198,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/misc/r_researcher1.png",
     "iconWidth": 32,
-    "iconHeight": 32
+    "iconHeight": 32,
+    "secondary": false
   },
   {
     "key": "DECONSTRUCTOR",
@@ -208,7 +218,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/blocks/woodplain.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "RESEARCHER2",
@@ -226,7 +237,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/misc/r_researcher2.png",
     "iconWidth": 32,
-    "iconHeight": 32
+    "iconHeight": 32,
+    "secondary": false
   },
   {
     "key": "RESEARCHDUPE",
@@ -244,7 +256,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/misc/r_resdupe.png",
     "iconWidth": 32,
-    "iconHeight": 32
+    "iconHeight": 32,
+    "secondary": false
   },
   {
     "key": "ENCHANT",
@@ -261,7 +274,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/misc/r_enchant.png",
     "iconWidth": 32,
-    "iconHeight": 32
+    "iconHeight": 32,
+    "secondary": false
   },
   {
     "key": "NODETAPPER1",
@@ -279,7 +293,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/misc/r_nodetap1.png",
     "iconWidth": 32,
-    "iconHeight": 32
+    "iconHeight": 32,
+    "secondary": false
   },
   {
     "key": "NODEPRESERVE",
@@ -297,7 +312,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/misc/r_nodepreserve.png",
     "iconWidth": 32,
-    "iconHeight": 32
+    "iconHeight": 32,
+    "secondary": false
   },
   {
     "key": "NODETAPPER2",
@@ -315,7 +331,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/misc/r_nodetap2.png",
     "iconWidth": 32,
-    "iconHeight": 32
+    "iconHeight": 32,
+    "secondary": false
   },
   {
     "key": "NODEJAR",
@@ -334,7 +351,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/blocks/jar_side.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "CRIMSON",
@@ -350,7 +368,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/eldritch_object.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "BASICTHAUMATURGY",
@@ -365,7 +384,8 @@
     "auto": true,
     "round": true,
     "concealed": false,
-    "item": "thaumcraft:wand"
+    "item": "thaumcraft:wand",
+    "secondary": false
   },
   {
     "key": "FOCUSFIRE",
@@ -384,7 +404,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/items/focus_fire.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "FOCUSFROST",
@@ -402,7 +423,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/focus_frost.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true
   },
   {
     "key": "FOCUSHELLBAT",
@@ -418,7 +440,12 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/focus_hellbat_orn.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false,
+    "hiddenParents": [
+      "FOCUSFIRE",
+      "INFUSION"
+    ]
   },
   {
     "key": "FOCUSEXCAVATION",
@@ -436,7 +463,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/focus_excavation.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "FOCUSWARDING",
@@ -455,7 +483,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/focus_warding.png",
     "iconWidth": 16,
-    "iconHeight": 128
+    "iconHeight": 128,
+    "secondary": false
   },
   {
     "key": "FOCUSSHOCK",
@@ -473,7 +502,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/focus_shock.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true
   },
   {
     "key": "FOCUSTRADE",
@@ -491,7 +521,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/focus_trade.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "FOCUSPORTABLEHOLE",
@@ -510,7 +541,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/focus_portablehole.png",
     "iconWidth": 16,
-    "iconHeight": 256
+    "iconHeight": 256,
+    "secondary": false
   },
   {
     "key": "FOCUSPOUCH",
@@ -528,7 +560,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/items/focuspouch.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true
   },
   {
     "key": "CAP_gold",
@@ -546,7 +579,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/items/wand_cap_gold.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "CAP_copper",
@@ -564,7 +598,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/items/wand_cap_copper.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "CAP_thaumium",
@@ -584,7 +619,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/items/wand_cap_thaumium.png",
     "iconWidth": 16,
-    "iconHeight": 48
+    "iconHeight": 48,
+    "secondary": false
   },
   {
     "key": "CAP_silver",
@@ -603,7 +639,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/wand_cap_silver.png",
     "iconWidth": 16,
-    "iconHeight": 48
+    "iconHeight": 48,
+    "secondary": false
   },
   {
     "key": "ROD_greatwood",
@@ -621,7 +658,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/items/wand_rod_greatwood.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "ROD_reed",
@@ -640,7 +678,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/wand_rod_reed.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true
   },
   {
     "key": "ROD_blaze",
@@ -659,7 +698,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/wand_rod_blaze.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true
   },
   {
     "key": "ROD_obsidian",
@@ -678,7 +718,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/wand_rod_obsidian.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true
   },
   {
     "key": "ROD_ice",
@@ -697,7 +738,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/wand_rod_ice.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true
   },
   {
     "key": "ROD_quartz",
@@ -716,7 +758,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/wand_rod_quartz.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true
   },
   {
     "key": "ROD_bone",
@@ -735,7 +778,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/wand_rod_bone.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true
   },
   {
     "key": "ROD_silverwood",
@@ -754,7 +798,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/items/wand_rod_silverwood.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "SCEPTRE",
@@ -770,7 +815,8 @@
     "auto": false,
     "round": false,
     "concealed": true,
-    "item": "thaumcraft:wand"
+    "item": "thaumcraft:wand",
+    "secondary": false
   },
   {
     "key": "ROD_greatwood_staff",
@@ -789,7 +835,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/items/staff_rod_greatwood.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "ROD_reed_staff",
@@ -807,7 +854,11 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/staff_rod_reed.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true,
+    "hiddenParents": [
+      "ROD_GREATWOOD_STAFF"
+    ]
   },
   {
     "key": "ROD_blaze_staff",
@@ -825,7 +876,11 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/staff_rod_blaze.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true,
+    "hiddenParents": [
+      "ROD_GREATWOOD_STAFF"
+    ]
   },
   {
     "key": "ROD_obsidian_staff",
@@ -843,7 +898,11 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/staff_rod_obsidian.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true,
+    "hiddenParents": [
+      "ROD_GREATWOOD_STAFF"
+    ]
   },
   {
     "key": "ROD_ice_staff",
@@ -861,7 +920,11 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/staff_rod_ice.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true,
+    "hiddenParents": [
+      "ROD_GREATWOOD_STAFF"
+    ]
   },
   {
     "key": "ROD_quartz_staff",
@@ -879,7 +942,11 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/staff_rod_quartz.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true,
+    "hiddenParents": [
+      "ROD_GREATWOOD_STAFF"
+    ]
   },
   {
     "key": "ROD_bone_staff",
@@ -897,7 +964,11 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/staff_rod_bone.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true,
+    "hiddenParents": [
+      "ROD_GREATWOOD_STAFF"
+    ]
   },
   {
     "key": "ROD_silverwood_staff",
@@ -915,7 +986,11 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/staff_rod_silverwood.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true,
+    "hiddenParents": [
+      "ROD_GREATWOOD_STAFF"
+    ]
   },
   {
     "key": "NODESTABILIZER",
@@ -934,7 +1009,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/blocks/al_furnace_side.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "NODESTABILIZERADV",
@@ -952,7 +1028,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/blocks/al_furnace_side.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true
   },
   {
     "key": "VISPOWER",
@@ -974,7 +1051,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/blocks/al_furnace_side.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "FOCALMANIPULATION",
@@ -993,7 +1071,12 @@
     "concealed": false,
     "icon": "thaumcraft:textures/blocks/al_furnace_side.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false,
+    "hiddenParents": [
+      "INFUSION",
+      "FOCUSFIRE"
+    ]
   },
   {
     "key": "VAMPBAT",
@@ -1011,7 +1094,11 @@
     "concealed": false,
     "icon": "thaumcraft:textures/foci/vampirebats.png",
     "iconWidth": 32,
-    "iconHeight": 32
+    "iconHeight": 32,
+    "secondary": true,
+    "hiddenParents": [
+      "FOCALMANIPULATION"
+    ]
   },
   {
     "key": "WANDPED",
@@ -1031,7 +1118,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/blocks/al_furnace_side.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "VISAMULET",
@@ -1050,7 +1138,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/vis_amulet.png",
     "iconWidth": 16,
-    "iconHeight": 128
+    "iconHeight": 128,
+    "secondary": false
   },
   {
     "key": "WANDPEDFOC",
@@ -1068,7 +1157,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/blocks/al_furnace_side.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true
   },
   {
     "key": "VISCHARGERELAY",
@@ -1087,7 +1177,11 @@
     "concealed": true,
     "icon": "thaumcraft:textures/blocks/crucible1.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true,
+    "hiddenParents": [
+      "ROD_GREATWOOD"
+    ]
   },
   {
     "key": "PHIAL",
@@ -1103,7 +1197,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/items/phial.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "CRUCIBLE",
@@ -1123,7 +1218,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/blocks/crucible1.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "NITOR",
@@ -1141,7 +1237,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/items/nitor.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "ALUMENTUM",
@@ -1159,7 +1256,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/items/alumentum.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "DISTILESSENTIA",
@@ -1179,7 +1277,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/blocks/crucible1.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "THAUMIUM",
@@ -1197,7 +1296,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/thaumiumingot.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "TUBES",
@@ -1218,7 +1318,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/blocks/pipe_1.png",
     "iconWidth": 32,
-    "iconHeight": 32
+    "iconHeight": 32,
+    "secondary": true
   },
   {
     "key": "TUBEFILTER",
@@ -1237,7 +1338,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/blocks/pipe_1.png",
     "iconWidth": 32,
-    "iconHeight": 32
+    "iconHeight": 32,
+    "secondary": true
   },
   {
     "key": "ESSENTIACRYSTAL",
@@ -1255,7 +1357,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/blocks/pipe_1.png",
     "iconWidth": 32,
-    "iconHeight": 32
+    "iconHeight": 32,
+    "secondary": false
   },
   {
     "key": "CENTRIFUGE",
@@ -1275,7 +1378,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/blocks/pipe_1.png",
     "iconWidth": 32,
-    "iconHeight": 32
+    "iconHeight": 32,
+    "secondary": false
   },
   {
     "key": "THAUMATORIUM",
@@ -1295,7 +1399,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/blocks/alchemyblock.png",
     "iconWidth": 32,
-    "iconHeight": 32
+    "iconHeight": 32,
+    "secondary": false
   },
   {
     "key": "TALLOW",
@@ -1313,7 +1418,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/items/tallow.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "ALCHEMICALDUPLICATION",
@@ -1331,7 +1437,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/misc/r_alchmult.png",
     "iconWidth": 32,
-    "iconHeight": 32
+    "iconHeight": 32,
+    "secondary": true
   },
   {
     "key": "ALCHEMICALMANUFACTURE",
@@ -1349,7 +1456,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/misc/r_alchman.png",
     "iconWidth": 32,
-    "iconHeight": 32
+    "iconHeight": 32,
+    "secondary": true
   },
   {
     "key": "ENTROPICPROCESSING",
@@ -1367,7 +1475,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/misc/r_alchent.png",
     "iconWidth": 32,
-    "iconHeight": 32
+    "iconHeight": 32,
+    "secondary": true
   },
   {
     "key": "LIQUIDDEATH",
@@ -1385,7 +1494,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/bucket_death.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "BOTTLETAINT",
@@ -1403,7 +1513,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/bottle_taint.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "PUREIRON",
@@ -1421,7 +1532,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/nuggetthaumium.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "PUREGOLD",
@@ -1439,7 +1551,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/nuggetthaumium.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true
   },
   {
     "key": "PURECOPPER",
@@ -1457,7 +1570,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/nuggetthaumium.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true
   },
   {
     "key": "PURETIN",
@@ -1475,7 +1589,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/nuggetthaumium.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true
   },
   {
     "key": "PURESILVER",
@@ -1493,7 +1608,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/nuggetthaumium.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true
   },
   {
     "key": "PURELEAD",
@@ -1511,7 +1627,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/nuggetthaumium.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true
   },
   {
     "key": "TRANSIRON",
@@ -1529,7 +1646,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/nuggetthaumium.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "TRANSGOLD",
@@ -1545,7 +1663,8 @@
     "auto": false,
     "round": false,
     "concealed": true,
-    "item": "minecraft:gold_nugget"
+    "item": "minecraft:gold_nugget",
+    "secondary": true
   },
   {
     "key": "TRANSCOPPER",
@@ -1563,7 +1682,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/nuggetthaumium.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true
   },
   {
     "key": "TRANSTIN",
@@ -1581,7 +1701,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/nuggetthaumium.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true
   },
   {
     "key": "TRANSSILVER",
@@ -1599,7 +1720,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/nuggetthaumium.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true
   },
   {
     "key": "TRANSLEAD",
@@ -1617,7 +1739,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/nuggetthaumium.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true
   },
   {
     "key": "ETHEREALBLOOM",
@@ -1636,7 +1759,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/blocks/purifier_seed.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "BATHSALTS",
@@ -1652,7 +1776,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/bath_salts.png",
     "iconWidth": 16,
-    "iconHeight": 64
+    "iconHeight": 64,
+    "secondary": false
   },
   {
     "key": "SANESOAP",
@@ -1670,7 +1795,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/items/soap.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "ARCANESPA",
@@ -1688,7 +1814,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/blocks/al_furnace_side.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true
   },
   {
     "key": "JARLABEL",
@@ -1708,7 +1835,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/blocks/jar_side.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "JARVOID",
@@ -1726,7 +1854,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/blocks/jar_side_void.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true
   },
   {
     "key": "ARCANESTONE",
@@ -1742,7 +1871,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/blocks/arcane_stone.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "GRATE",
@@ -1758,7 +1888,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/blocks/crucible1.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "TABLE",
@@ -1774,7 +1905,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/blocks/woodplain.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "ARCTABLE",
@@ -1792,7 +1924,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/blocks/woodplain.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "RESTABLE",
@@ -1810,7 +1943,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/blocks/woodplain.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "THAUMOMETER",
@@ -1826,7 +1960,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/items/gogglesrevealing.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "PAVETRAVEL",
@@ -1844,7 +1979,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/blocks/arcane_stone.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true
   },
   {
     "key": "PAVEWARD",
@@ -1863,7 +1999,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/blocks/arcane_stone.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true
   },
   {
     "key": "GOGGLES",
@@ -1881,7 +2018,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/gogglesrevealing.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "ARCANEEAR",
@@ -1899,7 +2037,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/blocks/woodplain.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "SINSTONE",
@@ -1917,7 +2056,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/sinister_stone.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "LEVITATOR",
@@ -1935,7 +2075,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/blocks/lifterside.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "INFERNALFURNACE",
@@ -1955,7 +2096,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/misc/r_infernalfurnace.png",
     "iconWidth": 32,
-    "iconHeight": 32
+    "iconHeight": 32,
+    "secondary": false
   },
   {
     "key": "BELLOWS",
@@ -1974,7 +2116,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/blocks/woodplain.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true
   },
   {
     "key": "ARCANEBORE",
@@ -1995,7 +2138,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/blocks/woodplain.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "ARCANELAMP",
@@ -2013,7 +2157,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/blocks/crucible1.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true
   },
   {
     "key": "ENCHFABRIC",
@@ -2030,7 +2175,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/items/cloth.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true
   },
   {
     "key": "RUNICARMOR",
@@ -2049,7 +2195,11 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/runic_ring.png",
     "iconWidth": 16,
-    "iconHeight": 64
+    "iconHeight": 64,
+    "secondary": false,
+    "hiddenParents": [
+      "INFUSION"
+    ]
   },
   {
     "key": "RUNICCHARGED",
@@ -2067,7 +2217,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/runic_ring.png",
     "iconWidth": 16,
-    "iconHeight": 64
+    "iconHeight": 64,
+    "secondary": true
   },
   {
     "key": "RUNICHEALING",
@@ -2085,7 +2236,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/runic_ring.png",
     "iconWidth": 16,
-    "iconHeight": 64
+    "iconHeight": 64,
+    "secondary": true
   },
   {
     "key": "RUNICKINETIC",
@@ -2103,7 +2255,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/runic_girdle.png",
     "iconWidth": 16,
-    "iconHeight": 64
+    "iconHeight": 64,
+    "secondary": true
   },
   {
     "key": "RUNICEMERGENCY",
@@ -2121,7 +2274,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/runic_amulet.png",
     "iconWidth": 16,
-    "iconHeight": 64
+    "iconHeight": 64,
+    "secondary": true
   },
   {
     "key": "RUNICAUGMENTATION",
@@ -2140,7 +2294,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/misc/r_runicupg.png",
     "iconWidth": 32,
-    "iconHeight": 32
+    "iconHeight": 32,
+    "secondary": false
   },
   {
     "key": "BANNERS",
@@ -2156,7 +2311,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/models/banner_blank.png",
     "iconWidth": 256,
-    "iconHeight": 128
+    "iconHeight": 128,
+    "secondary": true
   },
   {
     "key": "ELEMENTALAXE",
@@ -2176,7 +2332,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/elementalaxe.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "ELEMENTALPICK",
@@ -2196,7 +2353,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/elementalpick.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "ELEMENTALSWORD",
@@ -2215,7 +2373,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/elementalsword.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "ELEMENTALSHOVEL",
@@ -2235,7 +2394,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/elementalshovel.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "ELEMENTALHOE",
@@ -2254,7 +2414,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/elementalhoe.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "WARDEDARCANA",
@@ -2275,7 +2436,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/items/arcanedoor.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "BONEBOW",
@@ -2291,7 +2453,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/bonebow.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "PRIMALARROW",
@@ -2311,7 +2474,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/el_arrow_air.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "INFUSION",
@@ -2333,7 +2497,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/blocks/al_furnace_side.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "LAMPGROWTH",
@@ -2352,7 +2517,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/blocks/crucible1.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "LAMPFERTILITY",
@@ -2371,7 +2537,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/blocks/crucible1.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "MIRROR",
@@ -2391,7 +2558,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/mirrorframe.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "MIRRORHAND",
@@ -2409,7 +2577,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/mirrorhand.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true
   },
   {
     "key": "MIRRORESSENTIA",
@@ -2428,7 +2597,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/mirrorframe.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true
   },
   {
     "key": "JARBRAIN",
@@ -2446,7 +2616,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/brain.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "INFUSIONENCHANTMENT",
@@ -2466,7 +2637,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/misc/r_enchant.png",
     "iconWidth": 32,
-    "iconHeight": 32
+    "iconHeight": 32,
+    "secondary": false
   },
   {
     "key": "ARMORFORTRESS",
@@ -2486,7 +2658,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/thaumiumfortresshelm.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "HELMGOGGLES",
@@ -2504,7 +2677,11 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/gogglesrevealing.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true,
+    "hiddenParents": [
+      "GOGGLES"
+    ]
   },
   {
     "key": "MASKGRINNINGDEVIL",
@@ -2522,7 +2699,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/misc/r_mask0.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true
   },
   {
     "key": "MASKANGRYGHOST",
@@ -2540,7 +2718,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/misc/r_mask1.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true
   },
   {
     "key": "MASKSIPPINGFIEND",
@@ -2558,7 +2737,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/misc/r_mask2.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true
   },
   {
     "key": "BOOTSTRAVELLER",
@@ -2577,7 +2757,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/bootstraveler.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "HOVERHARNESS",
@@ -2596,7 +2777,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/hoverharness.png",
     "iconWidth": 32,
-    "iconHeight": 32
+    "iconHeight": 32,
+    "secondary": false
   },
   {
     "key": "HOVERGIRDLE",
@@ -2614,7 +2796,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/hovergirdle.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true
   },
   {
     "key": "BASICARTIFACE",
@@ -2630,7 +2813,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/items/charm.png",
     "iconWidth": 16,
-    "iconHeight": 480
+    "iconHeight": 480,
+    "secondary": false
   },
   {
     "key": "FLUXSCRUB",
@@ -2650,7 +2834,11 @@
     "concealed": false,
     "icon": "thaumcraft:textures/blocks/al_furnace_side.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true,
+    "hiddenParents": [
+      "INFUSION"
+    ]
   },
   {
     "key": "HUNGRYCHEST",
@@ -2666,7 +2854,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/blocks/chesthungry.png",
     "iconWidth": 64,
-    "iconHeight": 64
+    "iconHeight": 64,
+    "secondary": true
   },
   {
     "key": "TINYHAT",
@@ -2682,7 +2871,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/golemdecotophat.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true
   },
   {
     "key": "TINYGLASSES",
@@ -2698,7 +2888,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/golemdecoglasses.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true
   },
   {
     "key": "TINYBOWTIE",
@@ -2714,7 +2905,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/golemdecobowtie.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true
   },
   {
     "key": "TINYFEZ",
@@ -2730,7 +2922,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/golemdecofez.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true
   },
   {
     "key": "TINYDART",
@@ -2746,7 +2939,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/golemdecodart.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true
   },
   {
     "key": "TINYVISOR",
@@ -2762,7 +2956,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/golemdecovisor.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true
   },
   {
     "key": "TINYARMOR",
@@ -2778,7 +2973,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/golemdecoarmor.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true
   },
   {
     "key": "TINYHAMMER",
@@ -2794,7 +2990,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/golemdecomace.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true
   },
   {
     "key": "GOLEMSTRAW",
@@ -2814,7 +3011,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/items/golem_straw.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "GOLEMBELL",
@@ -2833,7 +3031,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/items/ironbell.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "GOLEMWOOD",
@@ -2851,7 +3050,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/items/golem_wood.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true
   },
   {
     "key": "GOLEMCLAY",
@@ -2869,7 +3069,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/golem_clay.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true
   },
   {
     "key": "GOLEMSTONE",
@@ -2887,7 +3088,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/golem_stone.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true
   },
   {
     "key": "GOLEMIRON",
@@ -2905,7 +3107,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/golem_iron.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true
   },
   {
     "key": "GOLEMTHAUMIUM",
@@ -2924,7 +3127,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/golem_thaumium.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "GOLEMFLESH",
@@ -2942,7 +3146,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/golem_flesh.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "GOLEMTALLOW",
@@ -2961,7 +3166,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/golem_tallow.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "GOLEMFETTER",
@@ -2979,7 +3185,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/blocks/arcane_stone.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true
   },
   {
     "key": "UPGRADEAIR",
@@ -2997,7 +3204,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/golem_upgrade_air.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true
   },
   {
     "key": "UPGRADEEARTH",
@@ -3015,7 +3223,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/golem_upgrade_earth.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true
   },
   {
     "key": "UPGRADEFIRE",
@@ -3033,7 +3242,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/golem_upgrade_fire.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true
   },
   {
     "key": "UPGRADEWATER",
@@ -3051,7 +3261,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/golem_upgrade_water.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true
   },
   {
     "key": "UPGRADEORDER",
@@ -3069,7 +3280,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/golem_upgrade_order.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true
   },
   {
     "key": "UPGRADEENTROPY",
@@ -3087,7 +3299,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/golem_upgrade_entropy.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true
   },
   {
     "key": "TRAVELTRUNK",
@@ -3107,7 +3320,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/models/trunk.png",
     "iconWidth": 64,
-    "iconHeight": 64
+    "iconHeight": 64,
+    "secondary": false
   },
   {
     "key": "COREGATHER",
@@ -3126,7 +3340,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/golem_core_gather.png",
     "iconWidth": 16,
-    "iconHeight": 48
+    "iconHeight": 48,
+    "secondary": false
   },
   {
     "key": "COREFILL",
@@ -3144,7 +3359,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/golem_core_fill.png",
     "iconWidth": 16,
-    "iconHeight": 48
+    "iconHeight": 48,
+    "secondary": true
   },
   {
     "key": "COREEMPTY",
@@ -3162,7 +3378,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/golem_core_empty.png",
     "iconWidth": 16,
-    "iconHeight": 48
+    "iconHeight": 48,
+    "secondary": true
   },
   {
     "key": "CORESORTING",
@@ -3182,7 +3399,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/golem_core_sorting.png",
     "iconWidth": 16,
-    "iconHeight": 48
+    "iconHeight": 48,
+    "secondary": true
   },
   {
     "key": "COREUSE",
@@ -3202,7 +3420,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/golem_core_use.png",
     "iconWidth": 16,
-    "iconHeight": 48
+    "iconHeight": 48,
+    "secondary": false
   },
   {
     "key": "COREHARVEST",
@@ -3220,7 +3439,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/golem_core_harvest.png",
     "iconWidth": 16,
-    "iconHeight": 48
+    "iconHeight": 48,
+    "secondary": false
   },
   {
     "key": "COREFISHING",
@@ -3239,7 +3459,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/golem_core_fish.png",
     "iconWidth": 16,
-    "iconHeight": 48
+    "iconHeight": 48,
+    "secondary": true
   },
   {
     "key": "CORELUMBER",
@@ -3258,7 +3479,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/golem_core_lumber.png",
     "iconWidth": 16,
-    "iconHeight": 48
+    "iconHeight": 48,
+    "secondary": true
   },
   {
     "key": "COREGUARD",
@@ -3276,7 +3498,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/golem_core_guard.png",
     "iconWidth": 16,
-    "iconHeight": 48
+    "iconHeight": 48,
+    "secondary": false
   },
   {
     "key": "COREBUTCHER",
@@ -3295,7 +3518,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/golem_core_butcher.png",
     "iconWidth": 16,
-    "iconHeight": 48
+    "iconHeight": 48,
+    "secondary": true
   },
   {
     "key": "CORELIQUID",
@@ -3313,7 +3537,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/golem_core_liquid.png",
     "iconWidth": 16,
-    "iconHeight": 48
+    "iconHeight": 48,
+    "secondary": false
   },
   {
     "key": "COREALCHEMY",
@@ -3333,7 +3558,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/golem_core_essentia.png",
     "iconWidth": 16,
-    "iconHeight": 48
+    "iconHeight": 48,
+    "secondary": true
   },
   {
     "key": "ADVANCEDGOLEM",
@@ -3357,7 +3583,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/golem_thaumium.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "ELDRITCHMINOR",
@@ -3373,7 +3600,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/misc/r_eldritchminor.png",
     "iconWidth": 32,
-    "iconHeight": 32
+    "iconHeight": 32,
+    "secondary": false
   },
   {
     "key": "OCULUS",
@@ -3393,7 +3621,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/eldritch_object.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "ENTEROUTER",
@@ -3411,7 +3640,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/misc/r_outer.png",
     "iconWidth": 32,
-    "iconHeight": 32
+    "iconHeight": 32,
+    "secondary": false
   },
   {
     "key": "OUTERREV",
@@ -3429,7 +3659,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/misc/r_outerrev.png",
     "iconWidth": 32,
-    "iconHeight": 32
+    "iconHeight": 32,
+    "secondary": true
   },
   {
     "key": "PRIMPEARL",
@@ -3448,7 +3679,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/items/eldritch_object.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true
   },
   {
     "key": "PRIMNODE",
@@ -3466,7 +3698,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/misc/r_nodes_2.png",
     "iconWidth": 32,
-    "iconHeight": 32
+    "iconHeight": 32,
+    "secondary": true
   },
   {
     "key": "ADVALCHEMYFURNACE",
@@ -3487,7 +3720,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/blocks/crucible1.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true
   },
   {
     "key": "PRIMALCRUSHER",
@@ -3506,7 +3740,13 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/primal_crusher.png",
     "iconWidth": 16,
-    "iconHeight": 288
+    "iconHeight": 288,
+    "secondary": false,
+    "hiddenParents": [
+      "VOIDMETAL",
+      "ELEMENTALPICK",
+      "ELEMENTALSHOVEL"
+    ]
   },
   {
     "key": "VOIDMETAL",
@@ -3526,7 +3766,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/items/voidingot.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "ESSENTIARESERVOIR",
@@ -3547,7 +3788,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/blocks/essentiareservoir.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "CAP_void",
@@ -3566,7 +3808,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/wand_cap_void.png",
     "iconWidth": 16,
-    "iconHeight": 48
+    "iconHeight": 48,
+    "secondary": false
   },
   {
     "key": "ARMORVOIDFORTRESS",
@@ -3586,7 +3829,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/voidrobehelm.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": true
   },
   {
     "key": "FOCUSPRIMAL",
@@ -3604,7 +3848,8 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/focus_primal.png",
     "iconWidth": 16,
-    "iconHeight": 480
+    "iconHeight": 480,
+    "secondary": false
   },
   {
     "key": "SANITYCHECK",
@@ -3622,7 +3867,8 @@
     "concealed": false,
     "icon": "thaumcraft:textures/items/sanitychecker.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false
   },
   {
     "key": "ROD_primal_staff",
@@ -3640,7 +3886,18 @@
     "concealed": true,
     "icon": "thaumcraft:textures/items/staff_rod_primal.png",
     "iconWidth": 16,
-    "iconHeight": 16
+    "iconHeight": 16,
+    "secondary": false,
+    "hiddenParents": [
+      "ROD_SILVERWOOD_STAFF",
+      "ROD_BONE_STAFF",
+      "ROD_GREATWOOD_STAFF",
+      "ROD_BLAZE_STAFF",
+      "ROD_REED_STAFF",
+      "ROD_OBSIDIAN_STAFF",
+      "ROD_QUARTZ_STAFF",
+      "ROD_ICE_STAFF"
+    ]
   },
   {
     "key": "ELDRITCHMAJOR",
@@ -3657,6 +3914,7 @@
     "concealed": true,
     "icon": "thaumcraft:textures/misc/r_eldritchmajor.png",
     "iconWidth": 32,
-    "iconHeight": 32
+    "iconHeight": 32,
+    "secondary": false
   }
 ]

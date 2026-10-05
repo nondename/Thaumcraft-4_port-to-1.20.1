@@ -79,7 +79,7 @@ public final class ResearchScreen extends AbstractContainerScreen<ResearchMenu> 
                 .bounds(leftPos + 69, topPos + 119, 20, 14).build());
     }
 
-    private void send(int id) { minecraft.gameMode.handleInventoryButtonClick(menu.containerId, id); }
+    private void send(int id) { thaumcraft.common.lib.network.ModNetwork.researchAction(menu.containerId,id); }
 
     @Override public void render(GuiGraphics g, int mouseX, int mouseY, float partialTick) {
         renderBackground(g);

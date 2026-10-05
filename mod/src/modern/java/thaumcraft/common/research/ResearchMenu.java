@@ -66,7 +66,7 @@ public final class ResearchMenu extends AbstractContainerMenu {
         if (knowledge == null) return false;
         if ((id>=1000 && id<1049) || (id>=2000 && id<2049)) {
             int cell=id%1000; var notes=slots.get(1).getItem(); var tools=slots.get(0).getItem();
-            if(!notes.is(ModResearch.NOTES.get()) || !tools.is(ModResearch.SCRIBING_TOOLS.get()) || !ResearchNotes.valid(cell))return false;
+            if(!notes.is(ModResearch.NOTES.get()) || !ScribingTools.hasInk(tools) || !ResearchNotes.valid(cell))return false;
             var def=ResearchProgression.definitions(player.level()).get(notes.getOrCreateTag().getString("Research"));
             if(def==null || !ResearchProgression.parents(player,def) || ResearchNotes.anchored(def,cell))return false;
             if(id<2000) {
@@ -75,7 +75,7 @@ public final class ResearchMenu extends AbstractContainerMenu {
                 notes.getOrCreateTag().putString("Cell"+cell,ASPECTS[selected()].getTag());
             } else {if(ResearchNotes.cell(notes,cell)==null)return false; notes.getOrCreateTag().remove("Cell"+cell);}
             notes.getOrCreateTag().putBoolean("Solved",ResearchNotes.complete(notes,def));
-            tools.hurtAndBreak(1,player,p -> {}); slots.get(0).setChanged(); slots.get(1).setChanged();
+            ScribingTools.consumeInk(tools); slots.get(0).setChanged(); slots.get(1).setChanged();
             ModNetwork.syncThaumometerKnowledge(player); return true;
         }
         if (id >= 0 && id < ASPECTS.length && knowledge.hasDiscoveredAspect(ASPECTS[id])) {

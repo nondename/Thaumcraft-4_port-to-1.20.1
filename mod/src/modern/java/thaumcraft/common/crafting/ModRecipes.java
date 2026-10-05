@@ -33,6 +33,8 @@ public final class ModRecipes {
             "arcane_wand", () -> RecipeType.simple(new ResourceLocation(Thaumcraft.MODID, "arcane_wand")));
     public static final RegistryObject<RecipeSerializer<ArcaneRecipe>> ARCANE_SERIALIZER =
             SERIALIZERS.register("arcane", ArcaneRecipe.Serializer::new);
+    public static final RegistryObject<RecipeSerializer<ScribingRefillRecipe>> SCRIBING_REFILL =
+            SERIALIZERS.register("scribing_refill", () -> new net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer<>(ScribingRefillRecipe::new));
     public static final RegistryObject<RecipeSerializer<ArcaneWandRecipe>> ARCANE_WAND_SERIALIZER =
             SERIALIZERS.register("arcane_wand", ArcaneWandRecipe.Serializer::new);
 

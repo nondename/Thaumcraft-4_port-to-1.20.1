@@ -17,7 +17,9 @@
 
 ## Активные заявки
 
-- **Аудит исследований — Codex (2026-10-05): common/research/**, client/ResearchTreeScreen.java, новый рецепт пополнения чернил в common/crafting и ModRecipes.java, progression/tree JSON, свои lang ключи, новые GameTest и docs/RESEARCH_AUDIT.md.** По поручению пользователя: таумономикон, стол, записки и серверные условия; скрытые родители/связанные открытия и чернила. Пересечение старых claims — только перечисленные файлы, сканирование и генерацию не меняю.
+- ~~**Дополнение к аудиту исследований: ModNetwork.java, новый ResearchActionMessage, client/ResearchScreen.java, scripts/export_modern_research.py.** Стандартный пакет кнопки хранит byte и обрезает действия 1000/2000; нужен отдельный серверный пакет с проверкой открытого меню. Экспорт должен сохранять скрытые условия дерева.~~ Готово: новый проверяемый C2S пакет, протокол 3, экспорт метаданных дерева.
+
+- ~~**Аудит исследований — Codex (2026-10-05): common/research/**, client/ResearchTreeScreen.java, новый рецепт пополнения чернил в common/crafting и ModRecipes.java, progression/tree JSON, свои lang ключи, новые GameTest и docs/RESEARCH_AUDIT.md.** По поручению пользователя: таумономикон, стол, записки и серверные условия; скрытые родители/связанные открытия и чернила. Пересечение старых claims — только перечисленные файлы, сканирование и генерацию не меняю.~~ Готово: серверная передача действий записки, конечные/пополняемые чернила, скрытые требования и связанная этикетка, полная глава исследований и рецепты; build + 48 GameTest, 909 EN/RU ключей проверены. Остатки исходной мини-игры и клиентская проверка — docs/RESEARCH_AUDIT.md.
 
 - ~~**Команды TC4 — Codex (2026-10-05): common/commands/**, capabilities IThaumometerKnowledge/ThaumometerKnowledge (точное начисление административных аспектов, set/add warp), новые data/thaumcraft/commands/research_links.json, свои lang ключи, новые CommandsTests и docs/COMMANDS.md.** Явное поручение пользователя: синтаксис/алиасы/research/aspect/warp по сохранённому CommandThaumcraft; debug вынести отдельно. Пересечение старого claims знаний — только указанный API, сканирование не меняю.~~ Готово: original research/player/all/reset/list, aspect, warp set/add PERM/TEMP, /tc /thaum и OP2; 17 скрытых связей, точные начисления, debug отдельно, EN/RU. build + 44 GameTest прошли; docs/COMMANDS.md. Реальный сетевой клиент вручную не проверялся.
 
@@ -189,3 +191,4 @@ TC4) закрыты позже; порядок и дерево — в `KNOWN_ISS
 - **Клиентский рендер TC4** (`client/renderers/**`, `client/fx/**`) — отдельное
   направление. (Пять guard-тестов оттуда, которые тут числились падающими, на
   2026-07-28 зелёные — пункт в `KNOWN_ISSUES` снят.)
+

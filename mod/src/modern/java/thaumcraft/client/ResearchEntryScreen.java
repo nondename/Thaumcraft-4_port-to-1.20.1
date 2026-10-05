@@ -21,7 +21,7 @@ public final class ResearchEntryScreen extends Screen {
     private float scale;
     private Button back, next;
     public ResearchEntryScreen(Screen parent, ResearchTreeScreen.Node node) {
-        super(Component.translatable("tc.research_name." + node.key()));
+        super(Component.translatable("tc.research_name." + thaumcraft.common.research.ResearchNotes.displayKey(node.key())));
         this.parent = parent; this.node = node;
     }
     @Override protected void init() {
@@ -44,7 +44,13 @@ public final class ResearchEntryScreen extends Screen {
             String key=recipe instanceof thaumcraft.common.crafting.ArcaneRecipe r?r.getResearch():
                 recipe instanceof thaumcraft.common.alchemy.CrucibleRecipe r?r.research():
                 recipe instanceof thaumcraft.common.infusion.InfusionRecipe r?r.research():"";
-            return !key.isEmpty() && key.equalsIgnoreCase(node.key());
+            if(!key.isEmpty())return key.equalsIgnoreCase(node.key());
+            if(!recipe.getId().getNamespace().equals("thaumcraft"))return false;
+            return switch(node.key()) {
+                case "RESEARCH" -> java.util.Set.of("scribing_tools","scribing_refill","phial").contains(recipe.getId().getPath());
+                case "TABLE" -> recipe.getId().getPath().equals("table");
+                default -> false;
+            };
         }).sorted(Comparator.comparing(r -> r.getId().toString())).forEach(recipes::add);
         spread = Math.min(spread, (pageCount() - 1) / 2);
         back = addRenderableWidget(Button.builder(Component.literal("<"), b -> spread--).bounds(left + 22, top + 226, 24, 20).build());
@@ -69,6 +75,12 @@ public final class ResearchEntryScreen extends Screen {
     }
     @Override public boolean mouseClicked(double x, double y, int b) { return super.mouseClicked(x / scale, y / scale, b); }
     private void drawRecipe(GuiGraphics g,net.minecraft.world.item.crafting.Recipe<?> recipe,int x,int y,int mx,int my) {
+        if(recipe instanceof thaumcraft.common.crafting.ScribingRefillRecipe) {
+            g.drawWordWrap(font,Component.translatable("tc.progress.refill_help"),x,y,137,0x423024);
+            g.renderItem(new net.minecraft.world.item.ItemStack(thaumcraft.common.research.ModResearch.SCRIBING_TOOLS.get()),x,y+48);
+            g.renderItem(new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.INK_SAC),x+25,y+48);
+            return;
+        }
         var ingredients=new ArrayList<net.minecraft.world.item.crafting.Ingredient>();var cost=new thaumcraft.api.aspects.AspectList();int columns=3;
         if(recipe instanceof thaumcraft.common.alchemy.CrucibleRecipe r) {ingredients.add(r.catalyst());cost=r.cost();}
         else if(recipe instanceof thaumcraft.common.infusion.InfusionRecipe r) {ingredients.add(r.input());ingredients.addAll(r.components());cost=r.aspects();}

@@ -15,7 +15,7 @@ import thaumcraft.common.lib.network.message.AuraNodeZapMessage;
 import thaumcraft.common.lib.network.message.SyncThaumometerKnowledgeMessage;
 
 public final class ModNetwork {
-    private static final String PROTOCOL_VERSION = "2";
+    private static final String PROTOCOL_VERSION = "3";
     private static final SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(
             ResourceLocation.fromNamespaceAndPath(Thaumcraft.MODID, "main"),
             () -> PROTOCOL_VERSION,
@@ -27,6 +27,11 @@ public final class ModNetwork {
     }
 
     public static void register() {
+        CHANNEL.registerMessage(3, thaumcraft.common.lib.network.message.ResearchActionMessage.class,
+                thaumcraft.common.lib.network.message.ResearchActionMessage::encode,
+                thaumcraft.common.lib.network.message.ResearchActionMessage::decode,
+                thaumcraft.common.lib.network.message.ResearchActionMessage::handle,
+                java.util.Optional.of(net.minecraftforge.network.NetworkDirection.PLAY_TO_SERVER));
         CHANNEL.registerMessage(2, thaumcraft.common.lib.network.message.ResearchRequestMessage.class,
                 thaumcraft.common.lib.network.message.ResearchRequestMessage::encode,
                 thaumcraft.common.lib.network.message.ResearchRequestMessage::decode,
@@ -50,6 +55,9 @@ public final class ModNetwork {
 
     public static void requestResearch(String key) {
         CHANNEL.sendToServer(new thaumcraft.common.lib.network.message.ResearchRequestMessage(key));
+    }
+    public static void researchAction(int containerId,int action) {
+        CHANNEL.sendToServer(new thaumcraft.common.lib.network.message.ResearchActionMessage(containerId,action));
     }
 
     public static void syncThaumometerKnowledge(Player player) {

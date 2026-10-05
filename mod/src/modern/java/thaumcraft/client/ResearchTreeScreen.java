@@ -24,6 +24,8 @@ public final class ResearchTreeScreen extends Screen {
     }
 
     private final List<Node> nodes = new ArrayList<>();
+    private final Map<String,List<String>> hiddenParents = new HashMap<>();
+    private final Set<String> secondary = new HashSet<>();
     private final Map<String, Node> byKey = new HashMap<>();
     private final double[] panX = new double[6], panY = new double[6];
     private int tab, left, top;
@@ -55,6 +57,8 @@ public final class ResearchTreeScreen extends Screen {
                         o.has("iconHeight") ? o.get("iconHeight").getAsInt() : 16
                 );
                 nodes.add(n);
+                if(o.has("hiddenParents"))hiddenParents.put(n.key(),strings(o,"hiddenParents"));
+                if(o.has("secondary") && o.get("secondary").getAsBoolean())secondary.add(n.key());
                 byKey.put(n.key(), n);
             }
         } catch (Exception e) {
@@ -106,9 +110,11 @@ public final class ResearchTreeScreen extends Screen {
     }
 
     private boolean parentsUnlocked(Node node) {
-        for (String key : node.parents()) {
+        var required=new ArrayList<>(node.parents());required.addAll(hiddenParents.getOrDefault(node.key(),List.of()));
+        for (String key : required) {
             Node parent = byKey.get(key);
-            if (parent != null && !isUnlocked(parent)) {
+            boolean complete=parent!=null?isUnlocked(parent):minecraft!=null && minecraft.player!=null && minecraft.player.getCapability(ThaumometerKnowledgeProvider.CAPABILITY).map(k -> k.hasResearch(key)).orElse(false);
+            if (!complete) {
                 return false;
             }
         }
@@ -191,14 +197,14 @@ public final class ResearchTreeScreen extends Screen {
 
         if (hovered != null) {
             List<Component> lines = new ArrayList<>();
-            lines.add(Component.translatable("tc.research_name." + hovered.key()));
+            lines.add(Component.translatable("tc.research_name." + thaumcraft.common.research.ResearchNotes.displayKey(hovered.key())));
             String description = "tc.research_text." + hovered.key();
             if (net.minecraft.client.resources.language.I18n.exists(description)) {
                 lines.add(Component.translatable(description));
             }
             if (!isUnlocked(hovered)) {
                 lines.add(Component.translatable("tc.tree.locked").withStyle(net.minecraft.ChatFormatting.GRAY));
-                if(parentsUnlocked(hovered))lines.add(Component.translatable("tc.progress.start_hint"));
+                if(parentsUnlocked(hovered))lines.add(Component.translatable(secondary.contains(hovered.key())?"tc.progress.secondary_hint":"tc.progress.start_hint"));
             }
             g.renderComponentTooltip(font, lines, mouseX, mouseY);
         } else {
@@ -278,7 +284,6 @@ public final class ResearchTreeScreen extends Screen {
             if (dragDistance < 4 && hovered != null && isUnlocked(hovered)) {
                 int chapter = switch (hovered.key()) {
                     case "BASICTHAUMATURGY", "THAUMONOMICON" -> 0;
-                    case "RESEARCH" -> 1;
                     case "ASPECTS" -> 3;
                     default -> -1;
                 };

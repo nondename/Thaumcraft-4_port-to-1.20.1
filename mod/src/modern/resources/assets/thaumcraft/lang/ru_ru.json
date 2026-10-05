@@ -871,7 +871,7 @@
   "tc.crucible.cold": "Не кипит",
   "block.thaumcraft.flux_gas": "Газообразный флюкс",
   "block.thaumcraft.flux_goo": "Жидкий флюкс",
-"block.thaumcraft.arcane_stone": "Магический камень",
+  "block.thaumcraft.arcane_stone": "Магический камень",
   "block.thaumcraft.arcane_pedestal": "Магический пьедестал",
   "block.thaumcraft.runic_matrix": "Руническая матрица",
   "block.thaumcraft.alchemy_furnace": "Алхимическая печь",
@@ -905,5 +905,7 @@
   "tc.command.links_error": "Не удалось загрузить зависимости исследований",
   "tc.command.no_knowledge": "Знания игрока недоступны",
   "tc.command.unknown_aspect": "Неизвестный аспект: %s",
-  "tc.command.unknown_research": "Неизвестное исследование: %s"
+  "tc.command.unknown_research": "Неизвестное исследование: %s",
+  "tc.progress.secondary_hint": "Нажмите, чтобы изучить за очки аспектов. Бумага и чернила не нужны.",
+  "tc.progress.refill_help": "Пополнение чернил: соедините письменные принадлежности и чернильный мешок в сетке крафта."
 }

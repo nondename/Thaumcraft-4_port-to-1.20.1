@@ -106,6 +106,9 @@ def main():
             parents = re.search(r'\.setParents\(([^)]+)\)', chain)
             if parents:
                 entry['parents'] = re.findall(r'"([^"]+)"', parents[1])
+            hidden = re.search(r'\.setParentsHidden\(([^)]+)\)', chain)
+            entry['hiddenParents'] = re.findall(r'"([^"]+)"', hidden[1]) if hidden else []
+            entry['secondary'] = '.setSecondary()' in chain
             resource = re.search(r'new ResourceLocation\("thaumcraft",\s*"([^"]+)"\)', icon)
             if resource:
                 entry['icon'] = copy('thaumcraft:' + resource[1])
