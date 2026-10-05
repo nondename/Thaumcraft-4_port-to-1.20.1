@@ -31,6 +31,7 @@ public final class Thaumcraft {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         thaumcraft.common.items.ModMetals.init();
         thaumcraft.common.alchemy.ModAlchemy.register(modEventBus);
+        thaumcraft.common.alchemy.ModAlchemyEntities.register(modEventBus);
         thaumcraft.common.alchemy.CrucibleRecipe.init();
         thaumcraft.common.infusion.ModInfusion.register(modEventBus);
         ModItems.register(modEventBus);

@@ -15,6 +15,11 @@ import thaumcraft.common.nodes.ModNodes;
 @Mod.EventBusSubscriber(modid = Thaumcraft.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class ClientRegistration {
     @SubscribeEvent
+    public static void entityRenderers(net.minecraftforge.client.event.EntityRenderersEvent.RegisterRenderers event) {
+        event.registerEntityRenderer(thaumcraft.common.alchemy.ModAlchemyEntities.ALUMENTUM.get(),
+                net.minecraft.client.renderer.entity.ThrownItemRenderer::new);
+    }
+    @SubscribeEvent
     public static void setup(net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
             net.minecraft.client.gui.screens.MenuScreens.register(
